@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite errors="0" failures="0" name="user_test.ZfmsOrg-20160506093301" skipped="0" tests="1" time="1.616">
+	<testcase classname="user_test.ZfmsOrg" name="test_Temp" time="1.616"/>
+	<system-out>
+<![CDATA[]]>	</system-out>
+	<system-err>
+<![CDATA[]]>	</system-err>
+</testsuite>

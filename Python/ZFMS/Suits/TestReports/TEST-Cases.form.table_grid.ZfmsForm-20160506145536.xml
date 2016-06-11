@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite errors="1" failures="0" name="Cases.form.table_grid.ZfmsForm-20160506145536" skipped="0" tests="1" time="58.179">
+	<testcase classname="Cases.form.table_grid.ZfmsForm" name="test_table_smoke" time="58.179">
+		<error message="Message: Unable to locate element: {&quot;method&quot;:&quot;xpath&quot;,&quot;selector&quot;:&quot;//table[@id='tableColumnItem']//td[@name='fieldName']&quot;}
+For documentation on this error, please visit: http://seleniumhq.org/exceptions/no_such_element.html
+Build info: version: '2.52.0', revision: '4c2593c', time: '2016-02-11 19:06:42'
+System info: host: 'wintest5-PC', ip: '172.25.2.75', os.name: 'Windows 7', os.arch: 'amd64', os.version: '6.1', java.version: '1.8.0_73'
+Driver info: driver.version: unknown
+Screenshot: available via screen
+Stacktrace:
+    at &lt;anonymous class&gt;.FirefoxDriver.prototype.findElementInternal_ (file:///C:/Users/wintest/AppData/Local/Temp/anonymous7935967093737680140webdriver-profile/extensions/fxdriver@googlecode.com/components/driver-component.js:10723)
+    at &lt;anonymous class&gt;.fxdriver.Timer.prototype.setTimeout/&lt;.notify (file:///C:/Users/wintest/AppData/Local/Temp/anonymous7935967093737680140webdriver-profile/extensions/fxdriver@googlecode.com/components/driver-component.js:623)" type="NoSuchElementException">
+<![CDATA['Traceback (most recent call last):\n  File "D:\\TestShop\\Selenium\\ZFMS\\Cases\\form\\table_grid.py", line 132, in test_table_smoke\n    ZfmsForm.add_table(self)\n  File "D:\\TestShop\\Selenium\\ZFMS\\Cases\\form\\table_grid.py", line 77, in add_table\n    newfield = driver.find_element_by_xpath("//table[@id=\'tableColumnItem\']//td[@name=\'fieldName\']").text\n  File "C:\\Python27\\lib\\site-packages\\selenium\\webdriver\\remote\\webdriver.py", line 290, in find_element_by_xpath\n    return self.find_element(by=By.XPATH, value=xpath)\n  File "C:\\Python27\\lib\\site-packages\\selenium\\webdriver\\remote\\webdriver.py", line 744, in find_element\n    {\'using\': by, \'value\': value})[\'value\']\n  File "C:\\Python27\\lib\\site-packages\\selenium\\webdriver\\remote\\webdriver.py", line 233, in execute\n    self.error_handler.check_response(response)\n  File "C:\\Python27\\lib\\site-packages\\selenium\\webdriver\\remote\\errorhandler.py", line 194, in check_response\n    raise exception_class(message, screen, stacktrace)\nNoSuchElementException: Message: Unable to locate element: {"method":"xpath","selector":"//table[@id=\'tableColumnItem\']//td[@name=\'fieldName\']"}\nFor documentation on this error, please visit: http://seleniumhq.org/exceptions/no_such_element.html\nBuild info: version: \'2.52.0\', revision: \'4c2593c\', time: \'2016-02-11 19:06:42\'\nSystem info: host: \'wintest5-PC\', ip: \'172.25.2.75\', os.name: \'Windows 7\', os.arch: \'amd64\', os.version: \'6.1\', java.version: \'1.8.0_73\'\nDriver info: driver.version: unknown\nScreenshot: available via screen\nStacktrace:\n    at <anonymous class>.FirefoxDriver.prototype.findElementInternal_ (file:///C:/Users/wintest/AppData/Local/Temp/anonymous7935967093737680140webdriver-profile/extensions/fxdriver@googlecode.com/components/driver-component.js:10723)\n    at <anonymous class>.fxdriver.Timer.prototype.setTimeout/<.notify (file:///C:/Users/wintest/AppData/Local/Temp/anonymous7935967093737680140webdriver-profile/extensions/fxdriver@googlecode.com/components/driver-component.js:623)\n\nStdout:\n---\xe6\xb7\xbb\xe5\x8a\xa0\xe8\x87\xaa\xe5\xae\x9a\xe4\xb9\x89\xe8\xa1\xa8---\n\xe6\xb7\xbb\xe5\x8a\xa0\xe5\xad\x97\xe6\xae\xb5...\n']]>		</error>
+	</testcase>
+	<system-out>
+<![CDATA[---添加自定义表---
+添加字段...
+]]>	</system-out>
+	<system-err>
+<![CDATA[]]>	</system-err>
+</testsuite>

@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite errors="0" failures="0" name="Cases.org.user_grid.ZfmsOrg-20160506175847" skipped="0" tests="3" time="12.784">
+	<testcase classname="Cases.org.user_grid.ZfmsOrg" name="test_user_add" time="5.406"/>
+	<testcase classname="Cases.org.user_grid.ZfmsOrg" name="test_user_bsearch" time="3.071"/>
+	<testcase classname="Cases.org.user_grid.ZfmsOrg" name="test_user_del" time="4.307"/>
+	<system-out>
+<![CDATA[---添加用户---
+---查询用户---
+查询到 1 个用户
+---删除用户---
+]]>	</system-out>
+	<system-err>
+<![CDATA[]]>	</system-err>
+</testsuite>

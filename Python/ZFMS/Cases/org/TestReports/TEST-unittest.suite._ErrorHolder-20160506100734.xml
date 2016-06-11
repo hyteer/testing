@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite errors="1" failures="0" name="unittest.suite._ErrorHolder-20160506100734" skipped="0" tests="1" time="0.000">
+	<testcase classname="setUpClass (user_test" name="ZfmsOrg)" time="0.000">
+		<error message="Message: Error forwarding the new session cannot find : Capabilities [{browserName=chrome, platform=WINDOS}]
+Stacktrace:
+    at org.openqa.grid.web.servlet.handler.RequestHandler.process (RequestHandler.java:115)
+    at org.openqa.grid.web.servlet.DriverServlet.process (DriverServlet.java:83)
+    at org.openqa.grid.web.servlet.DriverServlet.doPost (DriverServlet.java:67)
+    at javax.servlet.http.HttpServlet.service (HttpServlet.java:707)
+    at javax.servlet.http.HttpServlet.service (HttpServlet.java:790)
+    at org.seleniumhq.jetty9.servlet.ServletHolder.handle (ServletHolder.java:808)
+    at org.seleniumhq.jetty9.servlet.ServletHandler.doHandle (ServletHandler.java:587)
+    at org.seleniumhq.jetty9.server.session.SessionHandler.doHandle (SessionHandler.java:221)
+    at org.seleniumhq.jetty9.server.handler.ContextHandler.doHandle (ContextHandler.java:1127)
+    at org.seleniumhq.jetty9.servlet.ServletHandler.doScope (ServletHandler.java:515)
+    at org.seleniumhq.jetty9.server.session.SessionHandler.doScope (SessionHandler.java:185)
+    at org.seleniumhq.jetty9.server.handler.ContextHandler.doScope (ContextHandler.java:1061)
+    at org.seleniumhq.jetty9.server.handler.ScopedHandler.handle (ScopedHandler.java:141)
+    at org.seleniumhq.jetty9.server.handler.HandlerWrapper.handle (HandlerWrapper.java:97)
+    at org.seleniumhq.jetty9.server.Server.handle (Server.java:499)
+    at org.seleniumhq.jetty9.server.HttpChannel.handle (HttpChannel.java:310)
+    at org.seleniumhq.jetty9.server.HttpConnection.onFillable (HttpConnection.java:257)
+    at org.seleniumhq.jetty9.io.AbstractConnection$2.run (AbstractConnection.java:540)
+    at org.seleniumhq.jetty9.util.thread.QueuedThreadPool.runJob (QueuedThreadPool.java:635)
+    at org.seleniumhq.jetty9.util.thread.QueuedThreadPool$3.run (QueuedThreadPool.java:555)
+    at java.lang.Thread.run (&lt;anonymous&gt;:-1)" type="WebDriverException">
+<![CDATA['Traceback (most recent call last):\n  File "d:\\TestShop\\Selenium\\ZFMS\\Cases\\org\\user_test.py", line 27, in setUpClass\n    cls.driver = webdriver.Remote(\'http://172.25.2.71:4444/wd/hub\', cls.desired_caps)\n  File "C:\\Python27\\lib\\site-packages\\selenium\\webdriver\\remote\\webdriver.py", line 91, in __init__\n    self.start_session(desired_capabilities, browser_profile)\n  File "C:\\Python27\\lib\\site-packages\\selenium\\webdriver\\remote\\webdriver.py", line 173, in start_session\n    \'desiredCapabilities\': desired_capabilities,\n  File "C:\\Python27\\lib\\site-packages\\selenium\\webdriver\\remote\\webdriver.py", line 233, in execute\n    self.error_handler.check_response(response)\n  File "C:\\Python27\\lib\\site-packages\\selenium\\webdriver\\remote\\errorhandler.py", line 194, in check_response\n    raise exception_class(message, screen, stacktrace)\nWebDriverException: Message: Error forwarding the new session cannot find : Capabilities [{browserName=chrome, platform=WINDOS}]\nStacktrace:\n    at org.openqa.grid.web.servlet.handler.RequestHandler.process (RequestHandler.java:115)\n    at org.openqa.grid.web.servlet.DriverServlet.process (DriverServlet.java:83)\n    at org.openqa.grid.web.servlet.DriverServlet.doPost (DriverServlet.java:67)\n    at javax.servlet.http.HttpServlet.service (HttpServlet.java:707)\n    at javax.servlet.http.HttpServlet.service (HttpServlet.java:790)\n    at org.seleniumhq.jetty9.servlet.ServletHolder.handle (ServletHolder.java:808)\n    at org.seleniumhq.jetty9.servlet.ServletHandler.doHandle (ServletHandler.java:587)\n    at org.seleniumhq.jetty9.server.session.SessionHandler.doHandle (SessionHandler.java:221)\n    at org.seleniumhq.jetty9.server.handler.ContextHandler.doHandle (ContextHandler.java:1127)\n    at org.seleniumhq.jetty9.servlet.ServletHandler.doScope (ServletHandler.java:515)\n    at org.seleniumhq.jetty9.server.session.SessionHandler.doScope (SessionHandler.java:185)\n    at org.seleniumhq.jetty9.server.handler.ContextHandler.doScope (ContextHandler.java:1061)\n    at org.seleniumhq.jetty9.server.handler.ScopedHandler.handle (ScopedHandler.java:141)\n    at org.seleniumhq.jetty9.server.handler.HandlerWrapper.handle (HandlerWrapper.java:97)\n    at org.seleniumhq.jetty9.server.Server.handle (Server.java:499)\n    at org.seleniumhq.jetty9.server.HttpChannel.handle (HttpChannel.java:310)\n    at org.seleniumhq.jetty9.server.HttpConnection.onFillable (HttpConnection.java:257)\n    at org.seleniumhq.jetty9.io.AbstractConnection$2.run (AbstractConnection.java:540)\n    at org.seleniumhq.jetty9.util.thread.QueuedThreadPool.runJob (QueuedThreadPool.java:635)\n    at org.seleniumhq.jetty9.util.thread.QueuedThreadPool$3.run (QueuedThreadPool.java:555)\n    at java.lang.Thread.run (<anonymous>:-1)\n\nStdout:\n---\xe7\x94\xa8\xe6\x88\xb7\xe7\xae\xa1\xe7\x90\x86\xe6\xb5\x8b\xe8\xaf\x95\xe5\x88\x9d\xe5\xa7\x8b\xe5\x8c\x96...---\n']]>		</error>
+	</testcase>
+	<system-out>
+<![CDATA[---用户管理测试初始化...---
+]]>	</system-out>
+	<system-err>
+<![CDATA[]]>	</system-err>
+</testsuite>

@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite errors="1" failures="0" name="unittest.suite._ErrorHolder-20160506005120" skipped="0" tests="1" time="0.000">
+	<testcase classname="setUpClass (Cases.org.user_grid" name="ZfmsOrg)" time="0.000">
+		<error message="Message: Desired Capabilities must be a dictionary
+" type="WebDriverException">
+<![CDATA[Traceback (most recent call last):
+  File "D:\TestShop\Selenium\ZFMS\Cases\org\user_grid.py", line 38, in setUpClass
+    cls.driver = webdriver.Remote('http://172.25.2.71:4444/wd/hub', ZfmsOrg)
+  File "C:\Python27\lib\site-packages\selenium\webdriver\remote\webdriver.py", line 80, in __init__
+    raise WebDriverException("Desired Capabilities must be a dictionary")
+WebDriverException: Message: Desired Capabilities must be a dictionary
+
+
+Stdout:
+---用户管理测试初始化...---
+]]>		</error>
+	</testcase>
+	<system-out>
+<![CDATA[---用户管理测试初始化...---
+]]>	</system-out>
+	<system-err>
+<![CDATA[]]>	</system-err>
+</testsuite>

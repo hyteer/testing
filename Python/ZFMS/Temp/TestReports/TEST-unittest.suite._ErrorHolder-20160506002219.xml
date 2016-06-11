@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite errors="1" failures="0" name="unittest.suite._ErrorHolder-20160506002219" skipped="0" tests="1" time="0.000">
+	<testcase classname="setUpClass (Cases.org.user_grid" name="ZfmsOrg)" time="0.000">
+		<error message="global name 'desired_caps' is not defined" type="NameError">
+<![CDATA[Traceback (most recent call last):
+  File "D:\TestShop\Selenium\ZFMS\Cases\org\user_grid.py", line 34, in setUpClass
+    cls.driver = webdriver.Remote('http://172.25.2.71:4444/wd/hub', desired_caps)
+NameError: global name 'desired_caps' is not defined
+
+Stdout:
+---用户管理测试初始化...---
+]]>		</error>
+	</testcase>
+	<system-out>
+<![CDATA[---用户管理测试初始化...---
+]]>	</system-out>
+	<system-err>
+<![CDATA[]]>	</system-err>
+</testsuite>

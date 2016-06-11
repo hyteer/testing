@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite errors="0" failures="0" name="Cases.org.user_grid.ZfmsOrg-20160505165832" skipped="0" tests="2" time="6.764">
+	<testcase classname="Cases.org.user_grid.ZfmsOrg" name="test_add" time="4.305"/>
+	<testcase classname="Cases.org.user_grid.ZfmsOrg" name="test_search" time="2.459"/>
+	<system-out>
+<![CDATA[---添加用户---
+---查询用户---
+查询到 1 个用户
+]]>	</system-out>
+	<system-err>
+<![CDATA[]]>	</system-err>
+</testsuite>
