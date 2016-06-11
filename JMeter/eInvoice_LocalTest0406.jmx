@@ -1,0 +1,248 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jmeterTestPlan version="1.2" properties="2.8" jmeter="2.13 r1665067">
+  <hashTree>
+    <TestPlan guiclass="TestPlanGui" testclass="TestPlan" testname="eInvoice_LocalTest" enabled="true">
+      <stringProp name="TestPlan.comments"></stringProp>
+      <boolProp name="TestPlan.functional_mode">false</boolProp>
+      <boolProp name="TestPlan.serialize_threadgroups">false</boolProp>
+      <elementProp name="TestPlan.user_defined_variables" elementType="Arguments" guiclass="ArgumentsPanel" testclass="Arguments" testname="User Defined Variables" enabled="true">
+        <collectionProp name="Arguments.arguments"/>
+      </elementProp>
+      <stringProp name="TestPlan.user_define_classpath"></stringProp>
+    </TestPlan>
+    <hashTree>
+      <Arguments guiclass="ArgumentsPanel" testclass="Arguments" testname="User Defined Variables" enabled="true">
+        <collectionProp name="Arguments.arguments">
+          <elementProp name="host" elementType="Argument">
+            <stringProp name="Argument.name">host</stringProp>
+            <stringProp name="Argument.value">wsf.cdyne.com</stringProp>
+            <stringProp name="Argument.metadata">=</stringProp>
+            <stringProp name="Argument.desc">Host of Webservice</stringProp>
+          </elementProp>
+          <elementProp name="myhost" elementType="Argument">
+            <stringProp name="Argument.name">myhost</stringProp>
+            <stringProp name="Argument.value">localhost</stringProp>
+            <stringProp name="Argument.desc">My WS</stringProp>
+            <stringProp name="Argument.metadata">=</stringProp>
+          </elementProp>
+          <elementProp name="server" elementType="Argument">
+            <stringProp name="Argument.name">server</stringProp>
+            <stringProp name="Argument.value">172.25.2.61</stringProp>
+            <stringProp name="Argument.metadata">=</stringProp>
+            <stringProp name="Argument.desc">eInvoice Local test</stringProp>
+          </elementProp>
+        </collectionProp>
+      </Arguments>
+      <hashTree/>
+      <ConfigTestElement guiclass="HttpDefaultsGui" testclass="ConfigTestElement" testname="HTTP Request Defaults" enabled="true">
+        <elementProp name="HTTPsampler.Arguments" elementType="Arguments" guiclass="HTTPArgumentsPanel" testclass="Arguments" testname="User Defined Variables" enabled="true">
+          <collectionProp name="Arguments.arguments"/>
+        </elementProp>
+        <stringProp name="HTTPSampler.domain">${server}</stringProp>
+        <stringProp name="HTTPSampler.port">50021</stringProp>
+        <stringProp name="HTTPSampler.connect_timeout"></stringProp>
+        <stringProp name="HTTPSampler.response_timeout"></stringProp>
+        <stringProp name="HTTPSampler.protocol"></stringProp>
+        <stringProp name="HTTPSampler.contentEncoding">UTF-8</stringProp>
+        <stringProp name="HTTPSampler.path"></stringProp>
+        <stringProp name="HTTPSampler.concurrentPool">4</stringProp>
+      </ConfigTestElement>
+      <hashTree/>
+      <ThreadGroup guiclass="ThreadGroupGui" testclass="ThreadGroup" testname="Number of Users" enabled="true">
+        <stringProp name="ThreadGroup.on_sample_error">continue</stringProp>
+        <elementProp name="ThreadGroup.main_controller" elementType="LoopController" guiclass="LoopControlPanel" testclass="LoopController" testname="Loop Controller" enabled="true">
+          <boolProp name="LoopController.continue_forever">false</boolProp>
+          <stringProp name="LoopController.loops">1</stringProp>
+        </elementProp>
+        <stringProp name="ThreadGroup.num_threads">2</stringProp>
+        <stringProp name="ThreadGroup.ramp_time">1</stringProp>
+        <longProp name="ThreadGroup.start_time">1375525852000</longProp>
+        <longProp name="ThreadGroup.end_time">1375525852000</longProp>
+        <boolProp name="ThreadGroup.scheduler">false</boolProp>
+        <stringProp name="ThreadGroup.duration"></stringProp>
+        <stringProp name="ThreadGroup.delay"></stringProp>
+      </ThreadGroup>
+      <hashTree>
+        <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="Soap Request" enabled="true">
+          <boolProp name="HTTPSampler.postBodyRaw">true</boolProp>
+          <elementProp name="HTTPsampler.Arguments" elementType="Arguments">
+            <collectionProp name="Arguments.arguments">
+              <elementProp name="" elementType="HTTPArgument">
+                <boolProp name="HTTPArgument.always_encode">false</boolProp>
+                <stringProp name="Argument.value">&lt;soap:Envelope xmlns:soap=&quot;http://schemas.xmlsoap.org/soap/envelope/&quot; xmlns:xsi=&quot;http://www.w3.org/2001/XMLSchema-instance&quot; xmlns:xsd=&quot;http://www.w3.org/2001/XMLSchema&quot; xmlns:wsa=&quot;http://schemas.xmlsoap.org/ws/2004/03/addressing&quot;&gt;&#xd;
+	&lt;soap:Header&gt;&#xd;
+		&lt;wsa:Action&gt;&lt;/wsa:Action&gt;&#xd;
+		&lt;wsa:MessageID&gt;uuid:ef1f4ab1-2232-46dc-ad27-24787300f76b&lt;/wsa:MessageID&gt;&#xd;
+		&lt;wsa:ReplyTo&gt;&#xd;
+			&lt;wsa:Address&gt;&#xd;
+				http://schemas.xmlsoap.org/ws/2004/03/addressing/role/anonymous&#xd;
+			&lt;/wsa:Address&gt;&#xd;
+		&lt;/wsa:ReplyTo&gt;&#xd;
+		&lt;wsa:To&gt;http://172.25.2.61:50021/yysqz/services/ElectronInvoiceSer&lt;/wsa:To&gt;&#xd;
+	&lt;/soap:Header&gt;&#xd;
+	&lt;soap:Body&gt;&#xd;
+		&lt;electronInvoice xmlns=&quot;http://unientry.sn.tradeswitch.unicom.com&quot;&gt;&#xd;
+			&lt;xml&gt;&amp;lt;ElectronInvoiceInput&amp;gt;&amp;lt;UNI_BSS_HEAD&amp;gt;&amp;lt;ORIG_DOMAIN&amp;gt;PTIS&amp;lt;/ORIG_DOMAIN&amp;gt;&amp;lt;SERVICE_NAME&amp;gt;ElectronInvoiceSer&amp;lt;/SERVICE_NAME&amp;gt;&amp;lt;OPERATE_NAME&amp;gt;electronInvoice&amp;lt;/OPERATE_NAME&amp;gt;&amp;lt;ACTION_CODE&amp;gt;0&amp;lt;/ACTION_CODE&amp;gt;&amp;lt;ACTION_RELATION&amp;gt;0&amp;lt;/ACTION_RELATION&amp;gt;&amp;lt;ROUTING&amp;gt;&amp;lt;ROUTE_TYPE&amp;gt;36&amp;lt;/ROUTE_TYPE&amp;gt;&amp;lt;ROUTE_VALUE&amp;gt;18674453342&amp;lt;/ROUTE_VALUE&amp;gt;&amp;lt;/ROUTING&amp;gt;&amp;lt;PROC_ID&amp;gt;seq00001&amp;lt;/PROC_ID&amp;gt;&amp;lt;TRANS_IDO&amp;gt;seq00001&amp;lt;/TRANS_IDO&amp;gt;&amp;lt;TRANS_IDH&amp;gt;&amp;lt;/TRANS_IDH&amp;gt;&amp;lt;PROCESS_TIME&amp;gt;201603111704001&amp;lt;/PROCESS_TIME&amp;gt;&amp;lt;RESPONSE&amp;gt;&amp;lt;RSP_TYPE&amp;gt;&amp;lt;/RSP_TYPE&amp;gt;&amp;lt;RSP_CODE&amp;gt;&amp;lt;/RSP_CODE&amp;gt;&amp;lt;RSP_DESC&amp;gt;&amp;lt;/RSP_DESC&amp;gt;&amp;lt;/RESPONSE&amp;gt;&amp;lt;COM_BUS_INFO&amp;gt;&amp;lt;OPER_ID&amp;gt;yanff&amp;lt;/OPER_ID&amp;gt;&amp;lt;PROVINCE_CODE&amp;gt;0002&amp;lt;/PROVINCE_CODE&amp;gt;&amp;lt;EPARCHY_CODE&amp;gt;地市代码表&amp;lt;/EPARCHY_CODE&amp;gt;&amp;lt;CITY_CODE&amp;gt;区县编码&amp;lt;/CITY_CODE&amp;gt;&amp;lt;CHANNEL_ID&amp;gt;渠道编码&amp;lt;/CHANNEL_ID&amp;gt;&amp;lt;ACCESS_TYPE&amp;gt;1&amp;lt;/ACCESS_TYPE&amp;gt;&amp;lt;ORDER_TYPE&amp;gt;1&amp;lt;/ORDER_TYPE&amp;gt;&amp;lt;/COM_BUS_INFO&amp;gt;&amp;lt;SP_RESERVE&amp;gt;&amp;lt;TRANS_IDC&amp;gt;ECIP0002seq00001&amp;lt;/TRANS_IDC&amp;gt;&amp;lt;CUTOFFDAY&amp;gt;20080608&amp;lt;/CUTOFFDAY&amp;gt;&amp;lt;OSNDUNS&amp;gt;0002&amp;lt;/OSNDUNS&amp;gt;&amp;lt;HSNDUNS&amp;gt;1100&amp;lt;/HSNDUNS&amp;gt;&amp;lt;CONV_ID&amp;gt;ECIP0002seq00001200806081200111&amp;lt;/CONV_ID&amp;gt;&amp;lt;/SP_RESERVE&amp;gt;&amp;lt;TEST_FLAG&amp;gt;0&amp;lt;/TEST_FLAG&amp;gt;&amp;lt;MSG_SENDER&amp;gt;1100&amp;lt;/MSG_SENDER&amp;gt;&amp;lt;MSG_RECEIVER&amp;gt;1101&amp;lt;/MSG_RECEIVER&amp;gt;&amp;lt;/UNI_BSS_HEAD&amp;gt;&amp;lt;UNI_BSS_BODY&amp;gt;&amp;lt;ELECTRON_INVOICE_REQ&amp;gt;&amp;lt;INVOICE_REQ_ID&amp;gt;lyl{lsh}&amp;lt;/INVOICE_REQ_ID&amp;gt;&amp;lt;MAKE_INVOICE_TYPE&amp;gt;0&amp;lt;/MAKE_INVOICE_TYPE&amp;gt;&amp;lt;SELLER_TAXPAYER_ID&amp;gt;440300568519737&amp;lt;/SELLER_TAXPAYER_ID&amp;gt;&amp;lt;SELLER_NAME&amp;gt;电子发票测试-LR&amp;lt;/SELLER_NAME&amp;gt;&amp;lt;SELLER_ADD&amp;gt;深圳市南山区南海大道1057号科技大厦二期A栋601房&amp;lt;/SELLER_ADD&amp;gt;&amp;lt;SELLER_PHONE&amp;gt;0755-26027907&amp;lt;/SELLER_PHONE&amp;gt;&amp;lt;SELLER_BANK_ACCOUNT&amp;gt;31001669701052502638&amp;lt;/SELLER_BANK_ACCOUNT&amp;gt;&amp;lt;BUYER_TAXPAYER_ID&amp;gt;&amp;lt;/BUYER_TAXPAYER_ID&amp;gt;&amp;lt;BUYER_NAME&amp;gt;张三&amp;lt;/BUYER_NAME&amp;gt;&amp;lt;BUYER_ADD&amp;gt;深圳市南山区深南大道1057号科技大厦二期A栋6888房&amp;lt;/BUYER_ADD&amp;gt;&amp;lt;BUYER_BANK_ACCOUNT&amp;gt;98888888701052502638&amp;lt;/BUYER_BANK_ACCOUNT&amp;gt;&amp;lt;BUYER_PHONE&amp;gt;18888888888&amp;lt;/BUYER_PHONE&amp;gt;&amp;lt;BUYER_EMAIL&amp;gt;test@fapiao.com&amp;lt;/BUYER_EMAIL&amp;gt;&amp;lt;WRITE_MANAGER&amp;gt;admin&amp;lt;/WRITE_MANAGER&amp;gt;&amp;lt;RECE_FEE_MANAGER&amp;gt;admin&amp;lt;/RECE_FEE_MANAGER&amp;gt;&amp;lt;CHECK_MANAGER&amp;gt;admin&amp;lt;/CHECK_MANAGER&amp;gt;&amp;lt;ORG_INVOICE_CODE&amp;gt;&amp;lt;/ORG_INVOICE_CODE&amp;gt;&amp;lt;ORG_INVOICE_NUM&amp;gt;&amp;lt;/ORG_INVOICE_NUM&amp;gt;&amp;lt;TOTAL_PRICE_TAX&amp;gt;117&amp;lt;/TOTAL_PRICE_TAX&amp;gt;&amp;lt;TOTAL_FEE&amp;gt;100&amp;lt;/TOTAL_FEE&amp;gt;&amp;lt;TOTAL_TAX_PAY&amp;gt;17&amp;lt;/TOTAL_TAX_PAY&amp;gt;&amp;lt;PROJECT_INFO&amp;gt;&amp;lt;INVOICE_COMPANY_NATURE&amp;gt;0&amp;lt;/INVOICE_COMPANY_NATURE&amp;gt;&amp;lt;PROJECT_NAME&amp;gt;洗衣粉&amp;lt;/PROJECT_NAME&amp;gt;&amp;lt;UNIT&amp;gt;袋&amp;lt;/UNIT&amp;gt;&amp;lt;MODEL&amp;gt;500克&amp;lt;/MODEL&amp;gt;&amp;lt;PROJECT_COUNT&amp;gt;1&amp;lt;/PROJECT_COUNT&amp;gt;&amp;lt;PROJECT_UNIT_PRICE&amp;gt;100&amp;lt;/PROJECT_UNIT_PRICE&amp;gt;&amp;lt;PROJECT_FEE&amp;gt;100&amp;lt;/PROJECT_FEE&amp;gt;&amp;lt;TAX_RATE&amp;gt;0.17&amp;lt;/TAX_RATE&amp;gt;&amp;lt;TAX_PAY&amp;gt;17&amp;lt;/TAX_PAY&amp;gt;&amp;lt;/PROJECT_INFO&amp;gt;&amp;lt;PARA&amp;gt;&amp;lt;PARA_ID&amp;gt;保留字段ID&amp;lt;/PARA_ID&amp;gt;&amp;lt;PARA_VALUE&amp;gt;保留字段值&amp;lt;/PARA_VALUE&amp;gt;&amp;lt;/PARA&amp;gt;&amp;lt;/ELECTRON_INVOICE_REQ&amp;gt;&amp;lt;/UNI_BSS_BODY&amp;gt;&amp;lt;UNI_BSS_ATTACHED&amp;gt;&amp;lt;MEDIA_INFO&amp;gt;&amp;lt;/MEDIA_INFO&amp;gt;&amp;lt;/UNI_BSS_ATTACHED&amp;gt;&amp;lt;/ElectronInvoiceInput&amp;gt;&lt;/xml&gt;&#xd;
+		&lt;/electronInvoice&gt;&#xd;
+	&lt;/soap:Body&gt;&#xd;
+&lt;/soap:Envelope&gt;</stringProp>
+                <stringProp name="Argument.metadata">=</stringProp>
+              </elementProp>
+            </collectionProp>
+          </elementProp>
+          <stringProp name="HTTPSampler.domain"></stringProp>
+          <stringProp name="HTTPSampler.port"></stringProp>
+          <stringProp name="HTTPSampler.connect_timeout"></stringProp>
+          <stringProp name="HTTPSampler.response_timeout"></stringProp>
+          <stringProp name="HTTPSampler.protocol"></stringProp>
+          <stringProp name="HTTPSampler.contentEncoding">UTF-8</stringProp>
+          <stringProp name="HTTPSampler.path">/yysqz/services/ElectronInvoiceSer</stringProp>
+          <stringProp name="HTTPSampler.method">POST</stringProp>
+          <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
+          <boolProp name="HTTPSampler.auto_redirects">false</boolProp>
+          <boolProp name="HTTPSampler.use_keepalive">true</boolProp>
+          <boolProp name="HTTPSampler.DO_MULTIPART_POST">false</boolProp>
+          <boolProp name="HTTPSampler.monitor">false</boolProp>
+          <stringProp name="HTTPSampler.embedded_url_re"></stringProp>
+        </HTTPSamplerProxy>
+        <hashTree>
+          <HeaderManager guiclass="HeaderPanel" testclass="HeaderManager" testname="HTTP Header Manager" enabled="true">
+            <collectionProp name="HeaderManager.headers">
+              <elementProp name="" elementType="Header">
+                <stringProp name="Header.name">Content-Type</stringProp>
+                <stringProp name="Header.value">text/xml; charset=utf-8</stringProp>
+              </elementProp>
+              <elementProp name="" elementType="Header">
+                <stringProp name="Header.name">SOAPAction</stringProp>
+                <stringProp name="Header.value"></stringProp>
+              </elementProp>
+            </collectionProp>
+          </HeaderManager>
+          <hashTree/>
+          <ResponseAssertion guiclass="AssertionGui" testclass="ResponseAssertion" testname="Response Assertion" enabled="true">
+            <collectionProp name="Asserion.test_strings">
+              <stringProp name="-366345323">&amp;lt;RESP_CODE&gt;0000&amp;lt;/RESP_CODE&gt;</stringProp>
+            </collectionProp>
+            <stringProp name="TestPlan.comments">Verify content in response</stringProp>
+            <stringProp name="Assertion.test_field">Assertion.response_data</stringProp>
+            <boolProp name="Assertion.assume_success">false</boolProp>
+            <intProp name="Assertion.test_type">2</intProp>
+          </ResponseAssertion>
+          <hashTree/>
+          <ResponseAssertion guiclass="AssertionGui" testclass="ResponseAssertion" testname="WS-Return Assertion" enabled="false">
+            <collectionProp name="Asserion.test_strings">
+              <stringProp name="1378175689">&lt;return&gt;77&lt;/return&gt;</stringProp>
+            </collectionProp>
+            <stringProp name="Assertion.test_field">Assertion.response_data</stringProp>
+            <boolProp name="Assertion.assume_success">false</boolProp>
+            <intProp name="Assertion.test_type">2</intProp>
+          </ResponseAssertion>
+          <hashTree/>
+        </hashTree>
+      </hashTree>
+      <ResultCollector guiclass="ViewResultsFullVisualizer" testclass="ResultCollector" testname="View Results Tree" enabled="true">
+        <boolProp name="ResultCollector.error_logging">false</boolProp>
+        <objProp>
+          <name>saveConfig</name>
+          <value class="SampleSaveConfiguration">
+            <time>true</time>
+            <latency>true</latency>
+            <timestamp>true</timestamp>
+            <success>true</success>
+            <label>true</label>
+            <code>true</code>
+            <message>true</message>
+            <threadName>true</threadName>
+            <dataType>false</dataType>
+            <encoding>false</encoding>
+            <assertions>true</assertions>
+            <subresults>false</subresults>
+            <responseData>false</responseData>
+            <samplerData>false</samplerData>
+            <xml>false</xml>
+            <fieldNames>true</fieldNames>
+            <responseHeaders>false</responseHeaders>
+            <requestHeaders>false</requestHeaders>
+            <responseDataOnError>true</responseDataOnError>
+            <saveAssertionResultsFailureMessage>true</saveAssertionResultsFailureMessage>
+            <assertionsResultsToSave>0</assertionsResultsToSave>
+            <bytes>true</bytes>
+            <hostname>true</hostname>
+            <threadCounts>true</threadCounts>
+            <sampleCount>true</sampleCount>
+          </value>
+        </objProp>
+        <stringProp name="filename"></stringProp>
+      </ResultCollector>
+      <hashTree/>
+      <ResultCollector guiclass="StatGraphVisualizer" testclass="ResultCollector" testname="Aggregate Graph" enabled="false">
+        <boolProp name="ResultCollector.error_logging">false</boolProp>
+        <objProp>
+          <name>saveConfig</name>
+          <value class="SampleSaveConfiguration">
+            <time>true</time>
+            <latency>true</latency>
+            <timestamp>true</timestamp>
+            <success>true</success>
+            <label>true</label>
+            <code>true</code>
+            <message>true</message>
+            <threadName>true</threadName>
+            <dataType>false</dataType>
+            <encoding>false</encoding>
+            <assertions>true</assertions>
+            <subresults>false</subresults>
+            <responseData>false</responseData>
+            <samplerData>false</samplerData>
+            <xml>false</xml>
+            <fieldNames>true</fieldNames>
+            <responseHeaders>false</responseHeaders>
+            <requestHeaders>false</requestHeaders>
+            <responseDataOnError>true</responseDataOnError>
+            <saveAssertionResultsFailureMessage>true</saveAssertionResultsFailureMessage>
+            <assertionsResultsToSave>0</assertionsResultsToSave>
+            <bytes>true</bytes>
+            <hostname>true</hostname>
+            <threadCounts>true</threadCounts>
+            <sampleCount>true</sampleCount>
+          </value>
+        </objProp>
+        <stringProp name="filename"></stringProp>
+      </ResultCollector>
+      <hashTree/>
+      <ResultCollector guiclass="StatVisualizer" testclass="ResultCollector" testname="Aggregate Report" enabled="true">
+        <boolProp name="ResultCollector.error_logging">false</boolProp>
+        <objProp>
+          <name>saveConfig</name>
+          <value class="SampleSaveConfiguration">
+            <time>true</time>
+            <latency>true</latency>
+            <timestamp>true</timestamp>
+            <success>true</success>
+            <label>true</label>
+            <code>true</code>
+            <message>true</message>
+            <threadName>true</threadName>
+            <dataType>true</dataType>
+            <encoding>false</encoding>
+            <assertions>true</assertions>
+            <subresults>true</subresults>
+            <responseData>false</responseData>
+            <samplerData>false</samplerData>
+            <xml>true</xml>
+            <fieldNames>false</fieldNames>
+            <responseHeaders>false</responseHeaders>
+            <requestHeaders>false</requestHeaders>
+            <responseDataOnError>false</responseDataOnError>
+            <saveAssertionResultsFailureMessage>false</saveAssertionResultsFailureMessage>
+            <assertionsResultsToSave>0</assertionsResultsToSave>
+            <bytes>true</bytes>
+            <threadCounts>true</threadCounts>
+          </value>
+        </objProp>
+        <stringProp name="filename"></stringProp>
+      </ResultCollector>
+      <hashTree/>
+    </hashTree>
+  </hashTree>
+</jmeterTestPlan>

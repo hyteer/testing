@@ -1,0 +1,262 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jmeterTestPlan version="1.2" properties="2.8" jmeter="2.13 r1665067">
+  <hashTree>
+    <TestPlan guiclass="TestPlanGui" testclass="TestPlan" testname="CalWS" enabled="true">
+      <stringProp name="TestPlan.comments"></stringProp>
+      <boolProp name="TestPlan.functional_mode">false</boolProp>
+      <boolProp name="TestPlan.serialize_threadgroups">false</boolProp>
+      <elementProp name="TestPlan.user_defined_variables" elementType="Arguments" guiclass="ArgumentsPanel" testclass="Arguments" testname="User Defined Variables" enabled="true">
+        <collectionProp name="Arguments.arguments"/>
+      </elementProp>
+      <stringProp name="TestPlan.user_define_classpath"></stringProp>
+    </TestPlan>
+    <hashTree>
+      <Arguments guiclass="ArgumentsPanel" testclass="Arguments" testname="User Defined Variables" enabled="true">
+        <collectionProp name="Arguments.arguments">
+          <elementProp name="host" elementType="Argument">
+            <stringProp name="Argument.name">host</stringProp>
+            <stringProp name="Argument.value">wsf.cdyne.com</stringProp>
+            <stringProp name="Argument.metadata">=</stringProp>
+            <stringProp name="Argument.desc">Host of Webservice</stringProp>
+          </elementProp>
+          <elementProp name="local" elementType="Argument">
+            <stringProp name="Argument.name">local</stringProp>
+            <stringProp name="Argument.value">localhost</stringProp>
+            <stringProp name="Argument.metadata">=</stringProp>
+          </elementProp>
+        </collectionProp>
+      </Arguments>
+      <hashTree/>
+      <ConfigTestElement guiclass="HttpDefaultsGui" testclass="ConfigTestElement" testname="HTTP Request Defaults" enabled="true">
+        <elementProp name="HTTPsampler.Arguments" elementType="Arguments" guiclass="HTTPArgumentsPanel" testclass="Arguments" testname="User Defined Variables" enabled="true">
+          <collectionProp name="Arguments.arguments"/>
+        </elementProp>
+        <stringProp name="HTTPSampler.domain">${host}</stringProp>
+        <stringProp name="HTTPSampler.port">8080</stringProp>
+        <stringProp name="HTTPSampler.connect_timeout"></stringProp>
+        <stringProp name="HTTPSampler.response_timeout"></stringProp>
+        <stringProp name="HTTPSampler.protocol"></stringProp>
+        <stringProp name="HTTPSampler.contentEncoding"></stringProp>
+        <stringProp name="HTTPSampler.path"></stringProp>
+        <stringProp name="HTTPSampler.concurrentPool">4</stringProp>
+      </ConfigTestElement>
+      <hashTree/>
+      <ThreadGroup guiclass="ThreadGroupGui" testclass="ThreadGroup" testname="Number of Users" enabled="true">
+        <stringProp name="ThreadGroup.on_sample_error">continue</stringProp>
+        <elementProp name="ThreadGroup.main_controller" elementType="LoopController" guiclass="LoopControlPanel" testclass="LoopController" testname="Loop Controller" enabled="true">
+          <boolProp name="LoopController.continue_forever">false</boolProp>
+          <stringProp name="LoopController.loops">1</stringProp>
+        </elementProp>
+        <stringProp name="ThreadGroup.num_threads">1</stringProp>
+        <stringProp name="ThreadGroup.ramp_time">1</stringProp>
+        <longProp name="ThreadGroup.start_time">1375525852000</longProp>
+        <longProp name="ThreadGroup.end_time">1375525852000</longProp>
+        <boolProp name="ThreadGroup.scheduler">false</boolProp>
+        <stringProp name="ThreadGroup.duration"></stringProp>
+        <stringProp name="ThreadGroup.delay"></stringProp>
+      </ThreadGroup>
+      <hashTree>
+        <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="Soap Request" enabled="true">
+          <boolProp name="HTTPSampler.postBodyRaw">true</boolProp>
+          <elementProp name="HTTPsampler.Arguments" elementType="Arguments">
+            <collectionProp name="Arguments.arguments">
+              <elementProp name="" elementType="HTTPArgument">
+                <boolProp name="HTTPArgument.always_encode">false</boolProp>
+                <stringProp name="Argument.value">&lt;soapenv:Envelope xmlns:soapenv=&quot;http://schemas.xmlsoap.org/soap/envelope/&quot; xmlns:cal=&quot;http://cal.me.org/&quot;&gt;&#xd;
+   &lt;soapenv:Header/&gt;&#xd;
+   &lt;soapenv:Body&gt;&#xd;
+      &lt;cal:repl&gt;&#xd;
+         &lt;!--Optional:--&gt;&#xd;
+         &lt;info&gt;${BASE64}&lt;/info&gt;&#xd;
+         &lt;!--Optional:--&gt;&#xd;
+         &lt;time&gt;${__time(,)}&lt;/time&gt;&#xd;
+         &#xd;
+      &lt;/cal:repl&gt;&#xd;
+   &lt;/soapenv:Body&gt;&#xd;
+&lt;/soapenv:Envelope&gt;</stringProp>
+                <stringProp name="Argument.metadata">=</stringProp>
+              </elementProp>
+            </collectionProp>
+          </elementProp>
+          <stringProp name="HTTPSampler.domain"></stringProp>
+          <stringProp name="HTTPSampler.port"></stringProp>
+          <stringProp name="HTTPSampler.connect_timeout"></stringProp>
+          <stringProp name="HTTPSampler.response_timeout"></stringProp>
+          <stringProp name="HTTPSampler.protocol"></stringProp>
+          <stringProp name="HTTPSampler.contentEncoding">GB2312</stringProp>
+          <stringProp name="HTTPSampler.path">/CalWS/CalWS?wsdl</stringProp>
+          <stringProp name="HTTPSampler.method">POST</stringProp>
+          <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
+          <boolProp name="HTTPSampler.auto_redirects">false</boolProp>
+          <boolProp name="HTTPSampler.use_keepalive">true</boolProp>
+          <boolProp name="HTTPSampler.DO_MULTIPART_POST">false</boolProp>
+          <boolProp name="HTTPSampler.monitor">false</boolProp>
+          <stringProp name="HTTPSampler.embedded_url_re"></stringProp>
+        </HTTPSamplerProxy>
+        <hashTree>
+          <HeaderManager guiclass="HeaderPanel" testclass="HeaderManager" testname="HTTP Header Manager" enabled="true">
+            <collectionProp name="HeaderManager.headers">
+              <elementProp name="" elementType="Header">
+                <stringProp name="Header.name">Content-Type</stringProp>
+                <stringProp name="Header.value">text/xml; charset=gb2312</stringProp>
+              </elementProp>
+              <elementProp name="" elementType="Header">
+                <stringProp name="Header.name">SOAPAction</stringProp>
+                <stringProp name="Header.value"></stringProp>
+              </elementProp>
+            </collectionProp>
+          </HeaderManager>
+          <hashTree/>
+          <ResponseAssertion guiclass="AssertionGui" testclass="ResponseAssertion" testname="Response Assertion" enabled="false">
+            <collectionProp name="Asserion.test_strings">
+              <stringProp name="130046656">&lt;/GetCityForecastByZIPResult&gt;</stringProp>
+            </collectionProp>
+            <stringProp name="TestPlan.comments">Verify content in response</stringProp>
+            <stringProp name="Assertion.test_field">Assertion.response_data</stringProp>
+            <boolProp name="Assertion.assume_success">false</boolProp>
+            <intProp name="Assertion.test_type">16</intProp>
+          </ResponseAssertion>
+          <hashTree/>
+          <BeanShellPreProcessor guiclass="TestBeanGUI" testclass="BeanShellPreProcessor" testname="BeanShell Pre-Base64-Sun" enabled="false">
+            <boolProp name="resetInterpreter">false</boolProp>
+            <stringProp name="parameters"></stringProp>
+            <stringProp name="filename"></stringProp>
+            <stringProp name="script">import sun.misc.BASE64Decoder;
+import sun.misc.BASE64Encoder;
+//import org.apache.commons.codec.binary.Base64;
+BASE64Encoder encode = new BASE64Encoder();
+		
+        String base64 = encode.encode(&quot;&lt;Data&gt;&lt;REPAY_RESPONSE&gt;&lt;TRX_CODE&gt;9301&lt;/TRX_CODE&gt;&quot;.getBytes());
+        System.out.println(base64);
+vars.put(&quot;BASE64&quot;, base64);
+</stringProp>
+          </BeanShellPreProcessor>
+          <hashTree/>
+          <XPathExtractor guiclass="XPathExtractorGui" testclass="XPathExtractor" testname="XPath Extractor" enabled="false">
+            <stringProp name="XPathExtractor.default">Not found...</stringProp>
+            <stringProp name="XPathExtractor.refname">ReturnValue</stringProp>
+            <stringProp name="XPathExtractor.xpathQuery">//return</stringProp>
+            <boolProp name="XPathExtractor.validate">false</boolProp>
+            <boolProp name="XPathExtractor.tolerant">false</boolProp>
+            <boolProp name="XPathExtractor.namespace">false</boolProp>
+          </XPathExtractor>
+          <hashTree/>
+          <BeanShellPreProcessor guiclass="TestBeanGUI" testclass="BeanShellPreProcessor" testname="BeanShell PreBase64-Apache" enabled="true">
+            <boolProp name="resetInterpreter">false</boolProp>
+            <stringProp name="parameters"></stringProp>
+            <stringProp name="filename"></stringProp>
+            <stringProp name="script">import org.apache.commons.codec.binary.Base64;
+//String charset = &quot;UTF-8&quot;;
+String charset = &quot;GB2312&quot;;
+
+String org = &quot;&lt;REQUEST_COMMON_FPKJ class=&apos;REQUEST_COMMON_FPKJ&apos;&gt;&lt;BY6&gt;&lt;/BY6&gt;&lt;BY5&gt;&lt;/BY5&gt;&lt;GMF_MC&gt;柳絮浩&lt;/GMF_MC&gt;&lt;BY4&gt;&lt;/BY4&gt;&lt;XSF_NSRSBH&gt;330203954230624&lt;/XSF_NSRSBH&gt;&lt;XSF_DZDH&gt;宁波市高新区凌云路98号,0574-27821213&lt;/XSF_DZDH&gt;&lt;BY3&gt;&lt;/BY3&gt;&lt;BY2&gt;&lt;/BY2&gt;&lt;BY1&gt;1&lt;/BY1&gt;&lt;JSHJ&gt;117&lt;/JSHJ&gt;&lt;EWM&gt;&lt;![CDATA[]]&gt;&lt;/EWM&gt;&lt;BZ&gt;机器编号:499099915432&lt;/BZ&gt;&lt;KPRQ&gt;20160222164757&lt;/KPRQ&gt;&lt;JQBH&gt;499099900038&lt;/JQBH&gt;&lt;GMF_NSRSBH&gt;&lt;/GMF_NSRSBH&gt;&lt;JYM&gt;09193963768980293853&lt;/JYM&gt;&lt;GMF_SJH&gt;15920066345,18964787876&lt;/GMF_SJH&gt;&lt;FPT_ZH&gt;&lt;/FPT_ZH&gt;&lt;FP_MW&gt;&lt;![CDATA[03/7&gt;2445855/8&lt;2&lt;248-1&lt;08/29+/8+1*5/5+06*5/8-118*13901896&lt;/7&gt;2445855/8&lt;2&lt;231&gt;3+-982/389&lt;5**&gt;&gt;*01+54119-9/902/4&lt;6]]&gt;&lt;/FP_MW&gt;&lt;FPFM&gt;12340000000160190121&lt;/FPFM&gt;&lt;HYLX&gt;0&lt;/HYLX&gt;&lt;KPLX&gt;0&lt;/KPLX&gt;&lt;KPR&gt;AI_QA_KQ&lt;/KPR&gt;&lt;SKR&gt;&lt;/SKR&gt;&lt;FHR&gt;&lt;/FHR&gt;&lt;XSF_YHZH&gt;610118191919191919&lt;/XSF_YHZH&gt;&lt;FP_HM&gt;60190121&lt;/FP_HM&gt;&lt;FPQQLSH&gt;lyl12345678909876543212&lt;/FPQQLSH&gt;&lt;FP_DM&gt;123400000001&lt;/FP_DM&gt;&lt;GMF_DZDH&gt;&lt;/GMF_DZDH&gt;&lt;GMF_DZYX&gt;fengfan_yan@139.com&lt;/GMF_DZYX&gt;&lt;XSF_MC&gt;中国联合网络通信有限公司宁波市分公司&lt;/XSF_MC&gt;&lt;HJJE&gt;100&lt;/HJJE&gt;&lt;YFP_DM&gt;&lt;/YFP_DM&gt;&lt;HJSE&gt;*&lt;/HJSE&gt;&lt;BY7&gt;&lt;/BY7&gt;&lt;YFP_HM&gt;&lt;/YFP_HM&gt;&lt;BY8&gt;&lt;/BY8&gt;&lt;BY9&gt;&lt;/BY9&gt;&lt;BY10&gt;&lt;/BY10&gt;&lt;GMF_YHZH&gt;&lt;/GMF_YHZH&gt;&lt;COMMON_FPKJ_XMXXS class=&apos;COMMON_FPKJ_XMXX&apos; size=&apos;1&apos;&gt;&lt;COMMON_FPKJ_XMXX&gt;&lt;BY6&gt;&lt;/BY6&gt;&lt;BY5&gt;&lt;/BY5&gt;&lt;BY4&gt;&lt;/BY4&gt;&lt;SE&gt;*&lt;/SE&gt;&lt;BY3&gt;&lt;/BY3&gt;&lt;BY2&gt;&lt;/BY2&gt;&lt;BY1&gt;&lt;/BY1&gt;&lt;GGXH&gt;&lt;/GGXH&gt;&lt;SL&gt;*&lt;/SL&gt;&lt;XMSL&gt;&lt;/XMSL&gt;&lt;DW&gt;&lt;/DW&gt;&lt;FPHXZ&gt;0&lt;/FPHXZ&gt;&lt;XMDJ&gt;&lt;/XMDJ&gt;&lt;XMMC&gt;&lt;![CDATA[普通资金]]&gt;&lt;/XMMC&gt;&lt;XMJE&gt;1&lt;/XMJE&gt;&lt;/COMMON_FPKJ_XMXX&gt;&lt;/COMMON_FPKJ_XMXXS&gt;&lt;/REQUEST_COMMON_FPKJ&gt;&quot; ;
+String str1=&quot;&quot;;
+byte[] _sec1 = Base64.encodeBase64(org.getBytes(&quot;UTF-8&quot;));
+//vars.put(&quot;str1&quot;, new String(_sec1,charset));
+vars.put(&quot;str1&quot;, new String(_sec1,charset));
+String yt = str1;
+String getStr1=vars.get(&quot;str1&quot;);
+System.out.println(&quot;Get my encode: &quot; + getStr1);
+String str2 = &quot;&lt;REQUEST&gt;&lt;ORIGINAL&gt;&quot; + getStr1 + &quot;&lt;/ORIGINAL&gt;&lt;SERIALNUMBER/&gt;&lt;SIGNATURE/&gt;&lt;/REQUEST&gt;&quot;;
+vars.put(&quot;str2&quot;, str2);
+//print(&quot;str2 is: &quot;+str2);
+
+byte[] _sec2 = Base64.encodeBase64(str2.getBytes(&quot;UTF-8&quot;));
+vars.put(&quot;BASE64&quot;, new String(_sec2,charset));
+
+
+</stringProp>
+          </BeanShellPreProcessor>
+          <hashTree/>
+          <CSVDataSet guiclass="TestBeanGUI" testclass="CSVDataSet" testname="CSV Data Set Config" enabled="false">
+            <stringProp name="delimiter">,</stringProp>
+            <stringProp name="fileEncoding"></stringProp>
+            <stringProp name="filename"></stringProp>
+            <boolProp name="quotedData">false</boolProp>
+            <boolProp name="recycle">true</boolProp>
+            <stringProp name="shareMode">shareMode.all</stringProp>
+            <boolProp name="stopThread">false</boolProp>
+            <stringProp name="variableNames"></stringProp>
+          </CSVDataSet>
+          <hashTree/>
+        </hashTree>
+        <DebugSampler guiclass="TestBeanGUI" testclass="DebugSampler" testname="Debug Sampler" enabled="true">
+          <boolProp name="displayJMeterProperties">false</boolProp>
+          <boolProp name="displayJMeterVariables">true</boolProp>
+          <boolProp name="displaySystemProperties">false</boolProp>
+        </DebugSampler>
+        <hashTree/>
+      </hashTree>
+      <ResultCollector guiclass="ViewResultsFullVisualizer" testclass="ResultCollector" testname="View Results Tree" enabled="true">
+        <boolProp name="ResultCollector.error_logging">false</boolProp>
+        <objProp>
+          <name>saveConfig</name>
+          <value class="SampleSaveConfiguration">
+            <time>true</time>
+            <latency>true</latency>
+            <timestamp>true</timestamp>
+            <success>true</success>
+            <label>true</label>
+            <code>true</code>
+            <message>true</message>
+            <threadName>true</threadName>
+            <dataType>false</dataType>
+            <encoding>false</encoding>
+            <assertions>true</assertions>
+            <subresults>false</subresults>
+            <responseData>false</responseData>
+            <samplerData>false</samplerData>
+            <xml>false</xml>
+            <fieldNames>true</fieldNames>
+            <responseHeaders>false</responseHeaders>
+            <requestHeaders>false</requestHeaders>
+            <responseDataOnError>true</responseDataOnError>
+            <saveAssertionResultsFailureMessage>true</saveAssertionResultsFailureMessage>
+            <assertionsResultsToSave>0</assertionsResultsToSave>
+            <bytes>true</bytes>
+            <hostname>true</hostname>
+            <threadCounts>true</threadCounts>
+            <sampleCount>true</sampleCount>
+          </value>
+        </objProp>
+        <stringProp name="filename"></stringProp>
+      </ResultCollector>
+      <hashTree/>
+      <ResultCollector guiclass="StatGraphVisualizer" testclass="ResultCollector" testname="Aggregate Graph" enabled="true">
+        <boolProp name="ResultCollector.error_logging">false</boolProp>
+        <objProp>
+          <name>saveConfig</name>
+          <value class="SampleSaveConfiguration">
+            <time>true</time>
+            <latency>true</latency>
+            <timestamp>true</timestamp>
+            <success>true</success>
+            <label>true</label>
+            <code>true</code>
+            <message>true</message>
+            <threadName>true</threadName>
+            <dataType>false</dataType>
+            <encoding>false</encoding>
+            <assertions>true</assertions>
+            <subresults>false</subresults>
+            <responseData>false</responseData>
+            <samplerData>false</samplerData>
+            <xml>false</xml>
+            <fieldNames>true</fieldNames>
+            <responseHeaders>false</responseHeaders>
+            <requestHeaders>false</requestHeaders>
+            <responseDataOnError>true</responseDataOnError>
+            <saveAssertionResultsFailureMessage>true</saveAssertionResultsFailureMessage>
+            <assertionsResultsToSave>0</assertionsResultsToSave>
+            <bytes>true</bytes>
+            <hostname>true</hostname>
+            <threadCounts>true</threadCounts>
+            <sampleCount>true</sampleCount>
+          </value>
+        </objProp>
+        <stringProp name="filename"></stringProp>
+      </ResultCollector>
+      <hashTree/>
+    </hashTree>
+  </hashTree>
+</jmeterTestPlan>

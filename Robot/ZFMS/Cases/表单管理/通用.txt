@@ -1,0 +1,14 @@
+*** Settings ***
+Library           Selenium2Library
+Resource          ../../Actions/Menu.robot
+Resource          ../../Actions/Login.robot
+
+*** Test Cases ***
+打开组织管理
+    打开系统
+    Maximize Browser Window
+    输入登录信息
+    点击登录按钮
+    sleep    2s
+    点击组织管理
+    Element Should Contain    id=leftTree_1_a    用户管理

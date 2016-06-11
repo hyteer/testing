@@ -1,0 +1,23 @@
+*** Settings ***
+Library           Selenium2Library
+Resource          ../GlobalArgs/res.robot
+
+*** Test Cases ***
+Open Browser
+    Open Browser    ${HOME}
+
+Temp
+    Open Browser    ${HOME}
+    Click Link    /projects
+    sleep    1s
+    Click Link    /login
+    sleep    1.5s
+    Input Text    username    tony
+    sleep    2s
+    Close Browser
+
+Login
+    Open Login Page
+    Local Login
+    sleep    2s
+    Close Browser

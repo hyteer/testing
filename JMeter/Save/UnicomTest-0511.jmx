@@ -1,0 +1,445 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jmeterTestPlan version="1.2" properties="2.8" jmeter="2.13 r1665067">
+  <hashTree>
+    <TestPlan guiclass="TestPlanGui" testclass="TestPlan" testname="Test Plan" enabled="true">
+      <stringProp name="TestPlan.comments"></stringProp>
+      <boolProp name="TestPlan.functional_mode">false</boolProp>
+      <boolProp name="TestPlan.serialize_threadgroups">false</boolProp>
+      <elementProp name="TestPlan.user_defined_variables" elementType="Arguments" guiclass="ArgumentsPanel" testclass="Arguments" testname="User Defined Variables" enabled="true">
+        <collectionProp name="Arguments.arguments"/>
+      </elementProp>
+      <stringProp name="TestPlan.user_define_classpath"></stringProp>
+    </TestPlan>
+    <hashTree>
+      <ThreadGroup guiclass="ThreadGroupGui" testclass="ThreadGroup" testname="Thread Group" enabled="false">
+        <stringProp name="ThreadGroup.on_sample_error">continue</stringProp>
+        <elementProp name="ThreadGroup.main_controller" elementType="LoopController" guiclass="LoopControlPanel" testclass="LoopController" testname="Loop Controller" enabled="true">
+          <boolProp name="LoopController.continue_forever">false</boolProp>
+          <stringProp name="LoopController.loops">1</stringProp>
+        </elementProp>
+        <stringProp name="ThreadGroup.num_threads">1</stringProp>
+        <stringProp name="ThreadGroup.ramp_time">1</stringProp>
+        <longProp name="ThreadGroup.start_time">1462931146000</longProp>
+        <longProp name="ThreadGroup.end_time">1462931146000</longProp>
+        <boolProp name="ThreadGroup.scheduler">false</boolProp>
+        <stringProp name="ThreadGroup.duration"></stringProp>
+        <stringProp name="ThreadGroup.delay"></stringProp>
+      </ThreadGroup>
+      <hashTree>
+        <BeanShellPreProcessor guiclass="TestBeanGUI" testclass="BeanShellPreProcessor" testname="BeanShell PreProcessor" enabled="true">
+          <stringProp name="filename"></stringProp>
+          <stringProp name="parameters"></stringProp>
+          <boolProp name="resetInterpreter">false</boolProp>
+          <stringProp name="script"></stringProp>
+        </BeanShellPreProcessor>
+        <hashTree/>
+        <RandomVariableConfig guiclass="TestBeanGUI" testclass="RandomVariableConfig" testname="FM" enabled="true">
+          <stringProp name="maximumValue">999</stringProp>
+          <stringProp name="minimumValue">1</stringProp>
+          <stringProp name="outputFormat">11110000220000</stringProp>
+          <boolProp name="perThread">false</boolProp>
+          <stringProp name="randomSeed"></stringProp>
+          <stringProp name="variableName">fm</stringProp>
+        </RandomVariableConfig>
+        <hashTree/>
+        <RandomVariableConfig guiclass="TestBeanGUI" testclass="RandomVariableConfig" testname="DM" enabled="true">
+          <stringProp name="maximumValue">999</stringProp>
+          <stringProp name="minimumValue">1</stringProp>
+          <stringProp name="outputFormat">12000010000</stringProp>
+          <boolProp name="perThread">false</boolProp>
+          <stringProp name="randomSeed"></stringProp>
+          <stringProp name="variableName">dm</stringProp>
+        </RandomVariableConfig>
+        <hashTree/>
+        <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="HTTP Request" enabled="true">
+          <boolProp name="HTTPSampler.postBodyRaw">true</boolProp>
+          <elementProp name="HTTPsampler.Arguments" elementType="Arguments">
+            <collectionProp name="Arguments.arguments">
+              <elementProp name="" elementType="HTTPArgument">
+                <boolProp name="HTTPArgument.always_encode">false</boolProp>
+                <stringProp name="Argument.value">Test:&#xd;
+FM: ${fm}&#xd;
+DM: ${dm}</stringProp>
+                <stringProp name="Argument.metadata">=</stringProp>
+              </elementProp>
+            </collectionProp>
+          </elementProp>
+          <stringProp name="HTTPSampler.domain">localhost</stringProp>
+          <stringProp name="HTTPSampler.port">8081</stringProp>
+          <stringProp name="HTTPSampler.connect_timeout"></stringProp>
+          <stringProp name="HTTPSampler.response_timeout"></stringProp>
+          <stringProp name="HTTPSampler.protocol"></stringProp>
+          <stringProp name="HTTPSampler.contentEncoding"></stringProp>
+          <stringProp name="HTTPSampler.path"></stringProp>
+          <stringProp name="HTTPSampler.method">POST</stringProp>
+          <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
+          <boolProp name="HTTPSampler.auto_redirects">false</boolProp>
+          <boolProp name="HTTPSampler.use_keepalive">true</boolProp>
+          <boolProp name="HTTPSampler.DO_MULTIPART_POST">false</boolProp>
+          <boolProp name="HTTPSampler.monitor">false</boolProp>
+          <stringProp name="HTTPSampler.embedded_url_re"></stringProp>
+        </HTTPSamplerProxy>
+        <hashTree/>
+      </hashTree>
+      <ThreadGroup guiclass="ThreadGroupGui" testclass="ThreadGroup" testname="Thread Group" enabled="true">
+        <stringProp name="ThreadGroup.on_sample_error">continue</stringProp>
+        <elementProp name="ThreadGroup.main_controller" elementType="LoopController" guiclass="LoopControlPanel" testclass="LoopController" testname="Loop Controller" enabled="true">
+          <boolProp name="LoopController.continue_forever">false</boolProp>
+          <intProp name="LoopController.loops">-1</intProp>
+        </elementProp>
+        <stringProp name="ThreadGroup.num_threads">500</stringProp>
+        <stringProp name="ThreadGroup.ramp_time">5</stringProp>
+        <longProp name="ThreadGroup.start_time">1462931396000</longProp>
+        <longProp name="ThreadGroup.end_time">1462931396000</longProp>
+        <boolProp name="ThreadGroup.scheduler">false</boolProp>
+        <stringProp name="ThreadGroup.duration"></stringProp>
+        <stringProp name="ThreadGroup.delay"></stringProp>
+      </ThreadGroup>
+      <hashTree>
+        <Arguments guiclass="ArgumentsPanel" testclass="Arguments" testname="User Defined Variables" enabled="true">
+          <collectionProp name="Arguments.arguments">
+            <elementProp name="date" elementType="Argument">
+              <stringProp name="Argument.name">date</stringProp>
+              <stringProp name="Argument.value">${__time(YMD,)}</stringProp>
+              <stringProp name="Argument.metadata">=</stringProp>
+            </elementProp>
+            <elementProp name="time" elementType="Argument">
+              <stringProp name="Argument.name">time</stringProp>
+              <stringProp name="Argument.value">${__time(HMS,)}</stringProp>
+              <stringProp name="Argument.metadata">=</stringProp>
+            </elementProp>
+          </collectionProp>
+        </Arguments>
+        <hashTree/>
+        <ConfigTestElement guiclass="HttpDefaultsGui" testclass="ConfigTestElement" testname="HTTP Request Defaults" enabled="true">
+          <elementProp name="HTTPsampler.Arguments" elementType="Arguments" guiclass="HTTPArgumentsPanel" testclass="Arguments" testname="User Defined Variables" enabled="true">
+            <collectionProp name="Arguments.arguments"/>
+          </elementProp>
+          <stringProp name="HTTPSampler.domain">10.10.16.2</stringProp>
+          <stringProp name="HTTPSampler.port">9091</stringProp>
+          <stringProp name="HTTPSampler.connect_timeout"></stringProp>
+          <stringProp name="HTTPSampler.response_timeout"></stringProp>
+          <stringProp name="HTTPSampler.protocol"></stringProp>
+          <stringProp name="HTTPSampler.contentEncoding"></stringProp>
+          <stringProp name="HTTPSampler.path"></stringProp>
+          <stringProp name="HTTPSampler.concurrentPool">4</stringProp>
+        </ConfigTestElement>
+        <hashTree/>
+        <HeaderManager guiclass="HeaderPanel" testclass="HeaderManager" testname="HTTP Header Manager" enabled="true">
+          <collectionProp name="HeaderManager.headers">
+            <elementProp name="" elementType="Header">
+              <stringProp name="Header.name">Content-Type</stringProp>
+              <stringProp name="Header.value">text/xml; charset=utf-8</stringProp>
+            </elementProp>
+            <elementProp name="" elementType="Header">
+              <stringProp name="Header.name">SOAPAction</stringProp>
+              <stringProp name="Header.value"></stringProp>
+            </elementProp>
+          </collectionProp>
+        </HeaderManager>
+        <hashTree/>
+        <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="Soap Req" enabled="false">
+          <boolProp name="HTTPSampler.postBodyRaw">true</boolProp>
+          <elementProp name="HTTPsampler.Arguments" elementType="Arguments">
+            <collectionProp name="Arguments.arguments">
+              <elementProp name="" elementType="HTTPArgument">
+                <boolProp name="HTTPArgument.always_encode">false</boolProp>
+                <stringProp name="Argument.value">&lt;soapenv:Envelope xmlns:soapenv=&quot;http://schemas.xmlsoap.org/soap/envelope/&quot; xmlns:unib=&quot;http://ws.chinaunicom.cn/ElectronInvoiceSer/unibssBody&quot; xmlns:unib1=&quot;http://ws.chinaunicom.cn/unibssHead&quot; xmlns:cre=&quot;http://ws.chinaunicom.cn/ElectronInvoiceSer/unibssBody/createElectronInvoiceReq&quot; xmlns:unib2=&quot;http://ws.chinaunicom.cn/unibssAttached&quot;&gt;&#xd;
+   &lt;soapenv:Header/&gt;&#xd;
+   &lt;soapenv:Body&gt;&#xd;
+      &lt;unib:CREATE_ELECTRON_INVOICE_INPUT&gt;&#xd;
+         &lt;unib1:UNI_BSS_HEAD&gt;&#xd;
+            &lt;unib1:ORIG_DOMAIN&gt;PTIS&lt;/unib1:ORIG_DOMAIN&gt;&#xd;
+            &lt;unib1:SERVICE_NAME&gt;ElectronInvoiceSer&lt;/unib1:SERVICE_NAME&gt;&#xd;
+            &lt;unib1:OPERATE_NAME&gt;checkElectronInvoice&lt;/unib1:OPERATE_NAME&gt;&#xd;
+            &lt;unib1:ACTION_CODE&gt;0&lt;/unib1:ACTION_CODE&gt;&#xd;
+            &lt;unib1:ACTION_RELATION&gt;0&lt;/unib1:ACTION_RELATION&gt;&#xd;
+            &lt;unib1:ROUTING&gt;&#xd;
+               &lt;unib1:ROUTE_TYPE&gt;00&lt;/unib1:ROUTE_TYPE&gt;&#xd;
+               &lt;unib1:ROUTE_VALUE&gt;11&lt;/unib1:ROUTE_VALUE&gt;&#xd;
+            &lt;/unib1:ROUTING&gt;&#xd;
+            &lt;unib1:PROC_ID&gt;lyl001&lt;/unib1:PROC_ID&gt;&#xd;
+            &lt;unib1:TRANS_IDO&gt;lyl001&lt;/unib1:TRANS_IDO&gt;&#xd;
+            &lt;!--Optional:--&gt;&#xd;
+            &lt;unib1:TRANS_IDH&gt;&lt;/unib1:TRANS_IDH&gt;&#xd;
+            &lt;unib1:PROCESS_TIME&gt;${date}${time}&lt;/unib1:PROCESS_TIME&gt;&#xd;
+            &lt;!--Optional:--&gt;&#xd;
+            &lt;unib1:RESPONSE&gt;&#xd;
+               &lt;unib1:RSP_TYPE&gt;1&lt;/unib1:RSP_TYPE&gt;&#xd;
+               &lt;unib1:RSP_CODE&gt;1111&lt;/unib1:RSP_CODE&gt;&#xd;
+               &lt;unib1:RSP_DESC&gt;&lt;/unib1:RSP_DESC&gt;&#xd;
+            &lt;/unib1:RESPONSE&gt;&#xd;
+            &lt;unib1:COM_BUS_INFO&gt;&#xd;
+               &lt;unib1:OPER_ID&gt;00029345sunhong&lt;/unib1:OPER_ID&gt;&#xd;
+               &lt;!--Optional:--&gt;&#xd;
+               &lt;unib1:PROVINCE_CODE&gt;00&lt;/unib1:PROVINCE_CODE&gt;&#xd;
+               &lt;!--Optional:--&gt;&#xd;
+               &lt;unib1:EPARCHY_CODE&gt;988988&lt;/unib1:EPARCHY_CODE&gt;&#xd;
+               &lt;!--Optional:--&gt;&#xd;
+               &lt;unib1:CITY_CODE&gt;&lt;/unib1:CITY_CODE&gt;&#xd;
+               &lt;unib1:CHANNEL_ID&gt;&lt;/unib1:CHANNEL_ID&gt;&#xd;
+               &lt;unib1:CHANNEL_TYPE&gt;7777777&lt;/unib1:CHANNEL_TYPE&gt;&#xd;
+               &lt;unib1:ACCESS_TYPE&gt;11&lt;/unib1:ACCESS_TYPE&gt;&#xd;
+               &lt;!--Optional:--&gt;&#xd;
+               &lt;unib1:ORDER_TYPE&gt;22&lt;/unib1:ORDER_TYPE&gt;&#xd;
+            &lt;/unib1:COM_BUS_INFO&gt;&#xd;
+            &lt;!--Optional:--&gt;&#xd;
+            &lt;unib1:SP_RESERVE&gt;&#xd;
+               &lt;!--Optional:--&gt;&#xd;
+               &lt;unib1:TRANS_IDC&gt;ECIP0002seq00001&lt;/unib1:TRANS_IDC&gt;&#xd;
+               &lt;!--Optional:--&gt;&#xd;
+               &lt;unib1:CUTOFFDAY&gt;20080608&lt;/unib1:CUTOFFDAY&gt;&#xd;
+               &lt;unib1:OSNDUNS&gt;2222&lt;/unib1:OSNDUNS&gt;&#xd;
+               &lt;!--Optional:--&gt;&#xd;
+               &lt;unib1:HSNDUNS&gt;1100&lt;/unib1:HSNDUNS&gt;&#xd;
+               &lt;!--Optional:--&gt;&#xd;
+               &lt;unib1:CONV_ID&gt;ECIP0002seq00001200806081200111&lt;/unib1:CONV_ID&gt;&#xd;
+            &lt;/unib1:SP_RESERVE&gt;&#xd;
+            &lt;unib1:TEST_FLAG&gt;0&lt;/unib1:TEST_FLAG&gt;&#xd;
+            &lt;unib1:MSG_SENDER&gt;1100&lt;/unib1:MSG_SENDER&gt;&#xd;
+            &lt;unib1:MSG_RECEIVER&gt;1101&lt;/unib1:MSG_RECEIVER&gt;&#xd;
+         &lt;/unib1:UNI_BSS_HEAD&gt;&#xd;
+         &lt;unib:UNI_BSS_BODY&gt;&#xd;
+            &lt;cre:CREATE_ELECTRON_INVOICE_REQ&gt;&#xd;
+               &lt;cre:INVOICE_CODE&gt;${secReq}&lt;/cre:INVOICE_CODE&gt;&#xd;
+               &lt;!--Zero or more repetitions:--&gt;&#xd;
+               &lt;cre:PARA&gt;&#xd;
+                  &lt;cre:PARA_ID&gt;&lt;/cre:PARA_ID&gt;&#xd;
+                  &lt;cre:PARA_VALUE&gt;&lt;/cre:PARA_VALUE&gt;&#xd;
+               &lt;/cre:PARA&gt;&#xd;
+            &lt;/cre:CREATE_ELECTRON_INVOICE_REQ&gt;&#xd;
+         &lt;/unib:UNI_BSS_BODY&gt;&#xd;
+         &lt;unib2:UNI_BSS_ATTACHED&gt;&#xd;
+            &lt;!--Optional:--&gt;&#xd;
+            &lt;unib2:MEDIA_INFO&gt;&lt;/unib2:MEDIA_INFO&gt;&#xd;
+         &lt;/unib2:UNI_BSS_ATTACHED&gt;&#xd;
+      &lt;/unib:CREATE_ELECTRON_INVOICE_INPUT&gt;&#xd;
+   &lt;/soapenv:Body&gt;&#xd;
+&lt;/soapenv:Envelope&gt;</stringProp>
+                <stringProp name="Argument.metadata">=</stringProp>
+              </elementProp>
+            </collectionProp>
+          </elementProp>
+          <stringProp name="HTTPSampler.domain">10.10.16.2</stringProp>
+          <stringProp name="HTTPSampler.port">9091</stringProp>
+          <stringProp name="HTTPSampler.connect_timeout"></stringProp>
+          <stringProp name="HTTPSampler.response_timeout"></stringProp>
+          <stringProp name="HTTPSampler.protocol"></stringProp>
+          <stringProp name="HTTPSampler.contentEncoding"></stringProp>
+          <stringProp name="HTTPSampler.path">/yys-test-upload/services/ElectronInvoiceSer</stringProp>
+          <stringProp name="HTTPSampler.method">POST</stringProp>
+          <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
+          <boolProp name="HTTPSampler.auto_redirects">false</boolProp>
+          <boolProp name="HTTPSampler.use_keepalive">true</boolProp>
+          <boolProp name="HTTPSampler.DO_MULTIPART_POST">false</boolProp>
+          <boolProp name="HTTPSampler.monitor">false</boolProp>
+          <stringProp name="HTTPSampler.embedded_url_re"></stringProp>
+        </HTTPSamplerProxy>
+        <hashTree>
+          <BeanShellPreProcessor guiclass="TestBeanGUI" testclass="BeanShellPreProcessor" testname="BeanShell Pre-InvoiceCode" enabled="true">
+            <boolProp name="resetInterpreter">false</boolProp>
+            <stringProp name="parameters"></stringProp>
+            <stringProp name="filename"></stringProp>
+            <stringProp name="script">// ************** Unicom JMeter Test **************
+// * Author: YT
+// * V1.1
+// * 2016.05.11
+// ************************************************
+import org.apache.commons.codec.binary.Base64;
+String charset = &quot;UTF-8&quot;;
+//String charset = &quot;GB2312&quot;;
+String org1 = &quot;&lt;REQUEST_COMMON_FPKJ class=&apos;REQUEST_COMMON_FPKJ&apos;&gt;&lt;BY6&gt;&lt;/BY6&gt;&lt;BY5&gt;&lt;/BY5&gt;&lt;GMF_MC&gt;柳絮浩&lt;/GMF_MC&gt;&lt;BY4&gt;&lt;/BY4&gt;&lt;XSF_NSRSBH&gt;330901704639849&lt;/XSF_NSRSBH&gt;&lt;XSF_DZDH&gt;宁波市高新区凌云路98号,0574-27821213&lt;/XSF_DZDH&gt;&lt;BY3&gt;&lt;/BY3&gt;&lt;BY2&gt;&lt;/BY2&gt;&lt;BY1&gt;1&lt;/BY1&gt;&lt;JSHJ&gt;117&lt;/JSHJ&gt;&lt;EWM&gt;&lt;![CDATA[]]&gt;&lt;/EWM&gt;&lt;BZ&gt;机器编号:499099915432&lt;/BZ&gt;&lt;KPRQ&gt;20160222164757&lt;/KPRQ&gt;&lt;JQBH&gt;499099900038&lt;/JQBH&gt;&lt;GMF_NSRSBH&gt;&lt;/GMF_NSRSBH&gt;&lt;JYM&gt;09193963768980293853&lt;/JYM&gt;&lt;GMF_SJH&gt;15920066345,18964787876&lt;/GMF_SJH&gt;&lt;FPT_ZH&gt;&lt;/FPT_ZH&gt;&lt;FP_MW&gt;&lt;![CDATA[03/7&gt;2445855/8&lt;2&lt;248-1&lt;08/29+/8+1*5/5+06*5/8-118*13901896&lt;/7&gt;2445855/8&lt;2&lt;231&gt;3+-982/389&lt;5**&gt;&gt;*01+54119-9/902/4&lt;6]]&gt;&lt;/FP_MW&gt;&lt;FPFM&gt;&quot;;
+String org2 = &quot;&lt;/FPFM&gt;&lt;HYLX&gt;0&lt;/HYLX&gt;&lt;KPLX&gt;0&lt;/KPLX&gt;&lt;KPR&gt;AI_QA_KQ&lt;/KPR&gt;&lt;SKR&gt;&lt;/SKR&gt;&lt;FHR&gt;&lt;/FHR&gt;&lt;XSF_YHZH&gt;610118191919191919&lt;/XSF_YHZH&gt;&lt;FP_HM&gt;&quot;;
+String org3 =&quot;&lt;/FP_HM&gt;&lt;FPQQLSH&gt;lyl12345678909876543212&lt;/FPQQLSH&gt;&lt;FP_DM&gt;&quot;;
+String org4 = &quot;&lt;/FP_DM&gt;&lt;GMF_DZDH&gt;&lt;/GMF_DZDH&gt;&lt;GMF_DZYX&gt;fengfan_yan@139.com&lt;/GMF_DZYX&gt;&lt;XSF_MC&gt;中国联合网络通信有限公司宁波市分公司&lt;/XSF_MC&gt;&lt;HJJE&gt;100&lt;/HJJE&gt;&lt;YFP_DM&gt;&lt;/YFP_DM&gt;&lt;HJSE&gt;*&lt;/HJSE&gt;&lt;BY7&gt;&lt;/BY7&gt;&lt;YFP_HM&gt;&lt;/YFP_HM&gt;&lt;BY8&gt;&lt;/BY8&gt;&lt;BY9&gt;&lt;/BY9&gt;&lt;BY10&gt;&lt;/BY10&gt;&lt;GMF_YHZH&gt;&lt;/GMF_YHZH&gt;&lt;COMMON_FPKJ_XMXXS class=&apos;COMMON_FPKJ_XMXX&apos; size=&apos;1&apos;&gt;&lt;COMMON_FPKJ_XMXX&gt;&lt;BY6&gt;&lt;/BY6&gt;&lt;BY5&gt;&lt;/BY5&gt;&lt;BY4&gt;&lt;/BY4&gt;&lt;SE&gt;*&lt;/SE&gt;&lt;BY3&gt;&lt;/BY3&gt;&lt;BY2&gt;&lt;/BY2&gt;&lt;BY1&gt;&lt;/BY1&gt;&lt;GGXH&gt;&lt;/GGXH&gt;&lt;SL&gt;*&lt;/SL&gt;&lt;XMSL&gt;&lt;/XMSL&gt;&lt;DW&gt;&lt;/DW&gt;&lt;FPHXZ&gt;0&lt;/FPHXZ&gt;&lt;XMDJ&gt;&lt;/XMDJ&gt;&lt;XMMC&gt;&lt;![CDATA[普通资金]]&gt;&lt;/XMMC&gt;&lt;XMJE&gt;1&lt;/XMJE&gt;&lt;/COMMON_FPKJ_XMXX&gt;&lt;/COMMON_FPKJ_XMXXS&gt;&lt;/REQUEST_COMMON_FPKJ&gt;&quot; ;
+
+//******Generate and Get arguments**********
+String str1=&quot;&quot;;
+
+String dm = vars.get(&quot;dm&quot;);
+String hm = vars.get(&quot;hm&quot;);
+String fm = dm + hm;
+//String newFM = &quot;it&apos;s new&quot; + fm;
+//vars.put(&quot;newFM&quot;, newFM);
+
+//******Generate Original request string****
+String orgInfo = org1 + fm + org2 + hm + org3 + dm + org4;
+byte[] secOrg = Base64.encodeBase64(orgInfo.getBytes(&quot;UTF-8&quot;));
+//vars.put(&quot;invInfo&quot;, orgInfo);
+vars.put(&quot;orgInfo&quot;, orgInfo);
+vars.put(&quot;secOrg&quot;, new String(secOrg,charset));
+String secOrgStr = vars.get(&quot;secOrg&quot;);
+
+String reqInfo = &quot;&lt;REQUEST&gt;&lt;ORIGINAL&gt;&quot; + secOrgStr + &quot;&lt;/ORIGINAL&gt;&lt;SERIALNUMBER/&gt;&lt;SIGNATURE/&gt;&lt;/REQUEST&gt;&quot;;
+byte[] secReq = Base64.encodeBase64(reqInfo.getBytes(charset));
+vars.put(&quot;secReq&quot;, new String(secReq,charset));
+
+// Below put for debug
+vars.put(&quot;reqInfo&quot;, reqInfo);
+
+
+
+
+
+
+
+</stringProp>
+          </BeanShellPreProcessor>
+          <hashTree/>
+          <RandomVariableConfig guiclass="TestBeanGUI" testclass="RandomVariableConfig" testname="FM" enabled="true">
+            <stringProp name="maximumValue">999</stringProp>
+            <stringProp name="minimumValue">1</stringProp>
+            <stringProp name="outputFormat">11110000220000</stringProp>
+            <boolProp name="perThread">false</boolProp>
+            <stringProp name="randomSeed"></stringProp>
+            <stringProp name="variableName">fm</stringProp>
+          </RandomVariableConfig>
+          <hashTree/>
+          <RandomVariableConfig guiclass="TestBeanGUI" testclass="RandomVariableConfig" testname="DM" enabled="true">
+            <stringProp name="maximumValue">999999</stringProp>
+            <stringProp name="minimumValue">1</stringProp>
+            <stringProp name="outputFormat">123400000000</stringProp>
+            <boolProp name="perThread">false</boolProp>
+            <stringProp name="randomSeed"></stringProp>
+            <stringProp name="variableName">dm</stringProp>
+          </RandomVariableConfig>
+          <hashTree/>
+          <RandomVariableConfig guiclass="TestBeanGUI" testclass="RandomVariableConfig" testname="HM" enabled="true">
+            <stringProp name="maximumValue">999999</stringProp>
+            <stringProp name="minimumValue">1</stringProp>
+            <stringProp name="outputFormat">60000000</stringProp>
+            <boolProp name="perThread">false</boolProp>
+            <stringProp name="randomSeed"></stringProp>
+            <stringProp name="variableName">hm</stringProp>
+          </RandomVariableConfig>
+          <hashTree/>
+        </hashTree>
+        <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="HTTP Debug Info" enabled="false">
+          <boolProp name="HTTPSampler.postBodyRaw">true</boolProp>
+          <elementProp name="HTTPsampler.Arguments" elementType="Arguments">
+            <collectionProp name="Arguments.arguments">
+              <elementProp name="" elementType="HTTPArgument">
+                <boolProp name="HTTPArgument.always_encode">false</boolProp>
+                <stringProp name="Argument.value">【所有变量信息】:&#xd;
+FM: ${fm}	&#xd;
+DM: ${dm}	&#xd;
+NewFM: ${newFM}&#xd;
+Original Info: ${orgInfo}&#xd;
+Encoded Info: ${secOrg}	&#xd;
+Request Info: ${reqInfo}&#xd;
+Sec Req: ${secReq}&#xd;
+&#xd;
+&#xd;
+Ivoice Info: ${invInfo}	&#xd;
+&#xd;
+</stringProp>
+                <stringProp name="Argument.metadata">=</stringProp>
+              </elementProp>
+            </collectionProp>
+          </elementProp>
+          <stringProp name="HTTPSampler.domain">localhost</stringProp>
+          <stringProp name="HTTPSampler.port">8081</stringProp>
+          <stringProp name="HTTPSampler.connect_timeout"></stringProp>
+          <stringProp name="HTTPSampler.response_timeout"></stringProp>
+          <stringProp name="HTTPSampler.protocol"></stringProp>
+          <stringProp name="HTTPSampler.contentEncoding"></stringProp>
+          <stringProp name="HTTPSampler.path"></stringProp>
+          <stringProp name="HTTPSampler.method">POST</stringProp>
+          <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
+          <boolProp name="HTTPSampler.auto_redirects">false</boolProp>
+          <boolProp name="HTTPSampler.use_keepalive">true</boolProp>
+          <boolProp name="HTTPSampler.DO_MULTIPART_POST">false</boolProp>
+          <boolProp name="HTTPSampler.monitor">false</boolProp>
+          <stringProp name="HTTPSampler.embedded_url_re"></stringProp>
+        </HTTPSamplerProxy>
+        <hashTree/>
+        <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="HTTP Request" enabled="true">
+          <elementProp name="HTTPsampler.Arguments" elementType="Arguments" guiclass="HTTPArgumentsPanel" testclass="Arguments" testname="User Defined Variables" enabled="true">
+            <collectionProp name="Arguments.arguments"/>
+          </elementProp>
+          <stringProp name="HTTPSampler.domain"></stringProp>
+          <stringProp name="HTTPSampler.port"></stringProp>
+          <stringProp name="HTTPSampler.connect_timeout"></stringProp>
+          <stringProp name="HTTPSampler.response_timeout"></stringProp>
+          <stringProp name="HTTPSampler.protocol"></stringProp>
+          <stringProp name="HTTPSampler.contentEncoding"></stringProp>
+          <stringProp name="HTTPSampler.path">/yys-test-upload/index.jsp</stringProp>
+          <stringProp name="HTTPSampler.method">GET</stringProp>
+          <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
+          <boolProp name="HTTPSampler.auto_redirects">false</boolProp>
+          <boolProp name="HTTPSampler.use_keepalive">true</boolProp>
+          <boolProp name="HTTPSampler.DO_MULTIPART_POST">false</boolProp>
+          <boolProp name="HTTPSampler.monitor">false</boolProp>
+          <stringProp name="HTTPSampler.embedded_url_re"></stringProp>
+        </HTTPSamplerProxy>
+        <hashTree/>
+      </hashTree>
+      <ResultCollector guiclass="ViewResultsFullVisualizer" testclass="ResultCollector" testname="View Results Tree" enabled="true">
+        <boolProp name="ResultCollector.error_logging">true</boolProp>
+        <objProp>
+          <name>saveConfig</name>
+          <value class="SampleSaveConfiguration">
+            <time>true</time>
+            <latency>true</latency>
+            <timestamp>true</timestamp>
+            <success>true</success>
+            <label>true</label>
+            <code>true</code>
+            <message>true</message>
+            <threadName>true</threadName>
+            <dataType>true</dataType>
+            <encoding>false</encoding>
+            <assertions>true</assertions>
+            <subresults>true</subresults>
+            <responseData>false</responseData>
+            <samplerData>false</samplerData>
+            <xml>true</xml>
+            <fieldNames>false</fieldNames>
+            <responseHeaders>false</responseHeaders>
+            <requestHeaders>false</requestHeaders>
+            <responseDataOnError>false</responseDataOnError>
+            <saveAssertionResultsFailureMessage>false</saveAssertionResultsFailureMessage>
+            <assertionsResultsToSave>0</assertionsResultsToSave>
+            <bytes>true</bytes>
+            <threadCounts>true</threadCounts>
+          </value>
+        </objProp>
+        <stringProp name="filename"></stringProp>
+      </ResultCollector>
+      <hashTree/>
+      <ResultCollector guiclass="StatVisualizer" testclass="ResultCollector" testname="Aggregate Report" enabled="true">
+        <boolProp name="ResultCollector.error_logging">false</boolProp>
+        <objProp>
+          <name>saveConfig</name>
+          <value class="SampleSaveConfiguration">
+            <time>true</time>
+            <latency>true</latency>
+            <timestamp>true</timestamp>
+            <success>true</success>
+            <label>true</label>
+            <code>true</code>
+            <message>true</message>
+            <threadName>true</threadName>
+            <dataType>true</dataType>
+            <encoding>false</encoding>
+            <assertions>true</assertions>
+            <subresults>true</subresults>
+            <responseData>false</responseData>
+            <samplerData>false</samplerData>
+            <xml>true</xml>
+            <fieldNames>false</fieldNames>
+            <responseHeaders>false</responseHeaders>
+            <requestHeaders>false</requestHeaders>
+            <responseDataOnError>false</responseDataOnError>
+            <saveAssertionResultsFailureMessage>false</saveAssertionResultsFailureMessage>
+            <assertionsResultsToSave>0</assertionsResultsToSave>
+            <bytes>true</bytes>
+            <threadCounts>true</threadCounts>
+          </value>
+        </objProp>
+        <stringProp name="filename"></stringProp>
+      </ResultCollector>
+      <hashTree/>
+    </hashTree>
+  </hashTree>
+</jmeterTestPlan>
