@@ -1,0 +1,15 @@
+*** Settings ***
+Suite Teardown    exit
+Library           Selenium2Library
+Resource          ../Conf/common.robot
+
+*** Test Cases ***
+Login
+    Open Browser    ${BASEURL}    browser=chrome
+    Capture Page Screenshot
+    Title Should Be    微商户后台管理
+
+*** Keywords ***
+exit
+    Sleep    2s
+    Close Browser

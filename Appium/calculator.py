@@ -13,8 +13,8 @@ desired_caps['appPackage'] = 'com.android.calculator2'
 #desired_caps['appActivity'] = '.Calculator'
 #desired_caps['appPackage'] = 'com.android.calculator2'
 desired_caps['appActivity'] = '.Calculator'
-driver = webdriver.Remote('http://localhost:4492/wd/hub', desired_caps)
-#driver = webdriver.Remote('http://localhost:4492/wd/hub', desired_caps)
+#driver = webdriver.Remote('http://localhost:4723/wd/hub', desired_caps)
+driver = webdriver.Remote('http://localhost:4491/wd/hub', desired_caps)
 
 #delete = driver.find_element_by_id('del')
 
@@ -25,6 +25,8 @@ driver.find_element_by_id('equal').click()
 clr = driver.find_element_by_id('clear')
 clr.click()
 driver.quit()
+driver.deleteSession()
+
 
 #driver.find_element_by_android_uiautomator("1")
 #driver.find_element_by_name("1").click()
