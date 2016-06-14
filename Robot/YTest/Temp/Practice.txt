@@ -1,0 +1,22 @@
+*** Settings ***
+Library           Selenium2Library
+
+*** Test Cases ***
+getTime
+    ${time}=    Get Time
+    Log To Console    Time is ${time}
+
+testAlert
+    Open Browser    http://localhost:3000/testalert.html    chrome
+    Click Element    test
+    sleep    2s
+    Dismiss Alert    True
+    sleep    8s
+    Close Browser
+
+forLoop
+    @{var}    Set Variable    a    b    c
+    #: FOR    ${n}    IN    a    b    c
+    :FOR    ${n}    IN    @{var}
+    \    log    ${n}
+    log    Outside loop...
