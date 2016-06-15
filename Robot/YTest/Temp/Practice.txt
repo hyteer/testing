@@ -1,9 +1,12 @@
 *** Settings ***
 Library           Selenium2Library
+Library           ./YTLib/MyLib.py
+Library           ./YTLib/GetResult.py
 
 *** Test Cases ***
 getTime
     ${time}=    Get Time
+    Log    Log, time is: ${time}
     Log To Console    Time is ${time}
 
 testAlert
@@ -17,6 +20,23 @@ testAlert
 forLoop
     @{var}    Set Variable    a    b    c
     #: FOR    ${n}    IN    a    b    c
-    :FOR    ${n}    IN    @{var}
+    : FOR    ${n}    IN    @{var}
     \    log    ${n}
     log    Outside loop...
+
+testMyLib
+    ${name}    Set Variable    nemo
+    Count
+    sleep    3s
+    Clear Counter
+    #${name}=    Ytname
+    Log    ${name}
+
+condition
+    ${key}    Get Result    self    1
+    Run Keyword    ${key}    test
+    ${str}    Test Condi    self    yt
+    ${result}    Set Variable    right
+    Run Keyword If    '${str}'=='${result}'     Log    Success
+    ${str}    Test Condi    self    11
+    Run Keyword If    ${str}>1    Log    Number is:${str}

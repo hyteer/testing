@@ -5,5 +5,17 @@ Library           AppiumLibrary
 start
     Open Application    http://localhost:4491/wd/hub    alias=wechat    platformName=Android    platformVersion=5.1.1    deviceName='emulator-5554'    appPackage=com.tencent.mm
     ...    appActivity=com.tencent.mm.ui.LauncherUI
-    Sleep    10s
-    Close Application
+    Wait Until Page Contains    微信    20s    等待超时
+    Sleep    2s
+    #Close Application
+
+wsh
+    Wait Until Page Contains    微商户助手
+    Click Element    xpath=//android.view.View[contains(@text,'微商户助手')]
+    Log    Success...
+    Wait Until Page Contains    会员服务
+    Click Element    xpath=//android.widget.TextView[contains(@text,'会员服务')]
+    Sleep    1s
+    Click Element    xpath=//android.widget.TextView[contains(@text,'商品列表')]
+    ${a}    Get Contexts
+    Log    ${a}

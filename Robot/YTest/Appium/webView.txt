@@ -1,0 +1,22 @@
+*** Settings ***
+Library           AppiumLibrary
+Library           Dialogs
+
+*** Test Cases ***
+start
+    Open Application    http://localhost:4723/wd/hub    alias=wechat    platformName=Android    platformVersion=4.4    deviceName='emulator-5554'    appPackage=com.android.browser
+    ...    appActivity=.BrowserActivity
+    ${a}    Get Contexts
+    Log    ${a}
+    ${url}    Get Element Attribute    id=com.android.browser:id/url    text
+    Input Text    id=com.android.browser:id/url    baidu.com
+    Press Keycode    66
+    ${status}    run keyword and return status    Get Element Attribute    id=com.android.browser:id/share_button    text
+    Log    Status is: ${status}
+    Run Keyword If    ${status}==True    Click Element    id=com.android.browser:id/share_button
+    Log    ${url}
+    Switch To Context    ${a[1]}
+    Log Source
+    Pause Execution
+    Go To Url    http://www.runoob.com/
+    Sleep    2s
