@@ -1,0 +1,13 @@
+*** Settings ***
+Library           Selenium2Library
+Resource          ../../../Actions/Common.robot
+Resource          ../../../Actions/WYX.robot
+
+*** Test Cases ***
+添加活动
+    登录系统
+    #Wait Until Element Contains    xpath=//
+    Sleep    3s
+    #微营销
+    #Click Element    xpath=//div[@class='page-content']//a[@href='/reduction/add']
+    #    xpath=//a/span/parent::a[contains(text(),'难大')]

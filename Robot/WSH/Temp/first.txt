@@ -8,6 +8,9 @@ Login
     Open Browser    ${BASEURL}    browser=chrome
     Capture Page Screenshot
     Title Should Be    微商户后台管理
+    Input Text    staff_id    ${USR}
+    Input Password    password    ${PASSWD}
+    Input Text    captcha    1111
 
 *** Keywords ***
 exit
