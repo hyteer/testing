@@ -55,13 +55,37 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="wshTest.py" pinned="false" current-in-tab="true">
+      <file leaf-file-name="wshTest.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/Appium/wshTest.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.3601896">
-              <caret line="12" column="16" selection-start-line="12" selection-start-column="1" selection-end-line="12" selection-end-column="16" />
+            <state vertical-scroll-proportion="0.0">
+              <caret line="24" column="9" selection-start-line="24" selection-start-column="9" selection-end-line="24" selection-end-column="9" />
               <folding>
                 <element signature="e#18#27#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="maisha.py" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/Appium/maisha.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.5330033">
+              <caret line="23" column="9" selection-start-line="23" selection-start-column="9" selection-end-line="23" selection-end-column="9" />
+              <folding>
+                <element signature="e#232#257#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="calculator.py" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/Appium/calculator.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.0">
+              <caret line="7" column="0" selection-start-line="7" selection-start-column="0" selection-end-line="7" selection-end-column="0" />
+              <folding>
+                <element signature="e#14#42#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -138,7 +162,9 @@
         <option value="$PROJECT_DIR$/Lib/WshLibrary/__init__.py" />
         <option value="$PROJECT_DIR$/Lib/WshLibrary/comWeb.py" />
         <option value="$PROJECT_DIR$/WSH/WYX/mjby.py" />
+        <option value="$PROJECT_DIR$/Appium/calculator.py" />
         <option value="$PROJECT_DIR$/Appium/wshTest.py" />
+        <option value="$PROJECT_DIR$/Appium/maisha.py" />
       </list>
     </option>
   </component>
@@ -146,7 +172,7 @@
     <option name="x" value="703" />
     <option name="y" value="27" />
     <option name="width" value="1002" />
-    <option name="height" value="1097" />
+    <option name="height" value="1084" />
   </component>
   <component name="ProjectLevelVcsManager" settingsEditedManually="false">
     <OptionsSetting value="true" id="Add" />
@@ -174,7 +200,6 @@
     </navigator>
     <panes>
       <pane id="Scratches" />
-      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <PATH>
@@ -389,6 +414,7 @@
           </PATH>
         </subPane>
       </pane>
+      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -404,24 +430,7 @@
       <recent name="D:\TestShop\Python\Lib" />
     </key>
   </component>
-  <component name="RunManager" selected="Python.wshTest">
-    <configuration default="false" name="first" type="PythonConfigurationType" factoryName="Python" temporary="true">
-      <option name="INTERPRETER_OPTIONS" value="" />
-      <option name="PARENT_ENVS" value="true" />
-      <envs>
-        <env name="PYTHONUNBUFFERED" value="1" />
-      </envs>
-      <option name="SDK_HOME" value="" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/SNSTemp" />
-      <option name="IS_MODULE_SDK" value="true" />
-      <option name="ADD_CONTENT_ROOTS" value="true" />
-      <option name="ADD_SOURCE_ROOTS" value="true" />
-      <module name="Python" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/SNSTemp/first.py" />
-      <option name="PARAMETERS" value="" />
-      <option name="SHOW_COMMAND_LINE" value="false" />
-      <method />
-    </configuration>
+  <component name="RunManager" selected="Python.calculator">
     <configuration default="false" name="Unittests in ContactsAndroidTests" type="tests" factoryName="Unittests" temporary="true" nameIsGenerated="true">
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
@@ -498,6 +507,23 @@
       <option name="PUREUNITTEST" value="true" />
       <option name="PARAMS" value="" />
       <option name="USE_PARAM" value="false" />
+      <method />
+    </configuration>
+    <configuration default="false" name="calculator" type="PythonConfigurationType" factoryName="Python" temporary="true">
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/Appium" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <module name="Python" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/Appium/calculator.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
       <method />
     </configuration>
     <configuration default="true" type="PythonConfigurationType" factoryName="Python">
@@ -623,19 +649,19 @@
       <method />
     </configuration>
     <list size="5">
-      <item index="0" class="java.lang.String" itemvalue="Python.first" />
-      <item index="1" class="java.lang.String" itemvalue="Python tests.Unittests in ContactsAndroidTests" />
-      <item index="2" class="java.lang.String" itemvalue="Python.mjby" />
-      <item index="3" class="java.lang.String" itemvalue="Python.wshTest" />
-      <item index="4" class="java.lang.String" itemvalue="Python tests.Unittests in ContactsAndroidTests (1)" />
+      <item index="0" class="java.lang.String" itemvalue="Python tests.Unittests in ContactsAndroidTests" />
+      <item index="1" class="java.lang.String" itemvalue="Python.mjby" />
+      <item index="2" class="java.lang.String" itemvalue="Python.wshTest" />
+      <item index="3" class="java.lang.String" itemvalue="Python tests.Unittests in ContactsAndroidTests (1)" />
+      <item index="4" class="java.lang.String" itemvalue="Python.calculator" />
     </list>
     <recent_temporary>
       <list size="5">
-        <item index="0" class="java.lang.String" itemvalue="Python.wshTest" />
-        <item index="1" class="java.lang.String" itemvalue="Python tests.Unittests in ContactsAndroidTests (1)" />
-        <item index="2" class="java.lang.String" itemvalue="Python.mjby" />
-        <item index="3" class="java.lang.String" itemvalue="Python tests.Unittests in ContactsAndroidTests" />
-        <item index="4" class="java.lang.String" itemvalue="Python.first" />
+        <item index="0" class="java.lang.String" itemvalue="Python.calculator" />
+        <item index="1" class="java.lang.String" itemvalue="Python.wshTest" />
+        <item index="2" class="java.lang.String" itemvalue="Python tests.Unittests in ContactsAndroidTests (1)" />
+        <item index="3" class="java.lang.String" itemvalue="Python.mjby" />
+        <item index="4" class="java.lang.String" itemvalue="Python tests.Unittests in ContactsAndroidTests" />
       </list>
     </recent_temporary>
   </component>
@@ -661,15 +687,15 @@
     </history-entry>
   </component>
   <component name="ToolWindowManager">
-    <frame x="703" y="27" width="1002" height="1097" extended-state="0" />
-    <editor active="false" />
+    <frame x="703" y="27" width="1002" height="1084" extended-state="0" />
+    <editor active="true" />
     <layout>
       <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.2494929" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Python Console" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Run" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.3299595" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32946146" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
@@ -699,6 +725,80 @@
     <watches-manager />
   </component>
   <component name="editorHistoryManager">
+    <entry file="file://$PROJECT_DIR$/Appium/first.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="35" column="40" selection-start-line="35" selection-start-column="40" selection-end-line="35" selection-end-column="40" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/ZFMS/Cases/form/自定义表.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="17" />
+          <folding>
+            <element signature="e#18#33#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/WSH/WYX/mjby.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="8" column="43" selection-start-line="8" selection-start-column="43" selection-end-line="8" selection-end-column="43" />
+          <folding>
+            <element signature="e#18#33#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Appium/wshTest.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding>
+            <element signature="e#18#27#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Lib/WshLibrary/__init__.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="6" column="37" selection-start-line="6" selection-start-column="37" selection-end-line="6" selection-end-column="37" />
+          <folding>
+            <element signature="e#0#25#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Lib/WshLibrary/version.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Lib/WshLibrary/comWeb.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="24" column="7" selection-start-line="24" selection-start-column="7" selection-end-line="24" selection-end-column="7" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Lib/WshLibrary/login.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="10" column="39" selection-start-line="10" selection-start-column="39" selection-end-line="10" selection-end-column="39" />
+          <folding>
+            <element signature="e#0#11#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/Appium/first.py">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
@@ -1033,12 +1133,32 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/Appium/calculator.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="7" column="0" selection-start-line="7" selection-start-column="0" selection-end-line="7" selection-end-column="0" />
+          <folding>
+            <element signature="e#14#42#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/Appium/wshTest.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.3601896">
-          <caret line="12" column="16" selection-start-line="12" selection-start-column="1" selection-end-line="12" selection-end-column="16" />
+        <state vertical-scroll-proportion="0.0">
+          <caret line="24" column="9" selection-start-line="24" selection-start-column="9" selection-end-line="24" selection-end-column="9" />
           <folding>
             <element signature="e#18#27#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Appium/maisha.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.5330033">
+          <caret line="23" column="9" selection-start-line="23" selection-start-column="9" selection-end-line="23" selection-end-column="9" />
+          <folding>
+            <element signature="e#232#257#0" expanded="true" />
           </folding>
         </state>
       </provider>

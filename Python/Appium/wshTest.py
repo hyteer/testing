@@ -22,5 +22,6 @@ driver.find_element_by_xpath("//android.widget.EditText[@index='0']").send_keys(
 sleep(1)
 #driver.find_element_by_xpath("//android.widget.EditText[@index='0']").send_keys(66)
 driver.press_keycode(66)
+driver.se
 sleep(3)
 driver.quit()

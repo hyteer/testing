@@ -1,6 +1,6 @@
 *** Settings ***
 Library           AppiumLibrary
-Resource          ../../Lib/常用操作.robot
+Resource          ../../../Lib/常用操作.robot
 
 *** Test Cases ***
 搜索
