@@ -1,0 +1,25 @@
+*** Settings ***
+Library           AppiumLibrary
+Resource          ../../Lib/通用操作.robot
+
+*** Test Cases ***
+商品搜索
+    启动微信
+    进入微商户助手
+    打开会员服务菜单
+    打开首页
+    ${a}    Get Contexts
+    Log    ${a}
+
+WeiMeng
+    启动微信
+    Click Element    xpath=//android.view.View[contains(@text,'微盟')]
+    Log    Success...
+    Wait Until Page Contains    体验中心
+    Click Element    xpath=//android.widget.TextView[contains(@text,'体验中心')]
+    Sleep    1s
+    Click Element    xpath=//android.widget.TextView[contains(@text,'产品中心')]
+    Sleep    6s
+    #Wait Until Page Contains    营销推广
+    ${a}    Get Contexts
+    Log    ${a}

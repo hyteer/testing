@@ -1,31 +1,53 @@
-#coding=utf-8
+import os
+import unittest
 from appium import webdriver
+from time import sleep
 
-desired_caps = {}
-desired_caps['platformName'] = 'Android'
-desired_caps['platformVersion'] = '4.4.2'
-desired_caps['deviceName'] = 'Android Emulator'
-desired_caps['appPackage'] = 'com.android.calculator2'
-desired_caps['appActivity'] = '.Calculator'
+# Returns abs path relative to this file and not cwd
+PATH = lambda p: os.path.abspath(
+    os.path.join(os.path.dirname(__file__), p)
+)
 
-driver = webdriver.Remote('http://localhost:4723/wd/hub', desired_caps)
+class ContactsAndroidTests(unittest.TestCase):
+    def setUp(self):
+        desired_caps = {}
+        desired_caps['platformName'] = 'Android'
+        desired_caps['platformVersion'] = '4.4.2'
+        desired_caps['deviceName'] = 'Android Emulator'
+        desired_caps['app'] = PATH(
+            '../../../sample-code/apps/ContactManager/ContactManager.apk'
+        )
+        desired_caps['appPackage'] = 'com.example.android.contactmanager'
+        desired_caps['appActivity'] = '.ContactManager'
 
-driver.find_element_by_name("1").click()
+        self.driver = webdriver.Remote('http://localhost:4723/wd/hub', desired_caps)
 
-driver.find_element_by_name("5").click()
+    def tearDown(self):
+        self.driver.quit()
 
-driver.find_element_by_name("9").click()
+    def test_add_contacts(self):
+        el = self.driver.find_element_by_accessibility_id("Add Contact")
+        el.click()
 
-driver.find_element_by_name("delete").click()
+        textfields = self.driver.find_elements_by_class_name("android.widget.EditText")
+        textfields[0].send_keys("Appium User")
+        textfields[2].send_keys("someone@appium.io")
 
-driver.find_element_by_name("9").click()
+        self.assertEqual('Appium User', textfields[0].text)
+        self.assertEqual('someone@appium.io', textfields[2].text)
 
-driver.find_element_by_name("5").click()
+        self.driver.find_element_by_accessibility_id("Save").click()
 
-driver.find_element_by_name("+").click()
+        # for some reason "save" breaks things
+        alert = self.driver.switch_to_alert()
 
-driver.find_element_by_name("6").click()
+        # no way to handle alerts in Android
+        self.driver.find_element_by_android_uiautomator('new UiSelector().clickable(true)').click()
 
-driver.find_element_by_name("=").click()
+        self.driver.press_keycode(3)
 
-driver.quit()
+
+
+if __name__ == '__main__':
+    suite = unittest.TestLoader().loadTestsFromTestCase(ContactsAndroidTests)
+    unittest.TextTestRunner(verbosity=2).run(suite)

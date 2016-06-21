@@ -1,0 +1,9 @@
+*** Settings ***
+Library           WshLibrary
+
+*** Test Cases ***
+test1
+    Mytest
+    Mytest 2
+    Login    20151228    123456    1111
+    Sleep    3s

@@ -1,0 +1,15 @@
+*** Settings ***
+Library           AppiumLibrary
+Resource          ../../Lib/常用操作.robot
+
+*** Test Cases ***
+搜索
+    启动App
+    Sleep    1s
+    点击搜索
+    Sleep    3s
+    #Input Text    id=etSearch    儿童玩具
+    Input Text    xpath=//android.widget.EditText[@index='0']    儿童
+    #Input Text    xpath=//android.widget.EditText[@index='0']    Toy
+    #Input Text    xpath=//android.widget.EditText[@text='搜索正在热卖的商品']    儿童
+    回车
