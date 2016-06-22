@@ -11,5 +11,3 @@ Resource          ../Conf/Common.robot
     Input Password    password    ${PASSWD}
     Input Text    id=captcha    1111
     Click Element    id=login
-    Set Window Size    1600    1024
-    Click Element    xpath=//a[@href='/second-kill/list']

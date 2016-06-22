@@ -4,7 +4,7 @@ Library           AppiumLibrary
 *** Test Cases ***
 start
     Open Application    http://localhost:4723/wd/hub    alias=wechat    platformName=Android    platformVersion=5.1.1    deviceName='emulator-5554'    appPackage=com.tencent.mm
-    ...    appActivity=com.tencent.mm.ui.LauncherUI    unicodeKeyboard =True    resetKeyboard=True
+    ...    appActivity=com.tencent.mm.ui.LauncherUI    unicodeKeyboard=True    resetKeyboard=True
     Wait Until Page Contains    微信    20s    等待超时
     Sleep    2s
     #Close Application
@@ -27,4 +27,4 @@ Input
     Click Element    xpath=//android.widget.RelativeLayout[@index='1']
     Input Text    xpath=//android.widget.RelativeLayout[@index='1']    中文测试
     Sleep    2s
-    #Click Element    xpath=//android.widget.Button[@text='发送']
+    Click Element    xpath=//android.widget.Button[@text='发送']

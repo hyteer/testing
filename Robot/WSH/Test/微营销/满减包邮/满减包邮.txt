@@ -1,13 +1,11 @@
 *** Settings ***
 Library           Selenium2Library
 Resource          ../../../Actions/Common.robot
-Resource          ../../../Actions/WYX.robot
 
 *** Test Cases ***
 添加活动
     登录系统
-    #Wait Until Element Contains    xpath=//
+    Set Window Size    1600    1024
     Sleep    3s
-    #微营销
-    #Click Element    xpath=//div[@class='page-content']//a[@href='/reduction/add']
-    #    xpath=//a/span/parent::a[contains(text(),'难大')]
+    #Wait Until Page Contains Element    xpath=//div[@id='navbar']//ul[@id='headactive']//a[@text='微营销']
+    Click Link    /second-kill/list
