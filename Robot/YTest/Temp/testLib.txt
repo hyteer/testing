@@ -7,3 +7,10 @@ test1
     Mytest 2
     Login    20151228    123456    1111
     Sleep    3s
+
+test2
+    ${x}=    Get Slide Args V    small
+    @{list}=    Get Slide Args V    medium
+    Log    MyInfo: ${x}
+    Log    MyList: @{list}
+    Log    List1: @{list}[0]

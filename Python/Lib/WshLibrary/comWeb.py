@@ -6,8 +6,30 @@ class ComWeb(object):
     def __init__(self):
         pass
 
-    def mytest(self):
-        print "mytest"
+    def getSlideArgsV(self,device):
+        if device == 'small':   # 400x800
+            hx1 = 240;hy1 = 580
+            hx2 = 240;hy2 = 240
+        if device == 'medium':
+            hx1 = 350;hy1 = 950
+            hx2 = 350;hy2 = 400
+        if device == 'big':
+            hx1 = 500;hy1 = 1400
+            hx2 = 500;hy2 = 400
+        return hx1,hy1,hx2,hy2
+
+        print "hx1:%s,hx2:%s\nhx2:%s,hy2:%s"%(hx1,hy1,hx2,hy2)
+
+    def getSlideArgsH(self,device):
+        if device == 'small':   # 400x800
+            hx1 = 350;hy1 = 500
+            hx2 = 150;hy2 = 500
+        if device == 'medium':   # Medium
+            hx1 = 600;hy1 = 800
+            hx2 = 180;hy2 = 800
+        if device == 'big':   # Big
+            hx1 = 900;hy1 = 1000
+            hx2 = 300;hy2 = 1000
 
     def mytest2(self):
         print "mytest2..."
