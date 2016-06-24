@@ -9,17 +9,22 @@ Resource          ../../../Lib/配置参数.robot
 
 *** Test Cases ***
 首页滑动
+    [Tags]    Smoke
     Wait Until Page Contains Element    id=ivDiscover    ${TIMEOUT}
     Sleep    2s
-    向上滑动    3    big
-    向下滑动    2    big
+    ${device}    Set Variable    medium
+    向上滑动    3    400
+    向下滑动    3    400
 
 查看商品
     Wait Until Page Contains Element    id=ivDiscover    ${TIMEOUT}
-    Click Element    xpath=//android.view.View//android.widget.LinearLayout[@clickable='true']
-    #Click Element    xpath=//android.widget.LinearLayout[contains(@index,0)][contains(@clickable,true)]
+    #Click Element    xpath=//android.view.View//android.widget.LinearLayout[@clickable='true']
     Sleep    2s
-    Wait Until Page Contains Element    xpath=//android.widget.TextView[@text='拼啥嘞']    ${TIMEOUT}
+    #每日上新
+    Click Element    xpath=//android.view.View[@id='com.maishalei.seller.debug:id/flexboxGroupBuyCommodities']/android.widget.LinearLayout[0]
+    Sleep    2s
+    #Wait Until Page Contains Element    xpath=//android.widget.TextView[contains(@id,'com.maishalei.seller:id/centerView')][contains(@text,'拼啥嘞')]    ${TIMEOUT}
+    Wait Until Page Contains    拼啥嘞    ${TIMEOUT}
     向上滑动
     Wait Until Page Contains Element    xpath=//android.widget.TextView[@NAF='true']    ${TIMEOUT}
     返回-Text

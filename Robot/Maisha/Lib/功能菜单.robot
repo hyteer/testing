@@ -1,5 +1,6 @@
 *** Settings ***
 Library           AppiumLibrary
+Resource          配置参数.robot
 
 *** Keywords ***
 母婴用品
@@ -18,7 +19,7 @@ Library           AppiumLibrary
     Click Element    xpath=//android.widget.TextView[@text='电器数码']
 
 服装会场
-    Click Element    xpath=//android.widget.TextView[@text='服装会场']
+    Click Element    xpath=//android.widget.TextView[@text='饰品会场']
 
 鞋包会场
     Click Element    xpath=//android.widget.TextView[@text='鞋包会场']
@@ -40,3 +41,22 @@ Library           AppiumLibrary
 
 韩国馆
     Click Element    xpath=//android.widget.FrameLayout[contains(@index,3)][contains(@NAF,true)]
+
+分类菜单检测-测试
+    母婴用品
+    居家会场
+    美妆个护
+    环球美食
+    营养保健
+    电器数码
+    服装会场
+    鞋包会场
+    饰品会场
+
+分类菜单检测-生产
+    母婴用品
+    居家会场
+    美妆个护
+    环球美食
+    营养保健
+    饰品会场

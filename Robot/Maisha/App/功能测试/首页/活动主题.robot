@@ -1,6 +1,7 @@
 *** Settings ***
-Suite Setup       启动App2
+Suite Setup       启动App
 Suite Teardown    关闭App
+Force Tags        Smoke
 Library           AppiumLibrary
 Resource          ../../../Lib/常用操作.robot
 Resource          ../../../Lib/功能菜单.robot

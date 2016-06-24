@@ -1,6 +1,7 @@
 *** Settings ***
 Library           AppiumLibrary
 Library           WshLibrary
+Resource          配置参数.robot
 
 *** Keywords ***
 点击搜索
@@ -14,12 +15,27 @@ Library           WshLibrary
     Press Keycode    66
 
 启动App
-    Open Application    http://localhost:4723/wd/hub    alias=maisha    platformName=Android    platformVersion=4.4.2    deviceName='emulator-5554'    appPackage=com.maishalei.seller.debug
-    ...    appActivity=com.maishalei.seller.ui.activity.LauncherActivity    unicodeKeyboard=True    resetKeyboard=True
+    #Open Application    http://localhost:4723/wd/hub    alias=maisha    platformName=Android    platformVersion=4.4.2    deviceName='emulator-5554'    appPackage=com.maishalei.seller.debug
+    ...    # appActivity=com.maishalei.seller.ui.activity.LauncherActivity    unicodeKeyboard=True    resetKeyboard=True
+    启动参数
+    Open Application    ${host}    &{caps}
 
 启动App2
-    Open Application    http://localhost:4722/wd/hub    alias=maisha    platformName=Android    platformVersion=5.1.1    deviceName='emulator-5554'    appPackage=com.maishalei.seller.debug
-    ...    appActivity=com.maishalei.seller.ui.activity.LauncherActivity    unicodeKeyboard=True    resetKeyboard=True
+    ${mode}    Set Variable    debug    # debug/product
+    ${host}    Run Keyword If    '${device}'=='small'    Set Variable    http://localhost:4722/wd/hub
+    ...    ELSE IF    '${device}'=='medium'    Set Variable    http://localhost:4723/wd/hub
+    ...    ELSE IF    '${device}'=='big'    Set Variable    http://localhost:4724/wd/hub
+    ...    ELSE    Log    请输入正确的设备规格。
+    &{caps}    Run Keyword If    '${device}'=='small'    Create Dictionary    alias=maisha    platformName=Android    platformVersion=5.1.1
+    ...    deviceName='emulator-5554'    appPackage=com.maishalei.seller.debug    appActivity=com.maishalei.seller.ui.activity.LauncherActivity    unicodeKeyboard=True    resetKeyboard=True
+    ...    ELSE IF    '${device}'=='medium'    Create Dictionary    alias=maisha    platformName=Android    platformVersion=5.1.1
+    ...    deviceName='HUAWEI MT2-L01'    appPackage=com.maishalei.seller.debug    appActivity=com.maishalei.seller.ui.activity.LauncherActivity    unicodeKeyboard=True    resetKeyboard=True
+    ...    ELSE IF    '${device}'=='big'    Create Dictionary    alias=maisha    platformName=Android    platformVersion=4.4.2
+    ...    deviceName='emulator-5554'    appPackage=com.maishalei.seller.debug    appActivity=com.maishalei.seller.ui.activity.LauncherActivity    unicodeKeyboard=True    resetKeyboard=True
+    ...    ELSE    Log    请输入正确的设备规格。
+    Set Global Variable    &{caps}
+    Set Global Variable    ${host}
+    Open Application    ${host}    &{caps}
 
 启动App3
     Open Application    http://localhost:4724/wd/hub    alias=maisha    platformName=Android    platformVersion=5.1.1    deviceName='emulator-5554'    appPackage=com.maishalei.seller.debug
@@ -60,17 +76,31 @@ Library           WshLibrary
     Click Element    xpath=//android.widget.TextView[@NAF='true']
 
 向上滑动
-    [Arguments]    ${n}=1    ${device}=medium    ${interval}=500    # 设置滑动次数设备大小等参数
-    @{list}=    Get Slide Args V    ${device }
-    : FOR    ${i}    IN RANGE    ${n}
-    \    Swipe    @{list}[0]    @{list}[1]    @{list}[2]    @{list}[3]    ${interval}
+    [Arguments]    ${n}=1    ${interval}=500    # 设置滑动次数间隔
+    #@{list}=    Get Slide Args V    ${device }
+    启动参数
+    @{list}    Run Keyword If    '${device}'=='small'    Set Variable    240    580    240
+    ...    240
+    ...    ELSE IF    '${device}'=='medium'    Set Variable    350    950    350
+    ...    400
+    ...    ELSE    '${device}'=='big'    Set Variable    500    1400    500
+    ...    400
+    :FOR    ${i}    IN RANGE    ${n}
+    \    Swipe    @{list}    ${interval}
     \    Sleep    0.5
 
 向下滑动
-    [Arguments]    ${n}=1    ${device}=medium    ${interval}=500    # 滑动次数
-    @{list}=    Get Slide Args V    ${device }
-    : FOR    ${i}    IN RANGE    ${n}
-    \    Swipe    @{list}[0]    @{list}[3]    @{list}[2]    @{list}[1]    ${interval}
+    [Arguments]    ${n}=1    ${interval}=500    # 滑动次数
+    启动参数
+    @{list}    Run Keyword If    '${device}'=='small'    Set Variable    240    240    240
+    ...    580
+    ...    ELSE IF    '${device}'=='medium'    Set Variable    350    400    350
+    ...    950
+    ...    ELSE    '${device}'=='big'    Set Variable    500    400    500
+    ...    1400
+    :FOR    ${i}    IN RANGE    ${n}
+    \    Swipe    @{list}    ${interval}
+    \    Sleep    0.5
 
 返回顶部
     Click Element    id=ivBackToTop
@@ -81,13 +111,23 @@ Library           WshLibrary
 向左滑动
     [Arguments]    ${n}=1    ${device}=medium    ${interval}=500
     @{list}=    Get Slide Args H    ${device }
-    :FOR    ${i}    IN RANGE    ${n}
+    : FOR    ${i}    IN RANGE    ${n}
     \    Swipe    @{list}[0]    @{list}[1]    @{list}[2]    @{list}[3]    ${interval}
     \    Sleep    0.5
 
 向右滑动
     [Arguments]    ${n}=1    ${device}=medium    ${interval}=500
     @{list}=    Get Slide Args H    ${device }
+    : FOR    ${i}    IN RANGE    ${n}
+    \    Swipe    @{list}[0]    @{list}[1]    @{list}[2]    @{list}[3]    ${interval}
+    \    Sleep    0.5
+
+TempTest
+    [Arguments]    ${n}=1    ${device}=medium    ${interval}=500
+    @{list}    Run Keyword If    ${device }==smal    Set Variable    240    580    240
+    ...    240
+    \    ELSE IF    ${device}==medium    Set Variable    350    950    350
+    \    ...    400
     :FOR    ${i}    IN RANGE    ${n}
     \    Swipe    @{list}[0]    @{list}[1]    @{list}[2]    @{list}[3]    ${interval}
     \    Sleep    0.5

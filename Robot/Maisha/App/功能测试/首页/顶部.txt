@@ -1,6 +1,7 @@
 *** Settings ***
 Documentation     首页顶部功能测试
-Suite Setup       启动App3
+Suite Setup       启动App
+Suite Teardown    关闭App
 Library           AppiumLibrary
 Resource          ../../../Lib/常用操作.robot
 Resource          ../../../Lib/功能菜单.robot
@@ -20,24 +21,15 @@ Resource          ../../../Lib/配置参数.robot
     取消
 
 查看分类
+    [Tags]    Smoke
+    启动参数
     Wait Until Page Contains Element    id=ivDiscover    ${TIMEOUT}
     点击分类
     Log    开始分类检查...
     Log To Console    开始分类检查...
     Wait Until Page Contains Element    xpath=//android.widget.TextView[@text='母婴用品']    ${TIMEOUT}
-    母婴用品
-    居家会场
-    美妆个护
-    环球美食
-    营养保健
-    电器数码
-    服装会场
-    鞋包会场
-    饰品会场
+    Run Keyword If    '${mode}'=='debug'    分类菜单检测-测试
+    ...    ELSE IF    '${mode}'=='product'    分类菜单检测-生产
+    ...    ELSE    Log    请输入正确的运行模式。
     Log    分类检查完成...
-    Log To Console    分类检查完成...
     Click Element    xpath=//android.widget.ImageView[@NAF='true']
-    #返回键
-
-testLib
-    Log    @{desired_caps_avd}

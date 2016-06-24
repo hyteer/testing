@@ -1,0 +1,10 @@
+*** Settings ***
+Resource          ../../../Lib/配置参数.robot
+Library           AppiumLibrary
+
+*** Test Cases ***
+global
+    启动参数
+    Log Many    &{caps}
+    Log    URL is:${host}
+    Open Application    ${host}    &{caps}

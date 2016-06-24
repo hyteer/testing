@@ -37,6 +37,9 @@ condition
     Run Keyword    ${key}    test
     ${str}    Test Condi    self    yt
     ${result}    Set Variable    right
-    Run Keyword If    '${str}'=='${result}'     Log    Success
+    Run Keyword If    '${str}'=='${result}'    Log    Success
     ${str}    Test Condi    self    11
     Run Keyword If    ${str}>1    Log    Number is:${str}
+
+dict
+    &{dict} =    Create Dictionary    key=value    foo=bar    device='mate2'
