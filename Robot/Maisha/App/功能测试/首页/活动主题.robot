@@ -1,10 +1,9 @@
 *** Settings ***
 Suite Setup       启动App
 Suite Teardown    关闭App
-Force Tags        Smoke
 Library           AppiumLibrary
 Resource          ../../../Lib/常用操作.robot
-Resource          ../../../Lib/功能菜单.robot
+Resource          ../../../Lib/菜单库.robot
 Resource          ../../../Lib/系统按键.robot
 Resource          ../../../Lib/配置参数.robot
 
@@ -36,7 +35,7 @@ Resource          ../../../Lib/配置参数.robot
 
 全球秒杀
     Wait Until Page Contains Element    id=ivDiscover    ${TIMEOUT}
-    Sleep    1.5s
+    等待
     全球秒杀
     Wait Until Page Contains Element    xpath=//android.widget.TextView[@NAF='true']    ${TIMEOUT}
     Sleep    2s

@@ -2,6 +2,7 @@
 Library           AppiumLibrary
 Library           WshLibrary
 Resource          配置参数.robot
+Resource          系统按键.robot
 
 *** Keywords ***
 点击搜索
@@ -16,7 +17,8 @@ Resource          配置参数.robot
 
 启动App
     #Open Application    http://localhost:4723/wd/hub    alias=maisha    platformName=Android    platformVersion=4.4.2    deviceName='emulator-5554'    appPackage=com.maishalei.seller.debug
-    ...    # appActivity=com.maishalei.seller.ui.activity.LauncherActivity    unicodeKeyboard=True    resetKeyboard=True
+    # appActivity=com.maishalei.seller.ui.activity.LauncherActivity    unicodeKeyboard=True    resetKeyboard=True
+    # appActivity=com.maishalei.seller.ui.activity.LauncherActivity    unicodeKeyboard=True    resetKeyboard=True
     启动参数
     Open Application    ${host}    &{caps}
 
@@ -60,7 +62,9 @@ Resource          配置参数.robot
     Log    Contexts: ${a}
     ${b}    Get Current Context
     Log    Current Context is: ${b}
+    Log    Context a1 is: ${a[1]}
     Switch To Context    ${a[1]}
+    Get Current Context
 
 返回
     Click Element    xpath=//android.widget.ImageView[@NAF='true']
@@ -83,9 +87,10 @@ Resource          配置参数.robot
     ...    240
     ...    ELSE IF    '${device}'=='medium'    Set Variable    350    950    350
     ...    400
-    ...    ELSE    '${device}'=='big'    Set Variable    500    1400    500
+    ...    ELSE IF    '${device}'=='big'    Set Variable    500    1400    500
     ...    400
-    :FOR    ${i}    IN RANGE    ${n}
+    ...    ELSE    Log    无效的参数${device}
+    : FOR    ${i}    IN RANGE    ${n}
     \    Swipe    @{list}    ${interval}
     \    Sleep    0.5
 
@@ -96,9 +101,10 @@ Resource          配置参数.robot
     ...    580
     ...    ELSE IF    '${device}'=='medium'    Set Variable    350    400    350
     ...    950
-    ...    ELSE    '${device}'=='big'    Set Variable    500    400    500
+    ...    ELSE IF    '${device}'=='big'    Set Variable    500    400    500
     ...    1400
-    :FOR    ${i}    IN RANGE    ${n}
+    ...    ELSE    Log    无效的参数${device}
+    : FOR    ${i}    IN RANGE    ${n}
     \    Swipe    @{list}    ${interval}
     \    Sleep    0.5
 
@@ -128,6 +134,17 @@ TempTest
     ...    240
     \    ELSE IF    ${device}==medium    Set Variable    350    950    350
     \    ...    400
-    :FOR    ${i}    IN RANGE    ${n}
+    : FOR    ${i}    IN RANGE    ${n}
     \    Swipe    @{list}[0]    @{list}[1]    @{list}[2]    @{list}[3]    ${interval}
     \    Sleep    0.5
+
+等待
+    [Arguments]    ${time}=2s
+    Sleep    ${time}
+
+检验等待
+    [Arguments]    ${object}=首页    ${time}=10
+    Run Keyword If    '${object}'=='首页'    Wait Until Page Contains Element    id=ivDiscover    ${time}
+    ...    ELSE IF    '${object}'=='分享'    Wait Until Page Contains Element    xpath=//android.widget.TextView[@text='分享']    ${time}
+    ...    ELSE IF    '${object}'=='WebView'    Wait Until Page Contains Element    id=webview    ${time}
+    ...    ELSE IF    '${object}'=='标题'    Wait Until Page Contains Element    id=centerView

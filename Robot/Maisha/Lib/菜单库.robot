@@ -60,3 +60,15 @@ Resource          配置参数.robot
     环球美食
     营养保健
     饰品会场
+
+我的
+    Click Element    id=ivMine
+
+购物车
+    Click Element    id=ivShoppingCart
+
+社区
+    Click Element    id=ivSNS
+
+首页
+    Click Element    id=ivDiscover

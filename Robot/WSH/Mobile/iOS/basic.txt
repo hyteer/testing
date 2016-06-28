@@ -1,0 +1,10 @@
+*** Settings ***
+Library           AppiumLibrary
+
+*** Test Cases ***
+first
+    Open Application    http://10.20.100.82:4731/wd/hub    platformName=iOS    platformVersion=9.3    deviceName=iPhone 6s
+    #    io.appium.TestApp
+
+maisha
+    Open Application    http://10.20.100.82:4731/wd/hub    platformName=iOS    platformVersion=9.0    deviceName=iPhone 6s    udid=2bc289b87f8fdadd6add2ad0b55a26c6081d2d77

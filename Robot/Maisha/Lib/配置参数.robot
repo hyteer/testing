@@ -6,6 +6,8 @@ ${LONGTIME}       15
 @{desired_caps_avd}    http://localhost:4723/wd/hub    alias=maisha    platformName=Android    platformVersion=4.4.2    deviceName='emulator-5554'    appPackage=com.maishalei.seller.debug    appActivity=com.maishalei.seller.ui.activity.LauncherActivity
 ...               unicodeKeyboard=True    resetKeyboard=True
 &{CAPS}           a=xx    b=x2    c=x3
+${PHONE NUM}      13924628477
+${PHONE PWD}      test111
 
 *** Keywords ***
 启动参数_bak
@@ -25,8 +27,8 @@ ${LONGTIME}       15
     #Log Many    @{desired_caps}    --打印完毕--
 
 启动参数
-    ${device}    Set Variable    medium    # small/medium/big
-    ${mode}    Set Variable    debug    # debug/product
+    ${device}    Set Variable    big    # small/medium/big
+    ${mode}    Set Variable    product    # debug/product
     ${package}    Run Keyword If    '${mode}'=='debug'    Set Variable    com.maishalei.seller.debug
     ...    ELSE IF    '${mode}'=='product'    Set Variable    com.maishalei.seller
     ...    ELSE    Log    请输入正确的运行模式。
