@@ -20,8 +20,18 @@ SMS
     Log    Num is : ${num}
     ${message}    Get Element Attribute    xpath=//huawei.android.widget.TimeAxisWidget[${num}]//android.widget.TextView[@resource-id='com.android.contacts:id/text_view']    text
     Log    Message: ${message}
-    ${code}    Get Regexp Matches    ${message}    \d{4,}
+    ${code}    Get Regexp Matches    ${message}    \\d{4,}
     Log    Code is: ${code}
+    ${code2}    Get Substring    ${message}    7    11
+    Log    Code2 is: ${code2}
+
+switchApp
 
 *** Keywords ***
 获取验证码
+    [Arguments]    ${message}
+    Log    Message: ${message}
+    ${code}    Get Regexp Matches    ${message}    \\d{4,}
+    Log    Code is: ${code}
+    ${code2}    Get Substring    ${message}    7    11
+    Log    Code2 is: ${code2}

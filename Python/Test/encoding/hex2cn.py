@@ -11,5 +11,6 @@ def mysterious(ust):                  #定义一个将十六进制代码转换�
 str = u'\u9a8c\u8bc1\u7801\u53d1\u9001\u6210\u529f\uff0c\u8bf7\u6ce8\u610f\u67e5\u6536'
 mysterious('5269')
 print u'\u9a8c'
+print u'\u9a8c\u8bc1\u7801'
 print str
 #print mysterious(str)
