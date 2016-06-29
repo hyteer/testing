@@ -1,5 +1,5 @@
 *** Settings ***
-Library           AppiumLibrary
+Library           SongzAppiumLibrary
 
 *** Keywords ***
 获取元素

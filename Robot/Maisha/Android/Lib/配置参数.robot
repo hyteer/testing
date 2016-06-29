@@ -27,7 +27,7 @@ ${PHONE PWD}      test111
     #Log Many    @{desired_caps}    --打印完毕--
 
 启动参数
-    ${device}    Set Variable    big    # small/medium/big
+    ${device}    Set Variable    medium    # small/medium/big
     ${mode}    Set Variable    product    # debug/product
     ${package}    Run Keyword If    '${mode}'=='debug'    Set Variable    com.maishalei.seller.debug
     ...    ELSE IF    '${mode}'=='product'    Set Variable    com.maishalei.seller
@@ -37,7 +37,7 @@ ${PHONE PWD}      test111
     ...    ELSE    Log    请输入正确的运行模式。
     ${host}    Run Keyword If    '${device}'=='small'    Set Variable    http://localhost:4722/wd/hub
     ...    ELSE IF    '${device}'=='medium'    Set Variable    http://localhost:4723/wd/hub
-    ...    ELSE IF    '${device}'=='big'    Set Variable    http://localhost:4724/wd/hub
+    ...    ELSE IF    '${device}'=='big'    Set Variable    http://localhost:4734/wd/hub
     ...    ELSE    Log    请输入正确的设备规格。
     &{caps}    Run Keyword If    '${device}'=='small'    Create Dictionary    alias=maisha    platformName=Android    platformVersion=5.1.1
     ...    deviceName='emulator-5554'    appPackage=${package}    appActivity=${activity}    unicodeKeyboard=True    resetKeyboard=True

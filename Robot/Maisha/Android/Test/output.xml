@@ -1,0 +1,2365 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<robot generated="20160629 18:43:31.855" generator="Robot 3.0 (Python 2.7.11 on win32)">
+<suite source="D:\Testing\Robot\Maisha\Android\Test\冒烟测试" id="s1" name="冒烟测试">
+<suite source="D:\Testing\Robot\Maisha\Android\Test\冒烟测试\首页.robot" id="s1-s1" name="首页">
+<kw type="setup" name="启动App" library="常用操作">
+<kw name="启动参数" library="配置参数">
+<kw name="Set Variable" library="BuiltIn">
+<doc>Returns the given values which can then be assigned to a variables.</doc>
+<arguments>
+<arg>big</arg>
+</arguments>
+<assign>
+<var>${device}</var>
+</assign>
+<msg timestamp="20160629 18:43:32.000" level="INFO">${device} = big</msg>
+<status status="PASS" endtime="20160629 18:43:32.000" starttime="20160629 18:43:32.000"></status>
+</kw>
+<kw name="Set Variable" library="BuiltIn">
+<doc>Returns the given values which can then be assigned to a variables.</doc>
+<arguments>
+<arg>product</arg>
+</arguments>
+<assign>
+<var>${mode}</var>
+</assign>
+<msg timestamp="20160629 18:43:32.000" level="INFO">${mode} = product</msg>
+<status status="PASS" endtime="20160629 18:43:32.000" starttime="20160629 18:43:32.000"></status>
+</kw>
+<kw name="Run Keyword If" library="BuiltIn">
+<doc>Runs the given keyword with the given arguments, if ``condition`` is true.</doc>
+<arguments>
+<arg>'${mode}'=='debug'</arg>
+<arg>Set Variable</arg>
+<arg>com.maishalei.seller.debug</arg>
+<arg>ELSE IF</arg>
+<arg>'${mode}'=='product'</arg>
+<arg>Set Variable</arg>
+<arg>com.maishalei.seller</arg>
+<arg>ELSE</arg>
+<arg>Log</arg>
+<arg>请输入正确的运行模式。</arg>
+</arguments>
+<assign>
+<var>${package}</var>
+</assign>
+<kw name="Set Variable" library="BuiltIn">
+<doc>Returns the given values which can then be assigned to a variables.</doc>
+<arguments>
+<arg>com.maishalei.seller</arg>
+</arguments>
+<status status="PASS" endtime="20160629 18:43:32.002" starttime="20160629 18:43:32.001"></status>
+</kw>
+<msg timestamp="20160629 18:43:32.002" level="INFO">${package} = com.maishalei.seller</msg>
+<status status="PASS" endtime="20160629 18:43:32.002" starttime="20160629 18:43:32.000"></status>
+</kw>
+<kw name="Run Keyword If" library="BuiltIn">
+<doc>Runs the given keyword with the given arguments, if ``condition`` is true.</doc>
+<arguments>
+<arg>'${mode}'=='debug'</arg>
+<arg>Set Variable</arg>
+<arg>com.maishalei.seller.ui.activity.LauncherActivity</arg>
+<arg>ELSE IF</arg>
+<arg>'${mode}'=='product'</arg>
+<arg>Set Variable</arg>
+<arg>.ui.activity.LauncherActivity</arg>
+<arg>ELSE</arg>
+<arg>Log</arg>
+<arg>请输入正确的运行模式。</arg>
+</arguments>
+<assign>
+<var>${activity}</var>
+</assign>
+<kw name="Set Variable" library="BuiltIn">
+<doc>Returns the given values which can then be assigned to a variables.</doc>
+<arguments>
+<arg>.ui.activity.LauncherActivity</arg>
+</arguments>
+<status status="PASS" endtime="20160629 18:43:32.003" starttime="20160629 18:43:32.003"></status>
+</kw>
+<msg timestamp="20160629 18:43:32.003" level="INFO">${activity} = .ui.activity.LauncherActivity</msg>
+<status status="PASS" endtime="20160629 18:43:32.003" starttime="20160629 18:43:32.002"></status>
+</kw>
+<kw name="Run Keyword If" library="BuiltIn">
+<doc>Runs the given keyword with the given arguments, if ``condition`` is true.</doc>
+<arguments>
+<arg>'${device}'=='small'</arg>
+<arg>Set Variable</arg>
+<arg>http://localhost:4722/wd/hub</arg>
+<arg>ELSE IF</arg>
+<arg>'${device}'=='medium'</arg>
+<arg>Set Variable</arg>
+<arg>http://localhost:4723/wd/hub</arg>
+<arg>ELSE IF</arg>
+<arg>'${device}'=='big'</arg>
+<arg>Set Variable</arg>
+<arg>http://localhost:4734/wd/hub</arg>
+<arg>ELSE</arg>
+<arg>Log</arg>
+<arg>请输入正确的设备规格。</arg>
+</arguments>
+<assign>
+<var>${host}</var>
+</assign>
+<kw name="Set Variable" library="BuiltIn">
+<doc>Returns the given values which can then be assigned to a variables.</doc>
+<arguments>
+<arg>http://localhost:4734/wd/hub</arg>
+</arguments>
+<status status="PASS" endtime="20160629 18:43:32.005" starttime="20160629 18:43:32.005"></status>
+</kw>
+<msg timestamp="20160629 18:43:32.005" level="INFO">${host} = http://localhost:4734/wd/hub</msg>
+<status status="PASS" endtime="20160629 18:43:32.005" starttime="20160629 18:43:32.003"></status>
+</kw>
+<kw name="Run Keyword If" library="BuiltIn">
+<doc>Runs the given keyword with the given arguments, if ``condition`` is true.</doc>
+<arguments>
+<arg>'${device}'=='small'</arg>
+<arg>Create Dictionary</arg>
+<arg>alias=maisha</arg>
+<arg>platformName=Android</arg>
+<arg>platformVersion=5.1.1</arg>
+<arg>deviceName='emulator-5554'</arg>
+<arg>appPackage=${package}</arg>
+<arg>appActivity=${activity}</arg>
+<arg>unicodeKeyboard=True</arg>
+<arg>resetKeyboard=True</arg>
+<arg>ELSE IF</arg>
+<arg>'${device}'=='medium'</arg>
+<arg>Create Dictionary</arg>
+<arg>alias=maisha</arg>
+<arg>platformName=Android</arg>
+<arg>platformVersion=5.1.1</arg>
+<arg>deviceName='HUAWEI MT2-L01'</arg>
+<arg>appPackage=${package}</arg>
+<arg>appActivity=${activity}</arg>
+<arg>unicodeKeyboard=True</arg>
+<arg>resetKeyboard=True</arg>
+<arg>ELSE IF</arg>
+<arg>'${device}'=='big'</arg>
+<arg>Create Dictionary</arg>
+<arg>alias=maisha</arg>
+<arg>platformName=Android</arg>
+<arg>platformVersion=4.4.2</arg>
+<arg>deviceName='emulator-5554'</arg>
+<arg>appPackage=${package}</arg>
+<arg>appActivity=${activity}</arg>
+<arg>unicodeKeyboard=True</arg>
+<arg>resetKeyboard=True</arg>
+<arg>ELSE</arg>
+<arg>Log</arg>
+<arg>请输入正确的设备规格。</arg>
+</arguments>
+<assign>
+<var>&amp;{caps}</var>
+</assign>
+<kw name="Create Dictionary" library="BuiltIn">
+<doc>Creates and returns a dictionary based on given items.</doc>
+<arguments>
+<arg>alias=maisha</arg>
+<arg>platformName=Android</arg>
+<arg>platformVersion=4.4.2</arg>
+<arg>deviceName='emulator-5554'</arg>
+<arg>appPackage=${package}</arg>
+<arg>appActivity=${activity}</arg>
+<arg>unicodeKeyboard=True</arg>
+<arg>resetKeyboard=True</arg>
+</arguments>
+<status status="PASS" endtime="20160629 18:43:32.008" starttime="20160629 18:43:32.008"></status>
+</kw>
+<msg timestamp="20160629 18:43:32.009" level="INFO">&amp;{caps} = { alias=maisha | platformName=Android | platformVersion=4.4.2 | deviceName='emulator-5554' | appPackage=com.maishalei.seller | appActivity=.ui.activity.LauncherActivity | unicodeKeyboard=True | resetK...</msg>
+<status status="PASS" endtime="20160629 18:43:32.009" starttime="20160629 18:43:32.005"></status>
+</kw>
+<kw name="Set Global Variable" library="BuiltIn">
+<doc>Makes a variable available globally in all tests and suites.</doc>
+<arguments>
+<arg>${mode}</arg>
+</arguments>
+<msg timestamp="20160629 18:43:32.009" level="INFO">${mode} = product</msg>
+<status status="PASS" endtime="20160629 18:43:32.009" starttime="20160629 18:43:32.009"></status>
+</kw>
+<kw name="Set Global Variable" library="BuiltIn">
+<doc>Makes a variable available globally in all tests and suites.</doc>
+<arguments>
+<arg>&amp;{caps}</arg>
+</arguments>
+<msg timestamp="20160629 18:43:32.009" level="INFO">&amp;{caps} = { alias=maisha | platformName=Android | platformVersion=4.4.2 | deviceName='emulator-5554' | appPackage=com.maishalei.seller | appActivity=.ui.activity.LauncherActivity | unicodeKeyboard=True | resetK...</msg>
+<status status="PASS" endtime="20160629 18:43:32.009" starttime="20160629 18:43:32.009"></status>
+</kw>
+<kw name="Set Global Variable" library="BuiltIn">
+<doc>Makes a variable available globally in all tests and suites.</doc>
+<arguments>
+<arg>${host}</arg>
+</arguments>
+<msg timestamp="20160629 18:43:32.010" level="INFO">${host} = http://localhost:4734/wd/hub</msg>
+<status status="PASS" endtime="20160629 18:43:32.010" starttime="20160629 18:43:32.010"></status>
+</kw>
+<kw name="Set Global Variable" library="BuiltIn">
+<doc>Makes a variable available globally in all tests and suites.</doc>
+<arguments>
+<arg>${device}</arg>
+</arguments>
+<msg timestamp="20160629 18:43:32.010" level="INFO">${device} = big</msg>
+<status status="PASS" endtime="20160629 18:43:32.010" starttime="20160629 18:43:32.010"></status>
+</kw>
+<status status="PASS" endtime="20160629 18:43:32.010" starttime="20160629 18:43:31.999"></status>
+</kw>
+<kw name="Open Application" library="SongzAppiumLibrary">
+<doc>Opens a new application to given Appium server.</doc>
+<arguments>
+<arg>${host}</arg>
+<arg>&amp;{caps}</arg>
+</arguments>
+<status status="PASS" endtime="20160629 18:43:40.106" starttime="20160629 18:43:32.011"></status>
+</kw>
+<status status="PASS" endtime="20160629 18:43:40.107" starttime="20160629 18:43:31.999"></status>
+</kw>
+<test id="s1-s1-t1" name="活动主题检查">
+<kw name="检验等待" library="常用操作">
+<kw name="Run Keyword If" library="BuiltIn">
+<doc>Runs the given keyword with the given arguments, if ``condition`` is true.</doc>
+<arguments>
+<arg>'${object}'=='首页'</arg>
+<arg>Wait Until Page Contains Element</arg>
+<arg>id=ivDiscover</arg>
+<arg>${time}</arg>
+<arg>ELSE IF</arg>
+<arg>'${object}'=='分享'</arg>
+<arg>Wait Until Page Contains Element</arg>
+<arg>xpath=//android.widget.TextView[@text='分享']</arg>
+<arg>${time}</arg>
+<arg>ELSE IF</arg>
+<arg>'${object}'=='WebView'</arg>
+<arg>Wait Until Page Contains Element</arg>
+<arg>id=webview</arg>
+<arg>${time}</arg>
+<arg>ELSE IF</arg>
+<arg>'${object}'=='标题'</arg>
+<arg>Wait Until Page Contains Element</arg>
+<arg>id=centerView</arg>
+</arguments>
+<kw name="Wait Until Page Contains Element" library="SongzAppiumLibrary">
+<doc>Waits until element specified with `locator` appears on current page.</doc>
+<arguments>
+<arg>id=ivDiscover</arg>
+<arg>${time}</arg>
+</arguments>
+<status status="PASS" endtime="20160629 18:43:48.766" starttime="20160629 18:43:40.115"></status>
+</kw>
+<status status="PASS" endtime="20160629 18:43:48.766" starttime="20160629 18:43:40.112"></status>
+</kw>
+<status status="PASS" endtime="20160629 18:43:48.767" starttime="20160629 18:43:40.110"></status>
+</kw>
+<kw name="Sleep" library="BuiltIn">
+<doc>Pauses the test executed for the given time.</doc>
+<arguments>
+<arg>2</arg>
+</arguments>
+<msg timestamp="20160629 18:43:50.768" level="INFO">Slept 2 seconds</msg>
+<status status="PASS" endtime="20160629 18:43:50.768" starttime="20160629 18:43:48.767"></status>
+</kw>
+<kw name="活动主题检测" library="功能库">
+<arguments>
+<arg>4</arg>
+</arguments>
+<kw type="for" name="${i} IN RANGE [ ${n} ]">
+<kw type="foritem" name="${i} = 0">
+<kw name="Evaluate" library="BuiltIn">
+<doc>Evaluates the given expression in Python and returns the results.</doc>
+<arguments>
+<arg>${i}+${1}</arg>
+</arguments>
+<assign>
+<var>${e}</var>
+</assign>
+<msg timestamp="20160629 18:43:50.775" level="INFO">${e} = 1</msg>
+<status status="PASS" endtime="20160629 18:43:50.775" starttime="20160629 18:43:50.772"></status>
+</kw>
+<kw name="Log" library="BuiltIn">
+<doc>Logs the given message with the given level.</doc>
+<arguments>
+<arg>The e is: ${e}</arg>
+</arguments>
+<msg timestamp="20160629 18:43:50.776" level="INFO">The e is: 1</msg>
+<status status="PASS" endtime="20160629 18:43:50.777" starttime="20160629 18:43:50.776"></status>
+</kw>
+<kw name="Click Element" library="SongzAppiumLibrary">
+<doc>Click element identified by `locator`.</doc>
+<arguments>
+<arg>xpath=//android.support.v7.widget.RecyclerView/android.widget.FrameLayout[${e}]</arg>
+</arguments>
+<msg timestamp="20160629 18:43:50.778" level="INFO">Clicking element 'xpath=//android.support.v7.widget.RecyclerView/android.widget.FrameLayout[1]'.</msg>
+<status status="PASS" endtime="20160629 18:43:54.375" starttime="20160629 18:43:50.777"></status>
+</kw>
+<kw name="Sleep" library="BuiltIn">
+<doc>Pauses the test executed for the given time.</doc>
+<arguments>
+<arg>1.5</arg>
+</arguments>
+<msg timestamp="20160629 18:43:55.876" level="INFO">Slept 1 second 500 milliseconds</msg>
+<status status="PASS" endtime="20160629 18:43:55.876" starttime="20160629 18:43:54.375"></status>
+</kw>
+<kw name="返回键" library="系统按键">
+<kw name="Press Keycode" library="SongzAppiumLibrary">
+<doc>Sends a press of keycode to the device.</doc>
+<arguments>
+<arg>4</arg>
+</arguments>
+<status status="PASS" endtime="20160629 18:43:55.928" starttime="20160629 18:43:55.878"></status>
+</kw>
+<status status="PASS" endtime="20160629 18:43:55.929" starttime="20160629 18:43:55.876"></status>
+</kw>
+<kw name="Sleep" library="BuiltIn">
+<doc>Pauses the test executed for the given time.</doc>
+<arguments>
+<arg>1</arg>
+</arguments>
+<msg timestamp="20160629 18:43:56.929" level="INFO">Slept 1 second</msg>
+<status status="PASS" endtime="20160629 18:43:56.929" starttime="20160629 18:43:55.929"></status>
+</kw>
+<status status="PASS" endtime="20160629 18:43:56.929" starttime="20160629 18:43:50.771"></status>
+</kw>
+<kw type="foritem" name="${i} = 1">
+<kw name="Evaluate" library="BuiltIn">
+<doc>Evaluates the given expression in Python and returns the results.</doc>
+<arguments>
+<arg>${i}+${1}</arg>
+</arguments>
+<assign>
+<var>${e}</var>
+</assign>
+<msg timestamp="20160629 18:43:56.933" level="INFO">${e} = 2</msg>
+<status status="PASS" endtime="20160629 18:43:56.933" starttime="20160629 18:43:56.930"></status>
+</kw>
+<kw name="Log" library="BuiltIn">
+<doc>Logs the given message with the given level.</doc>
+<arguments>
+<arg>The e is: ${e}</arg>
+</arguments>
+<msg timestamp="20160629 18:43:56.934" level="INFO">The e is: 2</msg>
+<status status="PASS" endtime="20160629 18:43:56.934" starttime="20160629 18:43:56.933"></status>
+</kw>
+<kw name="Click Element" library="SongzAppiumLibrary">
+<doc>Click element identified by `locator`.</doc>
+<arguments>
+<arg>xpath=//android.support.v7.widget.RecyclerView/android.widget.FrameLayout[${e}]</arg>
+</arguments>
+<msg timestamp="20160629 18:43:56.935" level="INFO">Clicking element 'xpath=//android.support.v7.widget.RecyclerView/android.widget.FrameLayout[2]'.</msg>
+<status status="PASS" endtime="20160629 18:43:58.123" starttime="20160629 18:43:56.934"></status>
+</kw>
+<kw name="Sleep" library="BuiltIn">
+<doc>Pauses the test executed for the given time.</doc>
+<arguments>
+<arg>1.5</arg>
+</arguments>
+<msg timestamp="20160629 18:43:59.624" level="INFO">Slept 1 second 500 milliseconds</msg>
+<status status="PASS" endtime="20160629 18:43:59.624" starttime="20160629 18:43:58.124"></status>
+</kw>
+<kw name="返回键" library="系统按键">
+<kw name="Press Keycode" library="SongzAppiumLibrary">
+<doc>Sends a press of keycode to the device.</doc>
+<arguments>
+<arg>4</arg>
+</arguments>
+<status status="PASS" endtime="20160629 18:44:00.462" starttime="20160629 18:43:59.626"></status>
+</kw>
+<status status="PASS" endtime="20160629 18:44:00.462" starttime="20160629 18:43:59.625"></status>
+</kw>
+<kw name="Sleep" library="BuiltIn">
+<doc>Pauses the test executed for the given time.</doc>
+<arguments>
+<arg>1</arg>
+</arguments>
+<msg timestamp="20160629 18:44:01.463" level="INFO">Slept 1 second</msg>
+<status status="PASS" endtime="20160629 18:44:01.463" starttime="20160629 18:44:00.462"></status>
+</kw>
+<status status="PASS" endtime="20160629 18:44:01.463" starttime="20160629 18:43:56.929"></status>
+</kw>
+<kw type="foritem" name="${i} = 2">
+<kw name="Evaluate" library="BuiltIn">
+<doc>Evaluates the given expression in Python and returns the results.</doc>
+<arguments>
+<arg>${i}+${1}</arg>
+</arguments>
+<assign>
+<var>${e}</var>
+</assign>
+<msg timestamp="20160629 18:44:01.465" level="INFO">${e} = 3</msg>
+<status status="PASS" endtime="20160629 18:44:01.465" starttime="20160629 18:44:01.463"></status>
+</kw>
+<kw name="Log" library="BuiltIn">
+<doc>Logs the given message with the given level.</doc>
+<arguments>
+<arg>The e is: ${e}</arg>
+</arguments>
+<msg timestamp="20160629 18:44:01.466" level="INFO">The e is: 3</msg>
+<status status="PASS" endtime="20160629 18:44:01.466" starttime="20160629 18:44:01.466"></status>
+</kw>
+<kw name="Click Element" library="SongzAppiumLibrary">
+<doc>Click element identified by `locator`.</doc>
+<arguments>
+<arg>xpath=//android.support.v7.widget.RecyclerView/android.widget.FrameLayout[${e}]</arg>
+</arguments>
+<msg timestamp="20160629 18:44:01.467" level="INFO">Clicking element 'xpath=//android.support.v7.widget.RecyclerView/android.widget.FrameLayout[3]'.</msg>
+<status status="PASS" endtime="20160629 18:44:02.170" starttime="20160629 18:44:01.466"></status>
+</kw>
+<kw name="Sleep" library="BuiltIn">
+<doc>Pauses the test executed for the given time.</doc>
+<arguments>
+<arg>1.5</arg>
+</arguments>
+<msg timestamp="20160629 18:44:03.670" level="INFO">Slept 1 second 500 milliseconds</msg>
+<status status="PASS" endtime="20160629 18:44:03.670" starttime="20160629 18:44:02.170"></status>
+</kw>
+<kw name="返回键" library="系统按键">
+<kw name="Press Keycode" library="SongzAppiumLibrary">
+<doc>Sends a press of keycode to the device.</doc>
+<arguments>
+<arg>4</arg>
+</arguments>
+<status status="PASS" endtime="20160629 18:44:03.998" starttime="20160629 18:44:03.672"></status>
+</kw>
+<status status="PASS" endtime="20160629 18:44:03.999" starttime="20160629 18:44:03.671"></status>
+</kw>
+<kw name="Sleep" library="BuiltIn">
+<doc>Pauses the test executed for the given time.</doc>
+<arguments>
+<arg>1</arg>
+</arguments>
+<msg timestamp="20160629 18:44:04.999" level="INFO">Slept 1 second</msg>
+<status status="PASS" endtime="20160629 18:44:04.999" starttime="20160629 18:44:03.999"></status>
+</kw>
+<status status="PASS" endtime="20160629 18:44:04.999" starttime="20160629 18:44:01.463"></status>
+</kw>
+<kw type="foritem" name="${i} = 3">
+<kw name="Evaluate" library="BuiltIn">
+<doc>Evaluates the given expression in Python and returns the results.</doc>
+<arguments>
+<arg>${i}+${1}</arg>
+</arguments>
+<assign>
+<var>${e}</var>
+</assign>
+<msg timestamp="20160629 18:44:05.004" level="INFO">${e} = 4</msg>
+<status status="PASS" endtime="20160629 18:44:05.004" starttime="20160629 18:44:05.000"></status>
+</kw>
+<kw name="Log" library="BuiltIn">
+<doc>Logs the given message with the given level.</doc>
+<arguments>
+<arg>The e is: ${e}</arg>
+</arguments>
+<msg timestamp="20160629 18:44:05.006" level="INFO">The e is: 4</msg>
+<status status="PASS" endtime="20160629 18:44:05.006" starttime="20160629 18:44:05.005"></status>
+</kw>
+<kw name="Click Element" library="SongzAppiumLibrary">
+<doc>Click element identified by `locator`.</doc>
+<arguments>
+<arg>xpath=//android.support.v7.widget.RecyclerView/android.widget.FrameLayout[${e}]</arg>
+</arguments>
+<msg timestamp="20160629 18:44:05.007" level="INFO">Clicking element 'xpath=//android.support.v7.widget.RecyclerView/android.widget.FrameLayout[4]'.</msg>
+<status status="PASS" endtime="20160629 18:44:07.082" starttime="20160629 18:44:05.007"></status>
+</kw>
+<kw name="Sleep" library="BuiltIn">
+<doc>Pauses the test executed for the given time.</doc>
+<arguments>
+<arg>1.5</arg>
+</arguments>
+<msg timestamp="20160629 18:44:08.583" level="INFO">Slept 1 second 500 milliseconds</msg>
+<status status="PASS" endtime="20160629 18:44:08.583" starttime="20160629 18:44:07.082"></status>
+</kw>
+<kw name="返回键" library="系统按键">
+<kw name="Press Keycode" library="SongzAppiumLibrary">
+<doc>Sends a press of keycode to the device.</doc>
+<arguments>
+<arg>4</arg>
+</arguments>
+<status status="PASS" endtime="20160629 18:44:08.630" starttime="20160629 18:44:08.584"></status>
+</kw>
+<status status="PASS" endtime="20160629 18:44:08.630" starttime="20160629 18:44:08.583"></status>
+</kw>
+<kw name="Sleep" library="BuiltIn">
+<doc>Pauses the test executed for the given time.</doc>
+<arguments>
+<arg>1</arg>
+</arguments>
+<msg timestamp="20160629 18:44:09.631" level="INFO">Slept 1 second</msg>
+<status status="PASS" endtime="20160629 18:44:09.631" starttime="20160629 18:44:08.630"></status>
+</kw>
+<status status="PASS" endtime="20160629 18:44:09.631" starttime="20160629 18:44:05.000"></status>
+</kw>
+<status status="PASS" endtime="20160629 18:44:09.631" starttime="20160629 18:43:50.770"></status>
+</kw>
+<status status="PASS" endtime="20160629 18:44:09.632" starttime="20160629 18:43:50.769"></status>
+</kw>
+<kw name="Sleep" library="BuiltIn">
+<doc>Pauses the test executed for the given time.</doc>
+<arguments>
+<arg>2</arg>
+</arguments>
+<msg timestamp="20160629 18:44:11.633" level="INFO">Slept 2 seconds</msg>
+<status status="PASS" endtime="20160629 18:44:11.633" starttime="20160629 18:44:09.633"></status>
+</kw>
+<status status="PASS" endtime="20160629 18:44:11.634" critical="yes" starttime="20160629 18:43:40.107"></status>
+</test>
+<test id="s1-s1-t2" name="大家都在拼检查">
+<kw name="检验等待" library="常用操作">
+<kw name="Run Keyword If" library="BuiltIn">
+<doc>Runs the given keyword with the given arguments, if ``condition`` is true.</doc>
+<arguments>
+<arg>'${object}'=='首页'</arg>
+<arg>Wait Until Page Contains Element</arg>
+<arg>id=ivDiscover</arg>
+<arg>${time}</arg>
+<arg>ELSE IF</arg>
+<arg>'${object}'=='分享'</arg>
+<arg>Wait Until Page Contains Element</arg>
+<arg>xpath=//android.widget.TextView[@text='分享']</arg>
+<arg>${time}</arg>
+<arg>ELSE IF</arg>
+<arg>'${object}'=='WebView'</arg>
+<arg>Wait Until Page Contains Element</arg>
+<arg>id=webview</arg>
+<arg>${time}</arg>
+<arg>ELSE IF</arg>
+<arg>'${object}'=='标题'</arg>
+<arg>Wait Until Page Contains Element</arg>
+<arg>id=centerView</arg>
+</arguments>
+<kw name="Wait Until Page Contains Element" library="SongzAppiumLibrary">
+<doc>Waits until element specified with `locator` appears on current page.</doc>
+<arguments>
+<arg>id=ivDiscover</arg>
+<arg>${time}</arg>
+</arguments>
+<status status="PASS" endtime="20160629 18:44:12.252" starttime="20160629 18:44:11.647"></status>
+</kw>
+<status status="PASS" endtime="20160629 18:44:12.253" starttime="20160629 18:44:11.645"></status>
+</kw>
+<status status="PASS" endtime="20160629 18:44:12.253" starttime="20160629 18:44:11.644"></status>
+</kw>
+<kw name="Sleep" library="BuiltIn">
+<doc>Pauses the test executed for the given time.</doc>
+<arguments>
+<arg>2</arg>
+</arguments>
+<msg timestamp="20160629 18:44:14.254" level="INFO">Slept 2 seconds</msg>
+<status status="PASS" endtime="20160629 18:44:14.254" starttime="20160629 18:44:12.254"></status>
+</kw>
+<kw name="大家都在拼检测" library="功能库">
+<kw type="for" name="${i} IN RANGE [ ${n} ]">
+<kw type="foritem" name="${i} = 0">
+<kw name="Evaluate" library="BuiltIn">
+<doc>Evaluates the given expression in Python and returns the results.</doc>
+<arguments>
+<arg>${i}+${1}</arg>
+</arguments>
+<assign>
+<var>${e}</var>
+</assign>
+<msg timestamp="20160629 18:44:14.260" level="INFO">${e} = 1</msg>
+<status status="PASS" endtime="20160629 18:44:14.260" starttime="20160629 18:44:14.257"></status>
+</kw>
+<kw name="Log" library="BuiltIn">
+<doc>Logs the given message with the given level.</doc>
+<arguments>
+<arg>The e is: ${e}</arg>
+</arguments>
+<msg timestamp="20160629 18:44:14.261" level="INFO">The e is: 1</msg>
+<status status="PASS" endtime="20160629 18:44:14.261" starttime="20160629 18:44:14.260"></status>
+</kw>
+<kw name="Click Element" library="SongzAppiumLibrary">
+<doc>Click element identified by `locator`.</doc>
+<arguments>
+<arg>xpath=//android.view.View[@resource-id='com.maishalei.seller:id/flexboxGroupBuyCommodities']/android.widget.LinearLayout[${e}]</arg>
+</arguments>
+<msg timestamp="20160629 18:44:14.262" level="INFO">Clicking element 'xpath=//android.view.View[@resource-id='com.maishalei.seller:id/flexboxGroupBuyCommodities']/android.widget.LinearLayout[1]'.</msg>
+<status status="PASS" endtime="20160629 18:44:15.130" starttime="20160629 18:44:14.262"></status>
+</kw>
+<kw name="检验等待" library="常用操作">
+<arguments>
+<arg>分享</arg>
+</arguments>
+<kw name="Run Keyword If" library="BuiltIn">
+<doc>Runs the given keyword with the given arguments, if ``condition`` is true.</doc>
+<arguments>
+<arg>'${object}'=='首页'</arg>
+<arg>Wait Until Page Contains Element</arg>
+<arg>id=ivDiscover</arg>
+<arg>${time}</arg>
+<arg>ELSE IF</arg>
+<arg>'${object}'=='分享'</arg>
+<arg>Wait Until Page Contains Element</arg>
+<arg>xpath=//android.widget.TextView[@text='分享']</arg>
+<arg>${time}</arg>
+<arg>ELSE IF</arg>
+<arg>'${object}'=='WebView'</arg>
+<arg>Wait Until Page Contains Element</arg>
+<arg>id=webview</arg>
+<arg>${time}</arg>
+<arg>ELSE IF</arg>
+<arg>'${object}'=='标题'</arg>
+<arg>Wait Until Page Contains Element</arg>
+<arg>id=centerView</arg>
+</arguments>
+<kw name="Wait Until Page Contains Element" library="SongzAppiumLibrary">
+<doc>Waits until element specified with `locator` appears on current page.</doc>
+<arguments>
+<arg>xpath=//android.widget.TextView[@text='分享']</arg>
+<arg>${time}</arg>
+</arguments>
+<status status="PASS" endtime="20160629 18:44:23.559" starttime="20160629 18:44:15.136"></status>
+</kw>
+<status status="PASS" endtime="20160629 18:44:23.559" starttime="20160629 18:44:15.131"></status>
+</kw>
+<status status="PASS" endtime="20160629 18:44:23.560" starttime="20160629 18:44:15.130"></status>
+</kw>
+<kw name="Sleep" library="BuiltIn">
+<doc>Pauses the test executed for the given time.</doc>
+<arguments>
+<arg>1.5</arg>
+</arguments>
+<msg timestamp="20160629 18:44:25.061" level="INFO">Slept 1 second 500 milliseconds</msg>
+<status status="PASS" endtime="20160629 18:44:25.061" starttime="20160629 18:44:23.560"></status>
+</kw>
+<kw name="返回键" library="系统按键">
+<kw name="Press Keycode" library="SongzAppiumLibrary">
+<doc>Sends a press of keycode to the device.</doc>
+<arguments>
+<arg>4</arg>
+</arguments>
+<status status="PASS" endtime="20160629 18:44:25.579" starttime="20160629 18:44:25.062"></status>
+</kw>
+<status status="PASS" endtime="20160629 18:44:25.579" starttime="20160629 18:44:25.061"></status>
+</kw>
+<kw name="Sleep" library="BuiltIn">
+<doc>Pauses the test executed for the given time.</doc>
+<arguments>
+<arg>1</arg>
+</arguments>
+<msg timestamp="20160629 18:44:26.580" level="INFO">Slept 1 second</msg>
+<status status="PASS" endtime="20160629 18:44:26.580" starttime="20160629 18:44:25.580"></status>
+</kw>
+<status status="PASS" endtime="20160629 18:44:26.580" starttime="20160629 18:44:14.257"></status>
+</kw>
+<kw type="foritem" name="${i} = 1">
+<kw name="Evaluate" library="BuiltIn">
+<doc>Evaluates the given expression in Python and returns the results.</doc>
+<arguments>
+<arg>${i}+${1}</arg>
+</arguments>
+<assign>
+<var>${e}</var>
+</assign>
+<msg timestamp="20160629 18:44:26.584" level="INFO">${e} = 2</msg>
+<status status="PASS" endtime="20160629 18:44:26.584" starttime="20160629 18:44:26.581"></status>
+</kw>
+<kw name="Log" library="BuiltIn">
+<doc>Logs the given message with the given level.</doc>
+<arguments>
+<arg>The e is: ${e}</arg>
+</arguments>
+<msg timestamp="20160629 18:44:26.585" level="INFO">The e is: 2</msg>
+<status status="PASS" endtime="20160629 18:44:26.585" starttime="20160629 18:44:26.584"></status>
+</kw>
+<kw name="Click Element" library="SongzAppiumLibrary">
+<doc>Click element identified by `locator`.</doc>
+<arguments>
+<arg>xpath=//android.view.View[@resource-id='com.maishalei.seller:id/flexboxGroupBuyCommodities']/android.widget.LinearLayout[${e}]</arg>
+</arguments>
+<msg timestamp="20160629 18:44:26.586" level="INFO">Clicking element 'xpath=//android.view.View[@resource-id='com.maishalei.seller:id/flexboxGroupBuyCommodities']/android.widget.LinearLayout[2]'.</msg>
+<status status="PASS" endtime="20160629 18:44:27.412" starttime="20160629 18:44:26.585"></status>
+</kw>
+<kw name="检验等待" library="常用操作">
+<arguments>
+<arg>分享</arg>
+</arguments>
+<kw name="Run Keyword If" library="BuiltIn">
+<doc>Runs the given keyword with the given arguments, if ``condition`` is true.</doc>
+<arguments>
+<arg>'${object}'=='首页'</arg>
+<arg>Wait Until Page Contains Element</arg>
+<arg>id=ivDiscover</arg>
+<arg>${time}</arg>
+<arg>ELSE IF</arg>
+<arg>'${object}'=='分享'</arg>
+<arg>Wait Until Page Contains Element</arg>
+<arg>xpath=//android.widget.TextView[@text='分享']</arg>
+<arg>${time}</arg>
+<arg>ELSE IF</arg>
+<arg>'${object}'=='WebView'</arg>
+<arg>Wait Until Page Contains Element</arg>
+<arg>id=webview</arg>
+<arg>${time}</arg>
+<arg>ELSE IF</arg>
+<arg>'${object}'=='标题'</arg>
+<arg>Wait Until Page Contains Element</arg>
+<arg>id=centerView</arg>
+</arguments>
+<kw name="Wait Until Page Contains Element" library="SongzAppiumLibrary">
+<doc>Waits until element specified with `locator` appears on current page.</doc>
+<arguments>
+<arg>xpath=//android.widget.TextView[@text='分享']</arg>
+<arg>${time}</arg>
+</arguments>
+<status status="PASS" endtime="20160629 18:44:32.623" starttime="20160629 18:44:27.416"></status>
+</kw>
+<status status="PASS" endtime="20160629 18:44:32.623" starttime="20160629 18:44:27.413"></status>
+</kw>
+<status status="PASS" endtime="20160629 18:44:32.624" starttime="20160629 18:44:27.413"></status>
+</kw>
+<kw name="Sleep" library="BuiltIn">
+<doc>Pauses the test executed for the given time.</doc>
+<arguments>
+<arg>1.5</arg>
+</arguments>
+<msg timestamp="20160629 18:44:34.125" level="INFO">Slept 1 second 500 milliseconds</msg>
+<status status="PASS" endtime="20160629 18:44:34.125" starttime="20160629 18:44:32.624"></status>
+</kw>
+<kw name="返回键" library="系统按键">
+<kw name="Press Keycode" library="SongzAppiumLibrary">
+<doc>Sends a press of keycode to the device.</doc>
+<arguments>
+<arg>4</arg>
+</arguments>
+<status status="PASS" endtime="20160629 18:44:34.456" starttime="20160629 18:44:34.127"></status>
+</kw>
+<status status="PASS" endtime="20160629 18:44:34.456" starttime="20160629 18:44:34.126"></status>
+</kw>
+<kw name="Sleep" library="BuiltIn">
+<doc>Pauses the test executed for the given time.</doc>
+<arguments>
+<arg>1</arg>
+</arguments>
+<msg timestamp="20160629 18:44:35.457" level="INFO">Slept 1 second</msg>
+<status status="PASS" endtime="20160629 18:44:35.457" starttime="20160629 18:44:34.457"></status>
+</kw>
+<status status="PASS" endtime="20160629 18:44:35.457" starttime="20160629 18:44:26.580"></status>
+</kw>
+<kw type="foritem" name="${i} = 2">
+<kw name="Evaluate" library="BuiltIn">
+<doc>Evaluates the given expression in Python and returns the results.</doc>
+<arguments>
+<arg>${i}+${1}</arg>
+</arguments>
+<assign>
+<var>${e}</var>
+</assign>
+<msg timestamp="20160629 18:44:35.459" level="INFO">${e} = 3</msg>
+<status status="PASS" endtime="20160629 18:44:35.460" starttime="20160629 18:44:35.458"></status>
+</kw>
+<kw name="Log" library="BuiltIn">
+<doc>Logs the given message with the given level.</doc>
+<arguments>
+<arg>The e is: ${e}</arg>
+</arguments>
+<msg timestamp="20160629 18:44:35.460" level="INFO">The e is: 3</msg>
+<status status="PASS" endtime="20160629 18:44:35.460" starttime="20160629 18:44:35.460"></status>
+</kw>
+<kw name="Click Element" library="SongzAppiumLibrary">
+<doc>Click element identified by `locator`.</doc>
+<arguments>
+<arg>xpath=//android.view.View[@resource-id='com.maishalei.seller:id/flexboxGroupBuyCommodities']/android.widget.LinearLayout[${e}]</arg>
+</arguments>
+<msg timestamp="20160629 18:44:35.461" level="INFO">Clicking element 'xpath=//android.view.View[@resource-id='com.maishalei.seller:id/flexboxGroupBuyCommodities']/android.widget.LinearLayout[3]'.</msg>
+<status status="PASS" endtime="20160629 18:44:37.489" starttime="20160629 18:44:35.461"></status>
+</kw>
+<kw name="检验等待" library="常用操作">
+<arguments>
+<arg>分享</arg>
+</arguments>
+<kw name="Run Keyword If" library="BuiltIn">
+<doc>Runs the given keyword with the given arguments, if ``condition`` is true.</doc>
+<arguments>
+<arg>'${object}'=='首页'</arg>
+<arg>Wait Until Page Contains Element</arg>
+<arg>id=ivDiscover</arg>
+<arg>${time}</arg>
+<arg>ELSE IF</arg>
+<arg>'${object}'=='分享'</arg>
+<arg>Wait Until Page Contains Element</arg>
+<arg>xpath=//android.widget.TextView[@text='分享']</arg>
+<arg>${time}</arg>
+<arg>ELSE IF</arg>
+<arg>'${object}'=='WebView'</arg>
+<arg>Wait Until Page Contains Element</arg>
+<arg>id=webview</arg>
+<arg>${time}</arg>
+<arg>ELSE IF</arg>
+<arg>'${object}'=='标题'</arg>
+<arg>Wait Until Page Contains Element</arg>
+<arg>id=centerView</arg>
+</arguments>
+<kw name="Wait Until Page Contains Element" library="SongzAppiumLibrary">
+<doc>Waits until element specified with `locator` appears on current page.</doc>
+<arguments>
+<arg>xpath=//android.widget.TextView[@text='分享']</arg>
+<arg>${time}</arg>
+</arguments>
+<status status="PASS" endtime="20160629 18:44:39.302" starttime="20160629 18:44:37.498"></status>
+</kw>
+<status status="PASS" endtime="20160629 18:44:39.302" starttime="20160629 18:44:37.491"></status>
+</kw>
+<status status="PASS" endtime="20160629 18:44:39.303" starttime="20160629 18:44:37.490"></status>
+</kw>
+<kw name="Sleep" library="BuiltIn">
+<doc>Pauses the test executed for the given time.</doc>
+<arguments>
+<arg>1.5</arg>
+</arguments>
+<msg timestamp="20160629 18:44:40.803" level="INFO">Slept 1 second 500 milliseconds</msg>
+<status status="PASS" endtime="20160629 18:44:40.803" starttime="20160629 18:44:39.303"></status>
+</kw>
+<kw name="返回键" library="系统按键">
+<kw name="Press Keycode" library="SongzAppiumLibrary">
+<doc>Sends a press of keycode to the device.</doc>
+<arguments>
+<arg>4</arg>
+</arguments>
+<status status="PASS" endtime="20160629 18:44:41.286" starttime="20160629 18:44:40.805"></status>
+</kw>
+<status status="PASS" endtime="20160629 18:44:41.287" starttime="20160629 18:44:40.804"></status>
+</kw>
+<kw name="Sleep" library="BuiltIn">
+<doc>Pauses the test executed for the given time.</doc>
+<arguments>
+<arg>1</arg>
+</arguments>
+<msg timestamp="20160629 18:44:42.288" level="INFO">Slept 1 second</msg>
+<status status="PASS" endtime="20160629 18:44:42.288" starttime="20160629 18:44:41.287"></status>
+</kw>
+<status status="PASS" endtime="20160629 18:44:42.288" starttime="20160629 18:44:35.457"></status>
+</kw>
+<status status="PASS" endtime="20160629 18:44:42.288" starttime="20160629 18:44:14.256"></status>
+</kw>
+<status status="PASS" endtime="20160629 18:44:42.288" starttime="20160629 18:44:14.256"></status>
+</kw>
+<kw name="Sleep" library="BuiltIn">
+<doc>Pauses the test executed for the given time.</doc>
+<arguments>
+<arg>2</arg>
+</arguments>
+<msg timestamp="20160629 18:44:44.290" level="INFO">Slept 2 seconds</msg>
+<status status="PASS" endtime="20160629 18:44:44.290" starttime="20160629 18:44:42.289"></status>
+</kw>
+<status status="PASS" endtime="20160629 18:44:44.291" critical="yes" starttime="20160629 18:44:11.641"></status>
+</test>
+<test id="s1-s1-t3" name="搜索功能">
+<kw name="Wait Until Page Contains Element" library="SongzAppiumLibrary">
+<doc>Waits until element specified with `locator` appears on current page.</doc>
+<arguments>
+<arg>id=ivDiscover</arg>
+<arg>${TIMEOUT}</arg>
+</arguments>
+<status status="PASS" endtime="20160629 18:44:44.932" starttime="20160629 18:44:44.296"></status>
+</kw>
+<kw name="点击搜索" library="常用操作">
+<kw name="Wait Until Page Contains" library="SongzAppiumLibrary">
+<doc>Waits until `text` appears on current page.</doc>
+<arguments>
+<arg>首页</arg>
+</arguments>
+<status status="PASS" endtime="20160629 18:44:45.524" starttime="20160629 18:44:44.935"></status>
+</kw>
+<kw name="Click Element" library="SongzAppiumLibrary">
+<doc>Click element identified by `locator`.</doc>
+<arguments>
+<arg>xpath=//android.widget.ImageView[@index='2']</arg>
+</arguments>
+<msg timestamp="20160629 18:44:45.524" level="INFO">Clicking element 'xpath=//android.widget.ImageView[@index='2']'.</msg>
+<status status="PASS" endtime="20160629 18:44:46.298" starttime="20160629 18:44:45.524"></status>
+</kw>
+<status status="PASS" endtime="20160629 18:44:46.299" starttime="20160629 18:44:44.933"></status>
+</kw>
+<kw name="Sleep" library="BuiltIn">
+<doc>Pauses the test executed for the given time.</doc>
+<arguments>
+<arg>3s</arg>
+</arguments>
+<msg timestamp="20160629 18:44:49.301" level="INFO">Slept 3 seconds</msg>
+<status status="PASS" endtime="20160629 18:44:49.301" starttime="20160629 18:44:46.300"></status>
+</kw>
+<kw name="Input Text" library="SongzAppiumLibrary">
+<doc>Types the given `text` into text field identified by `locator`.</doc>
+<arguments>
+<arg>xpath=//android.widget.EditText[@index='0']</arg>
+<arg>儿童</arg>
+</arguments>
+<msg timestamp="20160629 18:44:49.303" level="INFO">Typing text '儿童' into text field 'xpath=//android.widget.EditText[@index='0']'</msg>
+<status status="PASS" endtime="20160629 18:44:54.747" starttime="20160629 18:44:49.302"></status>
+</kw>
+<kw name="回车" library="常用操作">
+<kw name="Press Keycode" library="SongzAppiumLibrary">
+<doc>Sends a press of keycode to the device.</doc>
+<arguments>
+<arg>66</arg>
+</arguments>
+<status status="PASS" endtime="20160629 18:44:55.762" starttime="20160629 18:44:54.749"></status>
+</kw>
+<status status="PASS" endtime="20160629 18:44:55.762" starttime="20160629 18:44:54.748"></status>
+</kw>
+<kw name="返回" library="常用操作">
+<kw name="Click Element" library="SongzAppiumLibrary">
+<doc>Click element identified by `locator`.</doc>
+<arguments>
+<arg>xpath=//android.widget.ImageView[@NAF='true']</arg>
+</arguments>
+<msg timestamp="20160629 18:44:55.767" level="INFO">Clicking element 'xpath=//android.widget.ImageView[@NAF='true']'.</msg>
+<status status="PASS" endtime="20160629 18:44:56.834" starttime="20160629 18:44:55.765"></status>
+</kw>
+<status status="PASS" endtime="20160629 18:44:56.834" starttime="20160629 18:44:55.764"></status>
+</kw>
+<kw name="返回键" library="系统按键">
+<kw name="Press Keycode" library="SongzAppiumLibrary">
+<doc>Sends a press of keycode to the device.</doc>
+<arguments>
+<arg>4</arg>
+</arguments>
+<status status="PASS" endtime="20160629 18:44:57.770" starttime="20160629 18:44:56.836"></status>
+</kw>
+<status status="PASS" endtime="20160629 18:44:57.770" starttime="20160629 18:44:56.835"></status>
+</kw>
+<kw name="取消" library="常用操作">
+<kw name="Click Element" library="SongzAppiumLibrary">
+<doc>Click element identified by `locator`.</doc>
+<arguments>
+<arg>xpath=//android.widget.TextView[@text='取消']</arg>
+</arguments>
+<msg timestamp="20160629 18:44:57.773" level="INFO">Clicking element 'xpath=//android.widget.TextView[@text='取消']'.</msg>
+<status status="PASS" endtime="20160629 18:45:01.144" starttime="20160629 18:44:57.773"></status>
+</kw>
+<status status="PASS" endtime="20160629 18:45:01.144" starttime="20160629 18:44:57.771"></status>
+</kw>
+<status status="PASS" endtime="20160629 18:45:01.145" critical="yes" starttime="20160629 18:44:44.295"></status>
+</test>
+<test id="s1-s1-t4" name="查看产品分类">
+<kw name="启动参数" library="配置参数">
+<kw name="Set Variable" library="BuiltIn">
+<doc>Returns the given values which can then be assigned to a variables.</doc>
+<arguments>
+<arg>big</arg>
+</arguments>
+<assign>
+<var>${device}</var>
+</assign>
+<msg timestamp="20160629 18:45:01.155" level="INFO">${device} = big</msg>
+<status status="PASS" endtime="20160629 18:45:01.155" starttime="20160629 18:45:01.155"></status>
+</kw>
+<kw name="Set Variable" library="BuiltIn">
+<doc>Returns the given values which can then be assigned to a variables.</doc>
+<arguments>
+<arg>product</arg>
+</arguments>
+<assign>
+<var>${mode}</var>
+</assign>
+<msg timestamp="20160629 18:45:01.157" level="INFO">${mode} = product</msg>
+<status status="PASS" endtime="20160629 18:45:01.157" starttime="20160629 18:45:01.156"></status>
+</kw>
+<kw name="Run Keyword If" library="BuiltIn">
+<doc>Runs the given keyword with the given arguments, if ``condition`` is true.</doc>
+<arguments>
+<arg>'${mode}'=='debug'</arg>
+<arg>Set Variable</arg>
+<arg>com.maishalei.seller.debug</arg>
+<arg>ELSE IF</arg>
+<arg>'${mode}'=='product'</arg>
+<arg>Set Variable</arg>
+<arg>com.maishalei.seller</arg>
+<arg>ELSE</arg>
+<arg>Log</arg>
+<arg>请输入正确的运行模式。</arg>
+</arguments>
+<assign>
+<var>${package}</var>
+</assign>
+<kw name="Set Variable" library="BuiltIn">
+<doc>Returns the given values which can then be assigned to a variables.</doc>
+<arguments>
+<arg>com.maishalei.seller</arg>
+</arguments>
+<status status="PASS" endtime="20160629 18:45:01.162" starttime="20160629 18:45:01.162"></status>
+</kw>
+<msg timestamp="20160629 18:45:01.163" level="INFO">${package} = com.maishalei.seller</msg>
+<status status="PASS" endtime="20160629 18:45:01.163" starttime="20160629 18:45:01.157"></status>
+</kw>
+<kw name="Run Keyword If" library="BuiltIn">
+<doc>Runs the given keyword with the given arguments, if ``condition`` is true.</doc>
+<arguments>
+<arg>'${mode}'=='debug'</arg>
+<arg>Set Variable</arg>
+<arg>com.maishalei.seller.ui.activity.LauncherActivity</arg>
+<arg>ELSE IF</arg>
+<arg>'${mode}'=='product'</arg>
+<arg>Set Variable</arg>
+<arg>.ui.activity.LauncherActivity</arg>
+<arg>ELSE</arg>
+<arg>Log</arg>
+<arg>请输入正确的运行模式。</arg>
+</arguments>
+<assign>
+<var>${activity}</var>
+</assign>
+<kw name="Set Variable" library="BuiltIn">
+<doc>Returns the given values which can then be assigned to a variables.</doc>
+<arguments>
+<arg>.ui.activity.LauncherActivity</arg>
+</arguments>
+<status status="PASS" endtime="20160629 18:45:01.168" starttime="20160629 18:45:01.168"></status>
+</kw>
+<msg timestamp="20160629 18:45:01.169" level="INFO">${activity} = .ui.activity.LauncherActivity</msg>
+<status status="PASS" endtime="20160629 18:45:01.169" starttime="20160629 18:45:01.163"></status>
+</kw>
+<kw name="Run Keyword If" library="BuiltIn">
+<doc>Runs the given keyword with the given arguments, if ``condition`` is true.</doc>
+<arguments>
+<arg>'${device}'=='small'</arg>
+<arg>Set Variable</arg>
+<arg>http://localhost:4722/wd/hub</arg>
+<arg>ELSE IF</arg>
+<arg>'${device}'=='medium'</arg>
+<arg>Set Variable</arg>
+<arg>http://localhost:4723/wd/hub</arg>
+<arg>ELSE IF</arg>
+<arg>'${device}'=='big'</arg>
+<arg>Set Variable</arg>
+<arg>http://localhost:4734/wd/hub</arg>
+<arg>ELSE</arg>
+<arg>Log</arg>
+<arg>请输入正确的设备规格。</arg>
+</arguments>
+<assign>
+<var>${host}</var>
+</assign>
+<kw name="Set Variable" library="BuiltIn">
+<doc>Returns the given values which can then be assigned to a variables.</doc>
+<arguments>
+<arg>http://localhost:4734/wd/hub</arg>
+</arguments>
+<status status="PASS" endtime="20160629 18:45:01.176" starttime="20160629 18:45:01.175"></status>
+</kw>
+<msg timestamp="20160629 18:45:01.176" level="INFO">${host} = http://localhost:4734/wd/hub</msg>
+<status status="PASS" endtime="20160629 18:45:01.176" starttime="20160629 18:45:01.169"></status>
+</kw>
+<kw name="Run Keyword If" library="BuiltIn">
+<doc>Runs the given keyword with the given arguments, if ``condition`` is true.</doc>
+<arguments>
+<arg>'${device}'=='small'</arg>
+<arg>Create Dictionary</arg>
+<arg>alias=maisha</arg>
+<arg>platformName=Android</arg>
+<arg>platformVersion=5.1.1</arg>
+<arg>deviceName='emulator-5554'</arg>
+<arg>appPackage=${package}</arg>
+<arg>appActivity=${activity}</arg>
+<arg>unicodeKeyboard=True</arg>
+<arg>resetKeyboard=True</arg>
+<arg>ELSE IF</arg>
+<arg>'${device}'=='medium'</arg>
+<arg>Create Dictionary</arg>
+<arg>alias=maisha</arg>
+<arg>platformName=Android</arg>
+<arg>platformVersion=5.1.1</arg>
+<arg>deviceName='HUAWEI MT2-L01'</arg>
+<arg>appPackage=${package}</arg>
+<arg>appActivity=${activity}</arg>
+<arg>unicodeKeyboard=True</arg>
+<arg>resetKeyboard=True</arg>
+<arg>ELSE IF</arg>
+<arg>'${device}'=='big'</arg>
+<arg>Create Dictionary</arg>
+<arg>alias=maisha</arg>
+<arg>platformName=Android</arg>
+<arg>platformVersion=4.4.2</arg>
+<arg>deviceName='emulator-5554'</arg>
+<arg>appPackage=${package}</arg>
+<arg>appActivity=${activity}</arg>
+<arg>unicodeKeyboard=True</arg>
+<arg>resetKeyboard=True</arg>
+<arg>ELSE</arg>
+<arg>Log</arg>
+<arg>请输入正确的设备规格。</arg>
+</arguments>
+<assign>
+<var>&amp;{caps}</var>
+</assign>
+<kw name="Create Dictionary" library="BuiltIn">
+<doc>Creates and returns a dictionary based on given items.</doc>
+<arguments>
+<arg>alias=maisha</arg>
+<arg>platformName=Android</arg>
+<arg>platformVersion=4.4.2</arg>
+<arg>deviceName='emulator-5554'</arg>
+<arg>appPackage=${package}</arg>
+<arg>appActivity=${activity}</arg>
+<arg>unicodeKeyboard=True</arg>
+<arg>resetKeyboard=True</arg>
+</arguments>
+<status status="PASS" endtime="20160629 18:45:01.186" starttime="20160629 18:45:01.184"></status>
+</kw>
+<msg timestamp="20160629 18:45:01.186" level="INFO">&amp;{caps} = { alias=maisha | platformName=Android | platformVersion=4.4.2 | deviceName='emulator-5554' | appPackage=com.maishalei.seller | appActivity=.ui.activity.LauncherActivity | unicodeKeyboard=True | resetK...</msg>
+<status status="PASS" endtime="20160629 18:45:01.186" starttime="20160629 18:45:01.177"></status>
+</kw>
+<kw name="Set Global Variable" library="BuiltIn">
+<doc>Makes a variable available globally in all tests and suites.</doc>
+<arguments>
+<arg>${mode}</arg>
+</arguments>
+<msg timestamp="20160629 18:45:01.188" level="INFO">${mode} = product</msg>
+<status status="PASS" endtime="20160629 18:45:01.188" starttime="20160629 18:45:01.187"></status>
+</kw>
+<kw name="Set Global Variable" library="BuiltIn">
+<doc>Makes a variable available globally in all tests and suites.</doc>
+<arguments>
+<arg>&amp;{caps}</arg>
+</arguments>
+<msg timestamp="20160629 18:45:01.190" level="INFO">&amp;{caps} = { alias=maisha | platformName=Android | platformVersion=4.4.2 | deviceName='emulator-5554' | appPackage=com.maishalei.seller | appActivity=.ui.activity.LauncherActivity | unicodeKeyboard=True | resetK...</msg>
+<status status="PASS" endtime="20160629 18:45:01.190" starttime="20160629 18:45:01.188"></status>
+</kw>
+<kw name="Set Global Variable" library="BuiltIn">
+<doc>Makes a variable available globally in all tests and suites.</doc>
+<arguments>
+<arg>${host}</arg>
+</arguments>
+<msg timestamp="20160629 18:45:01.191" level="INFO">${host} = http://localhost:4734/wd/hub</msg>
+<status status="PASS" endtime="20160629 18:45:01.191" starttime="20160629 18:45:01.190"></status>
+</kw>
+<kw name="Set Global Variable" library="BuiltIn">
+<doc>Makes a variable available globally in all tests and suites.</doc>
+<arguments>
+<arg>${device}</arg>
+</arguments>
+<msg timestamp="20160629 18:45:01.193" level="INFO">${device} = big</msg>
+<status status="PASS" endtime="20160629 18:45:01.193" starttime="20160629 18:45:01.192"></status>
+</kw>
+<status status="PASS" endtime="20160629 18:45:01.193" starttime="20160629 18:45:01.154"></status>
+</kw>
+<kw name="Wait Until Page Contains Element" library="SongzAppiumLibrary">
+<doc>Waits until element specified with `locator` appears on current page.</doc>
+<arguments>
+<arg>id=ivDiscover</arg>
+<arg>${TIMEOUT}</arg>
+</arguments>
+<status status="PASS" endtime="20160629 18:45:02.504" starttime="20160629 18:45:01.194"></status>
+</kw>
+<kw name="点击分类" library="常用操作">
+<kw name="Wait Until Page Contains" library="SongzAppiumLibrary">
+<doc>Waits until `text` appears on current page.</doc>
+<arguments>
+<arg>首页</arg>
+</arguments>
+<status status="PASS" endtime="20160629 18:45:02.972" starttime="20160629 18:45:02.506"></status>
+</kw>
+<kw name="Click Element" library="SongzAppiumLibrary">
+<doc>Click element identified by `locator`.</doc>
+<arguments>
+<arg>xpath=//android.widget.ImageView[@index='3']</arg>
+</arguments>
+<msg timestamp="20160629 18:45:02.973" level="INFO">Clicking element 'xpath=//android.widget.ImageView[@index='3']'.</msg>
+<status status="PASS" endtime="20160629 18:45:03.657" starttime="20160629 18:45:02.972"></status>
+</kw>
+<status status="PASS" endtime="20160629 18:45:03.657" starttime="20160629 18:45:02.505"></status>
+</kw>
+<kw name="Log" library="BuiltIn">
+<doc>Logs the given message with the given level.</doc>
+<arguments>
+<arg>开始分类检查...</arg>
+</arguments>
+<msg timestamp="20160629 18:45:03.659" level="INFO">开始分类检查...</msg>
+<status status="PASS" endtime="20160629 18:45:03.659" starttime="20160629 18:45:03.659"></status>
+</kw>
+<kw name="Log To Console" library="BuiltIn">
+<doc>Logs the given message to the console.</doc>
+<arguments>
+<arg>开始分类检查...</arg>
+</arguments>
+<status status="PASS" endtime="20160629 18:45:03.662" starttime="20160629 18:45:03.660"></status>
+</kw>
+<kw name="Wait Until Page Contains Element" library="SongzAppiumLibrary">
+<doc>Waits until element specified with `locator` appears on current page.</doc>
+<arguments>
+<arg>xpath=//android.widget.TextView[@text='母婴用品']</arg>
+<arg>${TIMEOUT}</arg>
+</arguments>
+<status status="PASS" endtime="20160629 18:45:05.368" starttime="20160629 18:45:03.663"></status>
+</kw>
+<kw name="Run Keyword If" library="BuiltIn">
+<doc>Runs the given keyword with the given arguments, if ``condition`` is true.</doc>
+<arguments>
+<arg>'${mode}'=='debug'</arg>
+<arg>分类菜单检测-测试</arg>
+<arg>ELSE IF</arg>
+<arg>'${mode}'=='product'</arg>
+<arg>分类菜单检测-生产</arg>
+<arg>ELSE</arg>
+<arg>Log</arg>
+<arg>请输入正确的运行模式。</arg>
+</arguments>
+<kw name="分类菜单检测-生产" library="菜单库">
+<kw name="母婴用品" library="菜单库">
+<kw name="Click Element" library="SongzAppiumLibrary">
+<doc>Click element identified by `locator`.</doc>
+<arguments>
+<arg>xpath=//android.widget.TextView[@text='母婴用品']</arg>
+</arguments>
+<msg timestamp="20160629 18:45:05.374" level="INFO">Clicking element 'xpath=//android.widget.TextView[@text='母婴用品']'.</msg>
+<status status="PASS" endtime="20160629 18:45:06.179" starttime="20160629 18:45:05.374"></status>
+</kw>
+<status status="PASS" endtime="20160629 18:45:06.179" starttime="20160629 18:45:05.373"></status>
+</kw>
+<kw name="居家会场" library="菜单库">
+<kw name="Click Element" library="SongzAppiumLibrary">
+<doc>Click element identified by `locator`.</doc>
+<arguments>
+<arg>xpath=//android.widget.TextView[@text='居家会场']</arg>
+</arguments>
+<msg timestamp="20160629 18:45:06.181" level="INFO">Clicking element 'xpath=//android.widget.TextView[@text='居家会场']'.</msg>
+<status status="PASS" endtime="20160629 18:45:08.161" starttime="20160629 18:45:06.180"></status>
+</kw>
+<status status="PASS" endtime="20160629 18:45:08.161" starttime="20160629 18:45:06.180"></status>
+</kw>
+<kw name="美妆个护" library="菜单库">
+<kw name="Click Element" library="SongzAppiumLibrary">
+<doc>Click element identified by `locator`.</doc>
+<arguments>
+<arg>xpath=//android.widget.TextView[@text='美妆个护']</arg>
+</arguments>
+<msg timestamp="20160629 18:45:08.163" level="INFO">Clicking element 'xpath=//android.widget.TextView[@text='美妆个护']'.</msg>
+<status status="PASS" endtime="20160629 18:45:08.746" starttime="20160629 18:45:08.162"></status>
+</kw>
+<status status="PASS" endtime="20160629 18:45:08.747" starttime="20160629 18:45:08.161"></status>
+</kw>
+<kw name="环球美食" library="菜单库">
+<kw name="Click Element" library="SongzAppiumLibrary">
+<doc>Click element identified by `locator`.</doc>
+<arguments>
+<arg>xpath=//android.widget.TextView[@text='环球美食']</arg>
+</arguments>
+<msg timestamp="20160629 18:45:08.749" level="INFO">Clicking element 'xpath=//android.widget.TextView[@text='环球美食']'.</msg>
+<status status="PASS" endtime="20160629 18:45:09.702" starttime="20160629 18:45:08.748"></status>
+</kw>
+<status status="PASS" endtime="20160629 18:45:09.702" starttime="20160629 18:45:08.747"></status>
+</kw>
+<kw name="营养保健" library="菜单库">
+<kw name="Click Element" library="SongzAppiumLibrary">
+<doc>Click element identified by `locator`.</doc>
+<arguments>
+<arg>xpath=//android.widget.TextView[@text='营养保健']</arg>
+</arguments>
+<msg timestamp="20160629 18:45:09.704" level="INFO">Clicking element 'xpath=//android.widget.TextView[@text='营养保健']'.</msg>
+<status status="PASS" endtime="20160629 18:45:11.432" starttime="20160629 18:45:09.704"></status>
+</kw>
+<status status="PASS" endtime="20160629 18:45:11.432" starttime="20160629 18:45:09.703"></status>
+</kw>
+<kw name="饰品会场" library="菜单库">
+<kw name="Click Element" library="SongzAppiumLibrary">
+<doc>Click element identified by `locator`.</doc>
+<arguments>
+<arg>xpath=//android.widget.TextView[@text='饰品会场']</arg>
+</arguments>
+<msg timestamp="20160629 18:45:11.434" level="INFO">Clicking element 'xpath=//android.widget.TextView[@text='饰品会场']'.</msg>
+<status status="PASS" endtime="20160629 18:45:12.426" starttime="20160629 18:45:11.433"></status>
+</kw>
+<status status="PASS" endtime="20160629 18:45:12.427" starttime="20160629 18:45:11.433"></status>
+</kw>
+<status status="PASS" endtime="20160629 18:45:12.427" starttime="20160629 18:45:05.372"></status>
+</kw>
+<status status="PASS" endtime="20160629 18:45:12.427" starttime="20160629 18:45:05.369"></status>
+</kw>
+<kw name="Log" library="BuiltIn">
+<doc>Logs the given message with the given level.</doc>
+<arguments>
+<arg>分类检查完成...</arg>
+</arguments>
+<msg timestamp="20160629 18:45:12.429" level="INFO">分类检查完成...</msg>
+<status status="PASS" endtime="20160629 18:45:12.429" starttime="20160629 18:45:12.428"></status>
+</kw>
+<kw name="Click Element" library="SongzAppiumLibrary">
+<doc>Click element identified by `locator`.</doc>
+<arguments>
+<arg>xpath=//android.widget.ImageView[@NAF='true']</arg>
+</arguments>
+<msg timestamp="20160629 18:45:12.432" level="INFO">Clicking element 'xpath=//android.widget.ImageView[@NAF='true']'.</msg>
+<status status="PASS" endtime="20160629 18:45:15.883" starttime="20160629 18:45:12.432"></status>
+</kw>
+<tags>
+<tag>Smoke</tag>
+</tags>
+<status status="PASS" endtime="20160629 18:45:15.885" critical="yes" starttime="20160629 18:45:01.151"></status>
+</test>
+<test id="s1-s1-t5" name="首页页面滑动">
+<kw name="Wait Until Page Contains Element" library="SongzAppiumLibrary">
+<doc>Waits until element specified with `locator` appears on current page.</doc>
+<arguments>
+<arg>id=ivDiscover</arg>
+<arg>${TIMEOUT}</arg>
+</arguments>
+<status status="PASS" endtime="20160629 18:45:16.981" starttime="20160629 18:45:15.895"></status>
+</kw>
+<kw name="Sleep" library="BuiltIn">
+<doc>Pauses the test executed for the given time.</doc>
+<arguments>
+<arg>1</arg>
+</arguments>
+<msg timestamp="20160629 18:45:17.983" level="INFO">Slept 1 second</msg>
+<status status="PASS" endtime="20160629 18:45:17.983" starttime="20160629 18:45:16.982"></status>
+</kw>
+<kw name="向上滑动" library="常用操作">
+<arguments>
+<arg>3</arg>
+<arg>500</arg>
+</arguments>
+<kw name="启动参数" library="配置参数">
+<kw name="Set Variable" library="BuiltIn">
+<doc>Returns the given values which can then be assigned to a variables.</doc>
+<arguments>
+<arg>big</arg>
+</arguments>
+<assign>
+<var>${device}</var>
+</assign>
+<msg timestamp="20160629 18:45:17.987" level="INFO">${device} = big</msg>
+<status status="PASS" endtime="20160629 18:45:17.987" starttime="20160629 18:45:17.986"></status>
+</kw>
+<kw name="Set Variable" library="BuiltIn">
+<doc>Returns the given values which can then be assigned to a variables.</doc>
+<arguments>
+<arg>product</arg>
+</arguments>
+<assign>
+<var>${mode}</var>
+</assign>
+<msg timestamp="20160629 18:45:17.988" level="INFO">${mode} = product</msg>
+<status status="PASS" endtime="20160629 18:45:17.988" starttime="20160629 18:45:17.987"></status>
+</kw>
+<kw name="Run Keyword If" library="BuiltIn">
+<doc>Runs the given keyword with the given arguments, if ``condition`` is true.</doc>
+<arguments>
+<arg>'${mode}'=='debug'</arg>
+<arg>Set Variable</arg>
+<arg>com.maishalei.seller.debug</arg>
+<arg>ELSE IF</arg>
+<arg>'${mode}'=='product'</arg>
+<arg>Set Variable</arg>
+<arg>com.maishalei.seller</arg>
+<arg>ELSE</arg>
+<arg>Log</arg>
+<arg>请输入正确的运行模式。</arg>
+</arguments>
+<assign>
+<var>${package}</var>
+</assign>
+<kw name="Set Variable" library="BuiltIn">
+<doc>Returns the given values which can then be assigned to a variables.</doc>
+<arguments>
+<arg>com.maishalei.seller</arg>
+</arguments>
+<status status="PASS" endtime="20160629 18:45:17.992" starttime="20160629 18:45:17.992"></status>
+</kw>
+<msg timestamp="20160629 18:45:17.992" level="INFO">${package} = com.maishalei.seller</msg>
+<status status="PASS" endtime="20160629 18:45:17.992" starttime="20160629 18:45:17.988"></status>
+</kw>
+<kw name="Run Keyword If" library="BuiltIn">
+<doc>Runs the given keyword with the given arguments, if ``condition`` is true.</doc>
+<arguments>
+<arg>'${mode}'=='debug'</arg>
+<arg>Set Variable</arg>
+<arg>com.maishalei.seller.ui.activity.LauncherActivity</arg>
+<arg>ELSE IF</arg>
+<arg>'${mode}'=='product'</arg>
+<arg>Set Variable</arg>
+<arg>.ui.activity.LauncherActivity</arg>
+<arg>ELSE</arg>
+<arg>Log</arg>
+<arg>请输入正确的运行模式。</arg>
+</arguments>
+<assign>
+<var>${activity}</var>
+</assign>
+<kw name="Set Variable" library="BuiltIn">
+<doc>Returns the given values which can then be assigned to a variables.</doc>
+<arguments>
+<arg>.ui.activity.LauncherActivity</arg>
+</arguments>
+<status status="PASS" endtime="20160629 18:45:17.997" starttime="20160629 18:45:17.996"></status>
+</kw>
+<msg timestamp="20160629 18:45:17.997" level="INFO">${activity} = .ui.activity.LauncherActivity</msg>
+<status status="PASS" endtime="20160629 18:45:17.997" starttime="20160629 18:45:17.993"></status>
+</kw>
+<kw name="Run Keyword If" library="BuiltIn">
+<doc>Runs the given keyword with the given arguments, if ``condition`` is true.</doc>
+<arguments>
+<arg>'${device}'=='small'</arg>
+<arg>Set Variable</arg>
+<arg>http://localhost:4722/wd/hub</arg>
+<arg>ELSE IF</arg>
+<arg>'${device}'=='medium'</arg>
+<arg>Set Variable</arg>
+<arg>http://localhost:4723/wd/hub</arg>
+<arg>ELSE IF</arg>
+<arg>'${device}'=='big'</arg>
+<arg>Set Variable</arg>
+<arg>http://localhost:4734/wd/hub</arg>
+<arg>ELSE</arg>
+<arg>Log</arg>
+<arg>请输入正确的设备规格。</arg>
+</arguments>
+<assign>
+<var>${host}</var>
+</assign>
+<kw name="Set Variable" library="BuiltIn">
+<doc>Returns the given values which can then be assigned to a variables.</doc>
+<arguments>
+<arg>http://localhost:4734/wd/hub</arg>
+</arguments>
+<status status="PASS" endtime="20160629 18:45:18.003" starttime="20160629 18:45:18.003"></status>
+</kw>
+<msg timestamp="20160629 18:45:18.003" level="INFO">${host} = http://localhost:4734/wd/hub</msg>
+<status status="PASS" endtime="20160629 18:45:18.003" starttime="20160629 18:45:17.998"></status>
+</kw>
+<kw name="Run Keyword If" library="BuiltIn">
+<doc>Runs the given keyword with the given arguments, if ``condition`` is true.</doc>
+<arguments>
+<arg>'${device}'=='small'</arg>
+<arg>Create Dictionary</arg>
+<arg>alias=maisha</arg>
+<arg>platformName=Android</arg>
+<arg>platformVersion=5.1.1</arg>
+<arg>deviceName='emulator-5554'</arg>
+<arg>appPackage=${package}</arg>
+<arg>appActivity=${activity}</arg>
+<arg>unicodeKeyboard=True</arg>
+<arg>resetKeyboard=True</arg>
+<arg>ELSE IF</arg>
+<arg>'${device}'=='medium'</arg>
+<arg>Create Dictionary</arg>
+<arg>alias=maisha</arg>
+<arg>platformName=Android</arg>
+<arg>platformVersion=5.1.1</arg>
+<arg>deviceName='HUAWEI MT2-L01'</arg>
+<arg>appPackage=${package}</arg>
+<arg>appActivity=${activity}</arg>
+<arg>unicodeKeyboard=True</arg>
+<arg>resetKeyboard=True</arg>
+<arg>ELSE IF</arg>
+<arg>'${device}'=='big'</arg>
+<arg>Create Dictionary</arg>
+<arg>alias=maisha</arg>
+<arg>platformName=Android</arg>
+<arg>platformVersion=4.4.2</arg>
+<arg>deviceName='emulator-5554'</arg>
+<arg>appPackage=${package}</arg>
+<arg>appActivity=${activity}</arg>
+<arg>unicodeKeyboard=True</arg>
+<arg>resetKeyboard=True</arg>
+<arg>ELSE</arg>
+<arg>Log</arg>
+<arg>请输入正确的设备规格。</arg>
+</arguments>
+<assign>
+<var>&amp;{caps}</var>
+</assign>
+<kw name="Create Dictionary" library="BuiltIn">
+<doc>Creates and returns a dictionary based on given items.</doc>
+<arguments>
+<arg>alias=maisha</arg>
+<arg>platformName=Android</arg>
+<arg>platformVersion=4.4.2</arg>
+<arg>deviceName='emulator-5554'</arg>
+<arg>appPackage=${package}</arg>
+<arg>appActivity=${activity}</arg>
+<arg>unicodeKeyboard=True</arg>
+<arg>resetKeyboard=True</arg>
+</arguments>
+<status status="PASS" endtime="20160629 18:45:18.007" starttime="20160629 18:45:18.006"></status>
+</kw>
+<msg timestamp="20160629 18:45:18.007" level="INFO">&amp;{caps} = { alias=maisha | platformName=Android | platformVersion=4.4.2 | deviceName='emulator-5554' | appPackage=com.maishalei.seller | appActivity=.ui.activity.LauncherActivity | unicodeKeyboard=True | resetK...</msg>
+<status status="PASS" endtime="20160629 18:45:18.007" starttime="20160629 18:45:18.003"></status>
+</kw>
+<kw name="Set Global Variable" library="BuiltIn">
+<doc>Makes a variable available globally in all tests and suites.</doc>
+<arguments>
+<arg>${mode}</arg>
+</arguments>
+<msg timestamp="20160629 18:45:18.008" level="INFO">${mode} = product</msg>
+<status status="PASS" endtime="20160629 18:45:18.008" starttime="20160629 18:45:18.008"></status>
+</kw>
+<kw name="Set Global Variable" library="BuiltIn">
+<doc>Makes a variable available globally in all tests and suites.</doc>
+<arguments>
+<arg>&amp;{caps}</arg>
+</arguments>
+<msg timestamp="20160629 18:45:18.009" level="INFO">&amp;{caps} = { alias=maisha | platformName=Android | platformVersion=4.4.2 | deviceName='emulator-5554' | appPackage=com.maishalei.seller | appActivity=.ui.activity.LauncherActivity | unicodeKeyboard=True | resetK...</msg>
+<status status="PASS" endtime="20160629 18:45:18.009" starttime="20160629 18:45:18.008"></status>
+</kw>
+<kw name="Set Global Variable" library="BuiltIn">
+<doc>Makes a variable available globally in all tests and suites.</doc>
+<arguments>
+<arg>${host}</arg>
+</arguments>
+<msg timestamp="20160629 18:45:18.009" level="INFO">${host} = http://localhost:4734/wd/hub</msg>
+<status status="PASS" endtime="20160629 18:45:18.010" starttime="20160629 18:45:18.009"></status>
+</kw>
+<kw name="Set Global Variable" library="BuiltIn">
+<doc>Makes a variable available globally in all tests and suites.</doc>
+<arguments>
+<arg>${device}</arg>
+</arguments>
+<msg timestamp="20160629 18:45:18.010" level="INFO">${device} = big</msg>
+<status status="PASS" endtime="20160629 18:45:18.010" starttime="20160629 18:45:18.010"></status>
+</kw>
+<status status="PASS" endtime="20160629 18:45:18.010" starttime="20160629 18:45:17.985"></status>
+</kw>
+<kw name="Run Keyword If" library="BuiltIn">
+<doc>Runs the given keyword with the given arguments, if ``condition`` is true.</doc>
+<arguments>
+<arg>'${device}'=='small'</arg>
+<arg>Set Variable</arg>
+<arg>240</arg>
+<arg>580</arg>
+<arg>240</arg>
+<arg>240</arg>
+<arg>ELSE IF</arg>
+<arg>'${device}'=='medium'</arg>
+<arg>Set Variable</arg>
+<arg>350</arg>
+<arg>950</arg>
+<arg>350</arg>
+<arg>400</arg>
+<arg>ELSE IF</arg>
+<arg>'${device}'=='big'</arg>
+<arg>Set Variable</arg>
+<arg>500</arg>
+<arg>1400</arg>
+<arg>500</arg>
+<arg>600</arg>
+<arg>ELSE</arg>
+<arg>Log</arg>
+<arg>无效的参数${device}</arg>
+</arguments>
+<assign>
+<var>@{list}</var>
+</assign>
+<kw name="Set Variable" library="BuiltIn">
+<doc>Returns the given values which can then be assigned to a variables.</doc>
+<arguments>
+<arg>500</arg>
+<arg>1400</arg>
+<arg>500</arg>
+<arg>600</arg>
+</arguments>
+<status status="PASS" endtime="20160629 18:45:18.014" starttime="20160629 18:45:18.014"></status>
+</kw>
+<msg timestamp="20160629 18:45:18.014" level="INFO">@{list} = [ 500 | 1400 | 500 | 600 ]</msg>
+<status status="PASS" endtime="20160629 18:45:18.014" starttime="20160629 18:45:18.011"></status>
+</kw>
+<kw type="for" name="${i} IN RANGE [ ${n} ]">
+<kw type="foritem" name="${i} = 0">
+<kw name="Swipe" library="SongzAppiumLibrary">
+<doc>Swipe from one point to another point, for an optional duration.</doc>
+<arguments>
+<arg>@{list}</arg>
+<arg>${interval}</arg>
+</arguments>
+<status status="PASS" endtime="20160629 18:45:18.452" starttime="20160629 18:45:18.015"></status>
+</kw>
+<kw name="Sleep" library="BuiltIn">
+<doc>Pauses the test executed for the given time.</doc>
+<arguments>
+<arg>0.5</arg>
+</arguments>
+<msg timestamp="20160629 18:45:18.953" level="INFO">Slept 500 milliseconds</msg>
+<status status="PASS" endtime="20160629 18:45:18.953" starttime="20160629 18:45:18.452"></status>
+</kw>
+<status status="PASS" endtime="20160629 18:45:18.953" starttime="20160629 18:45:18.015"></status>
+</kw>
+<kw type="foritem" name="${i} = 1">
+<kw name="Swipe" library="SongzAppiumLibrary">
+<doc>Swipe from one point to another point, for an optional duration.</doc>
+<arguments>
+<arg>@{list}</arg>
+<arg>${interval}</arg>
+</arguments>
+<status status="PASS" endtime="20160629 18:45:19.222" starttime="20160629 18:45:18.953"></status>
+</kw>
+<kw name="Sleep" library="BuiltIn">
+<doc>Pauses the test executed for the given time.</doc>
+<arguments>
+<arg>0.5</arg>
+</arguments>
+<msg timestamp="20160629 18:45:19.723" level="INFO">Slept 500 milliseconds</msg>
+<status status="PASS" endtime="20160629 18:45:19.723" starttime="20160629 18:45:19.223"></status>
+</kw>
+<status status="PASS" endtime="20160629 18:45:19.723" starttime="20160629 18:45:18.953"></status>
+</kw>
+<kw type="foritem" name="${i} = 2">
+<kw name="Swipe" library="SongzAppiumLibrary">
+<doc>Swipe from one point to another point, for an optional duration.</doc>
+<arguments>
+<arg>@{list}</arg>
+<arg>${interval}</arg>
+</arguments>
+<status status="PASS" endtime="20160629 18:45:19.989" starttime="20160629 18:45:19.724"></status>
+</kw>
+<kw name="Sleep" library="BuiltIn">
+<doc>Pauses the test executed for the given time.</doc>
+<arguments>
+<arg>0.5</arg>
+</arguments>
+<msg timestamp="20160629 18:45:20.490" level="INFO">Slept 500 milliseconds</msg>
+<status status="PASS" endtime="20160629 18:45:20.490" starttime="20160629 18:45:19.990"></status>
+</kw>
+<status status="PASS" endtime="20160629 18:45:20.490" starttime="20160629 18:45:19.723"></status>
+</kw>
+<status status="PASS" endtime="20160629 18:45:20.490" starttime="20160629 18:45:18.014"></status>
+</kw>
+<status status="PASS" endtime="20160629 18:45:20.491" starttime="20160629 18:45:17.984"></status>
+</kw>
+<kw name="Sleep" library="BuiltIn">
+<doc>Pauses the test executed for the given time.</doc>
+<arguments>
+<arg>1</arg>
+</arguments>
+<msg timestamp="20160629 18:45:21.493" level="INFO">Slept 1 second</msg>
+<status status="PASS" endtime="20160629 18:45:21.493" starttime="20160629 18:45:20.492"></status>
+</kw>
+<kw name="向下滑动" library="常用操作">
+<arguments>
+<arg>1</arg>
+<arg>400</arg>
+</arguments>
+<kw name="启动参数" library="配置参数">
+<kw name="Set Variable" library="BuiltIn">
+<doc>Returns the given values which can then be assigned to a variables.</doc>
+<arguments>
+<arg>big</arg>
+</arguments>
+<assign>
+<var>${device}</var>
+</assign>
+<msg timestamp="20160629 18:45:21.497" level="INFO">${device} = big</msg>
+<status status="PASS" endtime="20160629 18:45:21.497" starttime="20160629 18:45:21.496"></status>
+</kw>
+<kw name="Set Variable" library="BuiltIn">
+<doc>Returns the given values which can then be assigned to a variables.</doc>
+<arguments>
+<arg>product</arg>
+</arguments>
+<assign>
+<var>${mode}</var>
+</assign>
+<msg timestamp="20160629 18:45:21.498" level="INFO">${mode} = product</msg>
+<status status="PASS" endtime="20160629 18:45:21.498" starttime="20160629 18:45:21.498"></status>
+</kw>
+<kw name="Run Keyword If" library="BuiltIn">
+<doc>Runs the given keyword with the given arguments, if ``condition`` is true.</doc>
+<arguments>
+<arg>'${mode}'=='debug'</arg>
+<arg>Set Variable</arg>
+<arg>com.maishalei.seller.debug</arg>
+<arg>ELSE IF</arg>
+<arg>'${mode}'=='product'</arg>
+<arg>Set Variable</arg>
+<arg>com.maishalei.seller</arg>
+<arg>ELSE</arg>
+<arg>Log</arg>
+<arg>请输入正确的运行模式。</arg>
+</arguments>
+<assign>
+<var>${package}</var>
+</assign>
+<kw name="Set Variable" library="BuiltIn">
+<doc>Returns the given values which can then be assigned to a variables.</doc>
+<arguments>
+<arg>com.maishalei.seller</arg>
+</arguments>
+<status status="PASS" endtime="20160629 18:45:21.503" starttime="20160629 18:45:21.503"></status>
+</kw>
+<msg timestamp="20160629 18:45:21.504" level="INFO">${package} = com.maishalei.seller</msg>
+<status status="PASS" endtime="20160629 18:45:21.504" starttime="20160629 18:45:21.499"></status>
+</kw>
+<kw name="Run Keyword If" library="BuiltIn">
+<doc>Runs the given keyword with the given arguments, if ``condition`` is true.</doc>
+<arguments>
+<arg>'${mode}'=='debug'</arg>
+<arg>Set Variable</arg>
+<arg>com.maishalei.seller.ui.activity.LauncherActivity</arg>
+<arg>ELSE IF</arg>
+<arg>'${mode}'=='product'</arg>
+<arg>Set Variable</arg>
+<arg>.ui.activity.LauncherActivity</arg>
+<arg>ELSE</arg>
+<arg>Log</arg>
+<arg>请输入正确的运行模式。</arg>
+</arguments>
+<assign>
+<var>${activity}</var>
+</assign>
+<kw name="Set Variable" library="BuiltIn">
+<doc>Returns the given values which can then be assigned to a variables.</doc>
+<arguments>
+<arg>.ui.activity.LauncherActivity</arg>
+</arguments>
+<status status="PASS" endtime="20160629 18:45:21.510" starttime="20160629 18:45:21.509"></status>
+</kw>
+<msg timestamp="20160629 18:45:21.510" level="INFO">${activity} = .ui.activity.LauncherActivity</msg>
+<status status="PASS" endtime="20160629 18:45:21.510" starttime="20160629 18:45:21.505"></status>
+</kw>
+<kw name="Run Keyword If" library="BuiltIn">
+<doc>Runs the given keyword with the given arguments, if ``condition`` is true.</doc>
+<arguments>
+<arg>'${device}'=='small'</arg>
+<arg>Set Variable</arg>
+<arg>http://localhost:4722/wd/hub</arg>
+<arg>ELSE IF</arg>
+<arg>'${device}'=='medium'</arg>
+<arg>Set Variable</arg>
+<arg>http://localhost:4723/wd/hub</arg>
+<arg>ELSE IF</arg>
+<arg>'${device}'=='big'</arg>
+<arg>Set Variable</arg>
+<arg>http://localhost:4734/wd/hub</arg>
+<arg>ELSE</arg>
+<arg>Log</arg>
+<arg>请输入正确的设备规格。</arg>
+</arguments>
+<assign>
+<var>${host}</var>
+</assign>
+<kw name="Set Variable" library="BuiltIn">
+<doc>Returns the given values which can then be assigned to a variables.</doc>
+<arguments>
+<arg>http://localhost:4734/wd/hub</arg>
+</arguments>
+<status status="PASS" endtime="20160629 18:45:21.517" starttime="20160629 18:45:21.517"></status>
+</kw>
+<msg timestamp="20160629 18:45:21.517" level="INFO">${host} = http://localhost:4734/wd/hub</msg>
+<status status="PASS" endtime="20160629 18:45:21.518" starttime="20160629 18:45:21.511"></status>
+</kw>
+<kw name="Run Keyword If" library="BuiltIn">
+<doc>Runs the given keyword with the given arguments, if ``condition`` is true.</doc>
+<arguments>
+<arg>'${device}'=='small'</arg>
+<arg>Create Dictionary</arg>
+<arg>alias=maisha</arg>
+<arg>platformName=Android</arg>
+<arg>platformVersion=5.1.1</arg>
+<arg>deviceName='emulator-5554'</arg>
+<arg>appPackage=${package}</arg>
+<arg>appActivity=${activity}</arg>
+<arg>unicodeKeyboard=True</arg>
+<arg>resetKeyboard=True</arg>
+<arg>ELSE IF</arg>
+<arg>'${device}'=='medium'</arg>
+<arg>Create Dictionary</arg>
+<arg>alias=maisha</arg>
+<arg>platformName=Android</arg>
+<arg>platformVersion=5.1.1</arg>
+<arg>deviceName='HUAWEI MT2-L01'</arg>
+<arg>appPackage=${package}</arg>
+<arg>appActivity=${activity}</arg>
+<arg>unicodeKeyboard=True</arg>
+<arg>resetKeyboard=True</arg>
+<arg>ELSE IF</arg>
+<arg>'${device}'=='big'</arg>
+<arg>Create Dictionary</arg>
+<arg>alias=maisha</arg>
+<arg>platformName=Android</arg>
+<arg>platformVersion=4.4.2</arg>
+<arg>deviceName='emulator-5554'</arg>
+<arg>appPackage=${package}</arg>
+<arg>appActivity=${activity}</arg>
+<arg>unicodeKeyboard=True</arg>
+<arg>resetKeyboard=True</arg>
+<arg>ELSE</arg>
+<arg>Log</arg>
+<arg>请输入正确的设备规格。</arg>
+</arguments>
+<assign>
+<var>&amp;{caps}</var>
+</assign>
+<kw name="Create Dictionary" library="BuiltIn">
+<doc>Creates and returns a dictionary based on given items.</doc>
+<arguments>
+<arg>alias=maisha</arg>
+<arg>platformName=Android</arg>
+<arg>platformVersion=4.4.2</arg>
+<arg>deviceName='emulator-5554'</arg>
+<arg>appPackage=${package}</arg>
+<arg>appActivity=${activity}</arg>
+<arg>unicodeKeyboard=True</arg>
+<arg>resetKeyboard=True</arg>
+</arguments>
+<status status="PASS" endtime="20160629 18:45:21.527" starttime="20160629 18:45:21.525"></status>
+</kw>
+<msg timestamp="20160629 18:45:21.528" level="INFO">&amp;{caps} = { alias=maisha | platformName=Android | platformVersion=4.4.2 | deviceName='emulator-5554' | appPackage=com.maishalei.seller | appActivity=.ui.activity.LauncherActivity | unicodeKeyboard=True | resetK...</msg>
+<status status="PASS" endtime="20160629 18:45:21.528" starttime="20160629 18:45:21.518"></status>
+</kw>
+<kw name="Set Global Variable" library="BuiltIn">
+<doc>Makes a variable available globally in all tests and suites.</doc>
+<arguments>
+<arg>${mode}</arg>
+</arguments>
+<msg timestamp="20160629 18:45:21.529" level="INFO">${mode} = product</msg>
+<status status="PASS" endtime="20160629 18:45:21.529" starttime="20160629 18:45:21.528"></status>
+</kw>
+<kw name="Set Global Variable" library="BuiltIn">
+<doc>Makes a variable available globally in all tests and suites.</doc>
+<arguments>
+<arg>&amp;{caps}</arg>
+</arguments>
+<msg timestamp="20160629 18:45:21.531" level="INFO">&amp;{caps} = { alias=maisha | platformName=Android | platformVersion=4.4.2 | deviceName='emulator-5554' | appPackage=com.maishalei.seller | appActivity=.ui.activity.LauncherActivity | unicodeKeyboard=True | resetK...</msg>
+<status status="PASS" endtime="20160629 18:45:21.531" starttime="20160629 18:45:21.530"></status>
+</kw>
+<kw name="Set Global Variable" library="BuiltIn">
+<doc>Makes a variable available globally in all tests and suites.</doc>
+<arguments>
+<arg>${host}</arg>
+</arguments>
+<msg timestamp="20160629 18:45:21.533" level="INFO">${host} = http://localhost:4734/wd/hub</msg>
+<status status="PASS" endtime="20160629 18:45:21.533" starttime="20160629 18:45:21.532"></status>
+</kw>
+<kw name="Set Global Variable" library="BuiltIn">
+<doc>Makes a variable available globally in all tests and suites.</doc>
+<arguments>
+<arg>${device}</arg>
+</arguments>
+<msg timestamp="20160629 18:45:21.534" level="INFO">${device} = big</msg>
+<status status="PASS" endtime="20160629 18:45:21.534" starttime="20160629 18:45:21.533"></status>
+</kw>
+<status status="PASS" endtime="20160629 18:45:21.534" starttime="20160629 18:45:21.495"></status>
+</kw>
+<kw name="Run Keyword If" library="BuiltIn">
+<doc>Runs the given keyword with the given arguments, if ``condition`` is true.</doc>
+<arguments>
+<arg>'${device}'=='small'</arg>
+<arg>Set Variable</arg>
+<arg>240</arg>
+<arg>240</arg>
+<arg>240</arg>
+<arg>580</arg>
+<arg>ELSE IF</arg>
+<arg>'${device}'=='medium'</arg>
+<arg>Set Variable</arg>
+<arg>350</arg>
+<arg>400</arg>
+<arg>350</arg>
+<arg>950</arg>
+<arg>ELSE IF</arg>
+<arg>'${device}'=='big'</arg>
+<arg>Set Variable</arg>
+<arg>500</arg>
+<arg>400</arg>
+<arg>500</arg>
+<arg>1400</arg>
+<arg>ELSE</arg>
+<arg>Log</arg>
+<arg>无效的参数${device}</arg>
+</arguments>
+<assign>
+<var>@{list}</var>
+</assign>
+<kw name="Set Variable" library="BuiltIn">
+<doc>Returns the given values which can then be assigned to a variables.</doc>
+<arguments>
+<arg>500</arg>
+<arg>400</arg>
+<arg>500</arg>
+<arg>1400</arg>
+</arguments>
+<status status="PASS" endtime="20160629 18:45:21.542" starttime="20160629 18:45:21.542"></status>
+</kw>
+<msg timestamp="20160629 18:45:21.543" level="INFO">@{list} = [ 500 | 400 | 500 | 1400 ]</msg>
+<status status="PASS" endtime="20160629 18:45:21.543" starttime="20160629 18:45:21.535"></status>
+</kw>
+<kw type="for" name="${i} IN RANGE [ ${n} ]">
+<kw type="foritem" name="${i} = 0">
+<kw name="Swipe" library="SongzAppiumLibrary">
+<doc>Swipe from one point to another point, for an optional duration.</doc>
+<arguments>
+<arg>@{list}</arg>
+<arg>${interval}</arg>
+</arguments>
+<status status="PASS" endtime="20160629 18:45:21.970" starttime="20160629 18:45:21.544"></status>
+</kw>
+<kw name="Sleep" library="BuiltIn">
+<doc>Pauses the test executed for the given time.</doc>
+<arguments>
+<arg>0.5</arg>
+</arguments>
+<msg timestamp="20160629 18:45:22.471" level="INFO">Slept 500 milliseconds</msg>
+<status status="PASS" endtime="20160629 18:45:22.471" starttime="20160629 18:45:21.971"></status>
+</kw>
+<status status="PASS" endtime="20160629 18:45:22.471" starttime="20160629 18:45:21.543"></status>
+</kw>
+<status status="PASS" endtime="20160629 18:45:22.471" starttime="20160629 18:45:21.543"></status>
+</kw>
+<status status="PASS" endtime="20160629 18:45:22.472" starttime="20160629 18:45:21.494"></status>
+</kw>
+<kw name="Sleep" library="BuiltIn">
+<doc>Pauses the test executed for the given time.</doc>
+<arguments>
+<arg>2</arg>
+</arguments>
+<msg timestamp="20160629 18:45:24.474" level="INFO">Slept 2 seconds</msg>
+<status status="PASS" endtime="20160629 18:45:24.474" starttime="20160629 18:45:22.474"></status>
+</kw>
+<kw name="返回顶部" library="常用操作">
+<kw name="Click Element" library="SongzAppiumLibrary">
+<doc>Click element identified by `locator`.</doc>
+<arguments>
+<arg>id=ivBackToTop</arg>
+</arguments>
+<msg timestamp="20160629 18:45:24.477" level="INFO">Clicking element 'id=ivBackToTop'.</msg>
+<status status="PASS" endtime="20160629 18:45:28.442" starttime="20160629 18:45:24.476"></status>
+</kw>
+<status status="PASS" endtime="20160629 18:45:28.442" starttime="20160629 18:45:24.475"></status>
+</kw>
+<kw name="Sleep" library="BuiltIn">
+<doc>Pauses the test executed for the given time.</doc>
+<arguments>
+<arg>2</arg>
+</arguments>
+<msg timestamp="20160629 18:45:30.444" level="INFO">Slept 2 seconds</msg>
+<status status="PASS" endtime="20160629 18:45:30.444" starttime="20160629 18:45:28.443"></status>
+</kw>
+<tags>
+<tag>Smoke</tag>
+</tags>
+<status status="PASS" endtime="20160629 18:45:30.445" critical="yes" starttime="20160629 18:45:15.892"></status>
+</test>
+<test id="s1-s1-t6" name="封面产品检查">
+<kw name="检验等待" library="常用操作">
+<kw name="Run Keyword If" library="BuiltIn">
+<doc>Runs the given keyword with the given arguments, if ``condition`` is true.</doc>
+<arguments>
+<arg>'${object}'=='首页'</arg>
+<arg>Wait Until Page Contains Element</arg>
+<arg>id=ivDiscover</arg>
+<arg>${time}</arg>
+<arg>ELSE IF</arg>
+<arg>'${object}'=='分享'</arg>
+<arg>Wait Until Page Contains Element</arg>
+<arg>xpath=//android.widget.TextView[@text='分享']</arg>
+<arg>${time}</arg>
+<arg>ELSE IF</arg>
+<arg>'${object}'=='WebView'</arg>
+<arg>Wait Until Page Contains Element</arg>
+<arg>id=webview</arg>
+<arg>${time}</arg>
+<arg>ELSE IF</arg>
+<arg>'${object}'=='标题'</arg>
+<arg>Wait Until Page Contains Element</arg>
+<arg>id=centerView</arg>
+</arguments>
+<kw name="Wait Until Page Contains Element" library="SongzAppiumLibrary">
+<doc>Waits until element specified with `locator` appears on current page.</doc>
+<arguments>
+<arg>id=ivDiscover</arg>
+<arg>${time}</arg>
+</arguments>
+<status status="PASS" endtime="20160629 18:45:31.405" starttime="20160629 18:45:30.457"></status>
+</kw>
+<status status="PASS" endtime="20160629 18:45:31.405" starttime="20160629 18:45:30.454"></status>
+</kw>
+<status status="PASS" endtime="20160629 18:45:31.406" starttime="20160629 18:45:30.453"></status>
+</kw>
+<kw name="Click Element" library="SongzAppiumLibrary">
+<doc>Click element identified by `locator`.</doc>
+<arguments>
+<arg>id=view_pager</arg>
+</arguments>
+<msg timestamp="20160629 18:45:31.408" level="INFO">Clicking element 'id=view_pager'.</msg>
+<status status="PASS" endtime="20160629 18:45:32.562" starttime="20160629 18:45:31.407"></status>
+</kw>
+<kw name="检验等待" library="常用操作">
+<arguments>
+<arg>标题</arg>
+</arguments>
+<kw name="Run Keyword If" library="BuiltIn">
+<doc>Runs the given keyword with the given arguments, if ``condition`` is true.</doc>
+<arguments>
+<arg>'${object}'=='首页'</arg>
+<arg>Wait Until Page Contains Element</arg>
+<arg>id=ivDiscover</arg>
+<arg>${time}</arg>
+<arg>ELSE IF</arg>
+<arg>'${object}'=='分享'</arg>
+<arg>Wait Until Page Contains Element</arg>
+<arg>xpath=//android.widget.TextView[@text='分享']</arg>
+<arg>${time}</arg>
+<arg>ELSE IF</arg>
+<arg>'${object}'=='WebView'</arg>
+<arg>Wait Until Page Contains Element</arg>
+<arg>id=webview</arg>
+<arg>${time}</arg>
+<arg>ELSE IF</arg>
+<arg>'${object}'=='标题'</arg>
+<arg>Wait Until Page Contains Element</arg>
+<arg>id=centerView</arg>
+</arguments>
+<kw name="Wait Until Page Contains Element" library="SongzAppiumLibrary">
+<doc>Waits until element specified with `locator` appears on current page.</doc>
+<arguments>
+<arg>id=centerView</arg>
+</arguments>
+<status status="PASS" endtime="20160629 18:45:35.326" starttime="20160629 18:45:32.575"></status>
+</kw>
+<status status="PASS" endtime="20160629 18:45:35.327" starttime="20160629 18:45:32.564"></status>
+</kw>
+<status status="PASS" endtime="20160629 18:45:35.327" starttime="20160629 18:45:32.563"></status>
+</kw>
+<kw name="Sleep" library="BuiltIn">
+<doc>Pauses the test executed for the given time.</doc>
+<arguments>
+<arg>2</arg>
+</arguments>
+<msg timestamp="20160629 18:45:37.329" level="INFO">Slept 2 seconds</msg>
+<status status="PASS" endtime="20160629 18:45:37.329" starttime="20160629 18:45:35.328"></status>
+</kw>
+<kw name="向上滑动" library="常用操作">
+<arguments>
+<arg>2</arg>
+<arg>400</arg>
+</arguments>
+<kw name="启动参数" library="配置参数">
+<kw name="Set Variable" library="BuiltIn">
+<doc>Returns the given values which can then be assigned to a variables.</doc>
+<arguments>
+<arg>big</arg>
+</arguments>
+<assign>
+<var>${device}</var>
+</assign>
+<msg timestamp="20160629 18:45:37.334" level="INFO">${device} = big</msg>
+<status status="PASS" endtime="20160629 18:45:37.334" starttime="20160629 18:45:37.333"></status>
+</kw>
+<kw name="Set Variable" library="BuiltIn">
+<doc>Returns the given values which can then be assigned to a variables.</doc>
+<arguments>
+<arg>product</arg>
+</arguments>
+<assign>
+<var>${mode}</var>
+</assign>
+<msg timestamp="20160629 18:45:37.335" level="INFO">${mode} = product</msg>
+<status status="PASS" endtime="20160629 18:45:37.335" starttime="20160629 18:45:37.334"></status>
+</kw>
+<kw name="Run Keyword If" library="BuiltIn">
+<doc>Runs the given keyword with the given arguments, if ``condition`` is true.</doc>
+<arguments>
+<arg>'${mode}'=='debug'</arg>
+<arg>Set Variable</arg>
+<arg>com.maishalei.seller.debug</arg>
+<arg>ELSE IF</arg>
+<arg>'${mode}'=='product'</arg>
+<arg>Set Variable</arg>
+<arg>com.maishalei.seller</arg>
+<arg>ELSE</arg>
+<arg>Log</arg>
+<arg>请输入正确的运行模式。</arg>
+</arguments>
+<assign>
+<var>${package}</var>
+</assign>
+<kw name="Set Variable" library="BuiltIn">
+<doc>Returns the given values which can then be assigned to a variables.</doc>
+<arguments>
+<arg>com.maishalei.seller</arg>
+</arguments>
+<status status="PASS" endtime="20160629 18:45:37.342" starttime="20160629 18:45:37.341"></status>
+</kw>
+<msg timestamp="20160629 18:45:37.342" level="INFO">${package} = com.maishalei.seller</msg>
+<status status="PASS" endtime="20160629 18:45:37.343" starttime="20160629 18:45:37.336"></status>
+</kw>
+<kw name="Run Keyword If" library="BuiltIn">
+<doc>Runs the given keyword with the given arguments, if ``condition`` is true.</doc>
+<arguments>
+<arg>'${mode}'=='debug'</arg>
+<arg>Set Variable</arg>
+<arg>com.maishalei.seller.ui.activity.LauncherActivity</arg>
+<arg>ELSE IF</arg>
+<arg>'${mode}'=='product'</arg>
+<arg>Set Variable</arg>
+<arg>.ui.activity.LauncherActivity</arg>
+<arg>ELSE</arg>
+<arg>Log</arg>
+<arg>请输入正确的运行模式。</arg>
+</arguments>
+<assign>
+<var>${activity}</var>
+</assign>
+<kw name="Set Variable" library="BuiltIn">
+<doc>Returns the given values which can then be assigned to a variables.</doc>
+<arguments>
+<arg>.ui.activity.LauncherActivity</arg>
+</arguments>
+<status status="PASS" endtime="20160629 18:45:37.350" starttime="20160629 18:45:37.349"></status>
+</kw>
+<msg timestamp="20160629 18:45:37.350" level="INFO">${activity} = .ui.activity.LauncherActivity</msg>
+<status status="PASS" endtime="20160629 18:45:37.350" starttime="20160629 18:45:37.343"></status>
+</kw>
+<kw name="Run Keyword If" library="BuiltIn">
+<doc>Runs the given keyword with the given arguments, if ``condition`` is true.</doc>
+<arguments>
+<arg>'${device}'=='small'</arg>
+<arg>Set Variable</arg>
+<arg>http://localhost:4722/wd/hub</arg>
+<arg>ELSE IF</arg>
+<arg>'${device}'=='medium'</arg>
+<arg>Set Variable</arg>
+<arg>http://localhost:4723/wd/hub</arg>
+<arg>ELSE IF</arg>
+<arg>'${device}'=='big'</arg>
+<arg>Set Variable</arg>
+<arg>http://localhost:4734/wd/hub</arg>
+<arg>ELSE</arg>
+<arg>Log</arg>
+<arg>请输入正确的设备规格。</arg>
+</arguments>
+<assign>
+<var>${host}</var>
+</assign>
+<kw name="Set Variable" library="BuiltIn">
+<doc>Returns the given values which can then be assigned to a variables.</doc>
+<arguments>
+<arg>http://localhost:4734/wd/hub</arg>
+</arguments>
+<status status="PASS" endtime="20160629 18:45:37.357" starttime="20160629 18:45:37.356"></status>
+</kw>
+<msg timestamp="20160629 18:45:37.357" level="INFO">${host} = http://localhost:4734/wd/hub</msg>
+<status status="PASS" endtime="20160629 18:45:37.357" starttime="20160629 18:45:37.351"></status>
+</kw>
+<kw name="Run Keyword If" library="BuiltIn">
+<doc>Runs the given keyword with the given arguments, if ``condition`` is true.</doc>
+<arguments>
+<arg>'${device}'=='small'</arg>
+<arg>Create Dictionary</arg>
+<arg>alias=maisha</arg>
+<arg>platformName=Android</arg>
+<arg>platformVersion=5.1.1</arg>
+<arg>deviceName='emulator-5554'</arg>
+<arg>appPackage=${package}</arg>
+<arg>appActivity=${activity}</arg>
+<arg>unicodeKeyboard=True</arg>
+<arg>resetKeyboard=True</arg>
+<arg>ELSE IF</arg>
+<arg>'${device}'=='medium'</arg>
+<arg>Create Dictionary</arg>
+<arg>alias=maisha</arg>
+<arg>platformName=Android</arg>
+<arg>platformVersion=5.1.1</arg>
+<arg>deviceName='HUAWEI MT2-L01'</arg>
+<arg>appPackage=${package}</arg>
+<arg>appActivity=${activity}</arg>
+<arg>unicodeKeyboard=True</arg>
+<arg>resetKeyboard=True</arg>
+<arg>ELSE IF</arg>
+<arg>'${device}'=='big'</arg>
+<arg>Create Dictionary</arg>
+<arg>alias=maisha</arg>
+<arg>platformName=Android</arg>
+<arg>platformVersion=4.4.2</arg>
+<arg>deviceName='emulator-5554'</arg>
+<arg>appPackage=${package}</arg>
+<arg>appActivity=${activity}</arg>
+<arg>unicodeKeyboard=True</arg>
+<arg>resetKeyboard=True</arg>
+<arg>ELSE</arg>
+<arg>Log</arg>
+<arg>请输入正确的设备规格。</arg>
+</arguments>
+<assign>
+<var>&amp;{caps}</var>
+</assign>
+<kw name="Create Dictionary" library="BuiltIn">
+<doc>Creates and returns a dictionary based on given items.</doc>
+<arguments>
+<arg>alias=maisha</arg>
+<arg>platformName=Android</arg>
+<arg>platformVersion=4.4.2</arg>
+<arg>deviceName='emulator-5554'</arg>
+<arg>appPackage=${package}</arg>
+<arg>appActivity=${activity}</arg>
+<arg>unicodeKeyboard=True</arg>
+<arg>resetKeyboard=True</arg>
+</arguments>
+<status status="PASS" endtime="20160629 18:45:37.363" starttime="20160629 18:45:37.362"></status>
+</kw>
+<msg timestamp="20160629 18:45:37.363" level="INFO">&amp;{caps} = { alias=maisha | platformName=Android | platformVersion=4.4.2 | deviceName='emulator-5554' | appPackage=com.maishalei.seller | appActivity=.ui.activity.LauncherActivity | unicodeKeyboard=True | resetK...</msg>
+<status status="PASS" endtime="20160629 18:45:37.363" starttime="20160629 18:45:37.357"></status>
+</kw>
+<kw name="Set Global Variable" library="BuiltIn">
+<doc>Makes a variable available globally in all tests and suites.</doc>
+<arguments>
+<arg>${mode}</arg>
+</arguments>
+<msg timestamp="20160629 18:45:37.364" level="INFO">${mode} = product</msg>
+<status status="PASS" endtime="20160629 18:45:37.364" starttime="20160629 18:45:37.363"></status>
+</kw>
+<kw name="Set Global Variable" library="BuiltIn">
+<doc>Makes a variable available globally in all tests and suites.</doc>
+<arguments>
+<arg>&amp;{caps}</arg>
+</arguments>
+<msg timestamp="20160629 18:45:37.365" level="INFO">&amp;{caps} = { alias=maisha | platformName=Android | platformVersion=4.4.2 | deviceName='emulator-5554' | appPackage=com.maishalei.seller | appActivity=.ui.activity.LauncherActivity | unicodeKeyboard=True | resetK...</msg>
+<status status="PASS" endtime="20160629 18:45:37.365" starttime="20160629 18:45:37.364"></status>
+</kw>
+<kw name="Set Global Variable" library="BuiltIn">
+<doc>Makes a variable available globally in all tests and suites.</doc>
+<arguments>
+<arg>${host}</arg>
+</arguments>
+<msg timestamp="20160629 18:45:37.366" level="INFO">${host} = http://localhost:4734/wd/hub</msg>
+<status status="PASS" endtime="20160629 18:45:37.366" starttime="20160629 18:45:37.365"></status>
+</kw>
+<kw name="Set Global Variable" library="BuiltIn">
+<doc>Makes a variable available globally in all tests and suites.</doc>
+<arguments>
+<arg>${device}</arg>
+</arguments>
+<msg timestamp="20160629 18:45:37.367" level="INFO">${device} = big</msg>
+<status status="PASS" endtime="20160629 18:45:37.367" starttime="20160629 18:45:37.366"></status>
+</kw>
+<status status="PASS" endtime="20160629 18:45:37.367" starttime="20160629 18:45:37.332"></status>
+</kw>
+<kw name="Run Keyword If" library="BuiltIn">
+<doc>Runs the given keyword with the given arguments, if ``condition`` is true.</doc>
+<arguments>
+<arg>'${device}'=='small'</arg>
+<arg>Set Variable</arg>
+<arg>240</arg>
+<arg>580</arg>
+<arg>240</arg>
+<arg>240</arg>
+<arg>ELSE IF</arg>
+<arg>'${device}'=='medium'</arg>
+<arg>Set Variable</arg>
+<arg>350</arg>
+<arg>950</arg>
+<arg>350</arg>
+<arg>400</arg>
+<arg>ELSE IF</arg>
+<arg>'${device}'=='big'</arg>
+<arg>Set Variable</arg>
+<arg>500</arg>
+<arg>1400</arg>
+<arg>500</arg>
+<arg>600</arg>
+<arg>ELSE</arg>
+<arg>Log</arg>
+<arg>无效的参数${device}</arg>
+</arguments>
+<assign>
+<var>@{list}</var>
+</assign>
+<kw name="Set Variable" library="BuiltIn">
+<doc>Returns the given values which can then be assigned to a variables.</doc>
+<arguments>
+<arg>500</arg>
+<arg>1400</arg>
+<arg>500</arg>
+<arg>600</arg>
+</arguments>
+<status status="PASS" endtime="20160629 18:45:37.374" starttime="20160629 18:45:37.373"></status>
+</kw>
+<msg timestamp="20160629 18:45:37.374" level="INFO">@{list} = [ 500 | 1400 | 500 | 600 ]</msg>
+<status status="PASS" endtime="20160629 18:45:37.374" starttime="20160629 18:45:37.367"></status>
+</kw>
+<kw type="for" name="${i} IN RANGE [ ${n} ]">
+<kw type="foritem" name="${i} = 0">
+<kw name="Swipe" library="SongzAppiumLibrary">
+<doc>Swipe from one point to another point, for an optional duration.</doc>
+<arguments>
+<arg>@{list}</arg>
+<arg>${interval}</arg>
+</arguments>
+<status status="PASS" endtime="20160629 18:45:37.669" starttime="20160629 18:45:37.375"></status>
+</kw>
+<kw name="Sleep" library="BuiltIn">
+<doc>Pauses the test executed for the given time.</doc>
+<arguments>
+<arg>0.5</arg>
+</arguments>
+<msg timestamp="20160629 18:45:38.169" level="INFO">Slept 500 milliseconds</msg>
+<status status="PASS" endtime="20160629 18:45:38.169" starttime="20160629 18:45:37.669"></status>
+</kw>
+<status status="PASS" endtime="20160629 18:45:38.169" starttime="20160629 18:45:37.375"></status>
+</kw>
+<kw type="foritem" name="${i} = 1">
+<kw name="Swipe" library="SongzAppiumLibrary">
+<doc>Swipe from one point to another point, for an optional duration.</doc>
+<arguments>
+<arg>@{list}</arg>
+<arg>${interval}</arg>
+</arguments>
+<status status="PASS" endtime="20160629 18:45:38.381" starttime="20160629 18:45:38.170"></status>
+</kw>
+<kw name="Sleep" library="BuiltIn">
+<doc>Pauses the test executed for the given time.</doc>
+<arguments>
+<arg>0.5</arg>
+</arguments>
+<msg timestamp="20160629 18:45:38.882" level="INFO">Slept 500 milliseconds</msg>
+<status status="PASS" endtime="20160629 18:45:38.882" starttime="20160629 18:45:38.381"></status>
+</kw>
+<status status="PASS" endtime="20160629 18:45:38.882" starttime="20160629 18:45:38.170"></status>
+</kw>
+<status status="PASS" endtime="20160629 18:45:38.882" starttime="20160629 18:45:37.374"></status>
+</kw>
+<status status="PASS" endtime="20160629 18:45:38.882" starttime="20160629 18:45:37.330"></status>
+</kw>
+<kw name="Sleep" library="BuiltIn">
+<doc>Pauses the test executed for the given time.</doc>
+<arguments>
+<arg>1</arg>
+</arguments>
+<msg timestamp="20160629 18:45:39.884" level="INFO">Slept 1 second</msg>
+<status status="PASS" endtime="20160629 18:45:39.884" starttime="20160629 18:45:38.883"></status>
+</kw>
+<kw name="返回键" library="系统按键">
+<kw name="Press Keycode" library="SongzAppiumLibrary">
+<doc>Sends a press of keycode to the device.</doc>
+<arguments>
+<arg>4</arg>
+</arguments>
+<status status="PASS" endtime="20160629 18:45:39.986" starttime="20160629 18:45:39.886"></status>
+</kw>
+<status status="PASS" endtime="20160629 18:45:39.986" starttime="20160629 18:45:39.885"></status>
+</kw>
+<kw name="Sleep" library="BuiltIn">
+<doc>Pauses the test executed for the given time.</doc>
+<arguments>
+<arg>2</arg>
+</arguments>
+<msg timestamp="20160629 18:45:41.988" level="INFO">Slept 2 seconds</msg>
+<status status="PASS" endtime="20160629 18:45:41.988" starttime="20160629 18:45:39.987"></status>
+</kw>
+<status status="PASS" endtime="20160629 18:45:41.989" critical="yes" starttime="20160629 18:45:30.450"></status>
+</test>
+<kw type="teardown" name="关闭App" library="常用操作">
+<kw name="Close Application" library="SongzAppiumLibrary">
+<doc>Closes the current application.</doc>
+<status status="PASS" endtime="20160629 18:45:44.866" starttime="20160629 18:45:41.997"></status>
+</kw>
+<status status="PASS" endtime="20160629 18:45:44.866" starttime="20160629 18:45:41.997"></status>
+</kw>
+<status status="PASS" endtime="20160629 18:45:44.866" starttime="20160629 18:43:31.877"></status>
+</suite>
+<status status="PASS" endtime="20160629 18:45:44.870" starttime="20160629 18:43:31.858"></status>
+</suite>
+<statistics>
+<total>
+<stat fail="0" pass="6">Critical Tests</stat>
+<stat fail="0" pass="6">All Tests</stat>
+</total>
+<tag>
+<stat fail="0" pass="2">Smoke</stat>
+</tag>
+<suite>
+<stat fail="0" id="s1" name="冒烟测试" pass="6">冒烟测试</stat>
+<stat fail="0" id="s1-s1" name="首页" pass="6">冒烟测试.首页</stat>
+</suite>
+</statistics>
+<errors>
+</errors>
+</robot>

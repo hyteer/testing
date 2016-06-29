@@ -1,5 +1,5 @@
 *** Settings ***
-Library           AppiumLibrary
+Library           SongzAppiumLibrary
 Library           WshLibrary
 Resource          配置参数.robot
 Resource          系统按键.robot
@@ -88,7 +88,7 @@ Resource          系统按键.robot
     ...    ELSE IF    '${device}'=='medium'    Set Variable    350    950    350
     ...    400
     ...    ELSE IF    '${device}'=='big'    Set Variable    500    1400    500
-    ...    400
+    ...    600
     ...    ELSE    Log    无效的参数${device}
     : FOR    ${i}    IN RANGE    ${n}
     \    Swipe    @{list}    ${interval}
@@ -148,3 +148,11 @@ TempTest
     ...    ELSE IF    '${object}'=='分享'    Wait Until Page Contains Element    xpath=//android.widget.TextView[@text='分享']    ${time}
     ...    ELSE IF    '${object}'=='WebView'    Wait Until Page Contains Element    id=webview    ${time}
     ...    ELSE IF    '${object}'=='标题'    Wait Until Page Contains Element    id=centerView
+
+状态判断-不应该包含
+    [Arguments]    ${xpath}    # 不需要开头"xpath=",直接传入后面的xpath表达式
+    ${status}    Run Keyword And Return Status    Page Should Not Contain Element    xpath=${xpath}
+    #Log    Status is: ${status}
+    [Return]    ${status}
+
+校验是否登录

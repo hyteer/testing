@@ -1,7 +1,7 @@
 *** Settings ***
 Suite Setup       启动App
 Suite Teardown    关闭App
-Library           AppiumLibrary
+Library           SongzAppiumLibrary
 Resource          ../../Lib/常用操作.robot
 Resource          ../../Lib/菜单库.robot
 Resource          ../../Lib/系统按键.robot
@@ -54,7 +54,7 @@ Resource          ../../Lib/功能库.robot
     Wait Until Page Contains Element    id=ivDiscover    ${TIMEOUT}
     Sleep    1
     #${device}    Set Variable    medium
-    向上滑动    3    400
+    向上滑动    3    500
     Sleep    1
     向下滑动    1    400
     Sleep    2

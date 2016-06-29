@@ -1,5 +1,5 @@
 *** Settings ***
-Library           AppiumLibrary
+Library           SongzAppiumLibrary
 Resource          配置参数.robot
 
 *** Keywords ***

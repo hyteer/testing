@@ -1,0 +1,21 @@
+*** Settings ***
+Library           SongzAppiumLibrary
+
+*** Test Cases ***
+first
+    ${appCal}=    Open Application    http://localhost:4734/wd/hub    alias=calculator    platformName=Android    platformVersion=4.4.2    deviceName='emulator-5554'
+    ...    appPackage=com.android.calculator2    appActivity=.Calculator
+    #Wait Until Page Contains Element    id=ivDiscover    10
+    #Click Element    id=ivMine
+    Start Activity    com.android.calculator2    .Calculator
+    Sleep    2
+    Click Element    id=digit7
+    Click Element    id=mul
+    Click Element    id=digit9
+    Click Element    id=equal
+    Sleep    1
+    Start Activity    com.android.contacts    com.android.mms.ui.ConversationList
+    Sleep    2
+    Start Activity    com.android.calculator2    .Calculator
+    Click Element    id=clear
+    Sleep    3
