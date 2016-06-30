@@ -1,0 +1,15 @@
+*** Settings ***
+Suite Setup       启动App
+Suite Teardown    关闭App
+Resource          ../Lib/配置参数.robot
+Resource          ../Lib/常用操作.robot
+
+*** Test Cases ***
+启动参数
+    启动参数
+    Log Many    &{caps}
+
+Locate
+    检验等待
+    ${size}    Get Elements    xpath=/android.widget.FrameLayout
+    Log    ${size}

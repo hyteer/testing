@@ -1,6 +1,7 @@
 *** Settings ***
 Suite Setup       启动App
 Suite Teardown    关闭App
+Test Teardown     失败重启
 Library           SongzAppiumLibrary
 Resource          ../../Lib/常用操作.robot
 Resource          ../../Lib/菜单库.robot
@@ -37,8 +38,9 @@ Resource          ../../Lib/功能库.robot
 
 查看产品分类
     [Tags]    Smoke
-    启动参数
+    #启动参数    ${model}    ${mode}
     Wait Until Page Contains Element    id=ivDiscover    ${TIMEOUT}
+    Sleep    1
     点击分类
     Log    开始分类检查...
     Log To Console    开始分类检查...

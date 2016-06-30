@@ -19,20 +19,27 @@ Resource          系统按键.robot
     #Open Application    http://localhost:4723/wd/hub    alias=maisha    platformName=Android    platformVersion=4.4.2    deviceName='emulator-5554'    appPackage=com.maishalei.seller.debug
     # appActivity=com.maishalei.seller.ui.activity.LauncherActivity    unicodeKeyboard=True    resetKeyboard=True
     # appActivity=com.maishalei.seller.ui.activity.LauncherActivity    unicodeKeyboard=True    resetKeyboard=True
-    启动参数
+    #${model}
+    #${mode}
+    Log    Device:${device}
+    Log    Mode:${mode}
+    Set Global Variable    ${device}
+    Set Global Variable    ${mode}
+    启动参数    ${device}    ${mode}
     Open Application    ${host}    &{caps}
+    # ${model} and ${mode} get from robot starting commands
 
 启动App2
     ${mode}    Set Variable    debug    # debug/product
-    ${host}    Run Keyword If    '${device}'=='small'    Set Variable    http://localhost:4722/wd/hub
-    ...    ELSE IF    '${device}'=='medium'    Set Variable    http://localhost:4723/wd/hub
-    ...    ELSE IF    '${device}'=='big'    Set Variable    http://localhost:4724/wd/hub
+    ${host}    Run Keyword If    '${model}'=='small'    Set Variable    http://localhost:4722/wd/hub
+    ...    ELSE IF    '${model}'=='medium'    Set Variable    http://localhost:4723/wd/hub
+    ...    ELSE IF    '${model}'=='big'    Set Variable    http://localhost:4724/wd/hub
     ...    ELSE    Log    请输入正确的设备规格。
-    &{caps}    Run Keyword If    '${device}'=='small'    Create Dictionary    alias=maisha    platformName=Android    platformVersion=5.1.1
+    &{caps}    Run Keyword If    '${model}'=='small'    Create Dictionary    alias=maisha    platformName=Android    platformVersion=5.1.1
     ...    deviceName='emulator-5554'    appPackage=com.maishalei.seller.debug    appActivity=com.maishalei.seller.ui.activity.LauncherActivity    unicodeKeyboard=True    resetKeyboard=True
-    ...    ELSE IF    '${device}'=='medium'    Create Dictionary    alias=maisha    platformName=Android    platformVersion=5.1.1
+    ...    ELSE IF    '${model}'=='medium'    Create Dictionary    alias=maisha    platformName=Android    platformVersion=5.1.1
     ...    deviceName='HUAWEI MT2-L01'    appPackage=com.maishalei.seller.debug    appActivity=com.maishalei.seller.ui.activity.LauncherActivity    unicodeKeyboard=True    resetKeyboard=True
-    ...    ELSE IF    '${device}'=='big'    Create Dictionary    alias=maisha    platformName=Android    platformVersion=4.4.2
+    ...    ELSE IF    '${model}'=='big'    Create Dictionary    alias=maisha    platformName=Android    platformVersion=4.4.2
     ...    deviceName='emulator-5554'    appPackage=com.maishalei.seller.debug    appActivity=com.maishalei.seller.ui.activity.LauncherActivity    unicodeKeyboard=True    resetKeyboard=True
     ...    ELSE    Log    请输入正确的设备规格。
     Set Global Variable    &{caps}
@@ -81,8 +88,8 @@ Resource          系统按键.robot
 
 向上滑动
     [Arguments]    ${n}=1    ${interval}=500    # 设置滑动次数间隔
-    #@{list}=    Get Slide Args V    ${device }
-    启动参数
+    #@{list}=    Get Slide Args V    ${model }
+    #启动参数
     @{list}    Run Keyword If    '${device}'=='small'    Set Variable    240    580    240
     ...    240
     ...    ELSE IF    '${device}'=='medium'    Set Variable    350    950    350
@@ -96,7 +103,7 @@ Resource          系统按键.robot
 
 向下滑动
     [Arguments]    ${n}=1    ${interval}=500    # 滑动次数
-    启动参数
+    #启动参数
     @{list}    Run Keyword If    '${device}'=='small'    Set Variable    240    240    240
     ...    580
     ...    ELSE IF    '${device}'=='medium'    Set Variable    350    400    350
@@ -116,21 +123,21 @@ Resource          系统按键.robot
 
 向左滑动
     [Arguments]    ${n}=1    ${device}=medium    ${interval}=500
-    @{list}=    Get Slide Args H    ${device }
+    @{list}=    Get Slide Args H    ${device}
     : FOR    ${i}    IN RANGE    ${n}
     \    Swipe    @{list}[0]    @{list}[1]    @{list}[2]    @{list}[3]    ${interval}
     \    Sleep    0.5
 
 向右滑动
     [Arguments]    ${n}=1    ${device}=medium    ${interval}=500
-    @{list}=    Get Slide Args H    ${device }
+    @{list}=    Get Slide Args H    ${device}
     : FOR    ${i}    IN RANGE    ${n}
     \    Swipe    @{list}[0]    @{list}[1]    @{list}[2]    @{list}[3]    ${interval}
     \    Sleep    0.5
 
 TempTest
     [Arguments]    ${n}=1    ${device}=medium    ${interval}=500
-    @{list}    Run Keyword If    ${device }==smal    Set Variable    240    580    240
+    @{list}    Run Keyword If    ${device}==smal    Set Variable    240    580    240
     ...    240
     \    ELSE IF    ${device}==medium    Set Variable    350    950    350
     \    ...    400
@@ -144,9 +151,9 @@ TempTest
 
 检验等待
     [Arguments]    ${object}=首页    ${time}=10
-    Run Keyword If    '${object}'=='首页'    Wait Until Page Contains Element    id=ivDiscover    ${time}
-    ...    ELSE IF    '${object}'=='分享'    Wait Until Page Contains Element    xpath=//android.widget.TextView[@text='分享']    ${time}
-    ...    ELSE IF    '${object}'=='WebView'    Wait Until Page Contains Element    id=webview    ${time}
+    Run Keyword If    '${object}'=='首页'    Wait Until Page Contains Element    id=ivDiscover    ${TIMEOUT}
+    ...    ELSE IF    '${object}'=='分享'    Wait Until Page Contains Element    xpath=//android.widget.TextView[@text='分享']    ${TIMEOUT}
+    ...    ELSE IF    '${object}'=='WebView'    Wait Until Page Contains Element    id=webview    ${TIMEOUT}
     ...    ELSE IF    '${object}'=='标题'    Wait Until Page Contains Element    id=centerView
 
 状态判断-不应该包含
@@ -156,3 +163,12 @@ TempTest
     [Return]    ${status}
 
 校验是否登录
+
+状态判断-应该包含
+    [Arguments]    ${xpath}    # 不需要开头"xpath=",直接传入后面的xpath表达式
+    ${status}    Run Keyword And Return Status    Page Should Contain Element    xpath=${xpath}
+    #Log    Status is: ${status}
+    [Return]    ${status}
+
+失败重启
+    Run Keyword If Test Failed    启动App

@@ -15,10 +15,11 @@ QQ登录
     Click Element After Find It    id=ivQQLogin
     Wait Until Page Contains Element    xpath=//android.widget.Button[@text='登录']    8
     Sleep    1
-    Click Element    xpath=//android.widget.Button[@text='登录']
+    #Click Element    xpath=//android.widget.Button[@text='登录']
+    Click Element    xpath=//android.widget.Button[contains(@clickable,'true')][contains(@index,'1')]
     Sleep    5
     Page Should Contain Element    xpath=//android.widget.TextView[@text='我的订单']
-    Page Should Contain Text    13924628477
+    Page Should Contain Text    日志
     Log    ---Over---
     Sleep    2
     Close All Applications

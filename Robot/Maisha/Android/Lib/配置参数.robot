@@ -1,7 +1,7 @@
 *** Variables ***
 ${QQUSER}         3504007366
 ${QQPASSWD}       8520123456
-${TIMEOUT}        10
+${TIMEOUT}        15
 ${LONGTIME}       15
 @{desired_caps_avd}    http://localhost:4723/wd/hub    alias=maisha    platformName=Android    platformVersion=4.4.2    deviceName='emulator-5554'    appPackage=com.maishalei.seller.debug    appActivity=com.maishalei.seller.ui.activity.LauncherActivity
 ...               unicodeKeyboard=True    resetKeyboard=True
@@ -27,8 +27,10 @@ ${PHONE PWD}      test111
     #Log Many    @{desired_caps}    --打印完毕--
 
 启动参数
-    ${device}    Set Variable    medium    # small/medium/big
-    ${mode}    Set Variable    product    # debug/product
+    [Arguments]    ${getdevice}    ${getmode}
+    ${device}    Set Variable    ${getdevice}    # small/medium/big
+    ${mode}    Set Variable    ${getmode}    # debug/product
+    Log    Device is: ${device}
     ${package}    Run Keyword If    '${mode}'=='debug'    Set Variable    com.maishalei.seller.debug
     ...    ELSE IF    '${mode}'=='product'    Set Variable    com.maishalei.seller
     ...    ELSE    Log    请输入正确的运行模式。
@@ -46,8 +48,8 @@ ${PHONE PWD}      test111
     ...    ELSE IF    '${device}'=='big'    Create Dictionary    alias=maisha    platformName=Android    platformVersion=4.4.2
     ...    deviceName='emulator-5554'    appPackage=${package}    appActivity=${activity}    unicodeKeyboard=True    resetKeyboard=True
     ...    ELSE    Log    请输入正确的设备规格。
-    Set Global Variable    ${mode}
+    #Set Global Variable    ${mode}
     Set Global Variable    &{caps}
     Set Global Variable    ${host}
-    Set Global Variable    ${device}
+    #Set Global Variable    ${device}
     #Log Many    @{desired_caps}    --打印完毕--

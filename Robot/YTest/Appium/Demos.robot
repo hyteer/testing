@@ -2,6 +2,7 @@
 Library           SongzAppiumLibrary
 Library           String
 Library           Collections
+Library           AppiumYT
 
 *** Test Cases ***
 switchActivity
@@ -298,6 +299,21 @@ ArgsTransmit
 Convertion
     &{dict}    Convert To Dictionary    {xpath=aa,y=11}
 
+AppiumYT
+    start memo
+    Click Element    id=menu_create_note
+    Sleep    1
+    Input Text    xpath=//android.widget.EditText[@NAF='true']    Test...
+    Sleep    3
+
+bootArgs
+    Log    ${arg1}
+    Log    ${arg2}
+
+runArgs
+    Log    Device:${device}
+    Log    mode:${mode}
+
 *** Keywords ***
 获取验证码
     Sleep    1
@@ -348,3 +364,8 @@ Convertion
     @{backlist}    Set Variable    aa    bb    cc
     &{backdict}    Set Variable    a=1    b=2    c=3
     [Return]    ${y}
+
+start memo
+    Open Application    http://localhost:4723/wd/hub    alias=memo    platformName=Android    platformVersion=5.1.1    deviceName='emulator-5554'    appPackage=com.example.android.notepad
+    ...    appActivity=.NotePadActivity    unicodeKeyboard=True    resetKeyboard=True
+    Sleep    2
