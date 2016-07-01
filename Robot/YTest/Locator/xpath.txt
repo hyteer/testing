@@ -1,0 +1,4 @@
+*** Test Cases ***
+xpath
+    Wait Until Page Contains Element    xpath=//android.widget.TextView[contains(@id,'com.maishalei.seller:id/centerView')][contains(@text,'拼啥嘞')]
+    \    //a[contains(.,'立即飞')]

@@ -13,7 +13,7 @@ QQ登录
     ${status}    状态判断-不应该包含    //android.widget.TextView[@text='我的订单']
     Run Keyword If    '${status}'=='False'    退出登录
     Click Element After Find It    id=ivQQLogin
-    Wait Until Page Contains Element    xpath=//android.widget.Button[@text='登录']    8
+    Wait Until Page Contains Element    xpath=//android.widget.TextView[@text='QQ登录']    8
     Sleep    1
     #Click Element    xpath=//android.widget.Button[@text='登录']
     Click Element    xpath=//android.widget.Button[contains(@clickable,'true')][contains(@index,'1')]
@@ -35,6 +35,8 @@ QQ登录
 微信登录
 
 手机密码登录
+    ${status}    状态判断-不应该包含    //android.widget.TextView[@text='我的订单']
+    Run Keyword If    '${status}'=='False'    退出登录
     Input Text    id=etPhoneByPwd    ${phone num}
     Input Password    id=etPwdByPwd    ${phone pwd}
 

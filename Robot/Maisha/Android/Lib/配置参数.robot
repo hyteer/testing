@@ -7,7 +7,7 @@ ${LONGTIME}       15
 ...               unicodeKeyboard=True    resetKeyboard=True
 &{CAPS}           a=xx    b=x2    c=x3
 ${PHONE NUM}      13924628477
-${PHONE PWD}      test111
+${PHONE PWD}      2580123456
 
 *** Keywords ***
 启动参数_bak

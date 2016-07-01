@@ -27,6 +27,9 @@ Resource          系统按键.robot
     Set Global Variable    ${mode}
     启动参数    ${device}    ${mode}
     Open Application    ${host}    &{caps}
+    ${status}    Run Keyword And Return Status    校验等待
+    Run Keyword If    '${status}'=='False'    版本更新检测
+    #Run Keyword If    '${status}'==False    版本更新检测
     # ${model} and ${mode} get from robot starting commands
 
 启动App2
@@ -47,8 +50,8 @@ Resource          系统按键.robot
     Open Application    ${host}    &{caps}
 
 启动App3
-    Open Application    http://localhost:4724/wd/hub    alias=maisha    platformName=Android    platformVersion=5.1.1    deviceName='emulator-5554'    appPackage=com.maishalei.seller.debug
-    ...    appActivity=com.maishalei.seller.ui.activity.LauncherActivity    unicodeKeyboard=True    resetKeyboard=True
+    Open Application    http://localhost:4723/wd/hub    alias=maisha    platformName=Android    platformVersion=5.1.1    deviceName='emulator-5554'    appPackage=com.maishalei.seller
+    ...    appActivity=.ui.activity.LauncherActivity    unicodeKeyboard=True    resetKeyboard=True
 
 点击分类
     Wait Until Page Contains    首页
@@ -65,13 +68,13 @@ Resource          系统按键.robot
     Click Element    id=ivQQLogin
 
 切换Web视图
-    ${a}    Get Contexts
-    Log    Contexts: ${a}
-    ${b}    Get Current Context
-    Log    Current Context is: ${b}
-    Log    Context a1 is: ${a[1]}
-    Switch To Context    ${a[1]}
-    Get Current Context
+    ${contexts}    Get Contexts
+    Log    Contexts: ${contexts}
+    ${cur}    Get Current Context
+    Log    Current Context is: ${cur}
+    Switch To Context    ${contexts[1]}
+    ${cur}    Get Current Context
+    Log    Now,the context is: ${cur}
 
 返回
     Click Element    xpath=//android.widget.ImageView[@NAF='true']
@@ -149,7 +152,7 @@ TempTest
     [Arguments]    ${time}=2s
     Sleep    ${time}
 
-检验等待
+校验等待
     [Arguments]    ${object}=首页    ${time}=10
     Run Keyword If    '${object}'=='首页'    Wait Until Page Contains Element    id=ivDiscover    ${TIMEOUT}
     ...    ELSE IF    '${object}'=='分享'    Wait Until Page Contains Element    xpath=//android.widget.TextView[@text='分享']    ${TIMEOUT}
@@ -171,4 +174,46 @@ TempTest
     [Return]    ${status}
 
 失败重启
+    Run Keyword If Test Failed    Close All Applications
+    Run Keyword If Test Failed    Sleep    2
     Run Keyword If Test Failed    启动App
+
+退出登录
+    Click Element After Find It    id=layoutUserLogined
+    Sleep    1
+    向上滑动    1
+    Sleep    2
+    Click Element    id=btnLogout
+    Sleep    3
+
+切换WebView
+    ${a}    Get Contexts
+    ${b}    Get Current Context
+    Log    Contexts: ${a}
+    Switch To Context    ${a[1]}
+
+版本更新检测
+    [Arguments]    ${confirm}=no
+    ${id}    Run Keyword If    '${confirm}'=='yes'    Set Variable    bt_confirm
+    ...    ELSE IF    '${confirm}'=='no'    Set Variable    bt_cancel
+    Log    ID: ${id}
+    Capture Page Screenshot
+    ${newversion}    Run Keyword And Return Status    Page Should Contain Text    发现买啥嘞新版本
+    Run Keyword If    '${newversion}'=='True'    Click Element    id=${id}
+    校验等待
+
+手机密码登录
+    Sleep    2
+    Click Element    id=ivMine
+    Sleep    2
+    ${status}    状态判断-不应该包含    //android.widget.TextView[@text='我的订单']
+    Run Keyword If    '${status}'=='False'    退出登录
+    Run Keyword If    '${status}'=='False'    Click Element    id=ivMine
+    Run Keyword If    '${status}'=='False'    Sleep    1
+    Input Text    id=etPhoneByPwd    ${PHONE NUM}
+    Input Password    id=etPwdByPwd    ${PHONE PWD}
+    Click Element    id=btnLoginByPwd
+    Sleep    4
+    Page Should Contain Element    xpath=//android.widget.TextView[@text='我的订单']
+    Page Should Contain Text    日志
+    Log    ------手机密码登录-完成------

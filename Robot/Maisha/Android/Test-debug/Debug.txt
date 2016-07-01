@@ -1,5 +1,5 @@
 *** Settings ***
-Suite Setup       启动App
+Suite Setup       启动App3
 Suite Teardown    关闭App
 Resource          ../Lib/配置参数.robot
 Resource          ../Lib/常用操作.robot
@@ -10,6 +10,12 @@ Resource          ../Lib/常用操作.robot
     Log Many    &{caps}
 
 Locate
-    检验等待
+    校验等待
     ${size}    Get Elements    xpath=/android.widget.FrameLayout
     Log    ${size}
+
+start
+    Sleep    15
+    ${id}    Set Variable    bt_cancel
+    Click Element    id=${id}
+    Sleep    2

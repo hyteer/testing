@@ -1,0 +1,2575 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<robot generated="20160701 11:13:51.355" generator="Robot 3.0 (Python 2.7.11 on win32)">
+<suite source="D:\Testing\Robot\Maisha\Android\Test\冒烟测试" id="s1" name="冒烟测试">
+<suite source="D:\Testing\Robot\Maisha\Android\Test\冒烟测试\流程.txt" id="s1-s1" name="流程">
+<kw type="setup" name="启动App" library="常用操作">
+<kw name="Log" library="BuiltIn">
+<doc>Logs the given message with the given level.</doc>
+<arguments>
+<arg>Device:${device}</arg>
+</arguments>
+<msg timestamp="20160701 11:13:51.496" level="INFO">Device:big</msg>
+<status status="PASS" endtime="20160701 11:13:51.496" starttime="20160701 11:13:51.495"></status>
+</kw>
+<kw name="Log" library="BuiltIn">
+<doc>Logs the given message with the given level.</doc>
+<arguments>
+<arg>Mode:${mode}</arg>
+</arguments>
+<msg timestamp="20160701 11:13:51.496" level="INFO">Mode:product</msg>
+<status status="PASS" endtime="20160701 11:13:51.496" starttime="20160701 11:13:51.496"></status>
+</kw>
+<kw name="Set Global Variable" library="BuiltIn">
+<doc>Makes a variable available globally in all tests and suites.</doc>
+<arguments>
+<arg>${device}</arg>
+</arguments>
+<msg timestamp="20160701 11:13:51.496" level="INFO">${device} = big</msg>
+<status status="PASS" endtime="20160701 11:13:51.496" starttime="20160701 11:13:51.496"></status>
+</kw>
+<kw name="Set Global Variable" library="BuiltIn">
+<doc>Makes a variable available globally in all tests and suites.</doc>
+<arguments>
+<arg>${mode}</arg>
+</arguments>
+<msg timestamp="20160701 11:13:51.497" level="INFO">${mode} = product</msg>
+<status status="PASS" endtime="20160701 11:13:51.497" starttime="20160701 11:13:51.496"></status>
+</kw>
+<kw name="启动参数" library="配置参数">
+<arguments>
+<arg>${device}</arg>
+<arg>${mode}</arg>
+</arguments>
+<kw name="Set Variable" library="BuiltIn">
+<doc>Returns the given values which can then be assigned to a variables.</doc>
+<arguments>
+<arg>${getdevice}</arg>
+</arguments>
+<assign>
+<var>${device}</var>
+</assign>
+<msg timestamp="20160701 11:13:51.497" level="INFO">${device} = big</msg>
+<status status="PASS" endtime="20160701 11:13:51.497" starttime="20160701 11:13:51.497"></status>
+</kw>
+<kw name="Set Variable" library="BuiltIn">
+<doc>Returns the given values which can then be assigned to a variables.</doc>
+<arguments>
+<arg>${getmode}</arg>
+</arguments>
+<assign>
+<var>${mode}</var>
+</assign>
+<msg timestamp="20160701 11:13:51.498" level="INFO">${mode} = product</msg>
+<status status="PASS" endtime="20160701 11:13:51.498" starttime="20160701 11:13:51.497"></status>
+</kw>
+<kw name="Log" library="BuiltIn">
+<doc>Logs the given message with the given level.</doc>
+<arguments>
+<arg>Device is: ${device}</arg>
+</arguments>
+<msg timestamp="20160701 11:13:51.498" level="INFO">Device is: big</msg>
+<status status="PASS" endtime="20160701 11:13:51.498" starttime="20160701 11:13:51.498"></status>
+</kw>
+<kw name="Run Keyword If" library="BuiltIn">
+<doc>Runs the given keyword with the given arguments, if ``condition`` is true.</doc>
+<arguments>
+<arg>'${mode}'=='debug'</arg>
+<arg>Set Variable</arg>
+<arg>com.maishalei.seller.debug</arg>
+<arg>ELSE IF</arg>
+<arg>'${mode}'=='product'</arg>
+<arg>Set Variable</arg>
+<arg>com.maishalei.seller</arg>
+<arg>ELSE</arg>
+<arg>Log</arg>
+<arg>请输入正确的运行模式。</arg>
+</arguments>
+<assign>
+<var>${package}</var>
+</assign>
+<kw name="Set Variable" library="BuiltIn">
+<doc>Returns the given values which can then be assigned to a variables.</doc>
+<arguments>
+<arg>com.maishalei.seller</arg>
+</arguments>
+<status status="PASS" endtime="20160701 11:13:51.499" starttime="20160701 11:13:51.499"></status>
+</kw>
+<msg timestamp="20160701 11:13:51.499" level="INFO">${package} = com.maishalei.seller</msg>
+<status status="PASS" endtime="20160701 11:13:51.499" starttime="20160701 11:13:51.498"></status>
+</kw>
+<kw name="Run Keyword If" library="BuiltIn">
+<doc>Runs the given keyword with the given arguments, if ``condition`` is true.</doc>
+<arguments>
+<arg>'${mode}'=='debug'</arg>
+<arg>Set Variable</arg>
+<arg>com.maishalei.seller.ui.activity.LauncherActivity</arg>
+<arg>ELSE IF</arg>
+<arg>'${mode}'=='product'</arg>
+<arg>Set Variable</arg>
+<arg>.ui.activity.LauncherActivity</arg>
+<arg>ELSE</arg>
+<arg>Log</arg>
+<arg>请输入正确的运行模式。</arg>
+</arguments>
+<assign>
+<var>${activity}</var>
+</assign>
+<kw name="Set Variable" library="BuiltIn">
+<doc>Returns the given values which can then be assigned to a variables.</doc>
+<arguments>
+<arg>.ui.activity.LauncherActivity</arg>
+</arguments>
+<status status="PASS" endtime="20160701 11:13:51.501" starttime="20160701 11:13:51.501"></status>
+</kw>
+<msg timestamp="20160701 11:13:51.502" level="INFO">${activity} = .ui.activity.LauncherActivity</msg>
+<status status="PASS" endtime="20160701 11:13:51.502" starttime="20160701 11:13:51.500"></status>
+</kw>
+<kw name="Run Keyword If" library="BuiltIn">
+<doc>Runs the given keyword with the given arguments, if ``condition`` is true.</doc>
+<arguments>
+<arg>'${device}'=='small'</arg>
+<arg>Set Variable</arg>
+<arg>http://localhost:4722/wd/hub</arg>
+<arg>ELSE IF</arg>
+<arg>'${device}'=='medium'</arg>
+<arg>Set Variable</arg>
+<arg>http://localhost:4723/wd/hub</arg>
+<arg>ELSE IF</arg>
+<arg>'${device}'=='big'</arg>
+<arg>Set Variable</arg>
+<arg>http://localhost:4734/wd/hub</arg>
+<arg>ELSE</arg>
+<arg>Log</arg>
+<arg>请输入正确的设备规格。</arg>
+</arguments>
+<assign>
+<var>${host}</var>
+</assign>
+<kw name="Set Variable" library="BuiltIn">
+<doc>Returns the given values which can then be assigned to a variables.</doc>
+<arguments>
+<arg>http://localhost:4734/wd/hub</arg>
+</arguments>
+<status status="PASS" endtime="20160701 11:13:51.503" starttime="20160701 11:13:51.503"></status>
+</kw>
+<msg timestamp="20160701 11:13:51.504" level="INFO">${host} = http://localhost:4734/wd/hub</msg>
+<status status="PASS" endtime="20160701 11:13:51.504" starttime="20160701 11:13:51.502"></status>
+</kw>
+<kw name="Run Keyword If" library="BuiltIn">
+<doc>Runs the given keyword with the given arguments, if ``condition`` is true.</doc>
+<arguments>
+<arg>'${device}'=='small'</arg>
+<arg>Create Dictionary</arg>
+<arg>alias=maisha</arg>
+<arg>platformName=Android</arg>
+<arg>platformVersion=5.1.1</arg>
+<arg>deviceName='emulator-5554'</arg>
+<arg>appPackage=${package}</arg>
+<arg>appActivity=${activity}</arg>
+<arg>unicodeKeyboard=True</arg>
+<arg>resetKeyboard=True</arg>
+<arg>ELSE IF</arg>
+<arg>'${device}'=='medium'</arg>
+<arg>Create Dictionary</arg>
+<arg>alias=maisha</arg>
+<arg>platformName=Android</arg>
+<arg>platformVersion=5.1.1</arg>
+<arg>deviceName='HUAWEI MT2-L01'</arg>
+<arg>appPackage=${package}</arg>
+<arg>appActivity=${activity}</arg>
+<arg>unicodeKeyboard=True</arg>
+<arg>resetKeyboard=True</arg>
+<arg>ELSE IF</arg>
+<arg>'${device}'=='big'</arg>
+<arg>Create Dictionary</arg>
+<arg>alias=maisha</arg>
+<arg>platformName=Android</arg>
+<arg>platformVersion=4.4.2</arg>
+<arg>deviceName='emulator-5554'</arg>
+<arg>appPackage=${package}</arg>
+<arg>appActivity=${activity}</arg>
+<arg>unicodeKeyboard=True</arg>
+<arg>resetKeyboard=True</arg>
+<arg>ELSE</arg>
+<arg>Log</arg>
+<arg>请输入正确的设备规格。</arg>
+</arguments>
+<assign>
+<var>&amp;{caps}</var>
+</assign>
+<kw name="Create Dictionary" library="BuiltIn">
+<doc>Creates and returns a dictionary based on given items.</doc>
+<arguments>
+<arg>alias=maisha</arg>
+<arg>platformName=Android</arg>
+<arg>platformVersion=4.4.2</arg>
+<arg>deviceName='emulator-5554'</arg>
+<arg>appPackage=${package}</arg>
+<arg>appActivity=${activity}</arg>
+<arg>unicodeKeyboard=True</arg>
+<arg>resetKeyboard=True</arg>
+</arguments>
+<status status="PASS" endtime="20160701 11:13:51.506" starttime="20160701 11:13:51.505"></status>
+</kw>
+<msg timestamp="20160701 11:13:51.506" level="INFO">&amp;{caps} = { alias=maisha | platformName=Android | platformVersion=4.4.2 | deviceName='emulator-5554' | appPackage=com.maishalei.seller | appActivity=.ui.activity.LauncherActivity | unicodeKeyboard=True | resetK...</msg>
+<status status="PASS" endtime="20160701 11:13:51.506" starttime="20160701 11:13:51.504"></status>
+</kw>
+<kw name="Set Global Variable" library="BuiltIn">
+<doc>Makes a variable available globally in all tests and suites.</doc>
+<arguments>
+<arg>&amp;{caps}</arg>
+</arguments>
+<msg timestamp="20160701 11:13:51.507" level="INFO">&amp;{caps} = { alias=maisha | platformName=Android | platformVersion=4.4.2 | deviceName='emulator-5554' | appPackage=com.maishalei.seller | appActivity=.ui.activity.LauncherActivity | unicodeKeyboard=True | resetK...</msg>
+<status status="PASS" endtime="20160701 11:13:51.507" starttime="20160701 11:13:51.506"></status>
+</kw>
+<kw name="Set Global Variable" library="BuiltIn">
+<doc>Makes a variable available globally in all tests and suites.</doc>
+<arguments>
+<arg>${host}</arg>
+</arguments>
+<msg timestamp="20160701 11:13:51.507" level="INFO">${host} = http://localhost:4734/wd/hub</msg>
+<status status="PASS" endtime="20160701 11:13:51.507" starttime="20160701 11:13:51.507"></status>
+</kw>
+<status status="PASS" endtime="20160701 11:13:51.507" starttime="20160701 11:13:51.497"></status>
+</kw>
+<kw name="Open Application" library="SongzAppiumLibrary">
+<doc>Opens a new application to given Appium server.</doc>
+<arguments>
+<arg>${host}</arg>
+<arg>&amp;{caps}</arg>
+</arguments>
+<msg timestamp="20160701 11:13:51.513" level="DEBUG">POST http://127.0.0.1:4734/wd/hub/session {"desiredCapabilities": {"deviceName": "'emulator-5554'", "unicodeKeyboard": "True", "resetKeyboard": "True", "platformVersion": "4.4.2", "appPackage": "com.maishalei.seller", "platformName": "Android", "appActivity": ".ui.activity.LauncherActivity"}}</msg>
+<msg timestamp="20160701 11:13:59.583" level="DEBUG">Finished Request</msg>
+<msg timestamp="20160701 11:13:59.584" level="DEBUG">Opened application with session id f627f0ae-7057-4531-bcb7-0270f37925db</msg>
+<status status="PASS" endtime="20160701 11:13:59.584" starttime="20160701 11:13:51.507"></status>
+</kw>
+<status status="PASS" endtime="20160701 11:13:59.584" starttime="20160701 11:13:51.495"></status>
+</kw>
+<test id="s1-s1-t1" name="手机密码登录">
+<kw name="校验等待" library="常用操作">
+<kw name="Run Keyword If" library="BuiltIn">
+<doc>Runs the given keyword with the given arguments, if ``condition`` is true.</doc>
+<arguments>
+<arg>'${object}'=='首页'</arg>
+<arg>Wait Until Page Contains Element</arg>
+<arg>id=ivDiscover</arg>
+<arg>${TIMEOUT}</arg>
+<arg>ELSE IF</arg>
+<arg>'${object}'=='分享'</arg>
+<arg>Wait Until Page Contains Element</arg>
+<arg>xpath=//android.widget.TextView[@text='分享']</arg>
+<arg>${TIMEOUT}</arg>
+<arg>ELSE IF</arg>
+<arg>'${object}'=='WebView'</arg>
+<arg>Wait Until Page Contains Element</arg>
+<arg>id=webview</arg>
+<arg>${TIMEOUT}</arg>
+<arg>ELSE IF</arg>
+<arg>'${object}'=='标题'</arg>
+<arg>Wait Until Page Contains Element</arg>
+<arg>id=centerView</arg>
+</arguments>
+<kw name="Wait Until Page Contains Element" library="SongzAppiumLibrary">
+<doc>Waits until element specified with `locator` appears on current page.</doc>
+<arguments>
+<arg>id=ivDiscover</arg>
+<arg>${TIMEOUT}</arg>
+</arguments>
+<msg timestamp="20160701 11:13:59.587" level="DEBUG">POST http://127.0.0.1:4734/wd/hub/session/f627f0ae-7057-4531-bcb7-0270f37925db/elements {"using": "id", "sessionId": "f627f0ae-7057-4531-bcb7-0270f37925db", "value": "ivDiscover"}</msg>
+<msg timestamp="20160701 11:14:00.711" level="DEBUG">Finished Request</msg>
+<msg timestamp="20160701 11:14:00.911" level="DEBUG">POST http://127.0.0.1:4734/wd/hub/session/f627f0ae-7057-4531-bcb7-0270f37925db/elements {"using": "id", "sessionId": "f627f0ae-7057-4531-bcb7-0270f37925db", "value": "ivDiscover"}</msg>
+<msg timestamp="20160701 11:14:01.728" level="DEBUG">Finished Request</msg>
+<msg timestamp="20160701 11:14:01.929" level="DEBUG">POST http://127.0.0.1:4734/wd/hub/session/f627f0ae-7057-4531-bcb7-0270f37925db/elements {"using": "id", "sessionId": "f627f0ae-7057-4531-bcb7-0270f37925db", "value": "ivDiscover"}</msg>
+<msg timestamp="20160701 11:14:02.198" level="DEBUG">Finished Request</msg>
+<msg timestamp="20160701 11:14:02.399" level="DEBUG">POST http://127.0.0.1:4734/wd/hub/session/f627f0ae-7057-4531-bcb7-0270f37925db/elements {"using": "id", "sessionId": "f627f0ae-7057-4531-bcb7-0270f37925db", "value": "ivDiscover"}</msg>
+<msg timestamp="20160701 11:14:02.523" level="DEBUG">Finished Request</msg>
+<msg timestamp="20160701 11:14:02.723" level="DEBUG">POST http://127.0.0.1:4734/wd/hub/session/f627f0ae-7057-4531-bcb7-0270f37925db/elements {"using": "id", "sessionId": "f627f0ae-7057-4531-bcb7-0270f37925db", "value": "ivDiscover"}</msg>
+<msg timestamp="20160701 11:14:02.926" level="DEBUG">Finished Request</msg>
+<msg timestamp="20160701 11:14:03.126" level="DEBUG">POST http://127.0.0.1:4734/wd/hub/session/f627f0ae-7057-4531-bcb7-0270f37925db/elements {"using": "id", "sessionId": "f627f0ae-7057-4531-bcb7-0270f37925db", "value": "ivDiscover"}</msg>
+<msg timestamp="20160701 11:14:09.716" level="DEBUG">Finished Request</msg>
+<status status="PASS" endtime="20160701 11:14:09.717" starttime="20160701 11:13:59.586"></status>
+</kw>
+<status status="PASS" endtime="20160701 11:14:09.717" starttime="20160701 11:13:59.585"></status>
+</kw>
+<status status="PASS" endtime="20160701 11:14:09.717" starttime="20160701 11:13:59.585"></status>
+</kw>
+<kw name="Sleep" library="BuiltIn">
+<doc>Pauses the test executed for the given time.</doc>
+<arguments>
+<arg>2</arg>
+</arguments>
+<msg timestamp="20160701 11:14:11.719" level="INFO">Slept 2 seconds</msg>
+<status status="PASS" endtime="20160701 11:14:11.719" starttime="20160701 11:14:09.719"></status>
+</kw>
+<kw name="Click Element" library="SongzAppiumLibrary">
+<doc>Click element identified by `locator`.</doc>
+<arguments>
+<arg>id=ivMine</arg>
+</arguments>
+<msg timestamp="20160701 11:14:11.721" level="INFO">Clicking element 'id=ivMine'.</msg>
+<msg timestamp="20160701 11:14:11.722" level="DEBUG">POST http://127.0.0.1:4734/wd/hub/session/f627f0ae-7057-4531-bcb7-0270f37925db/elements {"using": "id", "sessionId": "f627f0ae-7057-4531-bcb7-0270f37925db", "value": "ivMine"}</msg>
+<msg timestamp="20160701 11:14:12.349" level="DEBUG">Finished Request</msg>
+<msg timestamp="20160701 11:14:12.349" level="DEBUG">POST http://127.0.0.1:4734/wd/hub/session/f627f0ae-7057-4531-bcb7-0270f37925db/element/2/click {"sessionId": "f627f0ae-7057-4531-bcb7-0270f37925db", "id": "2"}</msg>
+<msg timestamp="20160701 11:14:15.618" level="DEBUG">Finished Request</msg>
+<status status="PASS" endtime="20160701 11:14:15.618" starttime="20160701 11:14:11.721"></status>
+</kw>
+<kw name="Sleep" library="BuiltIn">
+<doc>Pauses the test executed for the given time.</doc>
+<arguments>
+<arg>2</arg>
+</arguments>
+<msg timestamp="20160701 11:14:17.619" level="INFO">Slept 2 seconds</msg>
+<status status="PASS" endtime="20160701 11:14:17.619" starttime="20160701 11:14:15.619"></status>
+</kw>
+<kw name="状态判断-不应该包含" library="常用操作">
+<arguments>
+<arg>//android.widget.TextView[@text='我的订单']</arg>
+</arguments>
+<assign>
+<var>${status}</var>
+</assign>
+<kw name="Run Keyword And Return Status" library="BuiltIn">
+<doc>Runs the given keyword with given arguments and returns the status as a Boolean value.</doc>
+<arguments>
+<arg>Page Should Not Contain Element</arg>
+<arg>xpath=${xpath}</arg>
+</arguments>
+<assign>
+<var>${status}</var>
+</assign>
+<kw name="Page Should Not Contain Element" library="SongzAppiumLibrary">
+<doc>Verifies that current page not contains `locator` element.</doc>
+<arguments>
+<arg>xpath=${xpath}</arg>
+</arguments>
+<msg timestamp="20160701 11:14:17.623" level="DEBUG">POST http://127.0.0.1:4734/wd/hub/session/f627f0ae-7057-4531-bcb7-0270f37925db/elements {"using": "xpath", "sessionId": "f627f0ae-7057-4531-bcb7-0270f37925db", "value": "//android.widget.TextView[@text='\u6211\u7684\u8ba2\u5355']"}</msg>
+<msg timestamp="20160701 11:14:18.253" level="DEBUG">Finished Request</msg>
+<msg timestamp="20160701 11:14:18.254" level="DEBUG">GET http://127.0.0.1:4734/wd/hub/session/f627f0ae-7057-4531-bcb7-0270f37925db/source {"sessionId": "f627f0ae-7057-4531-bcb7-0270f37925db"}</msg>
+<msg timestamp="20160701 11:14:18.822" level="DEBUG">Finished Request</msg>
+<msg timestamp="20160701 11:14:18.823" level="INFO">&lt;?xml version="1.0" encoding="UTF-8"?&gt;&lt;hierarchy rotation="0"&gt;&lt;android.widget.FrameLayout index="0" text="" class="android.widget.FrameLayout" package="com.maishalei.seller" content-desc="" checkable="false" checked="false" clickable="false" enabled="true" focusable="false" focused="false" scrollable="false" long-clickable="false" password="false" selected="false" bounds="[0,0][1080,1776]" resource-id="" instance="0"&gt;&lt;android.widget.LinearLayout index="0" text="" class="android.widget.LinearLayout" package="com.maishalei.seller" content-desc="" checkable="false" checked="false" clickable="false" enabled="true" focusable="false" focused="false" scrollable="false" long-clickable="false" password="false" selected="false" bounds="[0,0][1080,1776]" resource-id="" instance="0"&gt;&lt;android.widget.FrameLayout index="0" text="" class="android.widget.FrameLayout" package="com.maishalei.seller" content-desc="" checkable="false" checked="false" clickable="false" enabled="true" focusable="false" focused="false" scrollable="false" long-clickable="false" password="false" selected="false" bounds="[0,0][1080,1776]" resource-id="android:id/content" instance="1"&gt;&lt;android.widget.LinearLayout index="0" text="" class="android.widget.LinearLayout" package="com.maishalei.seller" content-desc="" checkable="false" checked="false" clickable="false" enabled="true" focusable="false" focused="false" scrollable="false" long-clickable="false" password="false" selected="false" bounds="[0,0][1080,1776]" resource-id="" instance="1"&gt;&lt;android.widget.FrameLayout index="0" text="" class="android.widget.FrameLayout" package="com.maishalei.seller" content-desc="" checkable="false" checked="false" clickable="false" enabled="true" focusable="false" focused="false" scrollable="false" long-clickable="false" password="false" selected="false" bounds="[0,0][1080,1614]" resource-id="com.maishalei.seller:id/content" instance="2"&gt;&lt;android.widget.LinearLayout index="0" text="" class="android.widget.LinearLayout" package="com.maishalei.seller" content-desc="" checkable="false" checked="false" clickable="false" enabled="true" focusable="false" focused="false" scrollable="false" long-clickable="false" password="false" selected="false" bounds="[0,0][1080,1614]" resource-id="" instance="2"&gt;&lt;android.widget.RelativeLayout index="0" text="" class="android.widget.RelativeLayout" package="com.maishalei.seller" content-desc="" checkable="false" checked="false" clickable="false" enabled="true" focusable="false" focused="false" scrollable="false" long-clickable="false" password="false" selected="false" bounds="[0,0][1080,690]" resource-id="" instance="0"&gt;&lt;android.widget.ImageView index="0" text="" class="android.widget.ImageView" package="com.maishalei.seller" content-desc="" checkable="false" checked="false" clickable="false" enabled="true" focusable="false" focused="false" scrollable="false" long-clickable="false" password="false" selected="false" bounds="[0,0][1080,690]" resource-id="com.maishalei.seller:id/ivHeaderBackgroundBlur" instance="0"/&gt;&lt;android.view.View index="1" text="" class="android.view.View" package="com.maishalei.seller" content-desc="" checkable="false" checked="false" clickable="false" enabled="true" focusable="false" focused="false" scrollable="false" long-clickable="false" password="false" selected="false" bounds="[0,0][1080,75]" resource-id="com.maishalei.seller:id/vStatusBarHolder" instance="0"/&gt;&lt;android.widget.RelativeLayout index="2" text="" class="android.widget.RelativeLayout" package="com.maishalei.seller" content-desc="" checkable="false" checked="false" clickable="false" enabled="true" focusable="false" focused="false" scrollable="false" long-clickable="false" password="false" selected="false" bounds="[0,75][1080,219]" resource-id="com.maishalei.seller:id/layoutHeader" instance="1"&gt;&lt;android.widget.FrameLayout index="0" text="" class="android.widget.FrameLayout" package="com.maishalei.seller" content-desc="" checkable="false" checked="false" clickable="false" enabled="true" focusable="false" focused="false" scrollable="false" long-clickable="false" password="false" selected="false" bounds="[0,75][150,219]" resource-id="" instance="3"&gt;&lt;android.widget.ImageView NAF="true" index="0" text="" class="android.widget.ImageView" package="com.maishalei.seller" content-desc="" checkable="false" checked="false" clickable="true" enabled="true" focusable="false" focused="false" scrollable="false" long-clickable="false" password="false" selected="false" bounds="[0,75][150,219]" resource-id="com.maishalei.seller:id/ivHeaderLeft" instance="1"/&gt;&lt;/android.widget.FrameLayout&gt;&lt;android.widget.TextView index="1" text="我的" class="android.widget.TextView" package="com.maishalei.seller" content-desc="" checkable="false" checked="false" clickable="false" enabled="true" focusable="false" focused="false" scrollable="false" long-clickable="false" password="false" selected="false" bounds="[150,118][930,176]" resource-id="com.maishalei.seller:id/tvHeaderCenter" instance="0"/&gt;&lt;android.widget.FrameLayout index="2" text="" class="android.widget.FrameLayout" package="com.maishalei.seller" content-desc="" checkable="false" checked="false" clickable="false" enabled="true" focusable="false" focused="false" scrollable="false" long-clickable="false" password="false" selected="false" bounds="[930,75][1080,219]" resource-id="" instance="4"&gt;&lt;android.widget.ImageView NAF="true" index="0" text="" class="android.widget.ImageView" package="com.maishalei.seller" content-desc="" checkable="false" checked="false" clickable="true" enabled="true" focusable="false" focused="false" scrollable="false" long-clickable="false" password="false" selected="false" bounds="[930,75][1080,219]" resource-id="com.maishalei.seller:id/ivHeaderRight" instance="2"/&gt;&lt;/android.widget.FrameLayout&gt;&lt;/android.widget.RelativeLayout&gt;&lt;android.widget.RelativeLayout index="3" text="" class="android.widget.RelativeLayout" package="com.maishalei.seller" content-desc="" checkable="false" checked="false" clickable="true" enabled="true" focusable="false" focused="false" scrollable="false" long-clickable="false" password="false" selected="false" bounds="[0,219][1080,540]" resource-id="com.maishalei.seller:id/layoutUserLogined" instance="2"&gt;&lt;android.widget.ImageView index="0" text="" class="android.widget.ImageView" package="com.maishalei.seller" content-desc="" checkable="false" checked="false" clickable="false" enabled="true" focusable="false" focused="false" scrollable="false" long-clickable="false" password="false" selected="false" bounds="[30,265][258,493]" resource-id="com.maishalei.seller:id/ivUserAvatar" instance="3"/&gt;&lt;android.widget.TextView index="1" text="Tony" class="android.widget.TextView" package="com.maishalei.seller" content-desc="" checkable="false" checked="false" clickable="false" enabled="true" focusable="false" focused="false" scrollable="false" long-clickable="false" password="false" selected="false" bounds="[288,310][380,368]" resource-id="com.maishalei.seller:id/tvUserName" instance="1"/&gt;&lt;android.widget.TextView index="2" text="账号: 13924628477" class="android.widget.TextView" package="com.maishalei.seller" content-desc="" checkable="false" checked="false" clickable="false" enabled="true" focusable="false" focused="false" scrollable="false" long-clickable="false" password="false" selected="false" bounds="[288,398][598,463]" resource-id="com.maishalei.seller:id/tvAccount" instance="2"/&gt;&lt;android.widget.ImageView index="3" text="" class="android.widget.ImageView" package="com.maishalei.seller" content-desc="" checkable="false" checked="false" clickable="false" enabled="true" focusable="false" focused="false" scrollable="false" long-clickable="false" password="false" selected="false" bounds="[978,343][1050,415]" resource-id="" instance="4"/&gt;&lt;/android.widget.RelativeLayout&gt;&lt;android.widget.LinearLayout index="4" text="" class="android.widget.LinearLayout" package="com.maishalei.seller" content-desc="" checkable="false" checked="false" clickable="false" enabled="true" focusable="false" focused="false" scrollable="false" long-clickable="false" password="false" selected="false" bounds="[0,540][1080,690]" resource-id="com.maishalei.seller:id/layoutSNSUserInfo" instance="3"&gt;&lt;android.widget.TextView index="0" text="0&amp;#10;日志" class="android.widget.TextView" package="com.maishalei.seller" content-desc="" checkable="false" checked="false" clickable="true" enabled="true" focusable="false" focused="false" scrollable="false" long-clickable="false" password="false" selected="false" bounds="[0,540][269,690]" resource-id="com.maishalei.seller:id/tvDiary" instance="3"/&gt;&lt;android.view.View index="1" text="" class="android.view.View" package="com.maishalei.seller" content-desc="" checkable="false" checked="false" clickable="false" enabled="true" focusable="false" focused="false" scrollable="false" long-clickable="false" password="false" selected="false" bounds="[269,576][270,654]" resource-id="" instance="1"/&gt;&lt;android.widget.TextView index="2" text="0&amp;#10;关注" class="android.widget.TextView" package="com.maishalei.seller" content-desc="" checkable="false" checked="false" clickable="true" enabled="true" focusable="false" focused="false" scrollable="false" long-clickable="false" password="false" selected="false" bounds="[270,540][539,690]" resource-id="com.maishalei.seller:id/tvFollowing" instance="4"/&gt;&lt;android.view.View index="3" text="" class="android.view.View" package="com.maishalei.seller" content-desc="" checkable="false" checked="false" clickable="false" enabled="true" focusable="false" focused="false" scrollable="false" long-clickable="false" password="false" selected="false" bounds="[539,576][540,654]" resource-id="" instance="2"/&gt;&lt;android.widget.TextView index="4" text="0&amp;#10;粉丝" class="android.widget.TextView" package="com.maishalei.seller" content-desc="" checkable="false" checked="false" clickable="true" enabled="true" focusable="false" focused="false" scrollable="false" long-clickable="false" password="false" selected="false" bounds="[540,540][809,690]" resource-id="com.maishalei.seller:id/tvFollower" instance="5"/&gt;&lt;android.view.View index="5" text="" class="android.view.View" package="com.maishalei.seller" content-desc="" checkable="false" checked="false" clickable="false" enabled="true" focusable="false" focused="false" scrollable="false" long-clickable="false" password="false" selected="false" bounds="[809,576][810,654]" resource-id="" instance="3"/&gt;&lt;android.widget.TextView index="6" text="0&amp;#10;收藏" class="android.widget.TextView" package="com.maishalei.seller" content-desc="" checkable="false" checked="false" clickable="true" enabled="true" focusable="false" focused="false" scrollable="false" long-clickable="false" password="false" selected="false" bounds="[810,540][1080,690]" resource-id="com.maishalei.seller:id/tvFavorite" instance="6"/&gt;&lt;/android.widget.LinearLayout&gt;&lt;/android.widget.RelativeLayout&gt;&lt;android.view.View index="1" text="" class="android.view.View" package="com.maishalei.seller" content-desc="" checkable="false" checked="false" clickable="false" enabled="true" focusable="false" focused="false" scrollable="false" long-clickable="false" password="false" selected="false" bounds="[0,690][1080,1614]" resource-id="com.maishalei.seller:id/swipeRefreshLayout" instance="4"&gt;&lt;android.widget.ScrollView index="0" text="" class="android.widget.ScrollView" package="com.maishalei.seller" content-desc="" checkable="false" checked="false" clickable="false" enabled="true" focusable="true" focused="false" scrollable="true" long-clickable="false" password="false" selected="false" bounds="[0,690][1080,1614]" resource-id="" instance="0"&gt;&lt;android.widget.LinearLayout index="0" text="" class="android.widget.LinearLayout" package="com.maishalei.seller" content-desc="" checkable="false" checked="false" clickable="false" enabled="true" focusable="false" focused="false" scrollable="false" long-clickable="false" password="false" selected="false" bounds="[0,690][1080,1776]" resource-id="" instance="4"&gt;&lt;android.widget.RelativeLayout index="0" text="" class="android.widget.RelativeLayout" package="com.maishalei.seller" content-desc="" checkable="false" checked="false" clickable="true" enabled="true" focusable="false" focused="false" scrollable="false" long-clickable="false" password="false" selected="false" bounds="[0,720][1080,870]" resource-id="com.maishalei.seller:id/layoutOrderTitle" instance="3"&gt;&lt;android.widget.TextView index="0" text="我的订单" class="android.widget.TextView" package="com.maishalei.seller" content-desc="" checkable="false" checked="false" clickable="false" enabled="true" focusable="false" focused="false" scrollable="false" long-clickable="false" password="false" selected="false" bounds="[30,766][198,824]" resource-id="" instance="7"/&gt;&lt;android.widget.TextView index="1" text="查看全部" class="android.widget.TextView" package="com.maishalei.seller" content-desc="" checkable="false" checked="false" clickable="false" enabled="true" focusable="false" focused="false" scrollable="false" long-clickable="false" password="false" selected="false" bounds="[859,770][1050,820]" resource-id="" instance="8"/&gt;&lt;/android.widget.RelativeLayout&gt;&lt;android.view.View index="1" text="" class="android.view.View" package="com.maishalei.seller" content-desc="" checkable="false" checked="false" clickable="false" enabled="true" focusable="false" focused="false" scrollable="false" long-clickable="false" password="false" selected="false" bounds="[0,870][1080,871]" resource-id="" instance="5"/&gt;&lt;android.widget.LinearLayout index="2" text="" class="android.widget.LinearLayout" package="com.maishalei.seller" content-desc="" checkable="false" checked="false" clickable="false" enabled="true" focusable="false" focused="false" scrollable="false" long-clickable="false" password="false" selected="false" bounds="[0,871][1080,1135]" resource-id="" instance="5"&gt;&lt;android.widget.FrameLayout index="0" text="" class="android.widget.FrameLayout" package="com.maishalei.seller" content-desc="" checkable="false" checked="false" clickable="true" enabled="true" focusable="false" focused="false" scrollable="false" long-clickable="false" password="false" selected="false" bounds="[0,871][216,1135]" resource-id="com.maishalei.seller:id/layoutOrderStateNonpayment" instance="5"&gt;&lt;android.widget.TextView index="0" text="待付款" class="android.widget.TextView" package="com.maishalei.seller" content-desc="" checkable="false" checked="false" clickable="false" enabled="true" focusable="false" focused="false" scrollable="false" long-clickable="false" password="false" selected="false" bounds="[54,935][162,1071]" resource-id="" instance="9"/&gt;&lt;/android.widget.FrameLayout&gt;&lt;android.widget.FrameLayout index="1" text="" class="android.widget.FrameLayout" package="com.maishalei.seller" content-desc="" checkable="false" checked="false" clickable="true" enabled="true" focusable="false" focused="false" scrollable="false" long-clickable="false" password="false" selected="false" bounds="[216,871][432,1135]" resource-id="com.maishalei.seller:id/layoutOrderStateUndeliverySelf" instance="6"&gt;&lt;android.widget.TextView index="0" text="待发货" class="android.widget.TextView" package="com.maishalei.seller" content-desc="" checkable="false" checked="false" clickable="false" enabled="true" focusable="false" focused="false" scrollable="false" long-clickable="false" password="false" selected="false" bounds="[270,935][378,1071]" resource-id="com.maishalei.seller:id/tvOrderStateUndeliverySelf" instance="10"/&gt;&lt;/android.widget.FrameLayout&gt;&lt;android.widget.FrameLayout index="2" text="" class="android.widget.FrameLayout" package="com.maishalei.seller" content-desc="" checkable="false" checked="false" clickable="true" enabled="true" focusable="false" focused="false" scrollable="false" long-clickable="false" password="false" selected="false" bounds="[432,871][648,1135]" resource-id="com.maishalei.seller:id/layoutOrderStateDeliveringSelf" instance="7"&gt;&lt;android.widget.TextView index="0" text="待收货" class="android.widget.TextView" package="com.maishalei.seller" content-desc="" checkable="false" checked="false" clickable="false" enabled="true" focusable="false" focused="false" scrollable="false" long-clickable="false" password="false" selected="false" bounds="[486,935][594,1071]" resource-id="com.maishalei.seller:id/tvOrderStateDeliveringSelf" instance="11"/&gt;&lt;/android.widget.FrameLayout&gt;&lt;android.widget.FrameLayout index="3" text="" class="android.widget.FrameLayout" package="com.maishalei.seller" content-desc="" checkable="false" checked="false" clickable="true" enabled="true" focusable="false" focused="false" scrollable="false" long-clickable="false" password="false" selected="false" bounds="[648,871][864,1135]" resource-id="com.maishalei.seller:id/layoutOrderStateCommentSelf" instance="8"&gt;&lt;android.widget.TextView index="0" text="待评价" class="android.widget.TextView" package="com.maishalei.seller" content-desc="" checkable="false" checked="false" clickable="false" enabled="true" focusable="false" focused="false" scrollable="false" long-clickable="false" password="false" selected="false" bounds="[702,925][810,1081]" resource-id="com.maishalei.seller:id/tvOrderStateCommentSelf" instance="12"/&gt;&lt;/android.widget.FrameLayout&gt;&lt;android.widget.FrameLayout index="4" text="" class="android.widget.FrameLayout" package="com.maishalei.seller" content-desc="" checkable="false" checked="false" clickable="true" enabled="true" focusable="false" focused="false" scrollable="false" long-clickable="false" password="false" selected="false" bounds="[864,871][1080,1135]" resource-id="com.maishalei.seller:id/layoutOrderStateRefundSelf" instance="9"&gt;&lt;android.widget.TextView index="0" text="售后" class="android.widget.TextView" package="com.maishalei.seller" content-desc="" checkable="false" checked="false" clickable="false" enabled="true" focusable="false" focused="false" scrollable="false" long-clickable="false" password="false" selected="false" bounds="[934,925][1010,1081]" resource-id="com.maishalei.seller:id/tvOrderStateRefundSelf" instance="13"/&gt;&lt;/android.widget.FrameLayout&gt;&lt;/android.widget.LinearLayout&gt;&lt;android.widget.LinearLayout index="3" text="" class="android.widget.LinearLayout" package="com.maishalei.seller" content-desc="" checkable="false" checked="false" clickable="false" enabled="true" focusable="false" focused="false" scrollable="false" long-clickable="false" password="false" selected="false" bounds="[0,1165][1080,1429]" resource-id="" instance="6"&gt;&lt;android.widget.TextView index="0" text="优惠券" class="android.widget.TextView" package="com.maishalei.seller" content-desc="" checkable="false" checked="false" clickable="true" enabled="true" focusable="false" focused="false" scrollable="false" long-clickable="false" password="false" selected="false" bounds="[0,1206][270,1388]" resource-id="com.maishalei.seller:id/layoutCoupon" instance="14"/&gt;&lt;android.widget.TextView index="1" text="地址管理" class="android.widget.TextView" package="com.maishalei.seller" content-desc="" checkable="false" checked="false" clickable="true" enabled="true" focusable="false" focused="false" scrollable="false" long-clickable="false" password="false" selected="false" bounds="[270,1206][540,1388]" resource-id="com.maishalei.seller:id/layoutAddress" instance="15"/&gt;&lt;android.widget.TextView index="2" text="清关证明" class="android.widget.TextView" package="com.maishalei.seller" content-desc="" checkable="false" checked="false" clickable="true" enabled="true" focusable="false" focused="false" scrollable="false" long-clickable="false" password="false" selected="false" bounds="[540,1206][810,1388]" resource-id="com.maishalei.seller:id/tvQingGuan" instance="16"/&gt;&lt;android.widget.TextView index="3" text="使用帮助" class="android.widget.TextView" package="com.maishalei.seller" content-desc="" checkable="false" checked="false" clickable="true" enabled="true" focusable="false" focused="false" scrollable="false" long-clickable="false" password="false" selected="false" bounds="[810,1206][1080,1388]" resource-id="com.maishalei.seller:id/layoutHelp" instance="17"/&gt;&lt;/android.widget.LinearLayout&gt;&lt;android.widget.RelativeLayout index="4" text="" class="android.widget.RelativeLayout" package="com.maishalei.seller" content-desc="" checkable="false" checked="false" clickable="true" enabled="true" focusable="false" focused="false" scrollable="false" long-clickable="false" password="false" selected="false" bounds="[0,1459][1080,1609]" resource-id="com.maishalei.seller:id/layoutStorePreview" instance="4"&gt;&lt;android.widget.TextView index="0" text="我的分享屋" class="android.widget.TextView" package="com.maishalei.seller" content-desc="" checkable="false" checked="false" clickable="false" enabled="true" focusable="false" focused="false" scrollable="false" long-clickable="false" password="false" selected="false" bounds="[30,1505][240,1563]" resource-id="" instance="18"/&gt;&lt;android.widget.TextView index="1" text="预览我的分享屋" class="android.widget.TextView" package="com.maishalei.seller" content-desc="" checkable="false" checked="false" clickable="false" enabled="true" focusable="false" focused="false" scrollable="false" long-clickable="false" password="false" selected="false" bounds="[751,1509][1050,1559]" resource-id="" instance="19"/&gt;&lt;/android.widget.RelativeLayout&gt;&lt;android.view.View index="5" text="" class="android.view.View" package="com.maishalei.seller" content-desc="" checkable="false" checked="false" clickable="false" enabled="true" focusable="false" focused="false" scrollable="false" long-clickable="false" password="false" selected="false" bounds="[0,1609][1080,1610]" resource-id="" instance="6"/&gt;&lt;android.widget.LinearLayout index="6" text="" class="android.widget.LinearLayout" package="com.maishalei.seller" content-desc="" checkable="false" checked="false" clickable="false" enabled="true" focusable="false" focused="false" scrollable="false" long-clickable="false" password="false" selected="false" bounds="[0,1610][1080,1776]" resource-id="" instance="7"&gt;&lt;android.widget.FrameLayout index="0" text="" class="android.widget.FrameLayout" package="com.maishalei.seller" content-desc="" checkable="false" checked="false" clickable="true" enabled="true" focusable="false" focused="false" scrollable="false" long-clickable="false" password="false" selected="false" bounds="[0,1610][216,1776]" resource-id="com.maishalei.seller:id/tvEarning" instance="10"/&gt;&lt;android.widget.FrameLayout index="1" text="" class="android.widget.FrameLayout" package="com.maishalei.seller" content-desc="" checkable="false" checked="false" clickable="true" enabled="true" focusable="false" focused="false" scrollable="false" long-clickable="false" password="false" selected="false" bounds="[216,1610][432,1776]" resource-id="com.maishalei.seller:id/tvCommodityManagement" instance="11"/&gt;&lt;android.widget.FrameLayout index="2" text="" class="android.widget.FrameLayout" package="com.maishalei.seller" content-desc="" checkable="false" checked="false" clickable="true" enabled="true" focusable="false" focused="false" scrollable="false" long-clickable="false" password="false" selected="false" bounds="[432,1610][648,1776]" resource-id="com.maishalei.seller:id/tvStatistics" instance="12"/&gt;&lt;android.widget.FrameLayout index="3" text="" class="android.widget.FrameLayout" package="com.maishalei.seller" content-desc="" checkable="false" checked="false" clickable="true" enabled="true" focusable="false" focused="false" scrollable="false" long-clickable="false" password="false" selected="false" bounds="[648,1610][864,1776]" resource-id="com.maishalei.seller:id/tvEarningOrders" instance="13"/&gt;&lt;android.widget.FrameLayout index="4" text="" class="android.widget.FrameLayout" package="com.maishalei.seller" content-desc="" checkable="false" checked="false" clickable="true" enabled="true" focusable="false" focused="false" scrollable="false" long-clickable="false" password="false" selected="false" bounds="[864,1610][1080,1776]" resource-id="com.maishalei.seller:id/tvStoreSetting" instance="14"/&gt;&lt;/android.widget.LinearLayout&gt;&lt;/android.widget.LinearLayout&gt;&lt;/android.widget.ScrollView&gt;&lt;/android.view.View&gt;&lt;/android.widget.LinearLayout&gt;&lt;/android.widget.FrameLayout&gt;&lt;android.widget.LinearLayout index="1" text="" class="android.widget.LinearLayout" package="com.maishalei.seller" content-desc="" checkable="false" checked="false" clickable="false" enabled="true" focusable="false" focused="false" scrollable="false" long-clickable="false" password="false" selected="false" bounds="[0,1614][1080,1776]" resource-id="com.maishalei.seller:id/tabLayout" instance="8"&gt;&lt;android.view.View index="0" text="" class="android.view.View" package="com.maishalei.seller" content-desc="" checkable="false" checked="false" clickable="false" enabled="true" focusable="false" focused="false" scrollable="false" long-clickable="false" password="false" selected="false" bounds="[0,1614][1080,1616]" resource-id="" instance="7"/&gt;&lt;android.widget.LinearLayout index="1" text="" class="android.widget.LinearLayout" package="com.maishalei.seller" content-desc="" checkable="false" checked="false" clickable="false" enabled="true" focusable="false" focused="false" scrollable="false" long-clickable="false" password="false" selected="false" bounds="[0,1616][1080,1776]" resource-id="" instance="9"&gt;&lt;android.widget.TextView index="0" text="首页" class="android.widget.TextView" package="com.maishalei.seller" content-desc="" checkable="false" checked="false" clickable="true" enabled="true" focusable="false" focused="false" scrollable="false" long-clickable="false" password="false" selected="false" bounds="[0,1634][270,1757]" resource-id="com.maishalei.seller:id/ivDiscover" instance="20"/&gt;&lt;android.widget.TextView index="1" text="社区" class="android.widget.TextView" package="com.maishalei.seller" content-desc="" checkable="false" checked="false" clickable="true" enabled="true" focusable="false" focused="false" scrollable="false" long-clickable="false" password="false" selected="false" bounds="[270,1634][540,1757]" resource-id="com.maishalei.seller:id/ivSNS" instance="21"/&gt;&lt;android.widget.TextView index="2" text="购物车" class="android.widget.TextView" package="com.maishalei.seller" content-desc="" checkable="false" checked="false" clickable="true" enabled="true" focusable="false" focused="false" scrollable="false" long-clickable="false" password="false" selected="false" bounds="[540,1634][810,1757]" resource-id="com.maishalei.seller:id/ivShoppingCart" instance="22"/&gt;&lt;android.widget.TextView index="3" text="我的" class="android.widget.TextView" package="com.maishalei.seller" content-desc="" checkable="false" checked="false" clickable="true" enabled="true" focusable="false" focused="false" scrollable="false" long-clickable="false" password="false" selected="true" bounds="[810,1634][1080,1757]" resource-id="com.maishalei.seller:id/ivMine" instance="23"/&gt;&lt;/android.widget.LinearLayout&gt;&lt;/android.widget.LinearLayout&gt;&lt;/android.widget.LinearLayout&gt;&lt;/android.widget.FrameLayout&gt;&lt;/android.widget.LinearLayout&gt;&lt;/android.widget.FrameLayout&gt;&lt;/hierarchy&gt;</msg>
+<kw name="Capture Page Screenshot" library="SongzAppiumLibrary">
+<doc>Takes a screenshot of the current page and embeds it into the log.</doc>
+<msg timestamp="20160701 11:14:18.824" level="DEBUG">GET http://127.0.0.1:4734/wd/hub/session/f627f0ae-7057-4531-bcb7-0270f37925db/screenshot {"sessionId": "f627f0ae-7057-4531-bcb7-0270f37925db"}</msg>
+<msg timestamp="20160701 11:14:20.250" level="DEBUG">Finished Request</msg>
+<msg timestamp="20160701 11:14:20.255" html="yes" level="INFO">&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td colspan="3"&gt;&lt;a href="appium-screenshot-1.png"&gt;&lt;img src="appium-screenshot-1.png" width="800px"&gt;&lt;/a&gt;</msg>
+<status status="PASS" endtime="20160701 11:14:20.255" starttime="20160701 11:14:18.823"></status>
+</kw>
+<msg timestamp="20160701 11:14:20.256" level="FAIL">Page should not have contained element 'xpath=//android.widget.TextView[@text='我的订单']' but did not</msg>
+<msg timestamp="20160701 11:14:20.256" level="DEBUG">Traceback (most recent call last):
+  File "&lt;decorator-gen-13&gt;", line 2, in page_should_not_contain_element
+  File "c:\python27\lib\site-packages\SongzAppiumLibrary\keywords\keywordgroup.py", line 15, in _run_on_failure_decorator
+    return method(*args, **kwargs)
+  File "c:\python27\lib\site-packages\SongzAppiumLibrary\keywords\_element.py", line 125, in page_should_not_contain_element
+    "but did not" % locator)</msg>
+<status status="FAIL" endtime="20160701 11:14:20.256" starttime="20160701 11:14:17.622"></status>
+</kw>
+<msg timestamp="20160701 11:14:20.256" level="INFO">${status} = False</msg>
+<status status="PASS" endtime="20160701 11:14:20.256" starttime="20160701 11:14:17.621"></status>
+</kw>
+<msg timestamp="20160701 11:14:20.256" level="INFO">${status} = False</msg>
+<status status="PASS" endtime="20160701 11:14:20.256" starttime="20160701 11:14:17.620"></status>
+</kw>
+<kw name="Run Keyword If" library="BuiltIn">
+<doc>Runs the given keyword with the given arguments, if ``condition`` is true.</doc>
+<arguments>
+<arg>'${status}'=='False'</arg>
+<arg>退出登录</arg>
+</arguments>
+<kw name="退出登录" library="常用操作">
+<kw name="Click Element After Find It" library="SongzAppiumLibrary">
+<doc>Foreach the identifies, and click the text-matched element identified by `locator`.</doc>
+<arguments>
+<arg>id=layoutUserLogined</arg>
+</arguments>
+<msg timestamp="20160701 11:14:20.258" level="DEBUG">GET http://127.0.0.1:4734/wd/hub/session/f627f0ae-7057-4531-bcb7-0270f37925db/window/current/size {"windowHandle": "current", "sessionId": "f627f0ae-7057-4531-bcb7-0270f37925db"}</msg>
+<msg timestamp="20160701 11:14:20.270" level="DEBUG">Finished Request</msg>
+<msg timestamp="20160701 11:14:20.270" level="INFO">Clicking element after find it: 'id=layoutUserLogined'.</msg>
+<msg timestamp="20160701 11:14:20.270" level="DEBUG">POST http://127.0.0.1:4734/wd/hub/session/f627f0ae-7057-4531-bcb7-0270f37925db/elements {"using": "id", "sessionId": "f627f0ae-7057-4531-bcb7-0270f37925db", "value": "layoutUserLogined"}</msg>
+<msg timestamp="20160701 11:14:21.398" level="DEBUG">Finished Request</msg>
+<msg timestamp="20160701 11:14:21.399" level="DEBUG">POST http://127.0.0.1:4734/wd/hub/session/f627f0ae-7057-4531-bcb7-0270f37925db/element/4/click {"sessionId": "f627f0ae-7057-4531-bcb7-0270f37925db", "id": "4"}</msg>
+<msg timestamp="20160701 11:14:23.443" level="DEBUG">Finished Request</msg>
+<status status="PASS" endtime="20160701 11:14:23.444" starttime="20160701 11:14:20.258"></status>
+</kw>
+<kw name="Sleep" library="BuiltIn">
+<doc>Pauses the test executed for the given time.</doc>
+<arguments>
+<arg>1</arg>
+</arguments>
+<msg timestamp="20160701 11:14:24.444" level="INFO">Slept 1 second</msg>
+<status status="PASS" endtime="20160701 11:14:24.444" starttime="20160701 11:14:23.444"></status>
+</kw>
+<kw name="向上滑动" library="常用操作">
+<arguments>
+<arg>1</arg>
+</arguments>
+<kw name="Run Keyword If" library="BuiltIn">
+<doc>Runs the given keyword with the given arguments, if ``condition`` is true.</doc>
+<arguments>
+<arg>'${device}'=='small'</arg>
+<arg>Set Variable</arg>
+<arg>240</arg>
+<arg>580</arg>
+<arg>240</arg>
+<arg>240</arg>
+<arg>ELSE IF</arg>
+<arg>'${device}'=='medium'</arg>
+<arg>Set Variable</arg>
+<arg>350</arg>
+<arg>950</arg>
+<arg>350</arg>
+<arg>400</arg>
+<arg>ELSE IF</arg>
+<arg>'${device}'=='big'</arg>
+<arg>Set Variable</arg>
+<arg>500</arg>
+<arg>1400</arg>
+<arg>500</arg>
+<arg>600</arg>
+<arg>ELSE</arg>
+<arg>Log</arg>
+<arg>无效的参数${device}</arg>
+</arguments>
+<assign>
+<var>@{list}</var>
+</assign>
+<kw name="Set Variable" library="BuiltIn">
+<doc>Returns the given values which can then be assigned to a variables.</doc>
+<arguments>
+<arg>500</arg>
+<arg>1400</arg>
+<arg>500</arg>
+<arg>600</arg>
+</arguments>
+<status status="PASS" endtime="20160701 11:14:24.455" starttime="20160701 11:14:24.454"></status>
+</kw>
+<msg timestamp="20160701 11:14:24.455" level="INFO">@{list} = [ 500 | 1400 | 500 | 600 ]</msg>
+<status status="PASS" endtime="20160701 11:14:24.456" starttime="20160701 11:14:24.446"></status>
+</kw>
+<kw type="for" name="${i} IN RANGE [ ${n} ]">
+<kw type="foritem" name="${i} = 0">
+<kw name="Swipe" library="SongzAppiumLibrary">
+<doc>Swipe from one point to another point, for an optional duration.</doc>
+<arguments>
+<arg>@{list}</arg>
+<arg>${interval}</arg>
+</arguments>
+<msg timestamp="20160701 11:14:24.458" level="DEBUG">POST http://127.0.0.1:4734/wd/hub/session/f627f0ae-7057-4531-bcb7-0270f37925db/touch/perform {"sessionId": "f627f0ae-7057-4531-bcb7-0270f37925db", "actions": [{"action": "press", "options": {"y": "1400", "x": "500"}}, {"action": "wait", "options": {"ms": "500"}}, {"action": "moveTo", "options": {"y": "600", "x": "500"}}, {"action": "release", "options": {}}]}</msg>
+<msg timestamp="20160701 11:14:24.732" level="DEBUG">Finished Request</msg>
+<status status="PASS" endtime="20160701 11:14:24.732" starttime="20160701 11:14:24.457"></status>
+</kw>
+<kw name="Sleep" library="BuiltIn">
+<doc>Pauses the test executed for the given time.</doc>
+<arguments>
+<arg>0.5</arg>
+</arguments>
+<msg timestamp="20160701 11:14:25.233" level="INFO">Slept 500 milliseconds</msg>
+<status status="PASS" endtime="20160701 11:14:25.233" starttime="20160701 11:14:24.732"></status>
+</kw>
+<status status="PASS" endtime="20160701 11:14:25.233" starttime="20160701 11:14:24.456"></status>
+</kw>
+<status status="PASS" endtime="20160701 11:14:25.233" starttime="20160701 11:14:24.456"></status>
+</kw>
+<status status="PASS" endtime="20160701 11:14:25.233" starttime="20160701 11:14:24.445"></status>
+</kw>
+<kw name="Sleep" library="BuiltIn">
+<doc>Pauses the test executed for the given time.</doc>
+<arguments>
+<arg>2</arg>
+</arguments>
+<msg timestamp="20160701 11:14:27.234" level="INFO">Slept 2 seconds</msg>
+<status status="PASS" endtime="20160701 11:14:27.234" starttime="20160701 11:14:25.234"></status>
+</kw>
+<kw name="Click Element" library="SongzAppiumLibrary">
+<doc>Click element identified by `locator`.</doc>
+<arguments>
+<arg>id=btnLogout</arg>
+</arguments>
+<msg timestamp="20160701 11:14:27.235" level="INFO">Clicking element 'id=btnLogout'.</msg>
+<msg timestamp="20160701 11:14:27.236" level="DEBUG">POST http://127.0.0.1:4734/wd/hub/session/f627f0ae-7057-4531-bcb7-0270f37925db/elements {"using": "id", "sessionId": "f627f0ae-7057-4531-bcb7-0270f37925db", "value": "btnLogout"}</msg>
+<msg timestamp="20160701 11:14:27.546" level="DEBUG">Finished Request</msg>
+<msg timestamp="20160701 11:14:27.546" level="DEBUG">POST http://127.0.0.1:4734/wd/hub/session/f627f0ae-7057-4531-bcb7-0270f37925db/element/5/click {"sessionId": "f627f0ae-7057-4531-bcb7-0270f37925db", "id": "5"}</msg>
+<msg timestamp="20160701 11:14:28.013" level="DEBUG">Finished Request</msg>
+<status status="PASS" endtime="20160701 11:14:28.014" starttime="20160701 11:14:27.235"></status>
+</kw>
+<kw name="Sleep" library="BuiltIn">
+<doc>Pauses the test executed for the given time.</doc>
+<arguments>
+<arg>3</arg>
+</arguments>
+<msg timestamp="20160701 11:14:31.015" level="INFO">Slept 3 seconds</msg>
+<status status="PASS" endtime="20160701 11:14:31.015" starttime="20160701 11:14:28.015"></status>
+</kw>
+<status status="PASS" endtime="20160701 11:14:31.016" starttime="20160701 11:14:20.258"></status>
+</kw>
+<status status="PASS" endtime="20160701 11:14:31.016" starttime="20160701 11:14:20.257"></status>
+</kw>
+<kw name="Run Keyword If" library="BuiltIn">
+<doc>Runs the given keyword with the given arguments, if ``condition`` is true.</doc>
+<arguments>
+<arg>'${status}'=='False'</arg>
+<arg>Click Element</arg>
+<arg>id=ivMine</arg>
+</arguments>
+<kw name="Click Element" library="SongzAppiumLibrary">
+<doc>Click element identified by `locator`.</doc>
+<arguments>
+<arg>id=ivMine</arg>
+</arguments>
+<msg timestamp="20160701 11:14:31.021" level="INFO">Clicking element 'id=ivMine'.</msg>
+<msg timestamp="20160701 11:14:31.022" level="DEBUG">POST http://127.0.0.1:4734/wd/hub/session/f627f0ae-7057-4531-bcb7-0270f37925db/elements {"using": "id", "sessionId": "f627f0ae-7057-4531-bcb7-0270f37925db", "value": "ivMine"}</msg>
+<msg timestamp="20160701 11:14:31.478" level="DEBUG">Finished Request</msg>
+<msg timestamp="20160701 11:14:31.479" level="DEBUG">POST http://127.0.0.1:4734/wd/hub/session/f627f0ae-7057-4531-bcb7-0270f37925db/element/6/click {"sessionId": "f627f0ae-7057-4531-bcb7-0270f37925db", "id": "6"}</msg>
+<msg timestamp="20160701 11:14:34.556" level="DEBUG">Finished Request</msg>
+<status status="PASS" endtime="20160701 11:14:34.557" starttime="20160701 11:14:31.021"></status>
+</kw>
+<status status="PASS" endtime="20160701 11:14:34.557" starttime="20160701 11:14:31.018"></status>
+</kw>
+<kw name="Run Keyword If" library="BuiltIn">
+<doc>Runs the given keyword with the given arguments, if ``condition`` is true.</doc>
+<arguments>
+<arg>'${status}'=='False'</arg>
+<arg>Sleep</arg>
+<arg>1</arg>
+</arguments>
+<kw name="Sleep" library="BuiltIn">
+<doc>Pauses the test executed for the given time.</doc>
+<arguments>
+<arg>1</arg>
+</arguments>
+<msg timestamp="20160701 11:14:35.561" level="INFO">Slept 1 second</msg>
+<status status="PASS" endtime="20160701 11:14:35.561" starttime="20160701 11:14:34.561"></status>
+</kw>
+<status status="PASS" endtime="20160701 11:14:35.561" starttime="20160701 11:14:34.558"></status>
+</kw>
+<kw name="Input Text" library="SongzAppiumLibrary">
+<doc>Types the given `text` into text field identified by `locator`.</doc>
+<arguments>
+<arg>id=etPhoneByPwd</arg>
+<arg>${PHONE NUM}</arg>
+</arguments>
+<msg timestamp="20160701 11:14:35.564" level="INFO">Typing text '13924628477' into text field 'id=etPhoneByPwd'</msg>
+<msg timestamp="20160701 11:14:35.564" level="DEBUG">POST http://127.0.0.1:4734/wd/hub/session/f627f0ae-7057-4531-bcb7-0270f37925db/elements {"using": "id", "sessionId": "f627f0ae-7057-4531-bcb7-0270f37925db", "value": "etPhoneByPwd"}</msg>
+<msg timestamp="20160701 11:14:35.833" level="DEBUG">Finished Request</msg>
+<msg timestamp="20160701 11:14:35.834" level="DEBUG">POST http://127.0.0.1:4734/wd/hub/session/f627f0ae-7057-4531-bcb7-0270f37925db/element/7/value {"sessionId": "f627f0ae-7057-4531-bcb7-0270f37925db", "id": "7", "value": ["1", "3", "9", "2", "4", "6", "2", "8", "4", "7", "7"]}</msg>
+<msg timestamp="20160701 11:14:41.024" level="DEBUG">Finished Request</msg>
+<status status="PASS" endtime="20160701 11:14:41.024" starttime="20160701 11:14:35.563"></status>
+</kw>
+<kw name="Input Password" library="SongzAppiumLibrary">
+<doc>Types the given password into text field identified by `locator`.</doc>
+<arguments>
+<arg>id=etPwdByPwd</arg>
+<arg>${PHONE PWD}</arg>
+</arguments>
+<msg timestamp="20160701 11:14:41.026" level="INFO">Typing password into text field 'id=etPwdByPwd'</msg>
+<msg timestamp="20160701 11:14:41.026" level="DEBUG">POST http://127.0.0.1:4734/wd/hub/session/f627f0ae-7057-4531-bcb7-0270f37925db/elements {"using": "id", "sessionId": "f627f0ae-7057-4531-bcb7-0270f37925db", "value": "etPwdByPwd"}</msg>
+<msg timestamp="20160701 11:14:41.858" level="DEBUG">Finished Request</msg>
+<msg timestamp="20160701 11:14:41.859" level="DEBUG">POST http://127.0.0.1:4734/wd/hub/session/f627f0ae-7057-4531-bcb7-0270f37925db/element/8/value {"sessionId": "f627f0ae-7057-4531-bcb7-0270f37925db", "id": "8", "value": ["2", "5", "8", "0", "1", "2", "3", "4", "5", "6"]}</msg>
+<msg timestamp="20160701 11:14:46.979" level="DEBUG">Finished Request</msg>
+<status status="PASS" endtime="20160701 11:14:46.980" starttime="20160701 11:14:41.026"></status>
+</kw>
+<kw name="Click Element" library="SongzAppiumLibrary">
+<doc>Click element identified by `locator`.</doc>
+<arguments>
+<arg>id=btnLoginByPwd</arg>
+</arguments>
+<msg timestamp="20160701 11:14:46.982" level="INFO">Clicking element 'id=btnLoginByPwd'.</msg>
+<msg timestamp="20160701 11:14:46.983" level="DEBUG">POST http://127.0.0.1:4734/wd/hub/session/f627f0ae-7057-4531-bcb7-0270f37925db/elements {"using": "id", "sessionId": "f627f0ae-7057-4531-bcb7-0270f37925db", "value": "btnLoginByPwd"}</msg>
+<msg timestamp="20160701 11:14:47.751" level="DEBUG">Finished Request</msg>
+<msg timestamp="20160701 11:14:47.752" level="DEBUG">POST http://127.0.0.1:4734/wd/hub/session/f627f0ae-7057-4531-bcb7-0270f37925db/element/9/click {"sessionId": "f627f0ae-7057-4531-bcb7-0270f37925db", "id": "9"}</msg>
+<msg timestamp="20160701 11:14:48.083" level="DEBUG">Finished Request</msg>
+<status status="PASS" endtime="20160701 11:14:48.084" starttime="20160701 11:14:46.981"></status>
+</kw>
+<kw name="Sleep" library="BuiltIn">
+<doc>Pauses the test executed for the given time.</doc>
+<arguments>
+<arg>4</arg>
+</arguments>
+<msg timestamp="20160701 11:14:52.086" level="INFO">Slept 4 seconds</msg>
+<status status="PASS" endtime="20160701 11:14:52.086" starttime="20160701 11:14:48.085"></status>
+</kw>
+<kw name="Page Should Contain Element" library="SongzAppiumLibrary">
+<doc>Verifies that current page contains `locator` element.</doc>
+<arguments>
+<arg>xpath=//android.widget.TextView[@text='我的订单']</arg>
+</arguments>
+<msg timestamp="20160701 11:14:52.088" level="DEBUG">POST http://127.0.0.1:4734/wd/hub/session/f627f0ae-7057-4531-bcb7-0270f37925db/elements {"using": "xpath", "sessionId": "f627f0ae-7057-4531-bcb7-0270f37925db", "value": "//android.widget.TextView[@text='\u6211\u7684\u8ba2\u5355']"}</msg>
+<msg timestamp="20160701 11:14:52.376" level="DEBUG">Finished Request</msg>
+<msg timestamp="20160701 11:14:52.376" level="INFO">Current page contains element 'xpath=//android.widget.TextView[@text='我的订单']'.</msg>
+<status status="PASS" endtime="20160701 11:14:52.376" starttime="20160701 11:14:52.087"></status>
+</kw>
+<kw name="Page Should Contain Text" library="SongzAppiumLibrary">
+<doc>Verifies that current page contains `text`.</doc>
+<arguments>
+<arg>日志</arg>
+</arguments>
+<msg timestamp="20160701 11:14:52.379" level="DEBUG">GET http://127.0.0.1:4734/wd/hub/session/f627f0ae-7057-4531-bcb7-0270f37925db/source {"sessionId": "f627f0ae-7057-4531-bcb7-0270f37925db"}</msg>
+<msg timestamp="20160701 11:14:52.800" level="DEBUG">Finished Request</msg>
+<msg timestamp="20160701 11:14:52.800" level="INFO">&lt;?xml version="1.0" encoding="UTF-8"?&gt;&lt;hierarchy rotation="0"&gt;&lt;android.widget.FrameLayout index="0" text="" class="android.widget.FrameLayout" package="com.maishalei.seller" content-desc="" checkable="false" checked="false" clickable="false" enabled="true" focusable="false" focused="false" scrollable="false" long-clickable="false" password="false" selected="false" bounds="[0,0][1080,1776]" resource-id="" instance="0"&gt;&lt;android.widget.LinearLayout index="0" text="" class="android.widget.LinearLayout" package="com.maishalei.seller" content-desc="" checkable="false" checked="false" clickable="false" enabled="true" focusable="false" focused="false" scrollable="false" long-clickable="false" password="false" selected="false" bounds="[0,0][1080,1776]" resource-id="" instance="0"&gt;&lt;android.widget.FrameLayout index="0" text="" class="android.widget.FrameLayout" package="com.maishalei.seller" content-desc="" checkable="false" checked="false" clickable="false" enabled="true" focusable="false" focused="false" scrollable="false" long-clickable="false" password="false" selected="false" bounds="[0,0][1080,1776]" resource-id="android:id/content" instance="1"&gt;&lt;android.widget.LinearLayout index="0" text="" class="android.widget.LinearLayout" package="com.maishalei.seller" content-desc="" checkable="false" checked="false" clickable="false" enabled="true" focusable="false" focused="false" scrollable="false" long-clickable="false" password="false" selected="false" bounds="[0,0][1080,1776]" resource-id="" instance="1"&gt;&lt;android.widget.FrameLayout index="0" text="" class="android.widget.FrameLayout" package="com.maishalei.seller" content-desc="" checkable="false" checked="false" clickable="false" enabled="true" focusable="false" focused="false" scrollable="false" long-clickable="false" password="false" selected="false" bounds="[0,0][1080,1614]" resource-id="com.maishalei.seller:id/content" instance="2"&gt;&lt;android.widget.LinearLayout index="0" text="" class="android.widget.LinearLayout" package="com.maishalei.seller" content-desc="" checkable="false" checked="false" clickable="false" enabled="true" focusable="false" focused="false" scrollable="false" long-clickable="false" password="false" selected="false" bounds="[0,0][1080,1614]" resource-id="" instance="2"&gt;&lt;android.widget.RelativeLayout index="0" text="" class="android.widget.RelativeLayout" package="com.maishalei.seller" content-desc="" checkable="false" checked="false" clickable="false" enabled="true" focusable="false" focused="false" scrollable="false" long-clickable="false" password="false" selected="false" bounds="[0,0][1080,690]" resource-id="" instance="0"&gt;&lt;android.widget.ImageView index="0" text="" class="android.widget.ImageView" package="com.maishalei.seller" content-desc="" checkable="false" checked="false" clickable="false" enabled="true" focusable="false" focused="false" scrollable="false" long-clickable="false" password="false" selected="false" bounds="[0,0][1080,690]" resource-id="com.maishalei.seller:id/ivHeaderBackgroundBlur" instance="0"/&gt;&lt;android.view.View index="1" text="" class="android.view.View" package="com.maishalei.seller" content-desc="" checkable="false" checked="false" clickable="false" enabled="true" focusable="false" focused="false" scrollable="false" long-clickable="false" password="false" selected="false" bounds="[0,0][1080,75]" resource-id="com.maishalei.seller:id/vStatusBarHolder" instance="0"/&gt;&lt;android.widget.RelativeLayout index="2" text="" class="android.widget.RelativeLayout" package="com.maishalei.seller" content-desc="" checkable="false" checked="false" clickable="false" enabled="true" focusable="false" focused="false" scrollable="false" long-clickable="false" password="false" selected="false" bounds="[0,75][1080,219]" resource-id="com.maishalei.seller:id/layoutHeader" instance="1"&gt;&lt;android.widget.FrameLayout index="0" text="" class="android.widget.FrameLayout" package="com.maishalei.seller" content-desc="" checkable="false" checked="false" clickable="false" enabled="true" focusable="false" focused="false" scrollable="false" long-clickable="false" password="false" selected="false" bounds="[0,75][150,219]" resource-id="" instance="3"&gt;&lt;android.widget.ImageView NAF="true" index="0" text="" class="android.widget.ImageView" package="com.maishalei.seller" content-desc="" checkable="false" checked="false" clickable="true" enabled="true" focusable="false" focused="false" scrollable="false" long-clickable="false" password="false" selected="false" bounds="[0,75][150,219]" resource-id="com.maishalei.seller:id/ivHeaderLeft" instance="1"/&gt;&lt;/android.widget.FrameLayout&gt;&lt;android.widget.TextView index="1" text="我的" class="android.widget.TextView" package="com.maishalei.seller" content-desc="" checkable="false" checked="false" clickable="false" enabled="true" focusable="false" focused="false" scrollable="false" long-clickable="false" password="false" selected="false" bounds="[150,118][930,176]" resource-id="com.maishalei.seller:id/tvHeaderCenter" instance="0"/&gt;&lt;android.widget.FrameLayout index="2" text="" class="android.widget.FrameLayout" package="com.maishalei.seller" content-desc="" checkable="false" checked="false" clickable="false" enabled="true" focusable="false" focused="false" scrollable="false" long-clickable="false" password="false" selected="false" bounds="[930,75][1080,219]" resource-id="" instance="4"&gt;&lt;android.widget.ImageView NAF="true" index="0" text="" class="android.widget.ImageView" package="com.maishalei.seller" content-desc="" checkable="false" checked="false" clickable="true" enabled="true" focusable="false" focused="false" scrollable="false" long-clickable="false" password="false" selected="false" bounds="[930,75][1080,219]" resource-id="com.maishalei.seller:id/ivHeaderRight" instance="2"/&gt;&lt;/android.widget.FrameLayout&gt;&lt;/android.widget.RelativeLayout&gt;&lt;android.widget.RelativeLayout index="3" text="" class="android.widget.RelativeLayout" package="com.maishalei.seller" content-desc="" checkable="false" checked="false" clickable="true" enabled="true" focusable="false" focused="false" scrollable="false" long-clickable="false" password="false" selected="false" bounds="[0,219][1080,540]" resource-id="com.maishalei.seller:id/layoutUserLogined" instance="2"&gt;&lt;android.widget.ImageView index="0" text="" class="android.widget.ImageView" package="com.maishalei.seller" content-desc="" checkable="false" checked="false" clickable="false" enabled="true" focusable="false" focused="false" scrollable="false" long-clickable="false" password="false" selected="false" bounds="[30,265][258,493]" resource-id="com.maishalei.seller:id/ivUserAvatar" instance="3"/&gt;&lt;android.widget.TextView index="1" text="Tony" class="android.widget.TextView" package="com.maishalei.seller" content-desc="" checkable="false" checked="false" clickable="false" enabled="true" focusable="false" focused="false" scrollable="false" long-clickable="false" password="false" selected="false" bounds="[288,310][380,368]" resource-id="com.maishalei.seller:id/tvUserName" instance="1"/&gt;&lt;android.widget.TextView index="2" text="账号: 13924628477" class="android.widget.TextView" package="com.maishalei.seller" content-desc="" checkable="false" checked="false" clickable="false" enabled="true" focusable="false" focused="false" scrollable="false" long-clickable="false" password="false" selected="false" bounds="[288,398][598,463]" resource-id="com.maishalei.seller:id/tvAccount" instance="2"/&gt;&lt;android.widget.ImageView index="3" text="" class="android.widget.ImageView" package="com.maishalei.seller" content-desc="" checkable="false" checked="false" clickable="false" enabled="true" focusable="false" focused="false" scrollable="false" long-clickable="false" password="false" selected="false" bounds="[978,343][1050,415]" resource-id="" instance="4"/&gt;&lt;/android.widget.RelativeLayout&gt;&lt;android.widget.LinearLayout index="4" text="" class="android.widget.LinearLayout" package="com.maishalei.seller" content-desc="" checkable="false" checked="false" clickable="false" enabled="true" focusable="false" focused="false" scrollable="false" long-clickable="false" password="false" selected="false" bounds="[0,540][1080,690]" resource-id="com.maishalei.seller:id/layoutSNSUserInfo" instance="3"&gt;&lt;android.widget.TextView index="0" text="0&amp;#10;日志" class="android.widget.TextView" package="com.maishalei.seller" content-desc="" checkable="false" checked="false" clickable="true" enabled="true" focusable="false" focused="false" scrollable="false" long-clickable="false" password="false" selected="false" bounds="[0,540][269,690]" resource-id="com.maishalei.seller:id/tvDiary" instance="3"/&gt;&lt;android.view.View index="1" text="" class="android.view.View" package="com.maishalei.seller" content-desc="" checkable="false" checked="false" clickable="false" enabled="true" focusable="false" focused="false" scrollable="false" long-clickable="false" password="false" selected="false" bounds="[269,576][270,654]" resource-id="" instance="1"/&gt;&lt;android.widget.TextView index="2" text="0&amp;#10;关注" class="android.widget.TextView" package="com.maishalei.seller" content-desc="" checkable="false" checked="false" clickable="true" enabled="true" focusable="false" focused="false" scrollable="false" long-clickable="false" password="false" selected="false" bounds="[270,540][539,690]" resource-id="com.maishalei.seller:id/tvFollowing" instance="4"/&gt;&lt;android.view.View index="3" text="" class="android.view.View" package="com.maishalei.seller" content-desc="" checkable="false" checked="false" clickable="false" enabled="true" focusable="false" focused="false" scrollable="false" long-clickable="false" password="false" selected="false" bounds="[539,576][540,654]" resource-id="" instance="2"/&gt;&lt;android.widget.TextView index="4" text="0&amp;#10;粉丝" class="android.widget.TextView" package="com.maishalei.seller" content-desc="" checkable="false" checked="false" clickable="true" enabled="true" focusable="false" focused="false" scrollable="false" long-clickable="false" password="false" selected="false" bounds="[540,540][809,690]" resource-id="com.maishalei.seller:id/tvFollower" instance="5"/&gt;&lt;android.view.View index="5" text="" class="android.view.View" package="com.maishalei.seller" content-desc="" checkable="false" checked="false" clickable="false" enabled="true" focusable="false" focused="false" scrollable="false" long-clickable="false" password="false" selected="false" bounds="[809,576][810,654]" resource-id="" instance="3"/&gt;&lt;android.widget.TextView index="6" text="0&amp;#10;收藏" class="android.widget.TextView" package="com.maishalei.seller" content-desc="" checkable="false" checked="false" clickable="true" enabled="true" focusable="false" focused="false" scrollable="false" long-clickable="false" password="false" selected="false" bounds="[810,540][1080,690]" resource-id="com.maishalei.seller:id/tvFavorite" instance="6"/&gt;&lt;/android.widget.LinearLayout&gt;&lt;/android.widget.RelativeLayout&gt;&lt;android.view.View index="1" text="" class="android.view.View" package="com.maishalei.seller" content-desc="" checkable="false" checked="false" clickable="false" enabled="true" focusable="false" focused="false" scrollable="false" long-clickable="false" password="false" selected="false" bounds="[0,690][1080,1614]" resource-id="com.maishalei.seller:id/swipeRefreshLayout" instance="4"&gt;&lt;android.widget.ScrollView index="0" text="" class="android.widget.ScrollView" package="com.maishalei.seller" content-desc="" checkable="false" checked="false" clickable="false" enabled="true" focusable="true" focused="false" scrollable="true" long-clickable="false" password="false" selected="false" bounds="[0,690][1080,1614]" resource-id="" instance="0"&gt;&lt;android.widget.LinearLayout index="0" text="" class="android.widget.LinearLayout" package="com.maishalei.seller" content-desc="" checkable="false" checked="false" clickable="false" enabled="true" focusable="false" focused="false" scrollable="false" long-clickable="false" password="false" selected="false" bounds="[0,690][1080,1776]" resource-id="" instance="4"&gt;&lt;android.widget.RelativeLayout index="0" text="" class="android.widget.RelativeLayout" package="com.maishalei.seller" content-desc="" checkable="false" checked="false" clickable="true" enabled="true" focusable="false" focused="false" scrollable="false" long-clickable="false" password="false" selected="false" bounds="[0,720][1080,870]" resource-id="com.maishalei.seller:id/layoutOrderTitle" instance="3"&gt;&lt;android.widget.TextView index="0" text="我的订单" class="android.widget.TextView" package="com.maishalei.seller" content-desc="" checkable="false" checked="false" clickable="false" enabled="true" focusable="false" focused="false" scrollable="false" long-clickable="false" password="false" selected="false" bounds="[30,766][198,824]" resource-id="" instance="7"/&gt;&lt;android.widget.TextView index="1" text="查看全部" class="android.widget.TextView" package="com.maishalei.seller" content-desc="" checkable="false" checked="false" clickable="false" enabled="true" focusable="false" focused="false" scrollable="false" long-clickable="false" password="false" selected="false" bounds="[859,770][1050,820]" resource-id="" instance="8"/&gt;&lt;/android.widget.RelativeLayout&gt;&lt;android.view.View index="1" text="" class="android.view.View" package="com.maishalei.seller" content-desc="" checkable="false" checked="false" clickable="false" enabled="true" focusable="false" focused="false" scrollable="false" long-clickable="false" password="false" selected="false" bounds="[0,870][1080,871]" resource-id="" instance="5"/&gt;&lt;android.widget.LinearLayout index="2" text="" class="android.widget.LinearLayout" package="com.maishalei.seller" content-desc="" checkable="false" checked="false" clickable="false" enabled="true" focusable="false" focused="false" scrollable="false" long-clickable="false" password="false" selected="false" bounds="[0,871][1080,1135]" resource-id="" instance="5"&gt;&lt;android.widget.FrameLayout index="0" text="" class="android.widget.FrameLayout" package="com.maishalei.seller" content-desc="" checkable="false" checked="false" clickable="true" enabled="true" focusable="false" focused="false" scrollable="false" long-clickable="false" password="false" selected="false" bounds="[0,871][216,1135]" resource-id="com.maishalei.seller:id/layoutOrderStateNonpayment" instance="5"&gt;&lt;android.widget.TextView index="0" text="待付款" class="android.widget.TextView" package="com.maishalei.seller" content-desc="" checkable="false" checked="false" clickable="false" enabled="true" focusable="false" focused="false" scrollable="false" long-clickable="false" password="false" selected="false" bounds="[54,935][162,1071]" resource-id="" instance="9"/&gt;&lt;/android.widget.FrameLayout&gt;&lt;android.widget.FrameLayout index="1" text="" class="android.widget.FrameLayout" package="com.maishalei.seller" content-desc="" checkable="false" checked="false" clickable="true" enabled="true" focusable="false" focused="false" scrollable="false" long-clickable="false" password="false" selected="false" bounds="[216,871][432,1135]" resource-id="com.maishalei.seller:id/layoutOrderStateUndeliverySelf" instance="6"&gt;&lt;android.widget.TextView index="0" text="待发货" class="android.widget.TextView" package="com.maishalei.seller" content-desc="" checkable="false" checked="false" clickable="false" enabled="true" focusable="false" focused="false" scrollable="false" long-clickable="false" password="false" selected="false" bounds="[270,935][378,1071]" resource-id="com.maishalei.seller:id/tvOrderStateUndeliverySelf" instance="10"/&gt;&lt;/android.widget.FrameLayout&gt;&lt;android.widget.FrameLayout index="2" text="" class="android.widget.FrameLayout" package="com.maishalei.seller" content-desc="" checkable="false" checked="false" clickable="true" enabled="true" focusable="false" focused="false" scrollable="false" long-clickable="false" password="false" selected="false" bounds="[432,871][648,1135]" resource-id="com.maishalei.seller:id/layoutOrderStateDeliveringSelf" instance="7"&gt;&lt;android.widget.TextView index="0" text="待收货" class="android.widget.TextView" package="com.maishalei.seller" content-desc="" checkable="false" checked="false" clickable="false" enabled="true" focusable="false" focused="false" scrollable="false" long-clickable="false" password="false" selected="false" bounds="[486,935][594,1071]" resource-id="com.maishalei.seller:id/tvOrderStateDeliveringSelf" instance="11"/&gt;&lt;/android.widget.FrameLayout&gt;&lt;android.widget.FrameLayout index="3" text="" class="android.widget.FrameLayout" package="com.maishalei.seller" content-desc="" checkable="false" checked="false" clickable="true" enabled="true" focusable="false" focused="false" scrollable="false" long-clickable="false" password="false" selected="false" bounds="[648,871][864,1135]" resource-id="com.maishalei.seller:id/layoutOrderStateCommentSelf" instance="8"&gt;&lt;android.widget.TextView index="0" text="待评价" class="android.widget.TextView" package="com.maishalei.seller" content-desc="" checkable="false" checked="false" clickable="false" enabled="true" focusable="false" focused="false" scrollable="false" long-clickable="false" password="false" selected="false" bounds="[702,925][810,1081]" resource-id="com.maishalei.seller:id/tvOrderStateCommentSelf" instance="12"/&gt;&lt;/android.widget.FrameLayout&gt;&lt;android.widget.FrameLayout index="4" text="" class="android.widget.FrameLayout" package="com.maishalei.seller" content-desc="" checkable="false" checked="false" clickable="true" enabled="true" focusable="false" focused="false" scrollable="false" long-clickable="false" password="false" selected="false" bounds="[864,871][1080,1135]" resource-id="com.maishalei.seller:id/layoutOrderStateRefundSelf" instance="9"&gt;&lt;android.widget.TextView index="0" text="售后" class="android.widget.TextView" package="com.maishalei.seller" content-desc="" checkable="false" checked="false" clickable="false" enabled="true" focusable="false" focused="false" scrollable="false" long-clickable="false" password="false" selected="false" bounds="[934,925][1010,1081]" resource-id="com.maishalei.seller:id/tvOrderStateRefundSelf" instance="13"/&gt;&lt;/android.widget.FrameLayout&gt;&lt;/android.widget.LinearLayout&gt;&lt;android.widget.LinearLayout index="3" text="" class="android.widget.LinearLayout" package="com.maishalei.seller" content-desc="" checkable="false" checked="false" clickable="false" enabled="true" focusable="false" focused="false" scrollable="false" long-clickable="false" password="false" selected="false" bounds="[0,1165][1080,1429]" resource-id="" instance="6"&gt;&lt;android.widget.TextView index="0" text="优惠券" class="android.widget.TextView" package="com.maishalei.seller" content-desc="" checkable="false" checked="false" clickable="true" enabled="true" focusable="false" focused="false" scrollable="false" long-clickable="false" password="false" selected="false" bounds="[0,1206][270,1388]" resource-id="com.maishalei.seller:id/layoutCoupon" instance="14"/&gt;&lt;android.widget.TextView index="1" text="地址管理" class="android.widget.TextView" package="com.maishalei.seller" content-desc="" checkable="false" checked="false" clickable="true" enabled="true" focusable="false" focused="false" scrollable="false" long-clickable="false" password="false" selected="false" bounds="[270,1206][540,1388]" resource-id="com.maishalei.seller:id/layoutAddress" instance="15"/&gt;&lt;android.widget.TextView index="2" text="清关证明" class="android.widget.TextView" package="com.maishalei.seller" content-desc="" checkable="false" checked="false" clickable="true" enabled="true" focusable="false" focused="false" scrollable="false" long-clickable="false" password="false" selected="false" bounds="[540,1206][810,1388]" resource-id="com.maishalei.seller:id/tvQingGuan" instance="16"/&gt;&lt;android.widget.TextView index="3" text="使用帮助" class="android.widget.TextView" package="com.maishalei.seller" content-desc="" checkable="false" checked="false" clickable="true" enabled="true" focusable="false" focused="false" scrollable="false" long-clickable="false" password="false" selected="false" bounds="[810,1206][1080,1388]" resource-id="com.maishalei.seller:id/layoutHelp" instance="17"/&gt;&lt;/android.widget.LinearLayout&gt;&lt;android.widget.RelativeLayout index="4" text="" class="android.widget.RelativeLayout" package="com.maishalei.seller" content-desc="" checkable="false" checked="false" clickable="true" enabled="true" focusable="false" focused="false" scrollable="false" long-clickable="false" password="false" selected="false" bounds="[0,1459][1080,1609]" resource-id="com.maishalei.seller:id/layoutStorePreview" instance="4"&gt;&lt;android.widget.TextView index="0" text="我的分享屋" class="android.widget.TextView" package="com.maishalei.seller" content-desc="" checkable="false" checked="false" clickable="false" enabled="true" focusable="false" focused="false" scrollable="false" long-clickable="false" password="false" selected="false" bounds="[30,1505][240,1563]" resource-id="" instance="18"/&gt;&lt;android.widget.TextView index="1" text="预览我的分享屋" class="android.widget.TextView" package="com.maishalei.seller" content-desc="" checkable="false" checked="false" clickable="false" enabled="true" focusable="false" focused="false" scrollable="false" long-clickable="false" password="false" selected="false" bounds="[751,1509][1050,1559]" resource-id="" instance="19"/&gt;&lt;/android.widget.RelativeLayout&gt;&lt;android.view.View index="5" text="" class="android.view.View" package="com.maishalei.seller" content-desc="" checkable="false" checked="false" clickable="false" enabled="true" focusable="false" focused="false" scrollable="false" long-clickable="false" password="false" selected="false" bounds="[0,1609][1080,1610]" resource-id="" instance="6"/&gt;&lt;android.widget.LinearLayout index="6" text="" class="android.widget.LinearLayout" package="com.maishalei.seller" content-desc="" checkable="false" checked="false" clickable="false" enabled="true" focusable="false" focused="false" scrollable="false" long-clickable="false" password="false" selected="false" bounds="[0,1610][1080,1776]" resource-id="" instance="7"&gt;&lt;android.widget.FrameLayout index="0" text="" class="android.widget.FrameLayout" package="com.maishalei.seller" content-desc="" checkable="false" checked="false" clickable="true" enabled="true" focusable="false" focused="false" scrollable="false" long-clickable="false" password="false" selected="false" bounds="[0,1610][216,1776]" resource-id="com.maishalei.seller:id/tvEarning" instance="10"/&gt;&lt;android.widget.FrameLayout index="1" text="" class="android.widget.FrameLayout" package="com.maishalei.seller" content-desc="" checkable="false" checked="false" clickable="true" enabled="true" focusable="false" focused="false" scrollable="false" long-clickable="false" password="false" selected="false" bounds="[216,1610][432,1776]" resource-id="com.maishalei.seller:id/tvCommodityManagement" instance="11"/&gt;&lt;android.widget.FrameLayout index="2" text="" class="android.widget.FrameLayout" package="com.maishalei.seller" content-desc="" checkable="false" checked="false" clickable="true" enabled="true" focusable="false" focused="false" scrollable="false" long-clickable="false" password="false" selected="false" bounds="[432,1610][648,1776]" resource-id="com.maishalei.seller:id/tvStatistics" instance="12"/&gt;&lt;android.widget.FrameLayout index="3" text="" class="android.widget.FrameLayout" package="com.maishalei.seller" content-desc="" checkable="false" checked="false" clickable="true" enabled="true" focusable="false" focused="false" scrollable="false" long-clickable="false" password="false" selected="false" bounds="[648,1610][864,1776]" resource-id="com.maishalei.seller:id/tvEarningOrders" instance="13"/&gt;&lt;android.widget.FrameLayout index="4" text="" class="android.widget.FrameLayout" package="com.maishalei.seller" content-desc="" checkable="false" checked="false" clickable="true" enabled="true" focusable="false" focused="false" scrollable="false" long-clickable="false" password="false" selected="false" bounds="[864,1610][1080,1776]" resource-id="com.maishalei.seller:id/tvStoreSetting" instance="14"/&gt;&lt;/android.widget.LinearLayout&gt;&lt;/android.widget.LinearLayout&gt;&lt;/android.widget.ScrollView&gt;&lt;/android.view.View&gt;&lt;/android.widget.LinearLayout&gt;&lt;/android.widget.FrameLayout&gt;&lt;android.widget.LinearLayout index="1" text="" class="android.widget.LinearLayout" package="com.maishalei.seller" content-desc="" checkable="false" checked="false" clickable="false" enabled="true" focusable="false" focused="false" scrollable="false" long-clickable="false" password="false" selected="false" bounds="[0,1614][1080,1776]" resource-id="com.maishalei.seller:id/tabLayout" instance="8"&gt;&lt;android.view.View index="0" text="" class="android.view.View" package="com.maishalei.seller" content-desc="" checkable="false" checked="false" clickable="false" enabled="true" focusable="false" focused="false" scrollable="false" long-clickable="false" password="false" selected="false" bounds="[0,1614][1080,1616]" resource-id="" instance="7"/&gt;&lt;android.widget.LinearLayout index="1" text="" class="android.widget.LinearLayout" package="com.maishalei.seller" content-desc="" checkable="false" checked="false" clickable="false" enabled="true" focusable="false" focused="false" scrollable="false" long-clickable="false" password="false" selected="false" bounds="[0,1616][1080,1776]" resource-id="" instance="9"&gt;&lt;android.widget.TextView index="0" text="首页" class="android.widget.TextView" package="com.maishalei.seller" content-desc="" checkable="false" checked="false" clickable="true" enabled="true" focusable="false" focused="false" scrollable="false" long-clickable="false" password="false" selected="false" bounds="[0,1634][270,1757]" resource-id="com.maishalei.seller:id/ivDiscover" instance="20"/&gt;&lt;android.widget.TextView index="1" text="社区" class="android.widget.TextView" package="com.maishalei.seller" content-desc="" checkable="false" checked="false" clickable="true" enabled="true" focusable="false" focused="false" scrollable="false" long-clickable="false" password="false" selected="false" bounds="[270,1634][540,1757]" resource-id="com.maishalei.seller:id/ivSNS" instance="21"/&gt;&lt;android.widget.TextView index="2" text="购物车" class="android.widget.TextView" package="com.maishalei.seller" content-desc="" checkable="false" checked="false" clickable="true" enabled="true" focusable="false" focused="false" scrollable="false" long-clickable="false" password="false" selected="false" bounds="[540,1634][810,1757]" resource-id="com.maishalei.seller:id/ivShoppingCart" instance="22"/&gt;&lt;android.widget.TextView index="3" text="我的" class="android.widget.TextView" package="com.maishalei.seller" content-desc="" checkable="false" checked="false" clickable="true" enabled="true" focusable="false" focused="false" scrollable="false" long-clickable="false" password="false" selected="true" bounds="[810,1634][1080,1757]" resource-id="com.maishalei.seller:id/ivMine" instance="23"/&gt;&lt;/android.widget.LinearLayout&gt;&lt;/android.widget.LinearLayout&gt;&lt;/android.widget.LinearLayout&gt;&lt;/android.widget.FrameLayout&gt;&lt;/android.widget.LinearLayout&gt;&lt;/android.widget.FrameLayout&gt;&lt;/hierarchy&gt;</msg>
+<msg timestamp="20160701 11:14:52.800" level="INFO">Current page contains text '日志'.</msg>
+<status status="PASS" endtime="20160701 11:14:52.801" starttime="20160701 11:14:52.378"></status>
+</kw>
+<kw name="Log" library="BuiltIn">
+<doc>Logs the given message with the given level.</doc>
+<arguments>
+<arg>------手机密码登录-完成------</arg>
+</arguments>
+<msg timestamp="20160701 11:14:52.801" level="INFO">------手机密码登录-完成------</msg>
+<status status="PASS" endtime="20160701 11:14:52.801" starttime="20160701 11:14:52.801"></status>
+</kw>
+<kw type="teardown" name="失败重启" library="常用操作">
+<kw name="Run Keyword If Test Failed" library="BuiltIn">
+<doc>Runs the given keyword with the given arguments, if the test failed.</doc>
+<arguments>
+<arg>启动App</arg>
+</arguments>
+<status status="PASS" endtime="20160701 11:14:52.802" starttime="20160701 11:14:52.802"></status>
+</kw>
+<status status="PASS" endtime="20160701 11:14:52.803" starttime="20160701 11:14:52.802"></status>
+</kw>
+<tags>
+<tag>ready</tag>
+</tags>
+<status status="PASS" endtime="20160701 11:14:52.803" critical="yes" starttime="20160701 11:13:59.584"></status>
+</test>
+<kw type="teardown" name="关闭App" library="常用操作">
+<kw name="Close Application" library="SongzAppiumLibrary">
+<doc>Closes the current application.</doc>
+<msg timestamp="20160701 11:14:52.806" level="DEBUG">Closing application with session id f627f0ae-7057-4531-bcb7-0270f37925db</msg>
+<msg timestamp="20160701 11:14:52.806" level="DEBUG">DELETE http://127.0.0.1:4734/wd/hub/session/f627f0ae-7057-4531-bcb7-0270f37925db {"sessionId": "f627f0ae-7057-4531-bcb7-0270f37925db"}</msg>
+<msg timestamp="20160701 11:14:55.643" level="DEBUG">Finished Request</msg>
+<status status="PASS" endtime="20160701 11:14:55.644" starttime="20160701 11:14:52.806"></status>
+</kw>
+<status status="PASS" endtime="20160701 11:14:55.644" starttime="20160701 11:14:52.806"></status>
+</kw>
+<status status="PASS" endtime="20160701 11:14:55.644" starttime="20160701 11:13:51.378"></status>
+</suite>
+<suite source="D:\Testing\Robot\Maisha\Android\Test\冒烟测试\首页.robot" id="s1-s2" name="首页">
+<kw type="setup" name="启动App" library="常用操作">
+<kw name="Log" library="BuiltIn">
+<doc>Logs the given message with the given level.</doc>
+<arguments>
+<arg>Device:${device}</arg>
+</arguments>
+<msg timestamp="20160701 11:14:55.683" level="INFO">Device:big</msg>
+<status status="PASS" endtime="20160701 11:14:55.683" starttime="20160701 11:14:55.682"></status>
+</kw>
+<kw name="Log" library="BuiltIn">
+<doc>Logs the given message with the given level.</doc>
+<arguments>
+<arg>Mode:${mode}</arg>
+</arguments>
+<msg timestamp="20160701 11:14:55.684" level="INFO">Mode:product</msg>
+<status status="PASS" endtime="20160701 11:14:55.684" starttime="20160701 11:14:55.683"></status>
+</kw>
+<kw name="Set Global Variable" library="BuiltIn">
+<doc>Makes a variable available globally in all tests and suites.</doc>
+<arguments>
+<arg>${device}</arg>
+</arguments>
+<msg timestamp="20160701 11:14:55.684" level="INFO">${device} = big</msg>
+<status status="PASS" endtime="20160701 11:14:55.684" starttime="20160701 11:14:55.684"></status>
+</kw>
+<kw name="Set Global Variable" library="BuiltIn">
+<doc>Makes a variable available globally in all tests and suites.</doc>
+<arguments>
+<arg>${mode}</arg>
+</arguments>
+<msg timestamp="20160701 11:14:55.685" level="INFO">${mode} = product</msg>
+<status status="PASS" endtime="20160701 11:14:55.685" starttime="20160701 11:14:55.685"></status>
+</kw>
+<kw name="启动参数" library="配置参数">
+<arguments>
+<arg>${device}</arg>
+<arg>${mode}</arg>
+</arguments>
+<kw name="Set Variable" library="BuiltIn">
+<doc>Returns the given values which can then be assigned to a variables.</doc>
+<arguments>
+<arg>${getdevice}</arg>
+</arguments>
+<assign>
+<var>${device}</var>
+</assign>
+<msg timestamp="20160701 11:14:55.686" level="INFO">${device} = big</msg>
+<status status="PASS" endtime="20160701 11:14:55.686" starttime="20160701 11:14:55.686"></status>
+</kw>
+<kw name="Set Variable" library="BuiltIn">
+<doc>Returns the given values which can then be assigned to a variables.</doc>
+<arguments>
+<arg>${getmode}</arg>
+</arguments>
+<assign>
+<var>${mode}</var>
+</assign>
+<msg timestamp="20160701 11:14:55.687" level="INFO">${mode} = product</msg>
+<status status="PASS" endtime="20160701 11:14:55.687" starttime="20160701 11:14:55.686"></status>
+</kw>
+<kw name="Log" library="BuiltIn">
+<doc>Logs the given message with the given level.</doc>
+<arguments>
+<arg>Device is: ${device}</arg>
+</arguments>
+<msg timestamp="20160701 11:14:55.687" level="INFO">Device is: big</msg>
+<status status="PASS" endtime="20160701 11:14:55.687" starttime="20160701 11:14:55.687"></status>
+</kw>
+<kw name="Run Keyword If" library="BuiltIn">
+<doc>Runs the given keyword with the given arguments, if ``condition`` is true.</doc>
+<arguments>
+<arg>'${mode}'=='debug'</arg>
+<arg>Set Variable</arg>
+<arg>com.maishalei.seller.debug</arg>
+<arg>ELSE IF</arg>
+<arg>'${mode}'=='product'</arg>
+<arg>Set Variable</arg>
+<arg>com.maishalei.seller</arg>
+<arg>ELSE</arg>
+<arg>Log</arg>
+<arg>请输入正确的运行模式。</arg>
+</arguments>
+<assign>
+<var>${package}</var>
+</assign>
+<kw name="Set Variable" library="BuiltIn">
+<doc>Returns the given values which can then be assigned to a variables.</doc>
+<arguments>
+<arg>com.maishalei.seller</arg>
+</arguments>
+<status status="PASS" endtime="20160701 11:14:55.690" starttime="20160701 11:14:55.690"></status>
+</kw>
+<msg timestamp="20160701 11:14:55.690" level="INFO">${package} = com.maishalei.seller</msg>
+<status status="PASS" endtime="20160701 11:14:55.690" starttime="20160701 11:14:55.688"></status>
+</kw>
+<kw name="Run Keyword If" library="BuiltIn">
+<doc>Runs the given keyword with the given arguments, if ``condition`` is true.</doc>
+<arguments>
+<arg>'${mode}'=='debug'</arg>
+<arg>Set Variable</arg>
+<arg>com.maishalei.seller.ui.activity.LauncherActivity</arg>
+<arg>ELSE IF</arg>
+<arg>'${mode}'=='product'</arg>
+<arg>Set Variable</arg>
+<arg>.ui.activity.LauncherActivity</arg>
+<arg>ELSE</arg>
+<arg>Log</arg>
+<arg>请输入正确的运行模式。</arg>
+</arguments>
+<assign>
+<var>${activity}</var>
+</assign>
+<kw name="Set Variable" library="BuiltIn">
+<doc>Returns the given values which can then be assigned to a variables.</doc>
+<arguments>
+<arg>.ui.activity.LauncherActivity</arg>
+</arguments>
+<status status="PASS" endtime="20160701 11:14:55.693" starttime="20160701 11:14:55.693"></status>
+</kw>
+<msg timestamp="20160701 11:14:55.693" level="INFO">${activity} = .ui.activity.LauncherActivity</msg>
+<status status="PASS" endtime="20160701 11:14:55.693" starttime="20160701 11:14:55.690"></status>
+</kw>
+<kw name="Run Keyword If" library="BuiltIn">
+<doc>Runs the given keyword with the given arguments, if ``condition`` is true.</doc>
+<arguments>
+<arg>'${device}'=='small'</arg>
+<arg>Set Variable</arg>
+<arg>http://localhost:4722/wd/hub</arg>
+<arg>ELSE IF</arg>
+<arg>'${device}'=='medium'</arg>
+<arg>Set Variable</arg>
+<arg>http://localhost:4723/wd/hub</arg>
+<arg>ELSE IF</arg>
+<arg>'${device}'=='big'</arg>
+<arg>Set Variable</arg>
+<arg>http://localhost:4734/wd/hub</arg>
+<arg>ELSE</arg>
+<arg>Log</arg>
+<arg>请输入正确的设备规格。</arg>
+</arguments>
+<assign>
+<var>${host}</var>
+</assign>
+<kw name="Set Variable" library="BuiltIn">
+<doc>Returns the given values which can then be assigned to a variables.</doc>
+<arguments>
+<arg>http://localhost:4734/wd/hub</arg>
+</arguments>
+<status status="PASS" endtime="20160701 11:14:55.697" starttime="20160701 11:14:55.697"></status>
+</kw>
+<msg timestamp="20160701 11:14:55.697" level="INFO">${host} = http://localhost:4734/wd/hub</msg>
+<status status="PASS" endtime="20160701 11:14:55.697" starttime="20160701 11:14:55.693"></status>
+</kw>
+<kw name="Run Keyword If" library="BuiltIn">
+<doc>Runs the given keyword with the given arguments, if ``condition`` is true.</doc>
+<arguments>
+<arg>'${device}'=='small'</arg>
+<arg>Create Dictionary</arg>
+<arg>alias=maisha</arg>
+<arg>platformName=Android</arg>
+<arg>platformVersion=5.1.1</arg>
+<arg>deviceName='emulator-5554'</arg>
+<arg>appPackage=${package}</arg>
+<arg>appActivity=${activity}</arg>
+<arg>unicodeKeyboard=True</arg>
+<arg>resetKeyboard=True</arg>
+<arg>ELSE IF</arg>
+<arg>'${device}'=='medium'</arg>
+<arg>Create Dictionary</arg>
+<arg>alias=maisha</arg>
+<arg>platformName=Android</arg>
+<arg>platformVersion=5.1.1</arg>
+<arg>deviceName='HUAWEI MT2-L01'</arg>
+<arg>appPackage=${package}</arg>
+<arg>appActivity=${activity}</arg>
+<arg>unicodeKeyboard=True</arg>
+<arg>resetKeyboard=True</arg>
+<arg>ELSE IF</arg>
+<arg>'${device}'=='big'</arg>
+<arg>Create Dictionary</arg>
+<arg>alias=maisha</arg>
+<arg>platformName=Android</arg>
+<arg>platformVersion=4.4.2</arg>
+<arg>deviceName='emulator-5554'</arg>
+<arg>appPackage=${package}</arg>
+<arg>appActivity=${activity}</arg>
+<arg>unicodeKeyboard=True</arg>
+<arg>resetKeyboard=True</arg>
+<arg>ELSE</arg>
+<arg>Log</arg>
+<arg>请输入正确的设备规格。</arg>
+</arguments>
+<assign>
+<var>&amp;{caps}</var>
+</assign>
+<kw name="Create Dictionary" library="BuiltIn">
+<doc>Creates and returns a dictionary based on given items.</doc>
+<arguments>
+<arg>alias=maisha</arg>
+<arg>platformName=Android</arg>
+<arg>platformVersion=4.4.2</arg>
+<arg>deviceName='emulator-5554'</arg>
+<arg>appPackage=${package}</arg>
+<arg>appActivity=${activity}</arg>
+<arg>unicodeKeyboard=True</arg>
+<arg>resetKeyboard=True</arg>
+</arguments>
+<status status="PASS" endtime="20160701 11:14:55.702" starttime="20160701 11:14:55.701"></status>
+</kw>
+<msg timestamp="20160701 11:14:55.702" level="INFO">&amp;{caps} = { alias=maisha | platformName=Android | platformVersion=4.4.2 | deviceName='emulator-5554' | appPackage=com.maishalei.seller | appActivity=.ui.activity.LauncherActivity | unicodeKeyboard=True | resetK...</msg>
+<status status="PASS" endtime="20160701 11:14:55.702" starttime="20160701 11:14:55.697"></status>
+</kw>
+<kw name="Set Global Variable" library="BuiltIn">
+<doc>Makes a variable available globally in all tests and suites.</doc>
+<arguments>
+<arg>&amp;{caps}</arg>
+</arguments>
+<msg timestamp="20160701 11:14:55.703" level="INFO">&amp;{caps} = { alias=maisha | platformName=Android | platformVersion=4.4.2 | deviceName='emulator-5554' | appPackage=com.maishalei.seller | appActivity=.ui.activity.LauncherActivity | unicodeKeyboard=True | resetK...</msg>
+<status status="PASS" endtime="20160701 11:14:55.703" starttime="20160701 11:14:55.702"></status>
+</kw>
+<kw name="Set Global Variable" library="BuiltIn">
+<doc>Makes a variable available globally in all tests and suites.</doc>
+<arguments>
+<arg>${host}</arg>
+</arguments>
+<msg timestamp="20160701 11:14:55.704" level="INFO">${host} = http://localhost:4734/wd/hub</msg>
+<status status="PASS" endtime="20160701 11:14:55.704" starttime="20160701 11:14:55.703"></status>
+</kw>
+<status status="PASS" endtime="20160701 11:14:55.704" starttime="20160701 11:14:55.685"></status>
+</kw>
+<kw name="Open Application" library="SongzAppiumLibrary">
+<doc>Opens a new application to given Appium server.</doc>
+<arguments>
+<arg>${host}</arg>
+<arg>&amp;{caps}</arg>
+</arguments>
+<msg timestamp="20160701 11:14:55.706" level="DEBUG">POST http://127.0.0.1:4734/wd/hub/session {"desiredCapabilities": {"deviceName": "'emulator-5554'", "unicodeKeyboard": "True", "resetKeyboard": "True", "platformVersion": "4.4.2", "appPackage": "com.maishalei.seller", "platformName": "Android", "appActivity": ".ui.activity.LauncherActivity"}}</msg>
+<msg timestamp="20160701 11:15:03.841" level="DEBUG">Finished Request</msg>
+<msg timestamp="20160701 11:15:03.842" level="DEBUG">Opened application with session id 2b514d63-01be-4bf8-9a40-a34702af8c8e</msg>
+<status status="PASS" endtime="20160701 11:15:03.842" starttime="20160701 11:14:55.704"></status>
+</kw>
+<status status="PASS" endtime="20160701 11:15:03.842" starttime="20160701 11:14:55.682"></status>
+</kw>
+<test id="s1-s2-t1" name="活动主题检查">
+<kw name="校验等待" library="常用操作">
+<kw name="Run Keyword If" library="BuiltIn">
+<doc>Runs the given keyword with the given arguments, if ``condition`` is true.</doc>
+<arguments>
+<arg>'${object}'=='首页'</arg>
+<arg>Wait Until Page Contains Element</arg>
+<arg>id=ivDiscover</arg>
+<arg>${TIMEOUT}</arg>
+<arg>ELSE IF</arg>
+<arg>'${object}'=='分享'</arg>
+<arg>Wait Until Page Contains Element</arg>
+<arg>xpath=//android.widget.TextView[@text='分享']</arg>
+<arg>${TIMEOUT}</arg>
+<arg>ELSE IF</arg>
+<arg>'${object}'=='WebView'</arg>
+<arg>Wait Until Page Contains Element</arg>
+<arg>id=webview</arg>
+<arg>${TIMEOUT}</arg>
+<arg>ELSE IF</arg>
+<arg>'${object}'=='标题'</arg>
+<arg>Wait Until Page Contains Element</arg>
+<arg>id=centerView</arg>
+</arguments>
+<kw name="Wait Until Page Contains Element" library="SongzAppiumLibrary">
+<doc>Waits until element specified with `locator` appears on current page.</doc>
+<arguments>
+<arg>id=ivDiscover</arg>
+<arg>${TIMEOUT}</arg>
+</arguments>
+<msg timestamp="20160701 11:15:03.850" level="DEBUG">POST http://127.0.0.1:4734/wd/hub/session/2b514d63-01be-4bf8-9a40-a34702af8c8e/elements {"using": "id", "sessionId": "2b514d63-01be-4bf8-9a40-a34702af8c8e", "value": "ivDiscover"}</msg>
+<msg timestamp="20160701 11:15:05.170" level="DEBUG">Finished Request</msg>
+<msg timestamp="20160701 11:15:05.370" level="DEBUG">POST http://127.0.0.1:4734/wd/hub/session/2b514d63-01be-4bf8-9a40-a34702af8c8e/elements {"using": "id", "sessionId": "2b514d63-01be-4bf8-9a40-a34702af8c8e", "value": "ivDiscover"}</msg>
+<msg timestamp="20160701 11:15:06.055" level="DEBUG">Finished Request</msg>
+<msg timestamp="20160701 11:15:06.257" level="DEBUG">POST http://127.0.0.1:4734/wd/hub/session/2b514d63-01be-4bf8-9a40-a34702af8c8e/elements {"using": "id", "sessionId": "2b514d63-01be-4bf8-9a40-a34702af8c8e", "value": "ivDiscover"}</msg>
+<msg timestamp="20160701 11:15:06.414" level="DEBUG">Finished Request</msg>
+<msg timestamp="20160701 11:15:06.615" level="DEBUG">POST http://127.0.0.1:4734/wd/hub/session/2b514d63-01be-4bf8-9a40-a34702af8c8e/elements {"using": "id", "sessionId": "2b514d63-01be-4bf8-9a40-a34702af8c8e", "value": "ivDiscover"}</msg>
+<msg timestamp="20160701 11:15:06.748" level="DEBUG">Finished Request</msg>
+<msg timestamp="20160701 11:15:06.948" level="DEBUG">POST http://127.0.0.1:4734/wd/hub/session/2b514d63-01be-4bf8-9a40-a34702af8c8e/elements {"using": "id", "sessionId": "2b514d63-01be-4bf8-9a40-a34702af8c8e", "value": "ivDiscover"}</msg>
+<msg timestamp="20160701 11:15:07.176" level="DEBUG">Finished Request</msg>
+<msg timestamp="20160701 11:15:07.376" level="DEBUG">POST http://127.0.0.1:4734/wd/hub/session/2b514d63-01be-4bf8-9a40-a34702af8c8e/elements {"using": "id", "sessionId": "2b514d63-01be-4bf8-9a40-a34702af8c8e", "value": "ivDiscover"}</msg>
+<msg timestamp="20160701 11:15:13.912" level="DEBUG">Finished Request</msg>
+<status status="PASS" endtime="20160701 11:15:13.912" starttime="20160701 11:15:03.849"></status>
+</kw>
+<status status="PASS" endtime="20160701 11:15:13.912" starttime="20160701 11:15:03.846"></status>
+</kw>
+<status status="PASS" endtime="20160701 11:15:13.913" starttime="20160701 11:15:03.845"></status>
+</kw>
+<kw name="Sleep" library="BuiltIn">
+<doc>Pauses the test executed for the given time.</doc>
+<arguments>
+<arg>2</arg>
+</arguments>
+<msg timestamp="20160701 11:15:15.913" level="INFO">Slept 2 seconds</msg>
+<status status="PASS" endtime="20160701 11:15:15.913" starttime="20160701 11:15:13.913"></status>
+</kw>
+<kw name="活动主题检测" library="功能库">
+<arguments>
+<arg>4</arg>
+</arguments>
+<kw type="for" name="${i} IN RANGE [ ${n} ]">
+<kw type="foritem" name="${i} = 0">
+<kw name="Evaluate" library="BuiltIn">
+<doc>Evaluates the given expression in Python and returns the results.</doc>
+<arguments>
+<arg>${i}+${1}</arg>
+</arguments>
+<assign>
+<var>${e}</var>
+</assign>
+<msg timestamp="20160701 11:15:15.919" level="INFO">${e} = 1</msg>
+<status status="PASS" endtime="20160701 11:15:15.919" starttime="20160701 11:15:15.916"></status>
+</kw>
+<kw name="Log" library="BuiltIn">
+<doc>Logs the given message with the given level.</doc>
+<arguments>
+<arg>The e is: ${e}</arg>
+</arguments>
+<msg timestamp="20160701 11:15:15.921" level="INFO">The e is: 1</msg>
+<status status="PASS" endtime="20160701 11:15:15.921" starttime="20160701 11:15:15.920"></status>
+</kw>
+<kw name="Click Element" library="SongzAppiumLibrary">
+<doc>Click element identified by `locator`.</doc>
+<arguments>
+<arg>xpath=//android.support.v7.widget.RecyclerView/android.widget.FrameLayout[${e}]</arg>
+</arguments>
+<msg timestamp="20160701 11:15:15.922" level="INFO">Clicking element 'xpath=//android.support.v7.widget.RecyclerView/android.widget.FrameLayout[1]'.</msg>
+<msg timestamp="20160701 11:15:15.923" level="DEBUG">POST http://127.0.0.1:4734/wd/hub/session/2b514d63-01be-4bf8-9a40-a34702af8c8e/elements {"using": "xpath", "sessionId": "2b514d63-01be-4bf8-9a40-a34702af8c8e", "value": "//android.support.v7.widget.RecyclerView/android.widget.FrameLayout[1]"}</msg>
+<msg timestamp="20160701 11:15:16.304" level="DEBUG">Finished Request</msg>
+<msg timestamp="20160701 11:15:16.304" level="DEBUG">POST http://127.0.0.1:4734/wd/hub/session/2b514d63-01be-4bf8-9a40-a34702af8c8e/element/2/click {"sessionId": "2b514d63-01be-4bf8-9a40-a34702af8c8e", "id": "2"}</msg>
+<msg timestamp="20160701 11:15:19.502" level="DEBUG">Finished Request</msg>
+<status status="PASS" endtime="20160701 11:15:19.502" starttime="20160701 11:15:15.921"></status>
+</kw>
+<kw name="Sleep" library="BuiltIn">
+<doc>Pauses the test executed for the given time.</doc>
+<arguments>
+<arg>1.5</arg>
+</arguments>
+<msg timestamp="20160701 11:15:21.003" level="INFO">Slept 1 second 500 milliseconds</msg>
+<status status="PASS" endtime="20160701 11:15:21.003" starttime="20160701 11:15:19.502"></status>
+</kw>
+<kw name="返回键" library="系统按键">
+<kw name="Press Keycode" library="SongzAppiumLibrary">
+<doc>Sends a press of keycode to the device.</doc>
+<arguments>
+<arg>4</arg>
+</arguments>
+<msg timestamp="20160701 11:15:21.005" level="DEBUG">POST http://127.0.0.1:4734/wd/hub/session/2b514d63-01be-4bf8-9a40-a34702af8c8e/appium/device/press_keycode {"sessionId": "2b514d63-01be-4bf8-9a40-a34702af8c8e", "keycode": "4"}</msg>
+<msg timestamp="20160701 11:15:21.058" level="DEBUG">Finished Request</msg>
+<status status="PASS" endtime="20160701 11:15:21.058" starttime="20160701 11:15:21.004"></status>
+</kw>
+<status status="PASS" endtime="20160701 11:15:21.059" starttime="20160701 11:15:21.003"></status>
+</kw>
+<kw name="Sleep" library="BuiltIn">
+<doc>Pauses the test executed for the given time.</doc>
+<arguments>
+<arg>1</arg>
+</arguments>
+<msg timestamp="20160701 11:15:22.061" level="INFO">Slept 1 second</msg>
+<status status="PASS" endtime="20160701 11:15:22.061" starttime="20160701 11:15:21.060"></status>
+</kw>
+<status status="PASS" endtime="20160701 11:15:22.061" starttime="20160701 11:15:15.916"></status>
+</kw>
+<kw type="foritem" name="${i} = 1">
+<kw name="Evaluate" library="BuiltIn">
+<doc>Evaluates the given expression in Python and returns the results.</doc>
+<arguments>
+<arg>${i}+${1}</arg>
+</arguments>
+<assign>
+<var>${e}</var>
+</assign>
+<msg timestamp="20160701 11:15:22.065" level="INFO">${e} = 2</msg>
+<status status="PASS" endtime="20160701 11:15:22.065" starttime="20160701 11:15:22.062"></status>
+</kw>
+<kw name="Log" library="BuiltIn">
+<doc>Logs the given message with the given level.</doc>
+<arguments>
+<arg>The e is: ${e}</arg>
+</arguments>
+<msg timestamp="20160701 11:15:22.066" level="INFO">The e is: 2</msg>
+<status status="PASS" endtime="20160701 11:15:22.066" starttime="20160701 11:15:22.065"></status>
+</kw>
+<kw name="Click Element" library="SongzAppiumLibrary">
+<doc>Click element identified by `locator`.</doc>
+<arguments>
+<arg>xpath=//android.support.v7.widget.RecyclerView/android.widget.FrameLayout[${e}]</arg>
+</arguments>
+<msg timestamp="20160701 11:15:22.067" level="INFO">Clicking element 'xpath=//android.support.v7.widget.RecyclerView/android.widget.FrameLayout[2]'.</msg>
+<msg timestamp="20160701 11:15:22.068" level="DEBUG">POST http://127.0.0.1:4734/wd/hub/session/2b514d63-01be-4bf8-9a40-a34702af8c8e/elements {"using": "xpath", "sessionId": "2b514d63-01be-4bf8-9a40-a34702af8c8e", "value": "//android.support.v7.widget.RecyclerView/android.widget.FrameLayout[2]"}</msg>
+<msg timestamp="20160701 11:15:22.444" level="DEBUG">Finished Request</msg>
+<msg timestamp="20160701 11:15:22.444" level="DEBUG">POST http://127.0.0.1:4734/wd/hub/session/2b514d63-01be-4bf8-9a40-a34702af8c8e/element/3/click {"sessionId": "2b514d63-01be-4bf8-9a40-a34702af8c8e", "id": "3"}</msg>
+<msg timestamp="20160701 11:15:24.245" level="DEBUG">Finished Request</msg>
+<status status="PASS" endtime="20160701 11:15:24.246" starttime="20160701 11:15:22.066"></status>
+</kw>
+<kw name="Sleep" library="BuiltIn">
+<doc>Pauses the test executed for the given time.</doc>
+<arguments>
+<arg>1.5</arg>
+</arguments>
+<msg timestamp="20160701 11:15:25.747" level="INFO">Slept 1 second 500 milliseconds</msg>
+<status status="PASS" endtime="20160701 11:15:25.747" starttime="20160701 11:15:24.246"></status>
+</kw>
+<kw name="返回键" library="系统按键">
+<kw name="Press Keycode" library="SongzAppiumLibrary">
+<doc>Sends a press of keycode to the device.</doc>
+<arguments>
+<arg>4</arg>
+</arguments>
+<msg timestamp="20160701 11:15:25.751" level="DEBUG">POST http://127.0.0.1:4734/wd/hub/session/2b514d63-01be-4bf8-9a40-a34702af8c8e/appium/device/press_keycode {"sessionId": "2b514d63-01be-4bf8-9a40-a34702af8c8e", "keycode": "4"}</msg>
+<msg timestamp="20160701 11:15:26.561" level="DEBUG">Finished Request</msg>
+<status status="PASS" endtime="20160701 11:15:26.561" starttime="20160701 11:15:25.749"></status>
+</kw>
+<status status="PASS" endtime="20160701 11:15:26.562" starttime="20160701 11:15:25.748"></status>
+</kw>
+<kw name="Sleep" library="BuiltIn">
+<doc>Pauses the test executed for the given time.</doc>
+<arguments>
+<arg>1</arg>
+</arguments>
+<msg timestamp="20160701 11:15:27.562" level="INFO">Slept 1 second</msg>
+<status status="PASS" endtime="20160701 11:15:27.562" starttime="20160701 11:15:26.562"></status>
+</kw>
+<status status="PASS" endtime="20160701 11:15:27.562" starttime="20160701 11:15:22.062"></status>
+</kw>
+<kw type="foritem" name="${i} = 2">
+<kw name="Evaluate" library="BuiltIn">
+<doc>Evaluates the given expression in Python and returns the results.</doc>
+<arguments>
+<arg>${i}+${1}</arg>
+</arguments>
+<assign>
+<var>${e}</var>
+</assign>
+<msg timestamp="20160701 11:15:27.563" level="INFO">${e} = 3</msg>
+<status status="PASS" endtime="20160701 11:15:27.563" starttime="20160701 11:15:27.562"></status>
+</kw>
+<kw name="Log" library="BuiltIn">
+<doc>Logs the given message with the given level.</doc>
+<arguments>
+<arg>The e is: ${e}</arg>
+</arguments>
+<msg timestamp="20160701 11:15:27.563" level="INFO">The e is: 3</msg>
+<status status="PASS" endtime="20160701 11:15:27.563" starttime="20160701 11:15:27.563"></status>
+</kw>
+<kw name="Click Element" library="SongzAppiumLibrary">
+<doc>Click element identified by `locator`.</doc>
+<arguments>
+<arg>xpath=//android.support.v7.widget.RecyclerView/android.widget.FrameLayout[${e}]</arg>
+</arguments>
+<msg timestamp="20160701 11:15:27.564" level="INFO">Clicking element 'xpath=//android.support.v7.widget.RecyclerView/android.widget.FrameLayout[3]'.</msg>
+<msg timestamp="20160701 11:15:27.564" level="DEBUG">POST http://127.0.0.1:4734/wd/hub/session/2b514d63-01be-4bf8-9a40-a34702af8c8e/elements {"using": "xpath", "sessionId": "2b514d63-01be-4bf8-9a40-a34702af8c8e", "value": "//android.support.v7.widget.RecyclerView/android.widget.FrameLayout[3]"}</msg>
+<msg timestamp="20160701 11:15:27.831" level="DEBUG">Finished Request</msg>
+<msg timestamp="20160701 11:15:27.832" level="DEBUG">POST http://127.0.0.1:4734/wd/hub/session/2b514d63-01be-4bf8-9a40-a34702af8c8e/element/4/click {"sessionId": "2b514d63-01be-4bf8-9a40-a34702af8c8e", "id": "4"}</msg>
+<msg timestamp="20160701 11:15:28.761" level="DEBUG">Finished Request</msg>
+<status status="PASS" endtime="20160701 11:15:28.761" starttime="20160701 11:15:27.563"></status>
+</kw>
+<kw name="Sleep" library="BuiltIn">
+<doc>Pauses the test executed for the given time.</doc>
+<arguments>
+<arg>1.5</arg>
+</arguments>
+<msg timestamp="20160701 11:15:30.261" level="INFO">Slept 1 second 500 milliseconds</msg>
+<status status="PASS" endtime="20160701 11:15:30.261" starttime="20160701 11:15:28.761"></status>
+</kw>
+<kw name="返回键" library="系统按键">
+<kw name="Press Keycode" library="SongzAppiumLibrary">
+<doc>Sends a press of keycode to the device.</doc>
+<arguments>
+<arg>4</arg>
+</arguments>
+<msg timestamp="20160701 11:15:30.262" level="DEBUG">POST http://127.0.0.1:4734/wd/hub/session/2b514d63-01be-4bf8-9a40-a34702af8c8e/appium/device/press_keycode {"sessionId": "2b514d63-01be-4bf8-9a40-a34702af8c8e", "keycode": "4"}</msg>
+<msg timestamp="20160701 11:15:30.525" level="DEBUG">Finished Request</msg>
+<status status="PASS" endtime="20160701 11:15:30.526" starttime="20160701 11:15:30.262"></status>
+</kw>
+<status status="PASS" endtime="20160701 11:15:30.526" starttime="20160701 11:15:30.261"></status>
+</kw>
+<kw name="Sleep" library="BuiltIn">
+<doc>Pauses the test executed for the given time.</doc>
+<arguments>
+<arg>1</arg>
+</arguments>
+<msg timestamp="20160701 11:15:31.528" level="INFO">Slept 1 second</msg>
+<status status="PASS" endtime="20160701 11:15:31.528" starttime="20160701 11:15:30.527"></status>
+</kw>
+<status status="PASS" endtime="20160701 11:15:31.528" starttime="20160701 11:15:27.562"></status>
+</kw>
+<kw type="foritem" name="${i} = 3">
+<kw name="Evaluate" library="BuiltIn">
+<doc>Evaluates the given expression in Python and returns the results.</doc>
+<arguments>
+<arg>${i}+${1}</arg>
+</arguments>
+<assign>
+<var>${e}</var>
+</assign>
+<msg timestamp="20160701 11:15:31.529" level="INFO">${e} = 4</msg>
+<status status="PASS" endtime="20160701 11:15:31.529" starttime="20160701 11:15:31.528"></status>
+</kw>
+<kw name="Log" library="BuiltIn">
+<doc>Logs the given message with the given level.</doc>
+<arguments>
+<arg>The e is: ${e}</arg>
+</arguments>
+<msg timestamp="20160701 11:15:31.529" level="INFO">The e is: 4</msg>
+<status status="PASS" endtime="20160701 11:15:31.529" starttime="20160701 11:15:31.529"></status>
+</kw>
+<kw name="Click Element" library="SongzAppiumLibrary">
+<doc>Click element identified by `locator`.</doc>
+<arguments>
+<arg>xpath=//android.support.v7.widget.RecyclerView/android.widget.FrameLayout[${e}]</arg>
+</arguments>
+<msg timestamp="20160701 11:15:31.530" level="INFO">Clicking element 'xpath=//android.support.v7.widget.RecyclerView/android.widget.FrameLayout[4]'.</msg>
+<msg timestamp="20160701 11:15:31.530" level="DEBUG">POST http://127.0.0.1:4734/wd/hub/session/2b514d63-01be-4bf8-9a40-a34702af8c8e/elements {"using": "xpath", "sessionId": "2b514d63-01be-4bf8-9a40-a34702af8c8e", "value": "//android.support.v7.widget.RecyclerView/android.widget.FrameLayout[4]"}</msg>
+<msg timestamp="20160701 11:15:31.842" level="DEBUG">Finished Request</msg>
+<msg timestamp="20160701 11:15:31.843" level="DEBUG">POST http://127.0.0.1:4734/wd/hub/session/2b514d63-01be-4bf8-9a40-a34702af8c8e/element/5/click {"sessionId": "2b514d63-01be-4bf8-9a40-a34702af8c8e", "id": "5"}</msg>
+<msg timestamp="20160701 11:15:32.234" level="DEBUG">Finished Request</msg>
+<status status="PASS" endtime="20160701 11:15:32.235" starttime="20160701 11:15:31.529"></status>
+</kw>
+<kw name="Sleep" library="BuiltIn">
+<doc>Pauses the test executed for the given time.</doc>
+<arguments>
+<arg>1.5</arg>
+</arguments>
+<msg timestamp="20160701 11:15:33.736" level="INFO">Slept 1 second 500 milliseconds</msg>
+<status status="PASS" endtime="20160701 11:15:33.736" starttime="20160701 11:15:32.235"></status>
+</kw>
+<kw name="返回键" library="系统按键">
+<kw name="Press Keycode" library="SongzAppiumLibrary">
+<doc>Sends a press of keycode to the device.</doc>
+<arguments>
+<arg>4</arg>
+</arguments>
+<msg timestamp="20160701 11:15:33.738" level="DEBUG">POST http://127.0.0.1:4734/wd/hub/session/2b514d63-01be-4bf8-9a40-a34702af8c8e/appium/device/press_keycode {"sessionId": "2b514d63-01be-4bf8-9a40-a34702af8c8e", "keycode": "4"}</msg>
+<msg timestamp="20160701 11:15:34.344" level="DEBUG">Finished Request</msg>
+<status status="PASS" endtime="20160701 11:15:34.344" starttime="20160701 11:15:33.737"></status>
+</kw>
+<status status="PASS" endtime="20160701 11:15:34.345" starttime="20160701 11:15:33.736"></status>
+</kw>
+<kw name="Sleep" library="BuiltIn">
+<doc>Pauses the test executed for the given time.</doc>
+<arguments>
+<arg>1</arg>
+</arguments>
+<msg timestamp="20160701 11:15:35.345" level="INFO">Slept 1 second</msg>
+<status status="PASS" endtime="20160701 11:15:35.345" starttime="20160701 11:15:34.345"></status>
+</kw>
+<status status="PASS" endtime="20160701 11:15:35.345" starttime="20160701 11:15:31.528"></status>
+</kw>
+<status status="PASS" endtime="20160701 11:15:35.345" starttime="20160701 11:15:15.915"></status>
+</kw>
+<status status="PASS" endtime="20160701 11:15:35.346" starttime="20160701 11:15:15.914"></status>
+</kw>
+<kw name="Sleep" library="BuiltIn">
+<doc>Pauses the test executed for the given time.</doc>
+<arguments>
+<arg>2</arg>
+</arguments>
+<msg timestamp="20160701 11:15:37.348" level="INFO">Slept 2 seconds</msg>
+<status status="PASS" endtime="20160701 11:15:37.348" starttime="20160701 11:15:35.347"></status>
+</kw>
+<kw name="Log" library="BuiltIn">
+<doc>Logs the given message with the given level.</doc>
+<arguments>
+<arg>------活动主题检查-测试完成------</arg>
+</arguments>
+<msg timestamp="20160701 11:15:37.350" level="INFO">------活动主题检查-测试完成------</msg>
+<status status="PASS" endtime="20160701 11:15:37.351" starttime="20160701 11:15:37.350"></status>
+</kw>
+<kw type="teardown" name="失败重启" library="常用操作">
+<kw name="Run Keyword If Test Failed" library="BuiltIn">
+<doc>Runs the given keyword with the given arguments, if the test failed.</doc>
+<arguments>
+<arg>启动App</arg>
+</arguments>
+<status status="PASS" endtime="20160701 11:15:37.354" starttime="20160701 11:15:37.353"></status>
+</kw>
+<status status="PASS" endtime="20160701 11:15:37.354" starttime="20160701 11:15:37.352"></status>
+</kw>
+<tags>
+<tag>ready</tag>
+</tags>
+<status status="PASS" endtime="20160701 11:15:37.355" critical="yes" starttime="20160701 11:15:03.843"></status>
+</test>
+<test id="s1-s2-t2" name="大家都在拼检查">
+<kw name="校验等待" library="常用操作">
+<kw name="Run Keyword If" library="BuiltIn">
+<doc>Runs the given keyword with the given arguments, if ``condition`` is true.</doc>
+<arguments>
+<arg>'${object}'=='首页'</arg>
+<arg>Wait Until Page Contains Element</arg>
+<arg>id=ivDiscover</arg>
+<arg>${TIMEOUT}</arg>
+<arg>ELSE IF</arg>
+<arg>'${object}'=='分享'</arg>
+<arg>Wait Until Page Contains Element</arg>
+<arg>xpath=//android.widget.TextView[@text='分享']</arg>
+<arg>${TIMEOUT}</arg>
+<arg>ELSE IF</arg>
+<arg>'${object}'=='WebView'</arg>
+<arg>Wait Until Page Contains Element</arg>
+<arg>id=webview</arg>
+<arg>${TIMEOUT}</arg>
+<arg>ELSE IF</arg>
+<arg>'${object}'=='标题'</arg>
+<arg>Wait Until Page Contains Element</arg>
+<arg>id=centerView</arg>
+</arguments>
+<kw name="Wait Until Page Contains Element" library="SongzAppiumLibrary">
+<doc>Waits until element specified with `locator` appears on current page.</doc>
+<arguments>
+<arg>id=ivDiscover</arg>
+<arg>${TIMEOUT}</arg>
+</arguments>
+<msg timestamp="20160701 11:15:37.372" level="DEBUG">POST http://127.0.0.1:4734/wd/hub/session/2b514d63-01be-4bf8-9a40-a34702af8c8e/elements {"using": "id", "sessionId": "2b514d63-01be-4bf8-9a40-a34702af8c8e", "value": "ivDiscover"}</msg>
+<msg timestamp="20160701 11:15:38.402" level="DEBUG">Finished Request</msg>
+<status status="PASS" endtime="20160701 11:15:38.403" starttime="20160701 11:15:37.371"></status>
+</kw>
+<status status="PASS" endtime="20160701 11:15:38.403" starttime="20160701 11:15:37.366"></status>
+</kw>
+<status status="PASS" endtime="20160701 11:15:38.403" starttime="20160701 11:15:37.365"></status>
+</kw>
+<kw name="Sleep" library="BuiltIn">
+<doc>Pauses the test executed for the given time.</doc>
+<arguments>
+<arg>2</arg>
+</arguments>
+<msg timestamp="20160701 11:15:40.404" level="INFO">Slept 2 seconds</msg>
+<status status="PASS" endtime="20160701 11:15:40.404" starttime="20160701 11:15:38.403"></status>
+</kw>
+<kw name="大家都在拼检测" library="功能库">
+<kw type="for" name="${i} IN RANGE [ ${n} ]">
+<kw type="foritem" name="${i} = 0">
+<kw name="Evaluate" library="BuiltIn">
+<doc>Evaluates the given expression in Python and returns the results.</doc>
+<arguments>
+<arg>${i}+${1}</arg>
+</arguments>
+<assign>
+<var>${e}</var>
+</assign>
+<msg timestamp="20160701 11:15:40.411" level="INFO">${e} = 1</msg>
+<status status="PASS" endtime="20160701 11:15:40.411" starttime="20160701 11:15:40.408"></status>
+</kw>
+<kw name="Log" library="BuiltIn">
+<doc>Logs the given message with the given level.</doc>
+<arguments>
+<arg>The e is: ${e}</arg>
+</arguments>
+<msg timestamp="20160701 11:15:40.413" level="INFO">The e is: 1</msg>
+<status status="PASS" endtime="20160701 11:15:40.413" starttime="20160701 11:15:40.412"></status>
+</kw>
+<kw name="Click Element" library="SongzAppiumLibrary">
+<doc>Click element identified by `locator`.</doc>
+<arguments>
+<arg>xpath=//android.view.View[@resource-id='com.maishalei.seller:id/flexboxGroupBuyCommodities']/android.widget.LinearLayout[${e}]</arg>
+</arguments>
+<msg timestamp="20160701 11:15:40.414" level="INFO">Clicking element 'xpath=//android.view.View[@resource-id='com.maishalei.seller:id/flexboxGroupBuyCommodities']/android.widget.LinearLayout[1]'.</msg>
+<msg timestamp="20160701 11:15:40.415" level="DEBUG">POST http://127.0.0.1:4734/wd/hub/session/2b514d63-01be-4bf8-9a40-a34702af8c8e/elements {"using": "xpath", "sessionId": "2b514d63-01be-4bf8-9a40-a34702af8c8e", "value": "//android.view.View[@resource-id='com.maishalei.seller:id/flexboxGroupBuyCommodities']/android.widget.LinearLayout[1]"}</msg>
+<msg timestamp="20160701 11:15:40.742" level="DEBUG">Finished Request</msg>
+<msg timestamp="20160701 11:15:40.742" level="DEBUG">POST http://127.0.0.1:4734/wd/hub/session/2b514d63-01be-4bf8-9a40-a34702af8c8e/element/7/click {"sessionId": "2b514d63-01be-4bf8-9a40-a34702af8c8e", "id": "7"}</msg>
+<msg timestamp="20160701 11:15:41.289" level="DEBUG">Finished Request</msg>
+<status status="PASS" endtime="20160701 11:15:41.289" starttime="20160701 11:15:40.413"></status>
+</kw>
+<kw name="校验等待" library="常用操作">
+<arguments>
+<arg>分享</arg>
+</arguments>
+<kw name="Run Keyword If" library="BuiltIn">
+<doc>Runs the given keyword with the given arguments, if ``condition`` is true.</doc>
+<arguments>
+<arg>'${object}'=='首页'</arg>
+<arg>Wait Until Page Contains Element</arg>
+<arg>id=ivDiscover</arg>
+<arg>${TIMEOUT}</arg>
+<arg>ELSE IF</arg>
+<arg>'${object}'=='分享'</arg>
+<arg>Wait Until Page Contains Element</arg>
+<arg>xpath=//android.widget.TextView[@text='分享']</arg>
+<arg>${TIMEOUT}</arg>
+<arg>ELSE IF</arg>
+<arg>'${object}'=='WebView'</arg>
+<arg>Wait Until Page Contains Element</arg>
+<arg>id=webview</arg>
+<arg>${TIMEOUT}</arg>
+<arg>ELSE IF</arg>
+<arg>'${object}'=='标题'</arg>
+<arg>Wait Until Page Contains Element</arg>
+<arg>id=centerView</arg>
+</arguments>
+<kw name="Wait Until Page Contains Element" library="SongzAppiumLibrary">
+<doc>Waits until element specified with `locator` appears on current page.</doc>
+<arguments>
+<arg>xpath=//android.widget.TextView[@text='分享']</arg>
+<arg>${TIMEOUT}</arg>
+</arguments>
+<msg timestamp="20160701 11:15:41.291" level="DEBUG">POST http://127.0.0.1:4734/wd/hub/session/2b514d63-01be-4bf8-9a40-a34702af8c8e/elements {"using": "xpath", "sessionId": "2b514d63-01be-4bf8-9a40-a34702af8c8e", "value": "//android.widget.TextView[@text='\u5206\u4eab']"}</msg>
+<msg timestamp="20160701 11:15:41.498" level="DEBUG">Finished Request</msg>
+<msg timestamp="20160701 11:15:41.699" level="DEBUG">POST http://127.0.0.1:4734/wd/hub/session/2b514d63-01be-4bf8-9a40-a34702af8c8e/elements {"using": "xpath", "sessionId": "2b514d63-01be-4bf8-9a40-a34702af8c8e", "value": "//android.widget.TextView[@text='\u5206\u4eab']"}</msg>
+<msg timestamp="20160701 11:15:41.877" level="DEBUG">Finished Request</msg>
+<msg timestamp="20160701 11:15:42.077" level="DEBUG">POST http://127.0.0.1:4734/wd/hub/session/2b514d63-01be-4bf8-9a40-a34702af8c8e/elements {"using": "xpath", "sessionId": "2b514d63-01be-4bf8-9a40-a34702af8c8e", "value": "//android.widget.TextView[@text='\u5206\u4eab']"}</msg>
+<msg timestamp="20160701 11:15:42.371" level="DEBUG">Finished Request</msg>
+<msg timestamp="20160701 11:15:42.571" level="DEBUG">POST http://127.0.0.1:4734/wd/hub/session/2b514d63-01be-4bf8-9a40-a34702af8c8e/elements {"using": "xpath", "sessionId": "2b514d63-01be-4bf8-9a40-a34702af8c8e", "value": "//android.widget.TextView[@text='\u5206\u4eab']"}</msg>
+<msg timestamp="20160701 11:15:42.778" level="DEBUG">Finished Request</msg>
+<msg timestamp="20160701 11:15:42.978" level="DEBUG">POST http://127.0.0.1:4734/wd/hub/session/2b514d63-01be-4bf8-9a40-a34702af8c8e/elements {"using": "xpath", "sessionId": "2b514d63-01be-4bf8-9a40-a34702af8c8e", "value": "//android.widget.TextView[@text='\u5206\u4eab']"}</msg>
+<msg timestamp="20160701 11:15:43.118" level="DEBUG">Finished Request</msg>
+<msg timestamp="20160701 11:15:43.318" level="DEBUG">POST http://127.0.0.1:4734/wd/hub/session/2b514d63-01be-4bf8-9a40-a34702af8c8e/elements {"using": "xpath", "sessionId": "2b514d63-01be-4bf8-9a40-a34702af8c8e", "value": "//android.widget.TextView[@text='\u5206\u4eab']"}</msg>
+<msg timestamp="20160701 11:15:43.468" level="DEBUG">Finished Request</msg>
+<msg timestamp="20160701 11:15:43.668" level="DEBUG">POST http://127.0.0.1:4734/wd/hub/session/2b514d63-01be-4bf8-9a40-a34702af8c8e/elements {"using": "xpath", "sessionId": "2b514d63-01be-4bf8-9a40-a34702af8c8e", "value": "//android.widget.TextView[@text='\u5206\u4eab']"}</msg>
+<msg timestamp="20160701 11:15:43.847" level="DEBUG">Finished Request</msg>
+<msg timestamp="20160701 11:15:44.047" level="DEBUG">POST http://127.0.0.1:4734/wd/hub/session/2b514d63-01be-4bf8-9a40-a34702af8c8e/elements {"using": "xpath", "sessionId": "2b514d63-01be-4bf8-9a40-a34702af8c8e", "value": "//android.widget.TextView[@text='\u5206\u4eab']"}</msg>
+<msg timestamp="20160701 11:15:44.262" level="DEBUG">Finished Request</msg>
+<msg timestamp="20160701 11:15:44.462" level="DEBUG">POST http://127.0.0.1:4734/wd/hub/session/2b514d63-01be-4bf8-9a40-a34702af8c8e/elements {"using": "xpath", "sessionId": "2b514d63-01be-4bf8-9a40-a34702af8c8e", "value": "//android.widget.TextView[@text='\u5206\u4eab']"}</msg>
+<msg timestamp="20160701 11:15:44.628" level="DEBUG">Finished Request</msg>
+<msg timestamp="20160701 11:15:44.828" level="DEBUG">POST http://127.0.0.1:4734/wd/hub/session/2b514d63-01be-4bf8-9a40-a34702af8c8e/elements {"using": "xpath", "sessionId": "2b514d63-01be-4bf8-9a40-a34702af8c8e", "value": "//android.widget.TextView[@text='\u5206\u4eab']"}</msg>
+<msg timestamp="20160701 11:15:44.982" level="DEBUG">Finished Request</msg>
+<msg timestamp="20160701 11:15:45.182" level="DEBUG">POST http://127.0.0.1:4734/wd/hub/session/2b514d63-01be-4bf8-9a40-a34702af8c8e/elements {"using": "xpath", "sessionId": "2b514d63-01be-4bf8-9a40-a34702af8c8e", "value": "//android.widget.TextView[@text='\u5206\u4eab']"}</msg>
+<msg timestamp="20160701 11:15:45.329" level="DEBUG">Finished Request</msg>
+<msg timestamp="20160701 11:15:45.530" level="DEBUG">POST http://127.0.0.1:4734/wd/hub/session/2b514d63-01be-4bf8-9a40-a34702af8c8e/elements {"using": "xpath", "sessionId": "2b514d63-01be-4bf8-9a40-a34702af8c8e", "value": "//android.widget.TextView[@text='\u5206\u4eab']"}</msg>
+<msg timestamp="20160701 11:15:45.732" level="DEBUG">Finished Request</msg>
+<msg timestamp="20160701 11:15:45.932" level="DEBUG">POST http://127.0.0.1:4734/wd/hub/session/2b514d63-01be-4bf8-9a40-a34702af8c8e/elements {"using": "xpath", "sessionId": "2b514d63-01be-4bf8-9a40-a34702af8c8e", "value": "//android.widget.TextView[@text='\u5206\u4eab']"}</msg>
+<msg timestamp="20160701 11:15:46.102" level="DEBUG">Finished Request</msg>
+<msg timestamp="20160701 11:15:46.303" level="DEBUG">POST http://127.0.0.1:4734/wd/hub/session/2b514d63-01be-4bf8-9a40-a34702af8c8e/elements {"using": "xpath", "sessionId": "2b514d63-01be-4bf8-9a40-a34702af8c8e", "value": "//android.widget.TextView[@text='\u5206\u4eab']"}</msg>
+<msg timestamp="20160701 11:15:46.437" level="DEBUG">Finished Request</msg>
+<msg timestamp="20160701 11:15:46.638" level="DEBUG">POST http://127.0.0.1:4734/wd/hub/session/2b514d63-01be-4bf8-9a40-a34702af8c8e/elements {"using": "xpath", "sessionId": "2b514d63-01be-4bf8-9a40-a34702af8c8e", "value": "//android.widget.TextView[@text='\u5206\u4eab']"}</msg>
+<msg timestamp="20160701 11:15:46.803" level="DEBUG">Finished Request</msg>
+<msg timestamp="20160701 11:15:47.003" level="DEBUG">POST http://127.0.0.1:4734/wd/hub/session/2b514d63-01be-4bf8-9a40-a34702af8c8e/elements {"using": "xpath", "sessionId": "2b514d63-01be-4bf8-9a40-a34702af8c8e", "value": "//android.widget.TextView[@text='\u5206\u4eab']"}</msg>
+<msg timestamp="20160701 11:15:47.192" level="DEBUG">Finished Request</msg>
+<msg timestamp="20160701 11:15:47.392" level="DEBUG">POST http://127.0.0.1:4734/wd/hub/session/2b514d63-01be-4bf8-9a40-a34702af8c8e/elements {"using": "xpath", "sessionId": "2b514d63-01be-4bf8-9a40-a34702af8c8e", "value": "//android.widget.TextView[@text='\u5206\u4eab']"}</msg>
+<msg timestamp="20160701 11:15:47.550" level="DEBUG">Finished Request</msg>
+<msg timestamp="20160701 11:15:47.750" level="DEBUG">POST http://127.0.0.1:4734/wd/hub/session/2b514d63-01be-4bf8-9a40-a34702af8c8e/elements {"using": "xpath", "sessionId": "2b514d63-01be-4bf8-9a40-a34702af8c8e", "value": "//android.widget.TextView[@text='\u5206\u4eab']"}</msg>
+<msg timestamp="20160701 11:15:49.090" level="DEBUG">Finished Request</msg>
+<status status="PASS" endtime="20160701 11:15:49.090" starttime="20160701 11:15:41.291"></status>
+</kw>
+<status status="PASS" endtime="20160701 11:15:49.091" starttime="20160701 11:15:41.289"></status>
+</kw>
+<status status="PASS" endtime="20160701 11:15:49.091" starttime="20160701 11:15:41.289"></status>
+</kw>
+<kw name="Sleep" library="BuiltIn">
+<doc>Pauses the test executed for the given time.</doc>
+<arguments>
+<arg>1.5</arg>
+</arguments>
+<msg timestamp="20160701 11:15:50.592" level="INFO">Slept 1 second 500 milliseconds</msg>
+<status status="PASS" endtime="20160701 11:15:50.592" starttime="20160701 11:15:49.092"></status>
+</kw>
+<kw name="返回键" library="系统按键">
+<kw name="Press Keycode" library="SongzAppiumLibrary">
+<doc>Sends a press of keycode to the device.</doc>
+<arguments>
+<arg>4</arg>
+</arguments>
+<msg timestamp="20160701 11:15:50.592" level="DEBUG">POST http://127.0.0.1:4734/wd/hub/session/2b514d63-01be-4bf8-9a40-a34702af8c8e/appium/device/press_keycode {"sessionId": "2b514d63-01be-4bf8-9a40-a34702af8c8e", "keycode": "4"}</msg>
+<msg timestamp="20160701 11:15:51.089" level="DEBUG">Finished Request</msg>
+<status status="PASS" endtime="20160701 11:15:51.089" starttime="20160701 11:15:50.592"></status>
+</kw>
+<status status="PASS" endtime="20160701 11:15:51.090" starttime="20160701 11:15:50.592"></status>
+</kw>
+<kw name="Sleep" library="BuiltIn">
+<doc>Pauses the test executed for the given time.</doc>
+<arguments>
+<arg>1</arg>
+</arguments>
+<msg timestamp="20160701 11:15:52.091" level="INFO">Slept 1 second</msg>
+<status status="PASS" endtime="20160701 11:15:52.091" starttime="20160701 11:15:51.091"></status>
+</kw>
+<status status="PASS" endtime="20160701 11:15:52.091" starttime="20160701 11:15:40.407"></status>
+</kw>
+<kw type="foritem" name="${i} = 1">
+<kw name="Evaluate" library="BuiltIn">
+<doc>Evaluates the given expression in Python and returns the results.</doc>
+<arguments>
+<arg>${i}+${1}</arg>
+</arguments>
+<assign>
+<var>${e}</var>
+</assign>
+<msg timestamp="20160701 11:15:52.092" level="INFO">${e} = 2</msg>
+<status status="PASS" endtime="20160701 11:15:52.092" starttime="20160701 11:15:52.091"></status>
+</kw>
+<kw name="Log" library="BuiltIn">
+<doc>Logs the given message with the given level.</doc>
+<arguments>
+<arg>The e is: ${e}</arg>
+</arguments>
+<msg timestamp="20160701 11:15:52.093" level="INFO">The e is: 2</msg>
+<status status="PASS" endtime="20160701 11:15:52.093" starttime="20160701 11:15:52.092"></status>
+</kw>
+<kw name="Click Element" library="SongzAppiumLibrary">
+<doc>Click element identified by `locator`.</doc>
+<arguments>
+<arg>xpath=//android.view.View[@resource-id='com.maishalei.seller:id/flexboxGroupBuyCommodities']/android.widget.LinearLayout[${e}]</arg>
+</arguments>
+<msg timestamp="20160701 11:15:52.093" level="INFO">Clicking element 'xpath=//android.view.View[@resource-id='com.maishalei.seller:id/flexboxGroupBuyCommodities']/android.widget.LinearLayout[2]'.</msg>
+<msg timestamp="20160701 11:15:52.093" level="DEBUG">POST http://127.0.0.1:4734/wd/hub/session/2b514d63-01be-4bf8-9a40-a34702af8c8e/elements {"using": "xpath", "sessionId": "2b514d63-01be-4bf8-9a40-a34702af8c8e", "value": "//android.view.View[@resource-id='com.maishalei.seller:id/flexboxGroupBuyCommodities']/android.widget.LinearLayout[2]"}</msg>
+<msg timestamp="20160701 11:15:52.320" level="DEBUG">Finished Request</msg>
+<msg timestamp="20160701 11:15:52.320" level="DEBUG">POST http://127.0.0.1:4734/wd/hub/session/2b514d63-01be-4bf8-9a40-a34702af8c8e/element/9/click {"sessionId": "2b514d63-01be-4bf8-9a40-a34702af8c8e", "id": "9"}</msg>
+<msg timestamp="20160701 11:15:52.813" level="DEBUG">Finished Request</msg>
+<status status="PASS" endtime="20160701 11:15:52.814" starttime="20160701 11:15:52.093"></status>
+</kw>
+<kw name="校验等待" library="常用操作">
+<arguments>
+<arg>分享</arg>
+</arguments>
+<kw name="Run Keyword If" library="BuiltIn">
+<doc>Runs the given keyword with the given arguments, if ``condition`` is true.</doc>
+<arguments>
+<arg>'${object}'=='首页'</arg>
+<arg>Wait Until Page Contains Element</arg>
+<arg>id=ivDiscover</arg>
+<arg>${TIMEOUT}</arg>
+<arg>ELSE IF</arg>
+<arg>'${object}'=='分享'</arg>
+<arg>Wait Until Page Contains Element</arg>
+<arg>xpath=//android.widget.TextView[@text='分享']</arg>
+<arg>${TIMEOUT}</arg>
+<arg>ELSE IF</arg>
+<arg>'${object}'=='WebView'</arg>
+<arg>Wait Until Page Contains Element</arg>
+<arg>id=webview</arg>
+<arg>${TIMEOUT}</arg>
+<arg>ELSE IF</arg>
+<arg>'${object}'=='标题'</arg>
+<arg>Wait Until Page Contains Element</arg>
+<arg>id=centerView</arg>
+</arguments>
+<kw name="Wait Until Page Contains Element" library="SongzAppiumLibrary">
+<doc>Waits until element specified with `locator` appears on current page.</doc>
+<arguments>
+<arg>xpath=//android.widget.TextView[@text='分享']</arg>
+<arg>${TIMEOUT}</arg>
+</arguments>
+<msg timestamp="20160701 11:15:52.818" level="DEBUG">POST http://127.0.0.1:4734/wd/hub/session/2b514d63-01be-4bf8-9a40-a34702af8c8e/elements {"using": "xpath", "sessionId": "2b514d63-01be-4bf8-9a40-a34702af8c8e", "value": "//android.widget.TextView[@text='\u5206\u4eab']"}</msg>
+<msg timestamp="20160701 11:15:53.008" level="DEBUG">Finished Request</msg>
+<msg timestamp="20160701 11:15:53.208" level="DEBUG">POST http://127.0.0.1:4734/wd/hub/session/2b514d63-01be-4bf8-9a40-a34702af8c8e/elements {"using": "xpath", "sessionId": "2b514d63-01be-4bf8-9a40-a34702af8c8e", "value": "//android.widget.TextView[@text='\u5206\u4eab']"}</msg>
+<msg timestamp="20160701 11:15:53.498" level="DEBUG">Finished Request</msg>
+<msg timestamp="20160701 11:15:53.698" level="DEBUG">POST http://127.0.0.1:4734/wd/hub/session/2b514d63-01be-4bf8-9a40-a34702af8c8e/elements {"using": "xpath", "sessionId": "2b514d63-01be-4bf8-9a40-a34702af8c8e", "value": "//android.widget.TextView[@text='\u5206\u4eab']"}</msg>
+<msg timestamp="20160701 11:15:53.901" level="DEBUG">Finished Request</msg>
+<msg timestamp="20160701 11:15:54.101" level="DEBUG">POST http://127.0.0.1:4734/wd/hub/session/2b514d63-01be-4bf8-9a40-a34702af8c8e/elements {"using": "xpath", "sessionId": "2b514d63-01be-4bf8-9a40-a34702af8c8e", "value": "//android.widget.TextView[@text='\u5206\u4eab']"}</msg>
+<msg timestamp="20160701 11:15:54.991" level="DEBUG">Finished Request</msg>
+<status status="PASS" endtime="20160701 11:15:54.992" starttime="20160701 11:15:52.817"></status>
+</kw>
+<status status="PASS" endtime="20160701 11:15:54.992" starttime="20160701 11:15:52.816"></status>
+</kw>
+<status status="PASS" endtime="20160701 11:15:54.993" starttime="20160701 11:15:52.814"></status>
+</kw>
+<kw name="Sleep" library="BuiltIn">
+<doc>Pauses the test executed for the given time.</doc>
+<arguments>
+<arg>1.5</arg>
+</arguments>
+<msg timestamp="20160701 11:15:56.494" level="INFO">Slept 1 second 500 milliseconds</msg>
+<status status="PASS" endtime="20160701 11:15:56.494" starttime="20160701 11:15:54.993"></status>
+</kw>
+<kw name="返回键" library="系统按键">
+<kw name="Press Keycode" library="SongzAppiumLibrary">
+<doc>Sends a press of keycode to the device.</doc>
+<arguments>
+<arg>4</arg>
+</arguments>
+<msg timestamp="20160701 11:15:56.495" level="DEBUG">POST http://127.0.0.1:4734/wd/hub/session/2b514d63-01be-4bf8-9a40-a34702af8c8e/appium/device/press_keycode {"sessionId": "2b514d63-01be-4bf8-9a40-a34702af8c8e", "keycode": "4"}</msg>
+<msg timestamp="20160701 11:15:56.807" level="DEBUG">Finished Request</msg>
+<status status="PASS" endtime="20160701 11:15:56.807" starttime="20160701 11:15:56.494"></status>
+</kw>
+<status status="PASS" endtime="20160701 11:15:56.808" starttime="20160701 11:15:56.494"></status>
+</kw>
+<kw name="Sleep" library="BuiltIn">
+<doc>Pauses the test executed for the given time.</doc>
+<arguments>
+<arg>1</arg>
+</arguments>
+<msg timestamp="20160701 11:15:57.808" level="INFO">Slept 1 second</msg>
+<status status="PASS" endtime="20160701 11:15:57.808" starttime="20160701 11:15:56.808"></status>
+</kw>
+<status status="PASS" endtime="20160701 11:15:57.808" starttime="20160701 11:15:52.091"></status>
+</kw>
+<kw type="foritem" name="${i} = 2">
+<kw name="Evaluate" library="BuiltIn">
+<doc>Evaluates the given expression in Python and returns the results.</doc>
+<arguments>
+<arg>${i}+${1}</arg>
+</arguments>
+<assign>
+<var>${e}</var>
+</assign>
+<msg timestamp="20160701 11:15:57.809" level="INFO">${e} = 3</msg>
+<status status="PASS" endtime="20160701 11:15:57.809" starttime="20160701 11:15:57.808"></status>
+</kw>
+<kw name="Log" library="BuiltIn">
+<doc>Logs the given message with the given level.</doc>
+<arguments>
+<arg>The e is: ${e}</arg>
+</arguments>
+<msg timestamp="20160701 11:15:57.809" level="INFO">The e is: 3</msg>
+<status status="PASS" endtime="20160701 11:15:57.809" starttime="20160701 11:15:57.809"></status>
+</kw>
+<kw name="Click Element" library="SongzAppiumLibrary">
+<doc>Click element identified by `locator`.</doc>
+<arguments>
+<arg>xpath=//android.view.View[@resource-id='com.maishalei.seller:id/flexboxGroupBuyCommodities']/android.widget.LinearLayout[${e}]</arg>
+</arguments>
+<msg timestamp="20160701 11:15:57.809" level="INFO">Clicking element 'xpath=//android.view.View[@resource-id='com.maishalei.seller:id/flexboxGroupBuyCommodities']/android.widget.LinearLayout[3]'.</msg>
+<msg timestamp="20160701 11:15:57.810" level="DEBUG">POST http://127.0.0.1:4734/wd/hub/session/2b514d63-01be-4bf8-9a40-a34702af8c8e/elements {"using": "xpath", "sessionId": "2b514d63-01be-4bf8-9a40-a34702af8c8e", "value": "//android.view.View[@resource-id='com.maishalei.seller:id/flexboxGroupBuyCommodities']/android.widget.LinearLayout[3]"}</msg>
+<msg timestamp="20160701 11:15:58.144" level="DEBUG">Finished Request</msg>
+<msg timestamp="20160701 11:15:58.144" level="DEBUG">POST http://127.0.0.1:4734/wd/hub/session/2b514d63-01be-4bf8-9a40-a34702af8c8e/element/11/click {"sessionId": "2b514d63-01be-4bf8-9a40-a34702af8c8e", "id": "11"}</msg>
+<msg timestamp="20160701 11:15:59.832" level="DEBUG">Finished Request</msg>
+<status status="PASS" endtime="20160701 11:15:59.833" starttime="20160701 11:15:57.809"></status>
+</kw>
+<kw name="校验等待" library="常用操作">
+<arguments>
+<arg>分享</arg>
+</arguments>
+<kw name="Run Keyword If" library="BuiltIn">
+<doc>Runs the given keyword with the given arguments, if ``condition`` is true.</doc>
+<arguments>
+<arg>'${object}'=='首页'</arg>
+<arg>Wait Until Page Contains Element</arg>
+<arg>id=ivDiscover</arg>
+<arg>${TIMEOUT}</arg>
+<arg>ELSE IF</arg>
+<arg>'${object}'=='分享'</arg>
+<arg>Wait Until Page Contains Element</arg>
+<arg>xpath=//android.widget.TextView[@text='分享']</arg>
+<arg>${TIMEOUT}</arg>
+<arg>ELSE IF</arg>
+<arg>'${object}'=='WebView'</arg>
+<arg>Wait Until Page Contains Element</arg>
+<arg>id=webview</arg>
+<arg>${TIMEOUT}</arg>
+<arg>ELSE IF</arg>
+<arg>'${object}'=='标题'</arg>
+<arg>Wait Until Page Contains Element</arg>
+<arg>id=centerView</arg>
+</arguments>
+<kw name="Wait Until Page Contains Element" library="SongzAppiumLibrary">
+<doc>Waits until element specified with `locator` appears on current page.</doc>
+<arguments>
+<arg>xpath=//android.widget.TextView[@text='分享']</arg>
+<arg>${TIMEOUT}</arg>
+</arguments>
+<msg timestamp="20160701 11:15:59.835" level="DEBUG">POST http://127.0.0.1:4734/wd/hub/session/2b514d63-01be-4bf8-9a40-a34702af8c8e/elements {"using": "xpath", "sessionId": "2b514d63-01be-4bf8-9a40-a34702af8c8e", "value": "//android.widget.TextView[@text='\u5206\u4eab']"}</msg>
+<msg timestamp="20160701 11:16:00.044" level="DEBUG">Finished Request</msg>
+<msg timestamp="20160701 11:16:00.244" level="DEBUG">POST http://127.0.0.1:4734/wd/hub/session/2b514d63-01be-4bf8-9a40-a34702af8c8e/elements {"using": "xpath", "sessionId": "2b514d63-01be-4bf8-9a40-a34702af8c8e", "value": "//android.widget.TextView[@text='\u5206\u4eab']"}</msg>
+<msg timestamp="20160701 11:16:01.209" level="DEBUG">Finished Request</msg>
+<status status="PASS" endtime="20160701 11:16:01.209" starttime="20160701 11:15:59.835"></status>
+</kw>
+<status status="PASS" endtime="20160701 11:16:01.209" starttime="20160701 11:15:59.833"></status>
+</kw>
+<status status="PASS" endtime="20160701 11:16:01.209" starttime="20160701 11:15:59.833"></status>
+</kw>
+<kw name="Sleep" library="BuiltIn">
+<doc>Pauses the test executed for the given time.</doc>
+<arguments>
+<arg>1.5</arg>
+</arguments>
+<msg timestamp="20160701 11:16:02.710" level="INFO">Slept 1 second 500 milliseconds</msg>
+<status status="PASS" endtime="20160701 11:16:02.710" starttime="20160701 11:16:01.209"></status>
+</kw>
+<kw name="返回键" library="系统按键">
+<kw name="Press Keycode" library="SongzAppiumLibrary">
+<doc>Sends a press of keycode to the device.</doc>
+<arguments>
+<arg>4</arg>
+</arguments>
+<msg timestamp="20160701 11:16:02.713" level="DEBUG">POST http://127.0.0.1:4734/wd/hub/session/2b514d63-01be-4bf8-9a40-a34702af8c8e/appium/device/press_keycode {"sessionId": "2b514d63-01be-4bf8-9a40-a34702af8c8e", "keycode": "4"}</msg>
+<msg timestamp="20160701 11:16:02.784" level="DEBUG">Finished Request</msg>
+<status status="PASS" endtime="20160701 11:16:02.785" starttime="20160701 11:16:02.712"></status>
+</kw>
+<status status="PASS" endtime="20160701 11:16:02.785" starttime="20160701 11:16:02.711"></status>
+</kw>
+<kw name="Sleep" library="BuiltIn">
+<doc>Pauses the test executed for the given time.</doc>
+<arguments>
+<arg>1</arg>
+</arguments>
+<msg timestamp="20160701 11:16:03.786" level="INFO">Slept 1 second</msg>
+<status status="PASS" endtime="20160701 11:16:03.786" starttime="20160701 11:16:02.786"></status>
+</kw>
+<status status="PASS" endtime="20160701 11:16:03.786" starttime="20160701 11:15:57.808"></status>
+</kw>
+<status status="PASS" endtime="20160701 11:16:03.786" starttime="20160701 11:15:40.407"></status>
+</kw>
+<status status="PASS" endtime="20160701 11:16:03.787" starttime="20160701 11:15:40.406"></status>
+</kw>
+<kw name="Sleep" library="BuiltIn">
+<doc>Pauses the test executed for the given time.</doc>
+<arguments>
+<arg>2</arg>
+</arguments>
+<msg timestamp="20160701 11:16:05.788" level="INFO">Slept 2 seconds</msg>
+<status status="PASS" endtime="20160701 11:16:05.788" starttime="20160701 11:16:03.788"></status>
+</kw>
+<kw name="Log" library="BuiltIn">
+<doc>Logs the given message with the given level.</doc>
+<arguments>
+<arg>------大家都在拼-测试完成------</arg>
+</arguments>
+<msg timestamp="20160701 11:16:05.789" level="INFO">------大家都在拼-测试完成------</msg>
+<status status="PASS" endtime="20160701 11:16:05.789" starttime="20160701 11:16:05.789"></status>
+</kw>
+<kw type="teardown" name="失败重启" library="常用操作">
+<kw name="Run Keyword If Test Failed" library="BuiltIn">
+<doc>Runs the given keyword with the given arguments, if the test failed.</doc>
+<arguments>
+<arg>启动App</arg>
+</arguments>
+<status status="PASS" endtime="20160701 11:16:05.790" starttime="20160701 11:16:05.790"></status>
+</kw>
+<status status="PASS" endtime="20160701 11:16:05.791" starttime="20160701 11:16:05.790"></status>
+</kw>
+<tags>
+<tag>ready</tag>
+</tags>
+<status status="PASS" endtime="20160701 11:16:05.791" critical="yes" starttime="20160701 11:15:37.361"></status>
+</test>
+<test id="s1-s2-t3" name="搜索功能">
+<kw name="校验等待" library="常用操作">
+<kw name="Run Keyword If" library="BuiltIn">
+<doc>Runs the given keyword with the given arguments, if ``condition`` is true.</doc>
+<arguments>
+<arg>'${object}'=='首页'</arg>
+<arg>Wait Until Page Contains Element</arg>
+<arg>id=ivDiscover</arg>
+<arg>${TIMEOUT}</arg>
+<arg>ELSE IF</arg>
+<arg>'${object}'=='分享'</arg>
+<arg>Wait Until Page Contains Element</arg>
+<arg>xpath=//android.widget.TextView[@text='分享']</arg>
+<arg>${TIMEOUT}</arg>
+<arg>ELSE IF</arg>
+<arg>'${object}'=='WebView'</arg>
+<arg>Wait Until Page Contains Element</arg>
+<arg>id=webview</arg>
+<arg>${TIMEOUT}</arg>
+<arg>ELSE IF</arg>
+<arg>'${object}'=='标题'</arg>
+<arg>Wait Until Page Contains Element</arg>
+<arg>id=centerView</arg>
+</arguments>
+<kw name="Wait Until Page Contains Element" library="SongzAppiumLibrary">
+<doc>Waits until element specified with `locator` appears on current page.</doc>
+<arguments>
+<arg>id=ivDiscover</arg>
+<arg>${TIMEOUT}</arg>
+</arguments>
+<msg timestamp="20160701 11:16:05.796" level="DEBUG">POST http://127.0.0.1:4734/wd/hub/session/2b514d63-01be-4bf8-9a40-a34702af8c8e/elements {"using": "id", "sessionId": "2b514d63-01be-4bf8-9a40-a34702af8c8e", "value": "ivDiscover"}</msg>
+<msg timestamp="20160701 11:16:06.883" level="DEBUG">Finished Request</msg>
+<status status="PASS" endtime="20160701 11:16:06.884" starttime="20160701 11:16:05.796"></status>
+</kw>
+<status status="PASS" endtime="20160701 11:16:06.884" starttime="20160701 11:16:05.795"></status>
+</kw>
+<status status="PASS" endtime="20160701 11:16:06.885" starttime="20160701 11:16:05.795"></status>
+</kw>
+<kw name="点击搜索" library="常用操作">
+<kw name="Wait Until Page Contains" library="SongzAppiumLibrary">
+<doc>Waits until `text` appears on current page.</doc>
+<arguments>
+<arg>首页</arg>
+</arguments>
+<msg timestamp="20160701 11:16:06.889" level="DEBUG">GET http://127.0.0.1:4734/wd/hub/session/2b514d63-01be-4bf8-9a40-a34702af8c8e/source {"sessionId": "2b514d63-01be-4bf8-9a40-a34702af8c8e"}</msg>
+<msg timestamp="20160701 11:16:07.424" level="DEBUG">Finished Request</msg>
+<status status="PASS" endtime="20160701 11:16:07.425" starttime="20160701 11:16:06.888"></status>
+</kw>
+<kw name="Click Element" library="SongzAppiumLibrary">
+<doc>Click element identified by `locator`.</doc>
+<arguments>
+<arg>xpath=//android.widget.ImageView[@index='2']</arg>
+</arguments>
+<msg timestamp="20160701 11:16:07.425" level="INFO">Clicking element 'xpath=//android.widget.ImageView[@index='2']'.</msg>
+<msg timestamp="20160701 11:16:07.426" level="DEBUG">POST http://127.0.0.1:4734/wd/hub/session/2b514d63-01be-4bf8-9a40-a34702af8c8e/elements {"using": "xpath", "sessionId": "2b514d63-01be-4bf8-9a40-a34702af8c8e", "value": "//android.widget.ImageView[@index='2']"}</msg>
+<msg timestamp="20160701 11:16:07.656" level="DEBUG">Finished Request</msg>
+<msg timestamp="20160701 11:16:07.656" level="DEBUG">POST http://127.0.0.1:4734/wd/hub/session/2b514d63-01be-4bf8-9a40-a34702af8c8e/element/14/click {"sessionId": "2b514d63-01be-4bf8-9a40-a34702af8c8e", "id": "14"}</msg>
+<msg timestamp="20160701 11:16:08.058" level="DEBUG">Finished Request</msg>
+<status status="PASS" endtime="20160701 11:16:08.059" starttime="20160701 11:16:07.425"></status>
+</kw>
+<status status="PASS" endtime="20160701 11:16:08.059" starttime="20160701 11:16:06.886"></status>
+</kw>
+<kw name="Sleep" library="BuiltIn">
+<doc>Pauses the test executed for the given time.</doc>
+<arguments>
+<arg>3s</arg>
+</arguments>
+<msg timestamp="20160701 11:16:11.060" level="INFO">Slept 3 seconds</msg>
+<status status="PASS" endtime="20160701 11:16:11.060" starttime="20160701 11:16:08.060"></status>
+</kw>
+<kw name="Input Text" library="SongzAppiumLibrary">
+<doc>Types the given `text` into text field identified by `locator`.</doc>
+<arguments>
+<arg>xpath=//android.widget.EditText[@index='0']</arg>
+<arg>儿童</arg>
+</arguments>
+<msg timestamp="20160701 11:16:11.061" level="INFO">Typing text '儿童' into text field 'xpath=//android.widget.EditText[@index='0']'</msg>
+<msg timestamp="20160701 11:16:11.061" level="DEBUG">POST http://127.0.0.1:4734/wd/hub/session/2b514d63-01be-4bf8-9a40-a34702af8c8e/elements {"using": "xpath", "sessionId": "2b514d63-01be-4bf8-9a40-a34702af8c8e", "value": "//android.widget.EditText[@index='0']"}</msg>
+<msg timestamp="20160701 11:16:11.243" level="DEBUG">Finished Request</msg>
+<msg timestamp="20160701 11:16:11.243" level="DEBUG">POST http://127.0.0.1:4734/wd/hub/session/2b514d63-01be-4bf8-9a40-a34702af8c8e/element/15/value {"sessionId": "2b514d63-01be-4bf8-9a40-a34702af8c8e", "id": "15", "value": ["\u513f", "\u7ae5"]}</msg>
+<msg timestamp="20160701 11:16:16.535" level="DEBUG">Finished Request</msg>
+<status status="PASS" endtime="20160701 11:16:16.536" starttime="20160701 11:16:11.060"></status>
+</kw>
+<kw name="回车" library="常用操作">
+<kw name="Press Keycode" library="SongzAppiumLibrary">
+<doc>Sends a press of keycode to the device.</doc>
+<arguments>
+<arg>66</arg>
+</arguments>
+<msg timestamp="20160701 11:16:16.538" level="DEBUG">POST http://127.0.0.1:4734/wd/hub/session/2b514d63-01be-4bf8-9a40-a34702af8c8e/appium/device/press_keycode {"sessionId": "2b514d63-01be-4bf8-9a40-a34702af8c8e", "keycode": "66"}</msg>
+<msg timestamp="20160701 11:16:16.836" level="DEBUG">Finished Request</msg>
+<status status="PASS" endtime="20160701 11:16:16.836" starttime="20160701 11:16:16.537"></status>
+</kw>
+<status status="PASS" endtime="20160701 11:16:16.836" starttime="20160701 11:16:16.536"></status>
+</kw>
+<kw name="返回" library="常用操作">
+<kw name="Click Element" library="SongzAppiumLibrary">
+<doc>Click element identified by `locator`.</doc>
+<arguments>
+<arg>xpath=//android.widget.ImageView[@NAF='true']</arg>
+</arguments>
+<msg timestamp="20160701 11:16:16.839" level="INFO">Clicking element 'xpath=//android.widget.ImageView[@NAF='true']'.</msg>
+<msg timestamp="20160701 11:16:16.840" level="DEBUG">POST http://127.0.0.1:4734/wd/hub/session/2b514d63-01be-4bf8-9a40-a34702af8c8e/elements {"using": "xpath", "sessionId": "2b514d63-01be-4bf8-9a40-a34702af8c8e", "value": "//android.widget.ImageView[@NAF='true']"}</msg>
+<msg timestamp="20160701 11:16:19.068" level="DEBUG">Finished Request</msg>
+<msg timestamp="20160701 11:16:19.069" level="DEBUG">POST http://127.0.0.1:4734/wd/hub/session/2b514d63-01be-4bf8-9a40-a34702af8c8e/element/16/click {"sessionId": "2b514d63-01be-4bf8-9a40-a34702af8c8e", "id": "16"}</msg>
+<msg timestamp="20160701 11:16:19.706" level="DEBUG">Finished Request</msg>
+<status status="PASS" endtime="20160701 11:16:19.707" starttime="20160701 11:16:16.839"></status>
+</kw>
+<status status="PASS" endtime="20160701 11:16:19.707" starttime="20160701 11:16:16.838"></status>
+</kw>
+<kw name="返回键" library="系统按键">
+<kw name="Press Keycode" library="SongzAppiumLibrary">
+<doc>Sends a press of keycode to the device.</doc>
+<arguments>
+<arg>4</arg>
+</arguments>
+<msg timestamp="20160701 11:16:19.710" level="DEBUG">POST http://127.0.0.1:4734/wd/hub/session/2b514d63-01be-4bf8-9a40-a34702af8c8e/appium/device/press_keycode {"sessionId": "2b514d63-01be-4bf8-9a40-a34702af8c8e", "keycode": "4"}</msg>
+<msg timestamp="20160701 11:16:21.831" level="DEBUG">Finished Request</msg>
+<status status="PASS" endtime="20160701 11:16:21.832" starttime="20160701 11:16:19.709"></status>
+</kw>
+<status status="PASS" endtime="20160701 11:16:21.832" starttime="20160701 11:16:19.708"></status>
+</kw>
+<kw name="取消" library="常用操作">
+<kw name="Click Element" library="SongzAppiumLibrary">
+<doc>Click element identified by `locator`.</doc>
+<arguments>
+<arg>xpath=//android.widget.TextView[@text='取消']</arg>
+</arguments>
+<msg timestamp="20160701 11:16:21.835" level="INFO">Clicking element 'xpath=//android.widget.TextView[@text='取消']'.</msg>
+<msg timestamp="20160701 11:16:21.835" level="DEBUG">POST http://127.0.0.1:4734/wd/hub/session/2b514d63-01be-4bf8-9a40-a34702af8c8e/elements {"using": "xpath", "sessionId": "2b514d63-01be-4bf8-9a40-a34702af8c8e", "value": "//android.widget.TextView[@text='\u53d6\u6d88']"}</msg>
+<msg timestamp="20160701 11:16:22.458" level="DEBUG">Finished Request</msg>
+<msg timestamp="20160701 11:16:22.458" level="DEBUG">POST http://127.0.0.1:4734/wd/hub/session/2b514d63-01be-4bf8-9a40-a34702af8c8e/element/18/click {"sessionId": "2b514d63-01be-4bf8-9a40-a34702af8c8e", "id": "18"}</msg>
+<msg timestamp="20160701 11:16:25.159" level="DEBUG">Finished Request</msg>
+<status status="PASS" endtime="20160701 11:16:25.160" starttime="20160701 11:16:21.834"></status>
+</kw>
+<status status="PASS" endtime="20160701 11:16:25.160" starttime="20160701 11:16:21.833"></status>
+</kw>
+<kw name="Log" library="BuiltIn">
+<doc>Logs the given message with the given level.</doc>
+<arguments>
+<arg>------搜索功能-测试完成------</arg>
+</arguments>
+<msg timestamp="20160701 11:16:25.162" level="INFO">------搜索功能-测试完成------</msg>
+<status status="PASS" endtime="20160701 11:16:25.162" starttime="20160701 11:16:25.161"></status>
+</kw>
+<kw type="teardown" name="失败重启" library="常用操作">
+<kw name="Run Keyword If Test Failed" library="BuiltIn">
+<doc>Runs the given keyword with the given arguments, if the test failed.</doc>
+<arguments>
+<arg>启动App</arg>
+</arguments>
+<status status="PASS" endtime="20160701 11:16:25.166" starttime="20160701 11:16:25.165"></status>
+</kw>
+<status status="PASS" endtime="20160701 11:16:25.166" starttime="20160701 11:16:25.164"></status>
+</kw>
+<tags>
+<tag>ready</tag>
+</tags>
+<status status="PASS" endtime="20160701 11:16:25.167" critical="yes" starttime="20160701 11:16:05.794"></status>
+</test>
+<test id="s1-s2-t4" name="查看产品分类">
+<kw name="Wait Until Page Contains Element" library="SongzAppiumLibrary">
+<doc>Waits until element specified with `locator` appears on current page.</doc>
+<arguments>
+<arg>id=ivDiscover</arg>
+<arg>${TIMEOUT}</arg>
+</arguments>
+<msg timestamp="20160701 11:16:25.176" level="DEBUG">POST http://127.0.0.1:4734/wd/hub/session/2b514d63-01be-4bf8-9a40-a34702af8c8e/elements {"using": "id", "sessionId": "2b514d63-01be-4bf8-9a40-a34702af8c8e", "value": "ivDiscover"}</msg>
+<msg timestamp="20160701 11:16:26.582" level="DEBUG">Finished Request</msg>
+<status status="PASS" endtime="20160701 11:16:26.583" starttime="20160701 11:16:25.175"></status>
+</kw>
+<kw name="Sleep" library="BuiltIn">
+<doc>Pauses the test executed for the given time.</doc>
+<arguments>
+<arg>1</arg>
+</arguments>
+<msg timestamp="20160701 11:16:27.584" level="INFO">Slept 1 second</msg>
+<status status="PASS" endtime="20160701 11:16:27.584" starttime="20160701 11:16:26.584"></status>
+</kw>
+<kw name="点击分类" library="常用操作">
+<kw name="Wait Until Page Contains" library="SongzAppiumLibrary">
+<doc>Waits until `text` appears on current page.</doc>
+<arguments>
+<arg>首页</arg>
+</arguments>
+<msg timestamp="20160701 11:16:27.587" level="DEBUG">GET http://127.0.0.1:4734/wd/hub/session/2b514d63-01be-4bf8-9a40-a34702af8c8e/source {"sessionId": "2b514d63-01be-4bf8-9a40-a34702af8c8e"}</msg>
+<msg timestamp="20160701 11:16:28.180" level="DEBUG">Finished Request</msg>
+<status status="PASS" endtime="20160701 11:16:28.180" starttime="20160701 11:16:27.587"></status>
+</kw>
+<kw name="Click Element" library="SongzAppiumLibrary">
+<doc>Click element identified by `locator`.</doc>
+<arguments>
+<arg>xpath=//android.widget.ImageView[@index='3']</arg>
+</arguments>
+<msg timestamp="20160701 11:16:28.181" level="INFO">Clicking element 'xpath=//android.widget.ImageView[@index='3']'.</msg>
+<msg timestamp="20160701 11:16:28.181" level="DEBUG">POST http://127.0.0.1:4734/wd/hub/session/2b514d63-01be-4bf8-9a40-a34702af8c8e/elements {"using": "xpath", "sessionId": "2b514d63-01be-4bf8-9a40-a34702af8c8e", "value": "//android.widget.ImageView[@index='3']"}</msg>
+<msg timestamp="20160701 11:16:28.511" level="DEBUG">Finished Request</msg>
+<msg timestamp="20160701 11:16:28.512" level="DEBUG">POST http://127.0.0.1:4734/wd/hub/session/2b514d63-01be-4bf8-9a40-a34702af8c8e/element/20/click {"sessionId": "2b514d63-01be-4bf8-9a40-a34702af8c8e", "id": "20"}</msg>
+<msg timestamp="20160701 11:16:28.995" level="DEBUG">Finished Request</msg>
+<status status="PASS" endtime="20160701 11:16:28.996" starttime="20160701 11:16:28.180"></status>
+</kw>
+<status status="PASS" endtime="20160701 11:16:28.996" starttime="20160701 11:16:27.585"></status>
+</kw>
+<kw name="Wait Until Page Contains Element" library="SongzAppiumLibrary">
+<doc>Waits until element specified with `locator` appears on current page.</doc>
+<arguments>
+<arg>xpath=//android.widget.TextView[@text='母婴用品']</arg>
+<arg>${TIMEOUT}</arg>
+</arguments>
+<msg timestamp="20160701 11:16:28.999" level="DEBUG">POST http://127.0.0.1:4734/wd/hub/session/2b514d63-01be-4bf8-9a40-a34702af8c8e/elements {"using": "xpath", "sessionId": "2b514d63-01be-4bf8-9a40-a34702af8c8e", "value": "//android.widget.TextView[@text='\u6bcd\u5a74\u7528\u54c1']"}</msg>
+<msg timestamp="20160701 11:16:30.267" level="DEBUG">Finished Request</msg>
+<status status="PASS" endtime="20160701 11:16:30.267" starttime="20160701 11:16:28.998"></status>
+</kw>
+<kw name="Run Keyword If" library="BuiltIn">
+<doc>Runs the given keyword with the given arguments, if ``condition`` is true.</doc>
+<arguments>
+<arg>'${mode}'=='debug'</arg>
+<arg>分类菜单检测-测试</arg>
+<arg>ELSE IF</arg>
+<arg>'${mode}'=='product'</arg>
+<arg>分类菜单检测-生产</arg>
+<arg>ELSE</arg>
+<arg>Log</arg>
+<arg>请输入正确的运行模式。</arg>
+</arguments>
+<kw name="分类菜单检测-生产" library="菜单库">
+<kw name="母婴用品" library="菜单库">
+<kw name="Click Element" library="SongzAppiumLibrary">
+<doc>Click element identified by `locator`.</doc>
+<arguments>
+<arg>xpath=//android.widget.TextView[@text='母婴用品']</arg>
+</arguments>
+<msg timestamp="20160701 11:16:30.271" level="INFO">Clicking element 'xpath=//android.widget.TextView[@text='母婴用品']'.</msg>
+<msg timestamp="20160701 11:16:30.271" level="DEBUG">POST http://127.0.0.1:4734/wd/hub/session/2b514d63-01be-4bf8-9a40-a34702af8c8e/elements {"using": "xpath", "sessionId": "2b514d63-01be-4bf8-9a40-a34702af8c8e", "value": "//android.widget.TextView[@text='\u6bcd\u5a74\u7528\u54c1']"}</msg>
+<msg timestamp="20160701 11:16:30.514" level="DEBUG">Finished Request</msg>
+<msg timestamp="20160701 11:16:30.515" level="DEBUG">POST http://127.0.0.1:4734/wd/hub/session/2b514d63-01be-4bf8-9a40-a34702af8c8e/element/22/click {"sessionId": "2b514d63-01be-4bf8-9a40-a34702af8c8e", "id": "22"}</msg>
+<msg timestamp="20160701 11:16:30.721" level="DEBUG">Finished Request</msg>
+<status status="PASS" endtime="20160701 11:16:30.721" starttime="20160701 11:16:30.271"></status>
+</kw>
+<status status="PASS" endtime="20160701 11:16:30.722" starttime="20160701 11:16:30.270"></status>
+</kw>
+<kw name="居家会场" library="菜单库">
+<kw name="Click Element" library="SongzAppiumLibrary">
+<doc>Click element identified by `locator`.</doc>
+<arguments>
+<arg>xpath=//android.widget.TextView[@text='居家会场']</arg>
+</arguments>
+<msg timestamp="20160701 11:16:30.723" level="INFO">Clicking element 'xpath=//android.widget.TextView[@text='居家会场']'.</msg>
+<msg timestamp="20160701 11:16:30.723" level="DEBUG">POST http://127.0.0.1:4734/wd/hub/session/2b514d63-01be-4bf8-9a40-a34702af8c8e/elements {"using": "xpath", "sessionId": "2b514d63-01be-4bf8-9a40-a34702af8c8e", "value": "//android.widget.TextView[@text='\u5c45\u5bb6\u4f1a\u573a']"}</msg>
+<msg timestamp="20160701 11:16:31.805" level="DEBUG">Finished Request</msg>
+<msg timestamp="20160701 11:16:31.805" level="DEBUG">POST http://127.0.0.1:4734/wd/hub/session/2b514d63-01be-4bf8-9a40-a34702af8c8e/element/23/click {"sessionId": "2b514d63-01be-4bf8-9a40-a34702af8c8e", "id": "23"}</msg>
+<msg timestamp="20160701 11:16:32.506" level="DEBUG">Finished Request</msg>
+<status status="PASS" endtime="20160701 11:16:32.507" starttime="20160701 11:16:30.722"></status>
+</kw>
+<status status="PASS" endtime="20160701 11:16:32.507" starttime="20160701 11:16:30.722"></status>
+</kw>
+<kw name="美妆个护" library="菜单库">
+<kw name="Click Element" library="SongzAppiumLibrary">
+<doc>Click element identified by `locator`.</doc>
+<arguments>
+<arg>xpath=//android.widget.TextView[@text='美妆个护']</arg>
+</arguments>
+<msg timestamp="20160701 11:16:32.508" level="INFO">Clicking element 'xpath=//android.widget.TextView[@text='美妆个护']'.</msg>
+<msg timestamp="20160701 11:16:32.508" level="DEBUG">POST http://127.0.0.1:4734/wd/hub/session/2b514d63-01be-4bf8-9a40-a34702af8c8e/elements {"using": "xpath", "sessionId": "2b514d63-01be-4bf8-9a40-a34702af8c8e", "value": "//android.widget.TextView[@text='\u7f8e\u5986\u4e2a\u62a4']"}</msg>
+<msg timestamp="20160701 11:16:33.254" level="DEBUG">Finished Request</msg>
+<msg timestamp="20160701 11:16:33.255" level="DEBUG">POST http://127.0.0.1:4734/wd/hub/session/2b514d63-01be-4bf8-9a40-a34702af8c8e/element/24/click {"sessionId": "2b514d63-01be-4bf8-9a40-a34702af8c8e", "id": "24"}</msg>
+<msg timestamp="20160701 11:16:33.478" level="DEBUG">Finished Request</msg>
+<status status="PASS" endtime="20160701 11:16:33.479" starttime="20160701 11:16:32.507"></status>
+</kw>
+<status status="PASS" endtime="20160701 11:16:33.479" starttime="20160701 11:16:32.507"></status>
+</kw>
+<kw name="环球美食" library="菜单库">
+<kw name="Click Element" library="SongzAppiumLibrary">
+<doc>Click element identified by `locator`.</doc>
+<arguments>
+<arg>xpath=//android.widget.TextView[@text='环球美食']</arg>
+</arguments>
+<msg timestamp="20160701 11:16:33.481" level="INFO">Clicking element 'xpath=//android.widget.TextView[@text='环球美食']'.</msg>
+<msg timestamp="20160701 11:16:33.481" level="DEBUG">POST http://127.0.0.1:4734/wd/hub/session/2b514d63-01be-4bf8-9a40-a34702af8c8e/elements {"using": "xpath", "sessionId": "2b514d63-01be-4bf8-9a40-a34702af8c8e", "value": "//android.widget.TextView[@text='\u73af\u7403\u7f8e\u98df']"}</msg>
+<msg timestamp="20160701 11:16:34.258" level="DEBUG">Finished Request</msg>
+<msg timestamp="20160701 11:16:34.259" level="DEBUG">POST http://127.0.0.1:4734/wd/hub/session/2b514d63-01be-4bf8-9a40-a34702af8c8e/element/25/click {"sessionId": "2b514d63-01be-4bf8-9a40-a34702af8c8e", "id": "25"}</msg>
+<msg timestamp="20160701 11:16:34.479" level="DEBUG">Finished Request</msg>
+<status status="PASS" endtime="20160701 11:16:34.479" starttime="20160701 11:16:33.480"></status>
+</kw>
+<status status="PASS" endtime="20160701 11:16:34.480" starttime="20160701 11:16:33.479"></status>
+</kw>
+<kw name="营养保健" library="菜单库">
+<kw name="Click Element" library="SongzAppiumLibrary">
+<doc>Click element identified by `locator`.</doc>
+<arguments>
+<arg>xpath=//android.widget.TextView[@text='营养保健']</arg>
+</arguments>
+<msg timestamp="20160701 11:16:34.481" level="INFO">Clicking element 'xpath=//android.widget.TextView[@text='营养保健']'.</msg>
+<msg timestamp="20160701 11:16:34.481" level="DEBUG">POST http://127.0.0.1:4734/wd/hub/session/2b514d63-01be-4bf8-9a40-a34702af8c8e/elements {"using": "xpath", "sessionId": "2b514d63-01be-4bf8-9a40-a34702af8c8e", "value": "//android.widget.TextView[@text='\u8425\u517b\u4fdd\u5065']"}</msg>
+<msg timestamp="20160701 11:16:35.531" level="DEBUG">Finished Request</msg>
+<msg timestamp="20160701 11:16:35.531" level="DEBUG">POST http://127.0.0.1:4734/wd/hub/session/2b514d63-01be-4bf8-9a40-a34702af8c8e/element/26/click {"sessionId": "2b514d63-01be-4bf8-9a40-a34702af8c8e", "id": "26"}</msg>
+<msg timestamp="20160701 11:16:36.233" level="DEBUG">Finished Request</msg>
+<status status="PASS" endtime="20160701 11:16:36.233" starttime="20160701 11:16:34.481"></status>
+</kw>
+<status status="PASS" endtime="20160701 11:16:36.233" starttime="20160701 11:16:34.480"></status>
+</kw>
+<kw name="饰品会场" library="菜单库">
+<kw name="Click Element" library="SongzAppiumLibrary">
+<doc>Click element identified by `locator`.</doc>
+<arguments>
+<arg>xpath=//android.widget.TextView[@text='饰品会场']</arg>
+</arguments>
+<msg timestamp="20160701 11:16:36.234" level="INFO">Clicking element 'xpath=//android.widget.TextView[@text='饰品会场']'.</msg>
+<msg timestamp="20160701 11:16:36.234" level="DEBUG">POST http://127.0.0.1:4734/wd/hub/session/2b514d63-01be-4bf8-9a40-a34702af8c8e/elements {"using": "xpath", "sessionId": "2b514d63-01be-4bf8-9a40-a34702af8c8e", "value": "//android.widget.TextView[@text='\u9970\u54c1\u4f1a\u573a']"}</msg>
+<msg timestamp="20160701 11:16:37.015" level="DEBUG">Finished Request</msg>
+<msg timestamp="20160701 11:16:37.015" level="DEBUG">POST http://127.0.0.1:4734/wd/hub/session/2b514d63-01be-4bf8-9a40-a34702af8c8e/element/27/click {"sessionId": "2b514d63-01be-4bf8-9a40-a34702af8c8e", "id": "27"}</msg>
+<msg timestamp="20160701 11:16:37.221" level="DEBUG">Finished Request</msg>
+<status status="PASS" endtime="20160701 11:16:37.221" starttime="20160701 11:16:36.233"></status>
+</kw>
+<status status="PASS" endtime="20160701 11:16:37.222" starttime="20160701 11:16:36.233"></status>
+</kw>
+<status status="PASS" endtime="20160701 11:16:37.222" starttime="20160701 11:16:30.270"></status>
+</kw>
+<status status="PASS" endtime="20160701 11:16:37.222" starttime="20160701 11:16:30.268"></status>
+</kw>
+<kw name="Log" library="BuiltIn">
+<doc>Logs the given message with the given level.</doc>
+<arguments>
+<arg>分类检查完成...</arg>
+</arguments>
+<msg timestamp="20160701 11:16:37.223" level="INFO">分类检查完成...</msg>
+<status status="PASS" endtime="20160701 11:16:37.224" starttime="20160701 11:16:37.223"></status>
+</kw>
+<kw name="Click Element" library="SongzAppiumLibrary">
+<doc>Click element identified by `locator`.</doc>
+<arguments>
+<arg>xpath=//android.widget.ImageView[@NAF='true']</arg>
+</arguments>
+<msg timestamp="20160701 11:16:37.225" level="INFO">Clicking element 'xpath=//android.widget.ImageView[@NAF='true']'.</msg>
+<msg timestamp="20160701 11:16:37.225" level="DEBUG">POST http://127.0.0.1:4734/wd/hub/session/2b514d63-01be-4bf8-9a40-a34702af8c8e/elements {"using": "xpath", "sessionId": "2b514d63-01be-4bf8-9a40-a34702af8c8e", "value": "//android.widget.ImageView[@NAF='true']"}</msg>
+<msg timestamp="20160701 11:16:37.990" level="DEBUG">Finished Request</msg>
+<msg timestamp="20160701 11:16:37.990" level="DEBUG">POST http://127.0.0.1:4734/wd/hub/session/2b514d63-01be-4bf8-9a40-a34702af8c8e/element/28/click {"sessionId": "2b514d63-01be-4bf8-9a40-a34702af8c8e", "id": "28"}</msg>
+<msg timestamp="20160701 11:16:40.707" level="DEBUG">Finished Request</msg>
+<status status="PASS" endtime="20160701 11:16:40.707" starttime="20160701 11:16:37.224"></status>
+</kw>
+<kw name="Log" library="BuiltIn">
+<doc>Logs the given message with the given level.</doc>
+<arguments>
+<arg>------查看产品分类-测试完成------</arg>
+</arguments>
+<msg timestamp="20160701 11:16:40.708" level="INFO">------查看产品分类-测试完成------</msg>
+<status status="PASS" endtime="20160701 11:16:40.709" starttime="20160701 11:16:40.708"></status>
+</kw>
+<kw type="teardown" name="失败重启" library="常用操作">
+<kw name="Run Keyword If Test Failed" library="BuiltIn">
+<doc>Runs the given keyword with the given arguments, if the test failed.</doc>
+<arguments>
+<arg>启动App</arg>
+</arguments>
+<status status="PASS" endtime="20160701 11:16:40.710" starttime="20160701 11:16:40.710"></status>
+</kw>
+<status status="PASS" endtime="20160701 11:16:40.711" starttime="20160701 11:16:40.710"></status>
+</kw>
+<tags>
+<tag>ready</tag>
+<tag>Smoke</tag>
+</tags>
+<status status="PASS" endtime="20160701 11:16:40.711" critical="yes" starttime="20160701 11:16:25.172"></status>
+</test>
+<test id="s1-s2-t5" name="首页页面滑动">
+<kw name="Wait Until Page Contains Element" library="SongzAppiumLibrary">
+<doc>Waits until element specified with `locator` appears on current page.</doc>
+<arguments>
+<arg>id=ivDiscover</arg>
+<arg>${TIMEOUT}</arg>
+</arguments>
+<msg timestamp="20160701 11:16:40.719" level="DEBUG">POST http://127.0.0.1:4734/wd/hub/session/2b514d63-01be-4bf8-9a40-a34702af8c8e/elements {"using": "id", "sessionId": "2b514d63-01be-4bf8-9a40-a34702af8c8e", "value": "ivDiscover"}</msg>
+<msg timestamp="20160701 11:16:42.138" level="DEBUG">Finished Request</msg>
+<status status="PASS" endtime="20160701 11:16:42.139" starttime="20160701 11:16:40.718"></status>
+</kw>
+<kw name="Sleep" library="BuiltIn">
+<doc>Pauses the test executed for the given time.</doc>
+<arguments>
+<arg>1</arg>
+</arguments>
+<msg timestamp="20160701 11:16:43.141" level="INFO">Slept 1 second</msg>
+<status status="PASS" endtime="20160701 11:16:43.141" starttime="20160701 11:16:42.140"></status>
+</kw>
+<kw name="向上滑动" library="常用操作">
+<arguments>
+<arg>3</arg>
+<arg>500</arg>
+</arguments>
+<kw name="Run Keyword If" library="BuiltIn">
+<doc>Runs the given keyword with the given arguments, if ``condition`` is true.</doc>
+<arguments>
+<arg>'${device}'=='small'</arg>
+<arg>Set Variable</arg>
+<arg>240</arg>
+<arg>580</arg>
+<arg>240</arg>
+<arg>240</arg>
+<arg>ELSE IF</arg>
+<arg>'${device}'=='medium'</arg>
+<arg>Set Variable</arg>
+<arg>350</arg>
+<arg>950</arg>
+<arg>350</arg>
+<arg>400</arg>
+<arg>ELSE IF</arg>
+<arg>'${device}'=='big'</arg>
+<arg>Set Variable</arg>
+<arg>500</arg>
+<arg>1400</arg>
+<arg>500</arg>
+<arg>600</arg>
+<arg>ELSE</arg>
+<arg>Log</arg>
+<arg>无效的参数${device}</arg>
+</arguments>
+<assign>
+<var>@{list}</var>
+</assign>
+<kw name="Set Variable" library="BuiltIn">
+<doc>Returns the given values which can then be assigned to a variables.</doc>
+<arguments>
+<arg>500</arg>
+<arg>1400</arg>
+<arg>500</arg>
+<arg>600</arg>
+</arguments>
+<status status="PASS" endtime="20160701 11:16:43.150" starttime="20160701 11:16:43.149"></status>
+</kw>
+<msg timestamp="20160701 11:16:43.150" level="INFO">@{list} = [ 500 | 1400 | 500 | 600 ]</msg>
+<status status="PASS" endtime="20160701 11:16:43.150" starttime="20160701 11:16:43.143"></status>
+</kw>
+<kw type="for" name="${i} IN RANGE [ ${n} ]">
+<kw type="foritem" name="${i} = 0">
+<kw name="Swipe" library="SongzAppiumLibrary">
+<doc>Swipe from one point to another point, for an optional duration.</doc>
+<arguments>
+<arg>@{list}</arg>
+<arg>${interval}</arg>
+</arguments>
+<msg timestamp="20160701 11:16:43.152" level="DEBUG">POST http://127.0.0.1:4734/wd/hub/session/2b514d63-01be-4bf8-9a40-a34702af8c8e/touch/perform {"sessionId": "2b514d63-01be-4bf8-9a40-a34702af8c8e", "actions": [{"action": "press", "options": {"y": "1400", "x": "500"}}, {"action": "wait", "options": {"ms": "500"}}, {"action": "moveTo", "options": {"y": "600", "x": "500"}}, {"action": "release", "options": {}}]}</msg>
+<msg timestamp="20160701 11:16:43.545" level="DEBUG">Finished Request</msg>
+<status status="PASS" endtime="20160701 11:16:43.545" starttime="20160701 11:16:43.151"></status>
+</kw>
+<kw name="Sleep" library="BuiltIn">
+<doc>Pauses the test executed for the given time.</doc>
+<arguments>
+<arg>0.5</arg>
+</arguments>
+<msg timestamp="20160701 11:16:44.046" level="INFO">Slept 500 milliseconds</msg>
+<status status="PASS" endtime="20160701 11:16:44.046" starttime="20160701 11:16:43.546"></status>
+</kw>
+<status status="PASS" endtime="20160701 11:16:44.046" starttime="20160701 11:16:43.151"></status>
+</kw>
+<kw type="foritem" name="${i} = 1">
+<kw name="Swipe" library="SongzAppiumLibrary">
+<doc>Swipe from one point to another point, for an optional duration.</doc>
+<arguments>
+<arg>@{list}</arg>
+<arg>${interval}</arg>
+</arguments>
+<msg timestamp="20160701 11:16:44.046" level="DEBUG">POST http://127.0.0.1:4734/wd/hub/session/2b514d63-01be-4bf8-9a40-a34702af8c8e/touch/perform {"sessionId": "2b514d63-01be-4bf8-9a40-a34702af8c8e", "actions": [{"action": "press", "options": {"y": "1400", "x": "500"}}, {"action": "wait", "options": {"ms": "500"}}, {"action": "moveTo", "options": {"y": "600", "x": "500"}}, {"action": "release", "options": {}}]}</msg>
+<msg timestamp="20160701 11:16:44.313" level="DEBUG">Finished Request</msg>
+<status status="PASS" endtime="20160701 11:16:44.313" starttime="20160701 11:16:44.046"></status>
+</kw>
+<kw name="Sleep" library="BuiltIn">
+<doc>Pauses the test executed for the given time.</doc>
+<arguments>
+<arg>0.5</arg>
+</arguments>
+<msg timestamp="20160701 11:16:44.814" level="INFO">Slept 500 milliseconds</msg>
+<status status="PASS" endtime="20160701 11:16:44.814" starttime="20160701 11:16:44.314"></status>
+</kw>
+<status status="PASS" endtime="20160701 11:16:44.814" starttime="20160701 11:16:44.046"></status>
+</kw>
+<kw type="foritem" name="${i} = 2">
+<kw name="Swipe" library="SongzAppiumLibrary">
+<doc>Swipe from one point to another point, for an optional duration.</doc>
+<arguments>
+<arg>@{list}</arg>
+<arg>${interval}</arg>
+</arguments>
+<msg timestamp="20160701 11:16:44.817" level="DEBUG">POST http://127.0.0.1:4734/wd/hub/session/2b514d63-01be-4bf8-9a40-a34702af8c8e/touch/perform {"sessionId": "2b514d63-01be-4bf8-9a40-a34702af8c8e", "actions": [{"action": "press", "options": {"y": "1400", "x": "500"}}, {"action": "wait", "options": {"ms": "500"}}, {"action": "moveTo", "options": {"y": "600", "x": "500"}}, {"action": "release", "options": {}}]}</msg>
+<msg timestamp="20160701 11:16:45.154" level="DEBUG">Finished Request</msg>
+<status status="PASS" endtime="20160701 11:16:45.155" starttime="20160701 11:16:44.815"></status>
+</kw>
+<kw name="Sleep" library="BuiltIn">
+<doc>Pauses the test executed for the given time.</doc>
+<arguments>
+<arg>0.5</arg>
+</arguments>
+<msg timestamp="20160701 11:16:45.656" level="INFO">Slept 500 milliseconds</msg>
+<status status="PASS" endtime="20160701 11:16:45.656" starttime="20160701 11:16:45.155"></status>
+</kw>
+<status status="PASS" endtime="20160701 11:16:45.656" starttime="20160701 11:16:44.815"></status>
+</kw>
+<status status="PASS" endtime="20160701 11:16:45.656" starttime="20160701 11:16:43.150"></status>
+</kw>
+<status status="PASS" endtime="20160701 11:16:45.656" starttime="20160701 11:16:43.142"></status>
+</kw>
+<kw name="Sleep" library="BuiltIn">
+<doc>Pauses the test executed for the given time.</doc>
+<arguments>
+<arg>1</arg>
+</arguments>
+<msg timestamp="20160701 11:16:46.658" level="INFO">Slept 1 second</msg>
+<status status="PASS" endtime="20160701 11:16:46.658" starttime="20160701 11:16:45.657"></status>
+</kw>
+<kw name="向下滑动" library="常用操作">
+<arguments>
+<arg>1</arg>
+<arg>400</arg>
+</arguments>
+<kw name="Run Keyword If" library="BuiltIn">
+<doc>Runs the given keyword with the given arguments, if ``condition`` is true.</doc>
+<arguments>
+<arg>'${device}'=='small'</arg>
+<arg>Set Variable</arg>
+<arg>240</arg>
+<arg>240</arg>
+<arg>240</arg>
+<arg>580</arg>
+<arg>ELSE IF</arg>
+<arg>'${device}'=='medium'</arg>
+<arg>Set Variable</arg>
+<arg>350</arg>
+<arg>400</arg>
+<arg>350</arg>
+<arg>950</arg>
+<arg>ELSE IF</arg>
+<arg>'${device}'=='big'</arg>
+<arg>Set Variable</arg>
+<arg>500</arg>
+<arg>400</arg>
+<arg>500</arg>
+<arg>1400</arg>
+<arg>ELSE</arg>
+<arg>Log</arg>
+<arg>无效的参数${device}</arg>
+</arguments>
+<assign>
+<var>@{list}</var>
+</assign>
+<kw name="Set Variable" library="BuiltIn">
+<doc>Returns the given values which can then be assigned to a variables.</doc>
+<arguments>
+<arg>500</arg>
+<arg>400</arg>
+<arg>500</arg>
+<arg>1400</arg>
+</arguments>
+<status status="PASS" endtime="20160701 11:16:46.661" starttime="20160701 11:16:46.660"></status>
+</kw>
+<msg timestamp="20160701 11:16:46.661" level="INFO">@{list} = [ 500 | 400 | 500 | 1400 ]</msg>
+<status status="PASS" endtime="20160701 11:16:46.661" starttime="20160701 11:16:46.659"></status>
+</kw>
+<kw type="for" name="${i} IN RANGE [ ${n} ]">
+<kw type="foritem" name="${i} = 0">
+<kw name="Swipe" library="SongzAppiumLibrary">
+<doc>Swipe from one point to another point, for an optional duration.</doc>
+<arguments>
+<arg>@{list}</arg>
+<arg>${interval}</arg>
+</arguments>
+<msg timestamp="20160701 11:16:46.661" level="DEBUG">POST http://127.0.0.1:4734/wd/hub/session/2b514d63-01be-4bf8-9a40-a34702af8c8e/touch/perform {"sessionId": "2b514d63-01be-4bf8-9a40-a34702af8c8e", "actions": [{"action": "press", "options": {"y": "400", "x": "500"}}, {"action": "wait", "options": {"ms": "400"}}, {"action": "moveTo", "options": {"y": "1400", "x": "500"}}, {"action": "release", "options": {}}]}</msg>
+<msg timestamp="20160701 11:16:48.396" level="DEBUG">Finished Request</msg>
+<status status="PASS" endtime="20160701 11:16:48.397" starttime="20160701 11:16:46.661"></status>
+</kw>
+<kw name="Sleep" library="BuiltIn">
+<doc>Pauses the test executed for the given time.</doc>
+<arguments>
+<arg>0.5</arg>
+</arguments>
+<msg timestamp="20160701 11:16:48.898" level="INFO">Slept 500 milliseconds</msg>
+<status status="PASS" endtime="20160701 11:16:48.898" starttime="20160701 11:16:48.397"></status>
+</kw>
+<status status="PASS" endtime="20160701 11:16:48.898" starttime="20160701 11:16:46.661"></status>
+</kw>
+<status status="PASS" endtime="20160701 11:16:48.898" starttime="20160701 11:16:46.661"></status>
+</kw>
+<status status="PASS" endtime="20160701 11:16:48.898" starttime="20160701 11:16:46.658"></status>
+</kw>
+<kw name="Sleep" library="BuiltIn">
+<doc>Pauses the test executed for the given time.</doc>
+<arguments>
+<arg>2</arg>
+</arguments>
+<msg timestamp="20160701 11:16:50.899" level="INFO">Slept 2 seconds</msg>
+<status status="PASS" endtime="20160701 11:16:50.899" starttime="20160701 11:16:48.899"></status>
+</kw>
+<kw name="返回顶部" library="常用操作">
+<kw name="Click Element" library="SongzAppiumLibrary">
+<doc>Click element identified by `locator`.</doc>
+<arguments>
+<arg>id=ivBackToTop</arg>
+</arguments>
+<msg timestamp="20160701 11:16:50.902" level="INFO">Clicking element 'id=ivBackToTop'.</msg>
+<msg timestamp="20160701 11:16:50.903" level="DEBUG">POST http://127.0.0.1:4734/wd/hub/session/2b514d63-01be-4bf8-9a40-a34702af8c8e/elements {"using": "id", "sessionId": "2b514d63-01be-4bf8-9a40-a34702af8c8e", "value": "ivBackToTop"}</msg>
+<msg timestamp="20160701 11:16:51.336" level="DEBUG">Finished Request</msg>
+<msg timestamp="20160701 11:16:51.336" level="DEBUG">POST http://127.0.0.1:4734/wd/hub/session/2b514d63-01be-4bf8-9a40-a34702af8c8e/element/30/click {"sessionId": "2b514d63-01be-4bf8-9a40-a34702af8c8e", "id": "30"}</msg>
+<msg timestamp="20160701 11:16:54.591" level="DEBUG">Finished Request</msg>
+<status status="PASS" endtime="20160701 11:16:54.592" starttime="20160701 11:16:50.901"></status>
+</kw>
+<status status="PASS" endtime="20160701 11:16:54.592" starttime="20160701 11:16:50.900"></status>
+</kw>
+<kw name="Sleep" library="BuiltIn">
+<doc>Pauses the test executed for the given time.</doc>
+<arguments>
+<arg>2</arg>
+</arguments>
+<msg timestamp="20160701 11:16:56.594" level="INFO">Slept 2 seconds</msg>
+<status status="PASS" endtime="20160701 11:16:56.594" starttime="20160701 11:16:54.593"></status>
+</kw>
+<kw name="Log" library="BuiltIn">
+<doc>Logs the given message with the given level.</doc>
+<arguments>
+<arg>------首页页面滑动-测试完成------</arg>
+</arguments>
+<msg timestamp="20160701 11:16:56.596" level="INFO">------首页页面滑动-测试完成------</msg>
+<status status="PASS" endtime="20160701 11:16:56.597" starttime="20160701 11:16:56.596"></status>
+</kw>
+<kw type="teardown" name="失败重启" library="常用操作">
+<kw name="Run Keyword If Test Failed" library="BuiltIn">
+<doc>Runs the given keyword with the given arguments, if the test failed.</doc>
+<arguments>
+<arg>启动App</arg>
+</arguments>
+<status status="PASS" endtime="20160701 11:16:56.600" starttime="20160701 11:16:56.600"></status>
+</kw>
+<status status="PASS" endtime="20160701 11:16:56.600" starttime="20160701 11:16:56.599"></status>
+</kw>
+<tags>
+<tag>ready</tag>
+<tag>Smoke</tag>
+</tags>
+<status status="PASS" endtime="20160701 11:16:56.601" critical="yes" starttime="20160701 11:16:40.716"></status>
+</test>
+<test id="s1-s2-t6" name="封面产品检查">
+<kw name="校验等待" library="常用操作">
+<kw name="Run Keyword If" library="BuiltIn">
+<doc>Runs the given keyword with the given arguments, if ``condition`` is true.</doc>
+<arguments>
+<arg>'${object}'=='首页'</arg>
+<arg>Wait Until Page Contains Element</arg>
+<arg>id=ivDiscover</arg>
+<arg>${TIMEOUT}</arg>
+<arg>ELSE IF</arg>
+<arg>'${object}'=='分享'</arg>
+<arg>Wait Until Page Contains Element</arg>
+<arg>xpath=//android.widget.TextView[@text='分享']</arg>
+<arg>${TIMEOUT}</arg>
+<arg>ELSE IF</arg>
+<arg>'${object}'=='WebView'</arg>
+<arg>Wait Until Page Contains Element</arg>
+<arg>id=webview</arg>
+<arg>${TIMEOUT}</arg>
+<arg>ELSE IF</arg>
+<arg>'${object}'=='标题'</arg>
+<arg>Wait Until Page Contains Element</arg>
+<arg>id=centerView</arg>
+</arguments>
+<kw name="Wait Until Page Contains Element" library="SongzAppiumLibrary">
+<doc>Waits until element specified with `locator` appears on current page.</doc>
+<arguments>
+<arg>id=ivDiscover</arg>
+<arg>${TIMEOUT}</arg>
+</arguments>
+<msg timestamp="20160701 11:16:56.616" level="DEBUG">POST http://127.0.0.1:4734/wd/hub/session/2b514d63-01be-4bf8-9a40-a34702af8c8e/elements {"using": "id", "sessionId": "2b514d63-01be-4bf8-9a40-a34702af8c8e", "value": "ivDiscover"}</msg>
+<msg timestamp="20160701 11:16:57.724" level="DEBUG">Finished Request</msg>
+<status status="PASS" endtime="20160701 11:16:57.724" starttime="20160701 11:16:56.615"></status>
+</kw>
+<status status="PASS" endtime="20160701 11:16:57.724" starttime="20160701 11:16:56.611"></status>
+</kw>
+<status status="PASS" endtime="20160701 11:16:57.725" starttime="20160701 11:16:56.610"></status>
+</kw>
+<kw name="Click Element" library="SongzAppiumLibrary">
+<doc>Click element identified by `locator`.</doc>
+<arguments>
+<arg>id=view_pager</arg>
+</arguments>
+<msg timestamp="20160701 11:16:57.726" level="INFO">Clicking element 'id=view_pager'.</msg>
+<msg timestamp="20160701 11:16:57.726" level="DEBUG">POST http://127.0.0.1:4734/wd/hub/session/2b514d63-01be-4bf8-9a40-a34702af8c8e/elements {"using": "id", "sessionId": "2b514d63-01be-4bf8-9a40-a34702af8c8e", "value": "view_pager"}</msg>
+<msg timestamp="20160701 11:16:58.650" level="DEBUG">Finished Request</msg>
+<msg timestamp="20160701 11:16:58.650" level="DEBUG">POST http://127.0.0.1:4734/wd/hub/session/2b514d63-01be-4bf8-9a40-a34702af8c8e/element/32/click {"sessionId": "2b514d63-01be-4bf8-9a40-a34702af8c8e", "id": "32"}</msg>
+<msg timestamp="20160701 11:17:02.027" level="DEBUG">Finished Request</msg>
+<status status="PASS" endtime="20160701 11:17:02.027" starttime="20160701 11:16:57.725"></status>
+</kw>
+<kw name="校验等待" library="常用操作">
+<arguments>
+<arg>标题</arg>
+</arguments>
+<kw name="Run Keyword If" library="BuiltIn">
+<doc>Runs the given keyword with the given arguments, if ``condition`` is true.</doc>
+<arguments>
+<arg>'${object}'=='首页'</arg>
+<arg>Wait Until Page Contains Element</arg>
+<arg>id=ivDiscover</arg>
+<arg>${TIMEOUT}</arg>
+<arg>ELSE IF</arg>
+<arg>'${object}'=='分享'</arg>
+<arg>Wait Until Page Contains Element</arg>
+<arg>xpath=//android.widget.TextView[@text='分享']</arg>
+<arg>${TIMEOUT}</arg>
+<arg>ELSE IF</arg>
+<arg>'${object}'=='WebView'</arg>
+<arg>Wait Until Page Contains Element</arg>
+<arg>id=webview</arg>
+<arg>${TIMEOUT}</arg>
+<arg>ELSE IF</arg>
+<arg>'${object}'=='标题'</arg>
+<arg>Wait Until Page Contains Element</arg>
+<arg>id=centerView</arg>
+</arguments>
+<kw name="Wait Until Page Contains Element" library="SongzAppiumLibrary">
+<doc>Waits until element specified with `locator` appears on current page.</doc>
+<arguments>
+<arg>id=centerView</arg>
+</arguments>
+<msg timestamp="20160701 11:17:02.031" level="DEBUG">POST http://127.0.0.1:4734/wd/hub/session/2b514d63-01be-4bf8-9a40-a34702af8c8e/elements {"using": "id", "sessionId": "2b514d63-01be-4bf8-9a40-a34702af8c8e", "value": "centerView"}</msg>
+<msg timestamp="20160701 11:17:02.497" level="DEBUG">Finished Request</msg>
+<status status="PASS" endtime="20160701 11:17:02.498" starttime="20160701 11:17:02.030"></status>
+</kw>
+<status status="PASS" endtime="20160701 11:17:02.498" starttime="20160701 11:17:02.028"></status>
+</kw>
+<status status="PASS" endtime="20160701 11:17:02.498" starttime="20160701 11:17:02.028"></status>
+</kw>
+<kw name="Sleep" library="BuiltIn">
+<doc>Pauses the test executed for the given time.</doc>
+<arguments>
+<arg>2</arg>
+</arguments>
+<msg timestamp="20160701 11:17:04.500" level="INFO">Slept 2 seconds</msg>
+<status status="PASS" endtime="20160701 11:17:04.500" starttime="20160701 11:17:02.500"></status>
+</kw>
+<kw name="向上滑动" library="常用操作">
+<arguments>
+<arg>2</arg>
+<arg>400</arg>
+</arguments>
+<kw name="Run Keyword If" library="BuiltIn">
+<doc>Runs the given keyword with the given arguments, if ``condition`` is true.</doc>
+<arguments>
+<arg>'${device}'=='small'</arg>
+<arg>Set Variable</arg>
+<arg>240</arg>
+<arg>580</arg>
+<arg>240</arg>
+<arg>240</arg>
+<arg>ELSE IF</arg>
+<arg>'${device}'=='medium'</arg>
+<arg>Set Variable</arg>
+<arg>350</arg>
+<arg>950</arg>
+<arg>350</arg>
+<arg>400</arg>
+<arg>ELSE IF</arg>
+<arg>'${device}'=='big'</arg>
+<arg>Set Variable</arg>
+<arg>500</arg>
+<arg>1400</arg>
+<arg>500</arg>
+<arg>600</arg>
+<arg>ELSE</arg>
+<arg>Log</arg>
+<arg>无效的参数${device}</arg>
+</arguments>
+<assign>
+<var>@{list}</var>
+</assign>
+<kw name="Set Variable" library="BuiltIn">
+<doc>Returns the given values which can then be assigned to a variables.</doc>
+<arguments>
+<arg>500</arg>
+<arg>1400</arg>
+<arg>500</arg>
+<arg>600</arg>
+</arguments>
+<status status="PASS" endtime="20160701 11:17:04.503" starttime="20160701 11:17:04.503"></status>
+</kw>
+<msg timestamp="20160701 11:17:04.503" level="INFO">@{list} = [ 500 | 1400 | 500 | 600 ]</msg>
+<status status="PASS" endtime="20160701 11:17:04.503" starttime="20160701 11:17:04.501"></status>
+</kw>
+<kw type="for" name="${i} IN RANGE [ ${n} ]">
+<kw type="foritem" name="${i} = 0">
+<kw name="Swipe" library="SongzAppiumLibrary">
+<doc>Swipe from one point to another point, for an optional duration.</doc>
+<arguments>
+<arg>@{list}</arg>
+<arg>${interval}</arg>
+</arguments>
+<msg timestamp="20160701 11:17:04.504" level="DEBUG">POST http://127.0.0.1:4734/wd/hub/session/2b514d63-01be-4bf8-9a40-a34702af8c8e/touch/perform {"sessionId": "2b514d63-01be-4bf8-9a40-a34702af8c8e", "actions": [{"action": "press", "options": {"y": "1400", "x": "500"}}, {"action": "wait", "options": {"ms": "400"}}, {"action": "moveTo", "options": {"y": "600", "x": "500"}}, {"action": "release", "options": {}}]}</msg>
+<msg timestamp="20160701 11:17:04.807" level="DEBUG">Finished Request</msg>
+<status status="PASS" endtime="20160701 11:17:04.807" starttime="20160701 11:17:04.503"></status>
+</kw>
+<kw name="Sleep" library="BuiltIn">
+<doc>Pauses the test executed for the given time.</doc>
+<arguments>
+<arg>0.5</arg>
+</arguments>
+<msg timestamp="20160701 11:17:05.308" level="INFO">Slept 500 milliseconds</msg>
+<status status="PASS" endtime="20160701 11:17:05.308" starttime="20160701 11:17:04.808"></status>
+</kw>
+<status status="PASS" endtime="20160701 11:17:05.308" starttime="20160701 11:17:04.503"></status>
+</kw>
+<kw type="foritem" name="${i} = 1">
+<kw name="Swipe" library="SongzAppiumLibrary">
+<doc>Swipe from one point to another point, for an optional duration.</doc>
+<arguments>
+<arg>@{list}</arg>
+<arg>${interval}</arg>
+</arguments>
+<msg timestamp="20160701 11:17:05.309" level="DEBUG">POST http://127.0.0.1:4734/wd/hub/session/2b514d63-01be-4bf8-9a40-a34702af8c8e/touch/perform {"sessionId": "2b514d63-01be-4bf8-9a40-a34702af8c8e", "actions": [{"action": "press", "options": {"y": "1400", "x": "500"}}, {"action": "wait", "options": {"ms": "400"}}, {"action": "moveTo", "options": {"y": "600", "x": "500"}}, {"action": "release", "options": {}}]}</msg>
+<msg timestamp="20160701 11:17:05.499" level="DEBUG">Finished Request</msg>
+<status status="PASS" endtime="20160701 11:17:05.500" starttime="20160701 11:17:05.308"></status>
+</kw>
+<kw name="Sleep" library="BuiltIn">
+<doc>Pauses the test executed for the given time.</doc>
+<arguments>
+<arg>0.5</arg>
+</arguments>
+<msg timestamp="20160701 11:17:06.001" level="INFO">Slept 500 milliseconds</msg>
+<status status="PASS" endtime="20160701 11:17:06.001" starttime="20160701 11:17:05.500"></status>
+</kw>
+<status status="PASS" endtime="20160701 11:17:06.001" starttime="20160701 11:17:05.308"></status>
+</kw>
+<status status="PASS" endtime="20160701 11:17:06.001" starttime="20160701 11:17:04.503"></status>
+</kw>
+<status status="PASS" endtime="20160701 11:17:06.001" starttime="20160701 11:17:04.500"></status>
+</kw>
+<kw name="Sleep" library="BuiltIn">
+<doc>Pauses the test executed for the given time.</doc>
+<arguments>
+<arg>1</arg>
+</arguments>
+<msg timestamp="20160701 11:17:07.002" level="INFO">Slept 1 second</msg>
+<status status="PASS" endtime="20160701 11:17:07.002" starttime="20160701 11:17:06.002"></status>
+</kw>
+<kw name="返回键" library="系统按键">
+<kw name="Press Keycode" library="SongzAppiumLibrary">
+<doc>Sends a press of keycode to the device.</doc>
+<arguments>
+<arg>4</arg>
+</arguments>
+<msg timestamp="20160701 11:17:07.003" level="DEBUG">POST http://127.0.0.1:4734/wd/hub/session/2b514d63-01be-4bf8-9a40-a34702af8c8e/appium/device/press_keycode {"sessionId": "2b514d63-01be-4bf8-9a40-a34702af8c8e", "keycode": "4"}</msg>
+<msg timestamp="20160701 11:17:07.277" level="DEBUG">Finished Request</msg>
+<status status="PASS" endtime="20160701 11:17:07.277" starttime="20160701 11:17:07.002"></status>
+</kw>
+<status status="PASS" endtime="20160701 11:17:07.277" starttime="20160701 11:17:07.002"></status>
+</kw>
+<kw name="Sleep" library="BuiltIn">
+<doc>Pauses the test executed for the given time.</doc>
+<arguments>
+<arg>2</arg>
+</arguments>
+<msg timestamp="20160701 11:17:09.279" level="INFO">Slept 2 seconds</msg>
+<status status="PASS" endtime="20160701 11:17:09.279" starttime="20160701 11:17:07.278"></status>
+</kw>
+<kw name="Log" library="BuiltIn">
+<doc>Logs the given message with the given level.</doc>
+<arguments>
+<arg>------封面产品检查-测试完成------</arg>
+</arguments>
+<msg timestamp="20160701 11:17:09.281" level="INFO">------封面产品检查-测试完成------</msg>
+<status status="PASS" endtime="20160701 11:17:09.282" starttime="20160701 11:17:09.281"></status>
+</kw>
+<kw type="teardown" name="失败重启" library="常用操作">
+<kw name="Run Keyword If Test Failed" library="BuiltIn">
+<doc>Runs the given keyword with the given arguments, if the test failed.</doc>
+<arguments>
+<arg>启动App</arg>
+</arguments>
+<status status="PASS" endtime="20160701 11:17:09.286" starttime="20160701 11:17:09.285"></status>
+</kw>
+<status status="PASS" endtime="20160701 11:17:09.286" starttime="20160701 11:17:09.284"></status>
+</kw>
+<tags>
+<tag>ready</tag>
+</tags>
+<status status="PASS" endtime="20160701 11:17:09.287" critical="yes" starttime="20160701 11:16:56.607"></status>
+</test>
+<kw type="teardown" name="关闭App" library="常用操作">
+<kw name="Close Application" library="SongzAppiumLibrary">
+<doc>Closes the current application.</doc>
+<msg timestamp="20160701 11:17:09.296" level="DEBUG">Closing application with session id 2b514d63-01be-4bf8-9a40-a34702af8c8e</msg>
+<msg timestamp="20160701 11:17:09.296" level="DEBUG">DELETE http://127.0.0.1:4734/wd/hub/session/2b514d63-01be-4bf8-9a40-a34702af8c8e {"sessionId": "2b514d63-01be-4bf8-9a40-a34702af8c8e"}</msg>
+<msg timestamp="20160701 11:17:12.065" level="DEBUG">Finished Request</msg>
+<status status="PASS" endtime="20160701 11:17:12.065" starttime="20160701 11:17:09.296"></status>
+</kw>
+<status status="PASS" endtime="20160701 11:17:12.065" starttime="20160701 11:17:09.294"></status>
+</kw>
+<status status="PASS" endtime="20160701 11:17:12.065" starttime="20160701 11:14:55.651"></status>
+</suite>
+<status status="PASS" endtime="20160701 11:17:12.069" starttime="20160701 11:13:51.357"></status>
+</suite>
+<statistics>
+<total>
+<stat fail="0" pass="7">Critical Tests</stat>
+<stat fail="0" pass="7">All Tests</stat>
+</total>
+<tag>
+<stat fail="0" pass="7">ready</stat>
+<stat fail="0" pass="2">Smoke</stat>
+</tag>
+<suite>
+<stat fail="0" id="s1" name="冒烟测试" pass="7">冒烟测试</stat>
+<stat fail="0" id="s1-s1" name="流程" pass="1">冒烟测试.流程</stat>
+<stat fail="0" id="s1-s2" name="首页" pass="6">冒烟测试.首页</stat>
+</suite>
+</statistics>
+<errors>
+</errors>
+</robot>
