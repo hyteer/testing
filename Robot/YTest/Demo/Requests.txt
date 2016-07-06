@@ -1,0 +1,74 @@
+*** Settings ***
+Library           RequestsLibrary
+Library           Collections
+Library           OperatingSystem
+Library           Ytools
+Library           json
+
+*** Test Cases ***
+first
+    Create Session    github    http://api.github.com
+    Create Session    baidu    http://www.baidu.com
+    ${resp}=    Get Request    baidu    /
+    Log    ResponseCode:${resp}
+    Should Be Equal As Strings    ${resp.status_code}    200
+    ${resp}=    Get Request    github    /users/bulkan
+    Should Be Equal As Strings    ${resp.status_code}    200
+    Dictionary Should Contain Value    ${resp.json()}    Bulkan Savun Evcimen
+
+Syntax
+    #Post Request Syntax
+    ${auth}    Create List    <username>    <password>
+    Create Session    my_session    <URL>    auth=${auth}
+    ${headers}    Create Dictionary    Accept    application/json    Content-Type    application/json
+    ${resp}    POST    my_session    <your rest api>    data=<JSON DATA>    headers=${headers}
+
+maishaAPI
+    ${json}    Get File    D:\\Res\\MaishaReq.txt
+    Create Session    maisha    http://huimaidev.vikduo.com/appapi    \    \    \    5
+    ...    #http://127.0.0.1:8888
+    &{data}=    Create Dictionary    fromapp=android    phone=13828821487    password=2580123456
+    #&{headers}    Set Variable    Accept=application/json    Content-Type=application/json
+    &{headers}=    Create Dictionary    Content-Type=application/x-www-form-urlencoded
+    ${resp}    Post Request    maisha    /user/login    data=${data}    headers=${headers}
+    #Post Request    maisha    /user/login    ${json}
+    Log    Response: ${resp}
+    ${respcontent}    Evaluate    ${resp.content}
+    Log    Response Content:${resp.content}
+    Log    Response Text:${resp.text}
+    #Print Json    ${resp}
+    #${respjs}    RequestsLibrary.To Json    ${resp}
+    ${respdata}    json.Loads    ${resp.content}
+    Log    Json Data:${respdata}
+    ${msg}    Get From Dictionary    ${respdata}    msg
+    ${type}    Get From Dictionary    ${respdata}    type
+    ${data}    Get From Dictionary    ${respdata}    data
+    ${phone}    Get From Dictionary    ${data}    phone
+    ${usersession}    Get From Dictionary    ${data}    usersession
+
+Demo
+    ${auth}    Create List    <username>    <password>
+    Create Session    apiurl    http://huimaidev.vikduo.com/appapi
+    ${headers}    Create Dictionary    Accept    application/json    Content-Type    application/json
+    ${resp}    Post Request    my_session    <your rest api>    data=<JSON DATA>    headers=${headers}
+    &{dict} =    Create Dictionary    key=value    foo=bar
+    Run Keyword If    '${status}' == 'PASS'    Log    Success
+    ${x}    Set Variable    10
+    Set Global Variable    ${x}
+    Should Be Equal    ${x}    10    Success
+    @{list} =    Create List    a    b    c
+
+Send Default File To SUT And Return Response
+    ${url}=    Get URL
+    ${auth}=    Create List    ${user_login}    ${user_password}
+    Create Session    rm    ${url}    auth=${auth}
+    &{headers}=    Create Dictionary    Content-Type=application/x-www-form-urlencoded
+    &{data}=    Create Dictionary    name=file    filename=${DEFAULT_FILE_NAME}
+    ${file_data}=    Get Binary File    ${CURDIR}${/}Resources${/}${DEFAULT_FILE_NAME}
+    &{files}=    Create Dictionary    file=${file_data}
+    ${resp}=    Post Request    rm    ${UPLOAD_URI}    files=${files}    data=${data}    headers=${headers}
+    Delete All Sessions
+
+temp
+    @{list} =    Create List    a    b    c
+    Run Keyword    Log    Success

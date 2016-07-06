@@ -1,0 +1,8 @@
+*** Test Cases ***
+docdemo
+    ${ns} =    Create Dictionary    x=${4}    y=${2}
+    ${result1} =    Evaluate    x*10 + y    namespace=${ns}
+    ${x}    Set Variable    4
+    ${y}    Set Variable    8
+    ${result}=    Evaluate    ${x}*8+${y}
+    Log    ${result}

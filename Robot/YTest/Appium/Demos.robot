@@ -314,6 +314,15 @@ runArgs
     Log    Device:${device}
     Log    mode:${mode}
 
+Demo
+    Sleep    1
+    Sleep    2
+    Wait Until Page Contains    健身器材
+    Wait Until Page Contains Element    id=ivDiscover
+    Log    This is a log demo
+    Run Keyword If    ${a}==${b}    Log    Success
+    Title Shou
+
 *** Keywords ***
 获取验证码
     Sleep    1

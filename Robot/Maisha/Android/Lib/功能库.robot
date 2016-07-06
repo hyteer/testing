@@ -12,7 +12,6 @@ Resource          常用操作.robot
     \    Sleep    1.5
     \    返回键
     \    Sleep    1
-    #Click Element    xpath=//android.support.v7.widget.RecyclerView/android.widget.FrameLayout[1]
 
 大家都在拼检测
     [Arguments]    ${n}=3

@@ -1,0 +1,10 @@
+*** Settings ***
+Library           OperatingSystem
+
+*** Test Cases ***
+JsonFile
+    ${json}    Get File    D:\\Res\\JSONdata.txt
+    Log    JSON: '${json}'
+    Log    JSON File: ${json}
+    ${phone}    Evaluate    ${json.phone}
+    Log    Phone:${phone}

@@ -20,7 +20,6 @@ Resource          系统按键.robot
     # appActivity=com.maishalei.seller.ui.activity.LauncherActivity    unicodeKeyboard=True    resetKeyboard=True
     # appActivity=com.maishalei.seller.ui.activity.LauncherActivity    unicodeKeyboard=True    resetKeyboard=True
     #${model}
-    #${mode}
     Log    Device:${device}
     Log    Mode:${mode}
     Set Global Variable    ${device}
@@ -29,7 +28,6 @@ Resource          系统按键.robot
     Open Application    ${host}    &{caps}
     ${status}    Run Keyword And Return Status    校验等待
     Run Keyword If    '${status}'=='False'    版本更新检测
-    #Run Keyword If    '${status}'==False    版本更新检测
     # ${model} and ${mode} get from robot starting commands
 
 启动App2

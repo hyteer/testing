@@ -1,0 +1,18 @@
+*** Test Cases ***
+dict
+    &{dict} =    Create Dictionary    key=value    foo=bar
+    Should Be True    ${dict} == {'key': 'value', 'foo': 'bar'}
+    &{dict} =    Create Dictionary    ${1}=${2}    &{dict}    foo=new
+    Should Be True    ${dict} == {1: 2, 'key': 'value', 'foo': 'new'}
+    Should Be Equal    ${dict.key}    value
+
+dict-yt
+    &{info} =    Create Dictionary    msg=a test    type=success
+    &{data}=    Create Dictionary    phone=13823114422    username=YT
+    Should Be True    ${info} == {'msg':'a test','type':'success'}
+    &{dict} =    Create Dictionary    ${1}=${2}    &{info}    error=0
+    Should Be True    ${dict} == {1: 2, 'msg':'a test','type':'success','error':'0'}
+    Should Be Equal    ${dict.msg}    a test
+    &{args}=    Create Dictionary    &{info}    data=&{data}
+    Log    Data:${args.data}
+    Log    Phone:${args.data.phone}

@@ -1,16 +1,21 @@
 import re
-from Regexp import searchByDelimiter
+import json
 
-file = open("d:/temp/hosts.txt","r")
+"""
+MaishaReq.txt:
+{
+	"fromapp": "android",
+	"phone": "13828821487",
+	"password": "2580123456"
+}
+"""
+
+file = open("d:/Res/MaishaReq2.txt","r")
 content = file.read()
-str = content.replace(',','')
-list = searchByDelimiter.tsplit(str,('\n'))
+print content
 
-#hosts = list.replace(',','')
+# JSON test
+js = json.loads(content)
+print "json:",js
+print "phone:",js['phone']
 
-
-print "Hosts:\n",list
-
-print file
-print "File name: %s"%(file.name)
-print "File content: %s"%(file.read())

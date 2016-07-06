@@ -1,0 +1,14 @@
+*** Settings ***
+Library           Ytools
+Library           OperatingSystem
+
+*** Test Cases ***
+first
+    Print Version
+    ${json}    Get File    D:\\Res\\JSONdata.txt
+    Print Json    ${json}
+    Json Test    ${json}
+    #Print Version
+
+apitest
+    Login Test

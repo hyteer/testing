@@ -1,0 +1,6 @@
+print u'\u767b\u9646\u6210\u529f'
+print u'\u767b\u9646\u6210\u529f'
+print u'\u8d26\u53f7\u4e0d\u80fd\u4e3a\u7a7a'
+print u'\u8bf7\u5148\u767b\u5f55'
+print u'\u7684\u5c0f\u5e97'
+#print help('assert')

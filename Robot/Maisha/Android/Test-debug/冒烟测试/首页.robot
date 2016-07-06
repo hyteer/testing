@@ -34,7 +34,6 @@ Resource          ../../Lib/功能库.robot
     校验等待
     点击搜索
     Sleep    3s
-    #Input Text    id=etSearch    儿童玩具
     Input Text    xpath=//android.widget.EditText[@index='0']    儿童
     回车
     返回
