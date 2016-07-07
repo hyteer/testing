@@ -85,3 +85,22 @@ class MaishaUser(object):
             #
         pass
 
+    def user_set_tag(self,session,tags, app=defaultapp):
+        # POST-user/set_tag
+        print "--test user_set_tag--"
+        url = ms.baseurl + 'user/set_tag'
+        #tags = [u'Tony11',u'YT',u'Walker']
+        #postdata = {'usersession':session,'fromapp': app,'tag_ids[]':tags}
+        postdata = {'usersession':session,'fromapp': app,'tag_ids[]':tags}
+
+        r = requests.post(url, data=postdata)
+        #js = json.loads(r.text)
+        #error = js['error']
+        '''
+        if r.status_code == 200 and error == 0:
+            print "Request sucess, msg:",js['msg']
+        else:
+            print "Error msg:",js['msg']
+            raise Exception("Error,response info:",r.text)
+        '''
+        print "Response:",r.content

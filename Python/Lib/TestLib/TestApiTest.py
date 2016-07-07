@@ -13,6 +13,10 @@ user = maisha.MaishaUser()
 # user_login
 usersession = user.maisha_user_login(set.phone,set.password)
 
+# user_set_tag
+tags = ['Badboy','YT','Walker']
+user.user_set_tag(usersession,tags)
+
 # genqrcode
 cm.maisha_get_qrcode(usersession,'test')
 
@@ -35,4 +39,5 @@ cm.maisha_check_up('android')
 #cm.maisha_send_vercode(usersession)
 
 # upload_file
-cm.upload_file(usersession,'D:\\Res\\test.png')
+#cm.upload_file(usersession,'D:\\Res\\test.png')
+

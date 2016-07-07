@@ -46,4 +46,26 @@ Resource          ../Lib/操作库.robot
     ${resp}    Get Request    maisha    /user/check_login?${data}
     Log    user/check_login:${resp.content}
 
+设置用户标签
+    @{tags}=    Set Variable    BigBoy    BadBoy    Crazy
+    &{headers}=    Create Dictionary    Content-Type=application/x-www-form-urlencoded
+    &{data}=    Create Dictionary    tag_ids[]=@{tags}    fromapp=${app}    usersesseion=${usersession}
+    #${resp}    Post Request    maisha    /user/login    data=${data}    headers=${headers}
+    ${resp}    Post Request    maisha    /user/set_tag    data=&{data}    headers=&{headers}
+    Log    user/set_tag:${resp.content}
+    #未完成
+
+是否设置店铺信息
+    [Tags]    ready
+    ${data}    Set Variable    usersession=${usersession}&fromapp=${FROMAPP}
+    ${resp}    Get Request    maisha    /user/is_already_set_store?${data}
+    Log    user/is_already_set_store:${resp.content}
+
+更新个性签名
+    [Tags]    ready
+    ${signature}    Set Variable    Y_Tsee
+    ${data}    Set Variable    usersession=${usersession}&fromapp=${FROMAPP}&signature=${signature}
+    ${resp}    Get Request    maisha    /user/update_signature?${data}
+    Log    user/update_signature:${resp.content}
+
 *** Keywords ***

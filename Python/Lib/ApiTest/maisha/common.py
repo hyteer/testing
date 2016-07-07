@@ -90,7 +90,6 @@ class MaishaCommon(object):
         else:
             print "Error msg:",js['msg']
             raise Exception("Error,response info:",r.text)
-            #
         pass
 
     def maisha_get_qrcode(self,usersession,content,app=defaultapp):
@@ -115,11 +114,14 @@ class MaishaCommon(object):
 
     def upload_file(self,session,filepath):
 
+        print "--test upload_file--"
         files = {'file': open(filepath,'rb')}
         values = {'usersession': session, 'fromapp': 'android', 'path':'avatar', 'crop': '200*200', 'tag':'testing'}
         url = "http://huimaidev.vikduo.com/appapi/common/upload_file"
         r = requests.post(url, files=files, data=values)
         print "resp:",r.content
+
+
 
     def maisha_getcode(self):
         # todo...

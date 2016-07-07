@@ -1,5 +1,6 @@
 *** Settings ***
 Suite Setup       启动App
+Suite Teardown    关闭App
 Resource          ../Lib/常用操作.robot
 Library           AppiumLibraryYT
 
@@ -12,11 +13,9 @@ Library           AppiumLibraryYT
     Click Element    xpath=//UIAApplication/UIAWindow[1]/UIANavigationBar/UIAButton[@name='返回']
     #Click Element    ios=.buttons().withName('返回')
     Sleep    3
-    Close Application
 
 首页页面滑动
     Wait Until Page Contains    首页
     Sleep    2
     向上滑动
     Sleep    3
-    Close All Applications
