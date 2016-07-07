@@ -35,3 +35,9 @@ class ApiTest(object):
         print "username:",js['data']['username']
         print "usersession:",js['data']['usersession']
 
+    def upload_file(self):
+        files = {'upload_file': open('file.txt','rb')}
+        values = {'DB': 'photcat', 'OUT': 'csv', 'SHORT': 'short'}
+        url = "http://huimaidev.vikduo.com/appapi/common/upload_file"
+        r = requests.post(url, files=files, data=values)
+

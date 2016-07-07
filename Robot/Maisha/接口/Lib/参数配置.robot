@@ -1,3 +1,7 @@
 *** Variables ***
-${phone}          13828821487
-${password}       2580123456
+${PHONE}          13828821487
+${PASSWORD}       2580123456
+${BASEURL}        http://huimaidev.vikduo.com/appapi
+${FROMAPP}        android
+${ANDROID}        android
+${IOS}            ios

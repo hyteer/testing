@@ -24,5 +24,5 @@ Library           ApiTest
 
 *** Keywords ***
 用户登录
-    ${session}    Maisha User Login    android    13828821487    2580123456
+    ${session}    Maisha User Login    13828821487    2580123456
     Set Suite Variable    ${session}

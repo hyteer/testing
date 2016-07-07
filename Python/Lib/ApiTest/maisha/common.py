@@ -2,8 +2,10 @@
 import requests
 import json
 from urllib import urlencode
+from utils import CommonUtils
 import ApiTest.settings as set
 ms = set.Maisha()
+defaultapp = 'android'
 
 class MaishaCommon(object):
     baseurl = 'http://huimaidev.vikduo.com/appapi/'
@@ -26,7 +28,7 @@ class MaishaCommon(object):
             utf8_data[k] = unicode(v).encode('utf-8')
             return urlencode(utf8_data)
 
-    def maisha_public_config(self,usersession,app):
+    def maisha_public_config(self,usersession,app=defaultapp):
         """
         获取用户公共配置信息.
 
@@ -48,7 +50,7 @@ class MaishaCommon(object):
             #
         pass
 
-    def maisha_generate_captcha(self,usersession,app):
+    def maisha_generate_captcha(self,usersession,app=defaultapp):
         """
         生成图片验证码.
 
@@ -70,7 +72,7 @@ class MaishaCommon(object):
             #
         pass
 
-    def maisha_check_up(self,app):
+    def maisha_check_up(self,app=defaultapp):
         """
         查询版本更新.
 
@@ -91,7 +93,7 @@ class MaishaCommon(object):
             #
         pass
 
-    def maisha_get_qrcode(self,usersession,app,content):
+    def maisha_get_qrcode(self,usersession,content,app=defaultapp):
         """
         生成二维码.
 
@@ -110,6 +112,14 @@ class MaishaCommon(object):
         else:
             print "Error msg:"
             raise Exception("Error,response info:",r.headers)
+
+    def upload_file(self,session,filepath):
+
+        files = {'file': open(filepath,'rb')}
+        values = {'usersession': session, 'fromapp': 'android', 'path':'avatar', 'crop': '200*200', 'tag':'testing'}
+        url = "http://huimaidev.vikduo.com/appapi/common/upload_file"
+        r = requests.post(url, files=files, data=values)
+        print "resp:",r.content
 
     def maisha_getcode(self):
         # todo...

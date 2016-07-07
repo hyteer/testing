@@ -1,9 +1,11 @@
 # encoding: utf-8
 
-from main import MaishaMain
+from user import MaishaUser
 from common import MaishaCommon
+from utils import CommonUtils
 
 __all__ = [
     "MaishaCommon",
-    "MaishaMain"
+    "MaishaUser",
+    "CommonUtils"
 ]

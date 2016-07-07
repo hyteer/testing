@@ -4,8 +4,9 @@ import json
 from urllib import urlencode
 import ApiTest.settings as set
 ms = set.Maisha()
+defaultapp = 'android'
 
-class MaishaMain(object):
+class MaishaUser(object):
     baseurl = 'http://huimaidev.vikduo.com/appapi/'
     proxylist = {'http' : 'http://127.0.0.1:8888'}
 
@@ -26,7 +27,7 @@ class MaishaMain(object):
             utf8_data[k] = unicode(v).encode('utf-8')
             return urlencode(utf8_data)
 
-    def maisha_user_login(self,app,phone,password,debug=0):
+    def maisha_user_login(self,phone,password,debug=0,app=defaultapp):
     #def maisha_user_login(self,app,phone=ms,debug=0,**args):
         """
         用户登录
@@ -62,7 +63,7 @@ class MaishaMain(object):
 
         return usersession
 
-    def maisha_user_getinfo(self,usersession,app):
+    def maisha_user_getinfo(self,usersession,app=defaultapp):
         """
         获取用户信息.
 

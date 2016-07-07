@@ -1,15 +1,14 @@
 *** Settings ***
 Library           RequestsLibrary
-Library           json
 Library           Collections
-Library           OperatingSystem
+Resource          参数配置.robot
+Library           json
 
-*** Test Cases ***
-用户登录-RF
-    ${json}    Get File    D:\\Res\\MaishaReq.txt
-    Create Session    maisha    http://huimaidev.vikduo.com/appapi    \    \    \    5
+*** Keywords ***
+用户登录
+    Create Session    maisha    ${BASEURL}    \    \    \    5
     ...    #http://127.0.0.1:8888
-    &{data}=    Create Dictionary    fromapp=android    phone=13828821487    password=2580123456
+    &{data}=    Create Dictionary    fromapp=android    phone=${PHONE}    password=${PASSWORD}
     #&{headers}    Set Variable    Accept=application/json    Content-Type=application/json
     &{headers}=    Create Dictionary    Content-Type=application/x-www-form-urlencoded
     ${resp}    Post Request    maisha    /user/login    data=${data}    headers=${headers}
@@ -28,7 +27,3 @@ Library           OperatingSystem
     ${phone}    Get From Dictionary    ${data}    phone
     ${usersession}    Get From Dictionary    ${data}    usersession
     Set Suite Variable    ${usersession}
-
-获取用户信息
-    Log    Session:${usersession}
-    &{data}=    Create Dictionary    fromapp=android    phone=13828821487    password=2580123456

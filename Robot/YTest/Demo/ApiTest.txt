@@ -11,3 +11,8 @@ getinfo
 
 qrcode
     Maisha Genqrcode    ${session}    android    test
+
+utils
+    Print Version
+    ${path}    Get Path    ${CURDIR}    Res
+    Log    ${path}

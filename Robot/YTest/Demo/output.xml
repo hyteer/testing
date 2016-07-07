@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<robot generated="20160707 13:16:36.662" generator="Robot 3.0 (Python 2.7.11 on win32)">
+<suite source="D:\Testing\Robot\YTest\Demo\OperatingSystem.txt" id="s1" name="OperatingSystem">
+<test id="s1-t1" name="path">
+<kw name="Log" library="BuiltIn">
+<doc>Logs the given message with the given level.</doc>
+<arguments>
+<arg>Path:${EXECDIR}</arg>
+</arguments>
+<msg timestamp="20160707 13:16:36.693" level="INFO">Path:D:\Testing\Robot\YTest\Demo</msg>
+<status status="PASS" endtime="20160707 13:16:36.693" starttime="20160707 13:16:36.692"></status>
+</kw>
+<kw name="Log To Console" library="BuiltIn">
+<doc>Logs the given message to the console.</doc>
+<arguments>
+<arg>Path:${EXECDIR}</arg>
+</arguments>
+<status status="PASS" endtime="20160707 13:16:36.694" starttime="20160707 13:16:36.693"></status>
+</kw>
+<kw name="Log" library="BuiltIn">
+<doc>Logs the given message with the given level.</doc>
+<arguments>
+<arg>MyPath:${EXECDIR}\\YTest\\Res\\test.png</arg>
+</arguments>
+<msg timestamp="20160707 13:16:36.694" level="INFO">MyPath:D:\Testing\Robot\YTest\Demo\YTest\Res\test.png</msg>
+<status status="PASS" endtime="20160707 13:16:36.694" starttime="20160707 13:16:36.694"></status>
+</kw>
+<kw name="Log To Console" library="BuiltIn">
+<doc>Logs the given message to the console.</doc>
+<arguments>
+<arg>MyPath:${EXECDIR}\\YTest\\Res\\test.png</arg>
+</arguments>
+<status status="PASS" endtime="20160707 13:16:36.695" starttime="20160707 13:16:36.694"></status>
+</kw>
+<status status="PASS" endtime="20160707 13:16:36.695" critical="yes" starttime="20160707 13:16:36.692"></status>
+</test>
+<status status="PASS" endtime="20160707 13:16:36.696" starttime="20160707 13:16:36.664"></status>
+</suite>
+<statistics>
+<total>
+<stat fail="0" pass="1">Critical Tests</stat>
+<stat fail="0" pass="1">All Tests</stat>
+</total>
+<tag>
+</tag>
+<suite>
+<stat fail="0" id="s1" name="OperatingSystem" pass="1">OperatingSystem</stat>
+</suite>
+</statistics>
+<errors>
+</errors>
+</robot>

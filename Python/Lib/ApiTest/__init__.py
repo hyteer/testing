@@ -4,5 +4,5 @@ from wsh import WshApi
 
 _version_ = VERSION
 
-class ApiTest(MaishaMain,MaishaCommon):
+class ApiTest(MaishaUser,MaishaCommon,CommonUtils):
        ROBOT_LIBRARY_SCOPE = 'GLOBAL'

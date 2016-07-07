@@ -3,11 +3,13 @@
 from Lib.ApiTest import maisha
 from Lib.ApiTest import settings
 set = settings.Maisha()
-
+print set.phone
+print set.password
 
 ############ MaiSha ###########
 cm = maisha.MaishaCommon()
 user = maisha.MaishaUser()
+
 # user_login
 usersession = user.maisha_user_login(set.phone,set.password)
 
@@ -27,7 +29,10 @@ cm.maisha_generate_captcha(usersession)
 cm.maisha_check_up('android')
 
 # loading_ad
-cm.maisha_loading_ad(usersession)
+#cm.maisha_loading_ad(usersession)
 
 # send_vercode
-cm.maisha_send_vercode(usersession)
+#cm.maisha_send_vercode(usersession)
+
+# upload_file
+cm.upload_file(usersession,'D:\\Res\\test.png')
