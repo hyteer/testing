@@ -1,3 +1,7 @@
+
+
+######### Maisha ##########
+print "---Maisha---"
 print u'\u767b\u9646\u6210\u529f'
 print u'\u767b\u9646\u6210\u529f'
 print u'\u8d26\u53f7\u4e0d\u80fd\u4e3a\u7a7a'
@@ -7,4 +11,13 @@ print u'\u672a\u9009\u62e9\u4e0a\u4f20\u6587\u4ef6'
 print u'\u8bf7\u5148\u767b\u5f55'
 print u'\u64cd\u4f5c\u6210\u529f'
 print u'\u7f3a\u5c11\u5fc5\u8981\u53c2\u6570'
+########## WSH Web #########
+print "---WSH---"
+print u'\u767b\u9646\u6210\u529f'
+print u'\u6ee1100\u7acb\u51cf10\u5143'
+print u'\u9875\u9762\u5df2\u8fc7\u671f\uff0c\u8bf7\u5237\u65b0\u91cd\u8bd5'
+print u'\u767b\u9646\u6210\u529f'
+
+
+
 #print help('assert')

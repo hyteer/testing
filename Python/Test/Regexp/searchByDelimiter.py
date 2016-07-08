@@ -1,3 +1,4 @@
+# encoding: utf-8
 #!/bin/python
 #
 #site: www.ahlinux.com
@@ -19,3 +20,8 @@ def tsplit(string, delimiters):
 s = 'thing1,thing2/thing3-thing4'
 s2 = tsplit(s,(',','/','-'))
 print s2
+
+str = '﻿{"errcode":"0","errmsg":"\u767b\u9646\u6210\u529f"}'
+print "Original str:", str
+str2 = str.replace('﻿','')
+print "The new str2:", str2

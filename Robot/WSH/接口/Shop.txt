@@ -1,0 +1,10 @@
+*** Settings ***
+Suite Setup       登录
+Library           RequestsLibrary
+Resource          Lib/通用操作.robot
+Resource          Lib/配置参数.robot
+
+*** Test Cases ***
+商家信息
+    ${resp}    Post Request    wsh    /shop/get-ajax
+    Log    Response:${resp.content}
