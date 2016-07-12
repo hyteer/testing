@@ -1,6 +1,7 @@
 *** Settings ***
 Library           Ytools
 Library           OperatingSystem
+Library           String
 
 *** Test Cases ***
 first
@@ -12,3 +13,9 @@ first
 
 apitest
     Login Test
+
+decode
+    ${bytes}    Convert To Bytes    \xe5\x95\x86\xe5\x9f\x8e
+    Log    Bytes:${bytes}
+    ${str}    Yt Decode    ${bytes}
+    ${string} =    Decode Bytes To String    ${bytes}    UTF-8

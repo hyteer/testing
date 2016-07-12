@@ -1,5 +1,5 @@
 *** Settings ***
-Suite Setup       启动App3
+Suite Setup       启动App
 Suite Teardown    关闭App
 Resource          ../Lib/配置参数.robot
 Resource          ../Lib/常用操作.robot
@@ -19,3 +19,5 @@ start
     ${id}    Set Variable    bt_cancel
     Click Element    id=${id}
     Sleep    2
+
+WebView

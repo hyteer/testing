@@ -3,8 +3,19 @@ Suite Setup       登录
 Library           RequestsLibrary
 Resource          Lib/通用操作.robot
 Resource          Lib/配置参数.robot
+Library           String
+Library           json
+Library           Collections
 
 *** Test Cases ***
 商家信息
     ${resp}    Post Request    wsh    /shop/get-ajax
     Log    Response:${resp.content}
+    ${len}    Get Length    ${resp.content}
+    ${str}    Get Substring    ${resp.content}    3
+    Log    Res2:${str}
+    ${js}    loads    ${str}
+    ${errcode}    Get From Dictionary    ${js}    errcode
+    Log    errcode is:${errcode}
+    Run Keyword If    ${errcode}==0    Log    Success
+    ...    ELSE    Log    Failed

@@ -16,3 +16,10 @@ dict-yt
     &{args}=    Create Dictionary    &{info}    data=&{data}
     Log    Data:${args.data}
     Log    Phone:${args.data.phone}
+
+dict-test
+    &{dict} =    Create Dictionary    key=value    foo=bar
+    Should Be True    ${dict} == {'key': 'value', 'foo': 'bar'}
+    &{dict} =    Create Dictionary    ${1}=${2}    &{dict}    foo=new
+    Should Be True    ${dict} == {1: 2, 'key': 'value', 'foo': 'new'}
+    Log    ${dict.key}

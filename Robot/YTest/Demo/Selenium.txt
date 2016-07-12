@@ -1,0 +1,49 @@
+*** Settings ***
+Library           Selenium2Library
+
+*** Test Cases ***
+GetCookie
+    Open Browser    http://betanewwsh.vikduo.com/login/index    chrome
+    ${cookies}    Get Cookies
+    ${cookie}    Get Cookie Value    PHPSESSID
+    Log    Cookies:${cookies}
+    Log    Cookie:${cookie}
+    Sleep    3
+    Close All Browsers
+
+WindowSize
+    Open Browser    http://betanewwsh.vikduo.com/login/index    chrome
+    Maximize Browser Window
+    Input Text    id=staff_id    20151228    #输入用户名
+    Input Text    id=password    123456    #输入密码
+    Input Text    id=captcha    111111    #输入验证码
+    Click Button    id=login    #点击登陆
+    Wait Until Page Contains    微营销    20
+    Sleep    3
+    Click Link    微营销
+    Wait Until Page Contains Element    link=添加活动
+    Sleep    1
+    Click Link    添加活动
+    Wait Until Page Contains Element    id=btnConfirm
+    Sleep    1
+    Click Element    id=btnConfirm
+    Wait Until Page Contains Element    link= 选择商品
+    Sleep    1
+    Click Link     选择商品
+    Wait Until Page Contains Element    xpath=//div[@id='productModal']    10
+    Sleep    1
+    ${prods}=    Get Webelements    xpath=//tr[@class='products']
+    #${prods}=    Get Webelements    xpath=//div[@id='product']//tbody
+    ${num}=    Get Length    ${prods}
+    Click Element    ${prods[1]}
+    #${specs}    Get Webelements    xpath=//tr[@class='products'][1]/following-sibling::tr[1]//tr
+    ${prodsku}    Get Webelements    xpath=//tr[@class='products_sku'][1]//tr
+    ${num3}    Get Length    ${prodsku}
+    Click Element    ${prodsku[2]}
+    #${class}    Get Element Attribute    xpath=//tr[@class='products_sku'][1]@class
+    Click Link    确定
+    Wait Until Element Is Visible    id=post
+    Sleep    1
+    Click Element    id=post
+    ${status}    Run Keyword And Return Status    ${alerttxt}    Get Alert Message
+    $

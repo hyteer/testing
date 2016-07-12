@@ -1,4 +1,4 @@
-
+# encoding: utf-8
 
 ######### Maisha ##########
 print "---Maisha---"
@@ -17,7 +17,16 @@ print u'\u767b\u9646\u6210\u529f'
 print u'\u6ee1100\u7acb\u51cf10\u5143'
 print u'\u9875\u9762\u5df2\u8fc7\u671f\uff0c\u8bf7\u5237\u65b0\u91cd\u8bd5'
 print u'\u767b\u9646\u6210\u529f'
-
-
+print u'\u9875\u9762\u5df2\u8fc7\u671f\uff0c\u8bf7\u5237\u65b0\u91cd\u8bd5'
+ptres = '\xef\xbb\xbf'
+ptres2 = ptres.decode(encoding="utf-8", errors="strict")
+print u'拼团返回',ptres2
 
 #print help('assert')
+########## Other ###########
+str = '\xe5\x95\x86\xe5\x9f\x8e'
+str2 = str.decode(encoding="utf-8", errors="strict")
+print str2
+
+########## Wechat ##########
+print u'\u5546\u57ce'

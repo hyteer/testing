@@ -6,7 +6,7 @@ from urllib import urlencode
 from utils import CommonUtils
 import settings as set
 ws = set.Wsh()
-defaultapp = 'android'
+
 
 class Common(object):
     baseurl = ws.baseurl

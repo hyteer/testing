@@ -1,24 +1,13 @@
 # encoding: utf-8
 import requests
 import json
-from urllib import urlencode
 
 class ApiTest(object):
 
     def __init__(self):
        pass
 
-    def _utf8_urlencode(self, data):
-        if isinstance(data,unicode):
-            return data.encode('utf-8')
-        if not isinstance(data,dict):
-            return data
-        utf8_data={}
-        for k, v in data.iteritems():
-            utf8_data[k] = unicode(v).encode('utf-8')
-            return urlencode(utf8_data)
-
-    def api_userlogin(self,data='default',debug=0):
+    def yt_api_userlogin(self,data='default',debug=0):
         file = open("d:/Res/MaishaReq.txt","r")
         content = file.read()
         if debug == 1:
@@ -35,7 +24,7 @@ class ApiTest(object):
         print "username:",js['data']['username']
         print "usersession:",js['data']['usersession']
 
-    def upload_file(self):
+    def yt_api_upload_file(self):
         files = {'upload_file': open('file.txt','rb')}
         values = {'DB': 'photcat', 'OUT': 'csv', 'SHORT': 'short'}
         url = "http://huimaidev.vikduo.com/appapi/common/upload_file"

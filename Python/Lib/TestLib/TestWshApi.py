@@ -5,9 +5,10 @@ from Lib.ApiWsh.api import settings
 
 set = settings.Maisha
 
-############ MaiSha ###########
+############ Wsh ###########
 cm = api.Common()
 sp = api.Shop()
+mk = api.Marketing()
 
 
 # get_cookie
@@ -21,3 +22,13 @@ sp.wsh_actlist(sid)
 
 # shop_get  获取商家信息
 sp.wsh_shop_get(sid)
+##### Marketing ####
+# get_group_actlist
+mk.get_group_actlist(sid)
+# get_reduction_actlist
+mk.get_reduction_actlist(sid)
+# get_secondkill_actlist
+mk.get_secondkill_actlist(sid)
+
+mk.get_collectzan_actlist(sid)
+

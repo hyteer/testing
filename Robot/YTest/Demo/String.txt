@@ -1,0 +1,8 @@
+*** Settings ***
+Library           String
+
+*** Test Cases ***
+decode
+    ${bytes}    Convert To Bytes    \xe5\x95\x86\xe5\x9f\x8e
+    Log    Bytes:${bytes}
+    ${string} =    Decode Bytes To String    ${bytes}    UTF-8
