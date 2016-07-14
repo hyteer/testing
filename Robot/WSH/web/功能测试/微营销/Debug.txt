@@ -1,0 +1,11 @@
+*** Settings ***
+Library           Selenium2Library
+Resource          ../../Resource/常用操作.robot
+
+*** Test Cases ***
+Random
+    ${str}    随机字符
+    Log    Str:${str}
+    ${num}    随机数字    3
+    Log    Num:${num}
+    ${random index}    Generate Random String    2    [12345678]0123456789

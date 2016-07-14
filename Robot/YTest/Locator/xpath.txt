@@ -2,3 +2,13 @@
 xpath
     Wait Until Page Contains Element    xpath=//android.widget.TextView[contains(@id,'com.maishalei.seller:id/centerView')][contains(@text,'拼啥嘞')]
     \    //a[contains(.,'立即飞')]
+    \    xpath=/*[@id="rule"]/ng-form/div[13]/label/following-sibling::div[1]
+    Get Element Attribute    xpath=//tr[@class='products_sku'][1]@class
+    #Click Element    xpath=//*[@id="main-container"]/div/div[2]/div[2]/div/div/div/div/div[1]/form/table/tbody/tr[1]/td[text()='点赞-qrN0APVLdEpFwG']
+    Click Element    xpath=//*[@id="main-container"]/div/div[2]/div[2]/div/div/div/div/div[1]/form/table/tbody/tr[1]/td[starts-with(text(),'点赞-qrN0APVLdEpFwG')]
+    # Locate Parent \ Node
+    \    //*[title="50"]/parent::*
+    \    //*[title="50"]/..
+    \    //*[title="50"]/parent::store
+    #获取先辈    xpath=//*[@id="main-container"]/div/div[2]/div[2]/div/div/div/div/div[1]/form/table/tbody/tr/td[starts-with(text(),'点赞-')]/ancestor::tr[1]/td[1]
+    #获取父辈    xpath=//*[@id="main-container"]/div/div[2]/div[2]/div/div/div/div/div[1]/form/table/tbody/tr/td[starts-with(text(),'点赞-')]/parent::tr[1]/td[1]

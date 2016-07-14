@@ -8,3 +8,4 @@ Resource          配置参数.robot
     [Arguments]    ${links}
     Set Browser Implicit Wait    10
     Click Link    ${links}
+    Sleep    1

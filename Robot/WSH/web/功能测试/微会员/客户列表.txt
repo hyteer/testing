@@ -1,5 +1,5 @@
 *** Settings ***
-Suite Setup       登陆
+Suite Setup       登录
 Suite Teardown    关闭浏览器
 Library           Selenium2Library
 Resource          ../../Resource/常用操作.robot
@@ -8,6 +8,7 @@ Resource          ../../Resource/配置参数.robot
 
 *** Test Cases ***
 客户列表
+    [Tags]    ready
     [Setup]
     点击链接菜单    微会员
     #客户总数
@@ -30,6 +31,7 @@ Resource          ../../Resource/配置参数.robot
     [Teardown]
 
 批量操作
+    [Tags]    ready
     [Setup]
     点击链接菜单    微会员
     点击链接菜单    客户列表
@@ -47,6 +49,7 @@ Resource          ../../Resource/配置参数.robot
     #批量分组
 
 批量分组
+    [Tags]    ready
     [Setup]
     点击链接菜单    微会员
     点击链接菜单    客户列表
@@ -81,6 +84,7 @@ Resource          ../../Resource/配置参数.robot
     [Teardown]
 
 客户管理_添加分组
+    [Tags]    ready
     [Setup]    点击链接菜单    微会员
     点击链接菜单    分组管理
     等待时间    1

@@ -12,8 +12,10 @@ driver.find_element_by_id('captcha').send_keys('1111')
 driver.find_element_by_id('login').click()
 time.sleep(3)
 driver.find_element_by_id('navbar').click()
-driver.find_element_by_xpath("//a[@href='/second-kill/list']").click()
-
+#driver.find_element_by_xpath("//a[@href='/second-kill/list']").click()
+driver.find_element_by_link_text("微营销")
+time.sleep(5)
+driver.quit()
 
 #driver.find_element_by_xpath("//div[@id='headactive']//a[@href='/second-kill/list']").click()
 
