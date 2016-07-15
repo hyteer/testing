@@ -9,3 +9,7 @@ Random
     ${num}    随机数字    3
     Log    Num:${num}
     ${random index}    Generate Random String    2    [12345678]0123456789
+
+test
+    ${rand}    Generate Random String    1    01
+    Log    Rand:${rand}

@@ -80,7 +80,7 @@ Library           String
     log    由于有全场商品满减活动，无法创建活动，返回活动列表
 
 随机字符
-    [Arguments]    ${pre}=测试    ${len}=10
+    [Arguments]    ${pre}=None    ${len}=10
     ${prelen}    Get Length    ${pre}
     ${randlen}    Evaluate    ${len}-${prelen}
     ${rand}    Generate Random String    ${randlen}
@@ -115,4 +115,38 @@ Library           String
 
 失败重置
     Run Keyword If Test Failed    Go To    http://betanewwsh.vikduo.com/
+    Sleep    1
+
+查看二维码
+    [Arguments]    ${xpath}
+    ###查看二维码
+    Click Element    xpath=${xpath}
+    Sleep    1
+    Select Window    二维码
+    Sleep    1
+    Click Element    xpath=//*[@id="main-container"]/div/div[2]/div[2]/div/div/div[1]/table/tbody/tr[1]/td[3]/a/i
+    Sleep    2
+    Wait Until Page Contains Element    xpath=//*[@id="query"]/div/div/div[2]/div/div/img    15
+    Wait Until Element Is Visible    xpath=//*[@id="query"]/div/div/div[2]/div/div/img
+    Sleep    1
+    Click Element    xpath=//*[@id="query"]/div/div/div[1]/a
+    Sleep    2
+    Close Window
+    Sleep    1
+
+查看中奖名单
+    [Arguments]    ${xpath}
+    Click Element    xpath=${xpath}
+    Wait Until Page Contains    中奖记录    20
+    Title Should Be    中奖记录
+    Sleep    1
+    #导出中奖记录
+    Click Link    导出中奖记录
+    Sleep    2
+
+查看日志
+    [Arguments]    ${xpath}
+    Click Element    xpath=${xpath}
+    Wait Until Page Contains    操作日志
+    Title Should Be    操作日志
     Sleep    1

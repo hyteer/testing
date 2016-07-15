@@ -13,3 +13,10 @@ for
 if-num
     Run Keyword If    ${errcode}==0    Log    Success
     ...    ELSE    Log    Failed
+
+sample
+    ${sign}    Set Variable    None
+    ${sign2}    Set Variable    no
+    Log    Sign:${sign}
+    Run Keyword If    ${sign}!=None    Log    sign is not none.
+    ...    ELSE    Log    sign is none

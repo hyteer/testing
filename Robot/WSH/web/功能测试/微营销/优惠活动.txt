@@ -1,0 +1,126 @@
+*** Settings ***
+Suite Setup       登录
+Suite Teardown    关闭浏览器
+Test Teardown     失败重置
+Library           Selenium2Library
+Resource          ../../Resource/常用操作.robot
+Resource          ../../Resource/功能菜单.robot
+Resource          ../../Resource/配置参数.robot
+
+*** Variables ***
+
+*** Test Cases ***
+送积分_添加
+    [Tags]    ready
+    点击链接菜单    微营销
+    ${sub}    Set Variable    积分活动
+    点击链接菜单    ${sub}
+    Wait Until Page Contains Element    //*[@id="breadcrumbs"]/ul/li[contains(text(),"${sub}")]    20
+    ###添加积分活动
+    点击链接菜单    添加积分活动
+    Sleep    1
+    #用例参数
+    &{活动时间}    Create Dictionary    0=无时间限制    1=指定时间有效
+    &{活动策略}    Create Dictionary    0=订单满多少送积分    1=订单每满多少送积分
+    &{积分购赠送规则}    Create Dictionary    1=按订单金额赠送    2=按实付金额赠送
+    #生成随机数
+    ${actname}    随机字符    【送积分】增加    15
+    ${acttime}    Generate Random String    1    01
+    ${rand2}    Generate Random String    1    01
+    ${money}    随机数字    2
+    ${points}    随机数字    1
+    Sleep    1
+    #参数设置
+    Input Text    //*[@id="main-container"]/div/div[2]/div[2]/div/div/form/div[1]/div/input    ${actname}
+    Select From List    //*[@id="main-container"]/div/div[2]/div[2]/div/div/form/div[2]/div/select    ${acttime}
+    Sleep    1
+    Run Keyword If    ${acttime}==1    选择时间
+    Select From List    //*[@id="main-container"]/div/div[2]/div[2]/div/div/form/div[4]/div/select    ${rand2}
+    Sleep    1
+    Input Text    //*[@id="main-container"]/div/div[2]/div[2]/div/div/form/div[5]/div/div[1]/input    ${money}
+    Input Text    //*[@id="main-container"]/div/div[2]/div[2]/div/div/form/div[5]/div/div[2]/input    ${points}
+    Sleep    1
+    ${atr}    Get Element Attribute    //*[@id="main-container"]/div/div[2]/div[2]/div/div/form/div[7]/div[1]/label/input@ng-model
+    Log    Attribute:${atr}
+    Select Checkbox    //*[@id="main-container"]/div/div[2]/div[2]/div/div/form/div[7]/div[2]/label/input
+    Sleep    1
+    Click Link    保存
+    Sleep    1.5
+    ${alert}    Get Alert Message
+    Should Contain    ${alert}    成功
+    Sleep    2
+    ###结果校验
+
+送积分_编辑
+    [Tags]    ready
+    点击链接菜单    微营销
+    ${sub}    Set Variable    积分活动
+    点击链接菜单    ${sub}
+    Wait Until Page Contains Element    //*[@id="breadcrumbs"]/ul/li[contains(text(),"${sub}")]    20
+    ###编辑活动
+    #随机参数
+    ${actname}    随机字符    【送积分】修改    15
+    Click Element    //*[@id="main-container"]/div/div[2]/div[2]/div/div/div/div/div[1]/form/table/tbody/tr/td[starts-with(text(),"【送积分】")]/parent::tr[1]/td[5]/a[1]/i
+    Sleep    2
+    Input Text    //*[@id="main-container"]/div/div[2]/div[2]/div/div/form/div[1]/div[2]/input    ${actname}
+    Sleep    1
+    Select Radio Button    favorable    2
+    Click Link    保存
+    Sleep    2
+    ${alert}    Get Alert Message
+    ${matches}    Get Regexp Matches    ${alert}    不允许
+    ${matches2}    Get Regexp Matches    ${alert}    成功
+    ${len1}    Get Length    ${matches}
+    ${len2}    Get Length    ${matches2}
+    Run Keyword If    ${len1}==1    Log    ${alert}
+    ...    ELSE IF    ${len2}==1    结果校验    ${sub}    ${actname}
+    ...    ELSE    Log    ${alert}
+    Sleep    1
+
+送积分_删除
+    [Tags]    ready
+    点击链接菜单    微营销
+    ${sub}    Set Variable    积分活动
+    点击链接菜单    ${sub}
+    Wait Until Page Contains Element    //*[@id="breadcrumbs"]/ul/li[contains(text(),"${sub}")]    20
+    ###删除活动
+    ${actname}    Get Text    xpath=//*[@id="main-container"]/div/div[2]/div[2]/div/div/div/div/div[1]/form/table/tbody/tr/td[starts-with(text(),"【送积分】")]/parent::tr[1]/td[1]
+    Click Element    //*[@id="main-container"]/div/div[2]/div[2]/div/div/div/div/div[1]/form/table/tbody/tr/td[starts-with(text(),"【送积分】")]/parent::tr[1]/td[5]/a[2]/i
+    Sleep    1
+    Click Element    xpath=//button[@data-id="ok" and text()="删除"]
+    #Click Button    确定
+    Sleep    1
+    ${alert}    Get Alert Message
+    Should Contain    ${alert}    成功
+    Sleep    2
+    ###结果校验
+    Page Should Not Contain Element    //*[@id="main-container"]/div/div[2]/div[2]/div/div/div/div/div[1]/form/table/tbody/tr/td[starts-with(text(),'${actname}')]
+    Sleep    3
+
+积分抵扣_添加
+    [Tags]    ready
+    点击链接菜单    微营销
+    ${sub}    Set Variable    积分活动
+    点击链接菜单    ${sub}
+    Wait Until Page Contains Element    //*[@id="breadcrumbs"]/ul/li[contains(text(),"${sub}")]    20
+    ###积分抵扣活动
+    Click Link    积分抵扣活动
+    Sleep    1
+    ###添加活动
+    Click Link    添加抵扣活动
+    Sleep    2
+    #随机参数
+    ${actname}    随机字符    【抵扣】添加    15
+    &{活动时间}    Create Dictionary    0=无时间限制    1=指定时间有效
+    ${订单限额}    随机数字    2
+    Input Text    //*[@id="main-container"]/div/div[2]/div[2]/div/div/form/div[1]/div/input    ${actname}
+    Sleep    3
+
+*** Keywords ***
+结果校验
+    [Arguments]    ${sub}    ${content}
+    ###结果校验
+    Wait Until Page Contains Element    //*[@id="breadcrumbs"]/ul/li[contains(text(),"${sub}")]
+    Sleep    1
+    Page Should Contain    ${content}
+    Sleep    1

@@ -30,3 +30,5 @@ print str2
 
 ########## Wechat ##########
 print u'\u5546\u57ce'
+
+print u'\u4e0d\u5141\u8bb8'

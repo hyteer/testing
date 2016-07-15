@@ -1,3 +1,6 @@
+*** Variables ***
+${var}            Test var
+
 *** Test Cases ***
 dict
     &{dict} =    Create Dictionary    key=value    foo=bar
@@ -23,3 +26,13 @@ dict-test
     &{dict} =    Create Dictionary    ${1}=${2}    &{dict}    foo=new
     Should Be True    ${dict} == {1: 2, 'key': 'value', 'foo': 'new'}
     Log    ${dict.key}
+
+mydict
+    &{dict} =    Create Dictionary    key=value    foo=bar
+    Log    Var:${var}
+    Log    Dict:${dict.foo}
+
+list
+    @{list}    Create List    Act1    Act2    Act3
+    ${list2}    Create List    Act1    Act2    Act3
+    Log    ${list2[1]}
