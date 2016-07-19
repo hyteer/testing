@@ -1,7 +1,7 @@
 *** Settings ***
 Suite Setup       登录
 Suite Teardown    关闭浏览器
-Test Teardown     失败重置
+Test Teardown     失败重启
 Library           Selenium2Library
 Resource          ../../Resource/常用操作.robot
 Resource          ../../Resource/功能菜单.robot
@@ -50,6 +50,9 @@ Resource          ../../Resource/配置参数.robot
     Should Contain    ${alert}    成功
     Sleep    2
     ###结果校验
+    ${actname2}    Get Text    xpath=//*[@id="main-container"]/div/div[2]/div[2]/div/div/div/div/div[1]/form/table/tbody/tr/td[starts-with(text(),"【送积分】")]/parent::tr[1]/td[1]
+    Should Be Equal As Strings    ${actname}    ${actname2}
+    Log    Sucess!
 
 送积分_编辑
     [Tags]    ready
@@ -111,10 +114,114 @@ Resource          ../../Resource/配置参数.robot
     Sleep    2
     #随机参数
     ${actname}    随机字符    【抵扣】添加    15
+    ${acttime}    Generate Random String    1    10
+    &{活动时间}    Create Dictionary    0=无时间限制    1=指定时间有效
+    ${订单限额}    随机数字    2
+    ${指定金额}    随机数字    2
+    Input Text    //*[@id="main-container"]/div/div[2]/div[2]/div/div/form/div[1]/div/input    ${actname}    #活动名称
+    Sleep    1
+    Run Keyword If    ${acttime}==1    选择时间
+    Input Text    //*[@id="main-container"]/div/div[2]/div[2]/div/div/form/div[4]/div/input    ${订单限额}
+    Sleep    0.6
+    Input Text    //*[@id="main-container"]/div/div[2]/div[2]/div/div/form/div[5]/div/div[1]/input    10    #兑换策略
+    Sleep    0.6
+    Input Text    //*[@id="main-container"]/div/div[2]/div[2]/div/div/form/div[5]/div/div[2]/input    1
+    Sleep    0.6
+    Input Text    //*[@id="main-container"]/div/div[2]/div[2]/div/div/form/div[7]/div/input    ${指定金额}
+    Sleep    0.6
+    Click Element    id=btnConfirm    #保存
+    Sleep    2
+    ${alert}    Get Alert Message
+    Should Contain    ${alert}    成功
+    Sleep    2
+    ###结果校验
+    ${actname2}    Get Text    xpath=//*[@id="main-container"]/div/div[2]/div[2]/div/div/div/div/div[1]/form/table/tbody/tr/td[starts-with(text(),"【抵扣】")]/parent::tr[1]/td[1]
+    Should Be Equal As Strings    ${actname}    ${actname2}
+    Log    Sucess!
+
+积分抵扣_编辑
+    [Tags]
+    点击链接菜单    微营销
+    ${sub}    Set Variable    积分活动
+    点击链接菜单    ${sub}
+    Wait Until Page Contains Element    //*[@id="breadcrumbs"]/ul/li[contains(text(),"${sub}")]    20
+    ###积分抵扣活动
+    Click Link    积分抵扣活动
+    Sleep    1
+    ###编辑活动
+    #随机参数
+    ${actname}    随机字符    【抵扣】修改    15
+    Click Element    //*[@id="main-container"]/div/div[2]/div[2]/div/div/div/div/div[1]/form/table/tbody/tr/td[starts-with(text(),"【抵扣】")]/parent::tr[1]/td[7]/a[1]/i
+    Sleep    2
+    Input Text    //*[@id="main-container"]/div/div[2]/div[2]/div/div/form/div[1]/div[2]/input    ${actname}
+    Sleep    1
+    Select Radio Button    favorable    2
+    Click Link    保存
+    Sleep    2
+    ${alert}    Get Alert Message
+    ${matches}    Get Regexp Matches    ${alert}    不允许
+    ${matches2}    Get Regexp Matches    ${alert}    成功
+    ${len1}    Get Length    ${matches}
+    ${len2}    Get Length    ${matches2}
+    Run Keyword If    ${len1}==1    Log    ${alert}
+    ...    ELSE IF    ${len2}==1    结果校验    ${sub}    ${actname}
+    ...    ELSE    Log    ${alert}
+    Sleep    1
+
+积分抵扣_删除
+    [Tags]
+    点击链接菜单    微营销
+    ${sub}    Set Variable    积分活动
+    点击链接菜单    ${sub}
+    Wait Until Page Contains Element    //*[@id="breadcrumbs"]/ul/li[contains(text(),"${sub}")]    20
+    ###积分抵扣活动
+    Click Link    积分抵扣活动
+    Sleep    1
+    ###添加活动
+    Click Link    添加抵扣活动
+    Sleep    2
+    #随机参数
+    ${actname}    随机字符    【抵扣】添加    15
     &{活动时间}    Create Dictionary    0=无时间限制    1=指定时间有效
     ${订单限额}    随机数字    2
     Input Text    //*[@id="main-container"]/div/div[2]/div[2]/div/div/form/div[1]/div/input    ${actname}
     Sleep    3
+
+商城红包_活动_添加
+    点击链接菜单    微营销
+    ${sub}    Set Variable    商城红包
+    点击链接菜单    ${sub}
+    Wait Until Page Contains Element    //*[@id="breadcrumbs"]/ul/li[contains(text(),"红包活动")]    20
+    ####添加积分活动
+    点击链接菜单    新增活动
+    Wait Until Page Contains Element    //*[@id="breadcrumbs"]/ul/li[text()='新增红包活动']
+    Sleep    1
+    ##用例参数
+    ${图文标题}    随机字符    【测试】手气比拼    18
+    ${摘要内容}    随机字符    【测试】亲，点击进入活动主页，意外惊喜等着你    40
+    ${活动名称}    随机字符    【红包活动】    18
+    ${每个红包}    随机数字    1
+    ${红包个数}    随机数字    1
+    ${活动类型}    Generate Random String    1    123
+    ##设置图文
+    Input Text    //*[@id="main-container"]/div/div[2]/div[2]/div/div/div[2]/div/div[2]/form/div[1]/div/input    ${图文标题}
+    Sleep    1
+    Input Text    //*[@id="form-field-8"]    ${摘要内容}
+    Sleep    0.8
+    Click Link    下一步
+    ##活动说明
+    Wait Until Page Contains Element    //*[@id="main-container"]/div/div[2]/div[2]/div/div/div[3]/form/div[1]/div/input
+    Sleep    1
+    Input Text    //*[@id="main-container"]/div/div[2]/div[2]/div/div/div[3]/form/div[1]/div/input    ${活动名称}
+    Sleep    1
+    #选择红包
+    Click Link     选择红包
+    Sleep    2
+    Click Element    //*[@id="redPaceModal"]/div/div/table/tbody/tr[1]
+    Sleep    1
+    Click Element    //*[@id="redPackModal"]/div/div/div/a[text()="确定"]
+    Sleep    2
+    Input Text    //*[@id="numperpacket"]    ${每个红包}
 
 *** Keywords ***
 结果校验

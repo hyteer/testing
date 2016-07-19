@@ -36,3 +36,14 @@ list
     @{list}    Create List    Act1    Act2    Act3
     ${list2}    Create List    Act1    Act2    Act3
     Log    ${list2[1]}
+
+Evaluate
+    ${x}    Set Variable    3
+    ${a}    Set variable
+    ${status}    Evaluate    ${x}>=3
+    Log    status:${status}
+    ${flag}    Evaluate    not $a
+    ${flag2}    Evaluate    $a
+
+time
+    ${time}    Get Time

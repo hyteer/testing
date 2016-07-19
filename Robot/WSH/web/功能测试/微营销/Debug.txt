@@ -1,4 +1,5 @@
 *** Settings ***
+Suite Setup       登录
 Library           Selenium2Library
 Resource          ../../Resource/常用操作.robot
 
@@ -13,3 +14,25 @@ Random
 test
     ${rand}    Generate Random String    1    01
     Log    Rand:${rand}
+
+check
+    点击链接菜单    微营销
+    ${sub}    Set Variable    现金红包
+    点击链接菜单    ${sub}
+    Wait Until Page Contains Element    //*[@id="breadcrumbs"]/ul/li[contains(text(),"${sub}")]    20
+    Sleep    1
+    ###Test
+    Sleep    1
+    ${status}    Run Keyword And Return Status    Checkbox Should Not Be Selected    //*[@id="main-container"]/div/div[2]/div[2]/div/div/div/div/div/form/table/tbody/tr[1]/td[10]/label/input
+    ${status2}    Run Keyword And Return Status    Checkbox Should Not Be Selected    //*[@id="main-container"]/div/div[2]/div[2]/div/div/div/div/div/form/table/tbody/tr[2]/td[10]/label/input
+    Log    Status:${status}
+    Log    Status2:${status2}
+    Sleep    3
+
+get time
+    点击链接菜单    微营销
+    ${sub}    Set Variable    现金红包
+    点击链接菜单    ${sub}
+    Wait Until Page Contains Element    //*[@id="breadcrumbs"]/ul/li[contains(text(),"${sub}")]    20
+    Sleep    1
+    $    //*[@id="start_time"]

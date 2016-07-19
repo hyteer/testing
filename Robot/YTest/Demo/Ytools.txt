@@ -19,3 +19,13 @@ decode
     Log    Bytes:${bytes}
     ${str}    Yt Decode    ${bytes}
     ${string} =    Decode Bytes To String    ${bytes}    UTF-8
+
+max
+    ${test1}    Set Variable
+    ${test2}    Set Variable    12
+    ${max}    Yt Get Max    ${test1}    ${test2}
+
+compare_time
+    ${start_time}    Set Variable    2016-07-21 16:58:58
+    ${now}    Get Time
+    ${status}    Yt Act Time Status    ${start_time}

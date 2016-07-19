@@ -1,5 +1,6 @@
 *** Settings ***
 Library           String
+Library           Collections
 
 *** Test Cases ***
 decode
@@ -15,3 +16,9 @@ sample
     Log    Mat2:${mat2}
     ${lenmat}    Get Length    ${mat}
     ${lenmat2}    Get Length    ${mat2}
+
+Match
+    ${list}    Create List    test    shr    sns
+    ${count}    Get Match Count    ${list}    est
+    ${count2}    Get Regexp Matches    tester    ab
+    ${len}    Get Length    ${count2}

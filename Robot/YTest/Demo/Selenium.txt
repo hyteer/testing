@@ -47,10 +47,3 @@ GetCookie
     Click Element    id=post
     ${status}    Run Keyword And Return Status    ${alerttxt}    Get Alert Message
     $
-
-exeJavascript
-    Execute Javascript    document.getElementById("share").scrollIntoView();
-
-javascript2
-    Execute Javascript    var el=document.getElementById("form-field-8");txt=el.value;txt+='${str2}';el.value=txt;
-    Execute Javascript    var el=document.getElementById("bg_color");el.setAttribute('style','background-color: #9faabb !important; color: transparent !important;')

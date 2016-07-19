@@ -113,8 +113,8 @@ Library           String
     Click Element    id=dpOkInput
     Unselect Frame
 
-失败重置
-    Run Keyword If Test Failed    Go To    http://betanewwsh.vikduo.com/
+失败重启
+    Run Keyword If Test Failed    登录
     Sleep    1
 
 查看二维码
