@@ -22,3 +22,15 @@ Match
     ${count}    Get Match Count    ${list}    est
     ${count2}    Get Regexp Matches    tester    ab
     ${len}    Get Length    ${count2}
+    ${match}    Get Matches    ${list}    shr*
+    Log    list:'${list}'
+
+match2
+    ${list}    Create List    delivery    newwxpay
+    ${match}    Get Matches    ${list}    delivery
+
+random_num
+    ${long}    Generate Random String    1    34567
+    ${pre}    Generate Random String    1    12345
+    ${zero}    Generate Random String    ${long}    0
+    ${限额}    Set Variable    ${pre}${zero}

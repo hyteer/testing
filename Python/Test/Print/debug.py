@@ -32,3 +32,7 @@ print str2
 print u'\u5546\u57ce'
 
 print u'\u4e0d\u5141\u8bb8'
+
+str11 = '\xb7\xc7\xd1\xa1\xd4\xf1\xd0\xd4\xb5\xc4\xb2\xce\xca\xfd\xa1\xa3'
+str111 = str11.decode("GBK")
+print "str111:",str111

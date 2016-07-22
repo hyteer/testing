@@ -1,0 +1,30 @@
+*** Settings ***
+Suite Setup       登录
+Suite Teardown    关闭浏览器
+Resource          ../../Resource/常用操作.robot
+Library           Selenium2Library
+Resource          ../../Resource/查询API.robot
+
+*** Test Cases ***
+上传图片
+    ####进入页面
+    点击链接菜单    运营设置
+    ${sub}    Set Variable    图片管理
+    Click Element    //*[@id="navList"]/li[3]/a
+    Wait Until Page Contains Element    //*[@id="breadcrumbs"]/ul/li[contains(text(),"图库")]
+    Sleep    1
+    ####图片上传
+    Click Link    上传图片
+    Sleep    3
+
+全选&取消
+
+移动分组
+
+编辑名称
+
+删除
+
+搜索图片
+
+查看图片

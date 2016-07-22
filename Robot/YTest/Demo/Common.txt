@@ -12,7 +12,7 @@ JsonFile
 list
     @{list} =    Create List    a    b    c
     ${n}    Set Variable    3
-    :FOR    ${i}    IN RANGE    ${n}
+    : FOR    ${i}    IN RANGE    ${n}
     \    Log
 
 list2

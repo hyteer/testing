@@ -2,6 +2,7 @@
 Library           Selenium2Library
 
 *** Variables ***
-${username}       20151228
-${password}       123456
-${url}            http://betanewwsh.vikduo.com/login/index
+${USERNAME}       20151228
+${PASSWORD}       123456
+${URL}            http://betanewwsh.snsshop.net/login/index
+${SHOP_ID}        97320

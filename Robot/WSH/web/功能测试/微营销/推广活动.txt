@@ -7,6 +7,8 @@ Resource          ../../Resource/常用操作.robot
 Resource          ../../Resource/功能菜单.robot
 Resource          ../../Resource/配置参数.robot
 Library           Ytools
+Library           AutoItLibrary
+Library           Screenshot
 
 *** Test Cases ***
 众筹活动_首页检测
@@ -974,6 +976,46 @@ Library           Ytools
     Page Should Contain Element    //*[@id="main-container"]/div/div[2]/div[2]/div/div/div/div/div/div/form/table/tbody/tr/td[starts-with(text(),"${规则名称}")]
     Log    Sucess!
     Sleep    1
+
+众筹活动_添加2
+    [Tags]    spec
+    #Set Selenium Implicit Wait    10
+    Set Selenium Timeout    10
+    点击链接菜单    微营销
+    点击链接菜单    众筹活动
+    点击链接菜单    添加点赞众筹
+    Sleep    1
+    ###图文设置
+    ${str}    随机字符
+    Input Text    xpath=//*[@id="home"]/div[2]/form/div[1]/div/input    ${str}
+    Sleep    1
+    Click Element    xpath=//*[@id="home"]/div[2]/form/div[3]/div/div/a/label    #活动图片
+    Sleep    1.4
+    Click Element    //*[@id="myTab"]/li[1]/a
+    #Click Element    xpath=//*[@id="select_ajax_form"]/div[3]/div/ul/li[7]/a/img
+    Sleep    1
+    Click Element    id=SWFUpload_0
+    #Choose File    id=SWFUpload_0    D:\\Temp\\QQ截图20160722114026.png
+    Sleep    1
+    Control Click    打开    ${EMPTY}    [CLASS:ToolbarWindow32; INSTANCE:2]    LEFT
+    Sleep    1
+    Send    C:\\Temp\\Pics
+    Sleep    1
+    Control Click    打开    ${EMPTY}    [CLASS:ToolbarWindow32; INSTANCE:3]    LEFT
+    Sleep    1
+    Control Send    打开    ${EMPTY}    [CLASS:Edit; INSTANCE:1]    test2.png
+    Sleep    1
+    Control Click    打开    ${EMPTY}    [CLASS:Button; INSTANCE:1]    LEFT
+    Sleep    1
+    #After uploading
+    Wait Until Element Is Visible    //*[@id="bdimg"]/form/div/div[3]/ul/li/img
+    Sleep    1
+    #Wait Until Keyword Succeeds    45sec    5sec    Alert Should Be Present
+    Click Element    id=submitImage
+    Sleep    1
+    ${alert}    Get Alert Message
+    Should Contain    ${alert}    成功
+    Sleep    6
 
 *** Keywords ***
 输入金额区间

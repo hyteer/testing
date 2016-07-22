@@ -1,0 +1,89 @@
+*** Settings ***
+Test Teardown     关闭网页
+Library           AutoItLibrary
+Resource          resource.txt
+
+*** Test Cases ***
+upload-case
+    打开网页
+    Choose File    file    ${CURDIR}\\..\\demo\\text.rar
+    sleep    5
+
+upload-autoit
+    打开网页
+    sleep    5
+    ${TITLE}    Get Title
+    ${cx}    Get Horizontal Position    choose
+    ${cy}    Get Vertical Position    choose
+    Comment    mouse move    ${cx}    ${cy}
+    ${conx}    control Get Pos X    \    \    Internet Explorer_Server1
+    ${cony}    control Get Pos Y    \    \    Internet Explorer_Server1
+    Comment    mouse move    ${conx}    ${cony}
+    ${ix}    win Get Pos X    ${TITLE}
+    ${iy}    win Get Pos Y    ${TITLE}
+    ${mx}    Evaluate    int(${cx})+int(${ix})+int(${conx})+18
+    ${my}    Evaluate    int(${cy})+int(${iy})+int(${cony})+38
+    sleep    2
+    Comment    mouse move    ${mx}    ${my}
+    Mouse Click    LEFT    ${mx}    ${my}
+    Win Wait    选择要加载的文件    \    20
+    Win Activate    选择要加载的文件
+    Control Set Text    \    \    Edit1    ${CURDIR}\\..\\demo\\text.rar
+    sleep    2
+    Control Click    \    \    Button1
+    sleep    3
+
+download-case
+    打开网页
+    sleep    5
+    click link    下载测试
+    sleep    2
+    win wait    文件下载    \    15
+    Win Activate    文件下载
+    Control Click    \    \    Button2
+    sleep    3
+    win wait    另存为    \    15
+    Win Activate    另存为
+    Control Set Text    \    \    Edit1    ${CURDIR}\\..\\demo\\text2.rar
+    Control Click    \    \    Button1
+    sleep    3
+    ${confirm}    Win Exists    确认另存为
+    runkeyword if    ${confirm}==1    Win Activate    确认另存为
+    runkeyword if    ${confirm}==1    Control Click    \    \    Button1
+    sleep    5
+
+处理对话框
+    打开网页
+    click button    pay
+    ${mes}    confirm action
+    Choose Cancel On Next Confirmation
+    click button    paycon
+    ${mes}    confirm action
+    Choose Ok On Next Confirmation
+    click button    paycon
+    ${mes}    confirm action
+
+处理对话框AutoIt
+    打开网页
+    click button    pay
+    ${mes}    关闭对话框    来自网页的消息
+    click button    paycon
+    ${mes}    关闭对话框    来自网页的消息
+
+yt-upload
+    打开网页
+    Click Element    id=file
+    Sleep    2
+    Win Wait    打开
+    #Choose File    id=file    D:\\Temp\\wechat.txt
+    Control Click    打开    ${EMPTY}    [CLASS:ToolbarWindow32; INSTANCE:2]    LEFT
+    Sleep    1
+    Send    C:\\Temp\\Pics
+    Sleep    1
+    Control Click    打开    ${EMPTY}    [CLASS:ToolbarWindow32; INSTANCE:3]    LEFT
+    Sleep    1
+    Control Send    打开    ${EMPTY}    [CLASS:Edit; INSTANCE:1]    test2.png
+    Sleep    1
+    Control Click    打开    ${EMPTY}    [CLASS:Button; INSTANCE:1]    LEFT
+    Sleep    1
+    Sleep    3

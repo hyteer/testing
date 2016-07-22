@@ -3,13 +3,16 @@ Library           Selenium2Library
 Resource          配置参数.robot
 Resource          功能菜单.robot
 Library           String
+Library           Screenshot
 
 *** Keywords ***
 登录
-    Open Browser    ${url}    Chrome    #打开浏览器
+    #Set Selenium Implicit Wait    10
+    #Set Selenium Timeout    10
+    Open Browser    ${URL}    chrome    #打开浏览器
     界面最大化
-    Input Text    id=staff_id    ${username}    #输入用户名
-    Input Text    id=password    ${password}    #输入密码
+    Input Text    id=staff_id    ${USERNAME}    #输入用户名
+    Input Text    id=password    ${PASSWORD}    #输入密码
     Input Text    id=captcha    111111    #输入验证码
     Click Button    id=login    #点击登陆
 
@@ -114,6 +117,7 @@ Library           String
     Unselect Frame
 
 失败重启
+    Run Keyword If Test Failed    Take Screenshot
     Run Keyword If Test Failed    登录
     Sleep    1
 
@@ -150,3 +154,15 @@ Library           String
     Wait Until Page Contains    操作日志
     Title Should Be    操作日志
     Sleep    1
+
+随机金额
+    ${long}    Generate Random String    1    34567
+    ${pre}    Generate Random String    1    12345
+    ${zero}    Generate Random String    ${long}    0
+    ${金额}    Set Variable    ${pre}${zero}
+    [Return]    ${金额}
+
+弹出信息校验
+    [Arguments]    ${msg}
+    ${alert}    Get Alert Message
+    Should Contain    ${alert}    ${msg}

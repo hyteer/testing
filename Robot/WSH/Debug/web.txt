@@ -1,5 +1,5 @@
 *** Settings ***
-Library           Selenium2Library
+Library           Selenium2Library    timeout=5    implicit_wait=5
 Resource          ../Web/Resource/配置参数.robot
 
 *** Test Cases ***
