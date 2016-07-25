@@ -24,6 +24,15 @@ sample
     Run Keyword If    ${sign}!=None    Log    sign is not none.
     ...    ELSE    Log    sign is none
 
+if-multi
+    ${x}    Set Variable    11
+    Run Keyword If    ${x}>=2    Log    yes
+    ...    ELSE    Log    no
+    Run Keyword If    ${x}!=1    Log    yes
+    ...    ELSE    Log    no
+    Run Keyword If    ${x}>2 and ${x}<10    Log    Multi:yes
+    ...    ELSE    Log    Multi:no
+
 *** Keywords ***
 testif
     [Arguments]    ${n}=1    ${device}=medium    ${interval}=500

@@ -138,6 +138,22 @@ Library           Screenshot
     Close Window
     Sleep    1
 
+查看参与人员
+    [Arguments]    ${xpath}    ${title}
+    ####查看参与人员
+    Click Element    xpath=${xpath}
+    Sleep    1
+    Select Window    ${title}
+    Sleep    2
+    ##数据检查
+    ${第一行数据}    Get Text    //*[@id="main-container"]/div/div[2]/div[2]/div/div/div[3]/table/tbody/tr/td
+    Run Keyword If    '${第一行数据}'=='暂无数据'    Log    暂无参与数据。
+    ##数据导出
+    Click Link    导出参与人员
+    Sleep    2
+    Close Window
+    Sleep    1
+
 查看中奖名单
     [Arguments]    ${xpath}
     Click Element    xpath=${xpath}
@@ -166,3 +182,13 @@ Library           Screenshot
     [Arguments]    ${msg}
     ${alert}    Get Alert Message
     Should Contain    ${alert}    ${msg}
+
+选择图片
+    [Arguments]    ${xpath}
+    Click Element    ${xpath}
+    Wait Until Page Contains Element    //h4[text()="图片管理器"]
+    Sleep    1
+    Click Element    //*[@id="select_ajax_form"]/div[3]/div/ul/li[8]/a/img
+    Sleep    1
+    Click Element    id=submitImage
+    Sleep    2

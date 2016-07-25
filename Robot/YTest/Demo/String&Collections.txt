@@ -34,3 +34,4 @@ random_num
     ${pre}    Generate Random String    1    12345
     ${zero}    Generate Random String    ${long}    0
     ${限额}    Set Variable    ${pre}${zero}
+    ${rand}    Generate Random String    1    [NUMBERS]

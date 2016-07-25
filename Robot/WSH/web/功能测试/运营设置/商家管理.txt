@@ -64,10 +64,8 @@ Resource          ../../Resource/查询API.robot
     ####状态校验
     ${status_wx}    Run Keyword And Return Status    Checkbox Should Be Selected    //*[@id="main-container"]/div/div[2]/div[2]/div/div/form/table/tbody/tr[1]/td[4]/label/input
     ${status_hd}    Run Keyword And Return Status    Checkbox Should Be Selected    //*[@id="main-container"]/div/div[2]/div[2]/div/div/form/table/tbody/tr[5]/td[4]/label/input
-    Run Keyword If    ${status_wx}==True    支付管理操作校验1    ${EMPTY}
-    ...    ELSE    Should Be Equal As Numbers    ${len_wx}    0    #${len_wx}    1
-    Run Keyword If    ${status_hd}==True    Should Be Equal As Numbers    ${len_hd}    1
-    ...    ELSE    Should Be Equal As Numbers    ${len_hd}    0
+    ####状态开关
+    支付管理状态开关校验    ${len_wx}
     Log    Success!
     ####操作校验
 
@@ -134,14 +132,18 @@ Resource          ../../Resource/查询API.robot
     Set Suite Variable    ${len_wx}
     Set Suite Variable    ${len_hd}
 
-支付管理操作校验1
+支付管理状态开关校验
     [Arguments]    ${len}
-    Should Be Equal As Numbers    ${len}    1
     Sleep    1
     Click Element    //*[@id="main-container"]/div/div[2]/div[2]/div/div/form/table/tbody/tr[1]/td[4]/label/input
+    Sleep    1.5
+    ${alert}    Get Alert Message
+    Should Contain    ${alert}    成功
+    Sleep    2
     查询支付方式
     Sleep    3
-    Should Be Equal As Numbers    ${len}    0
+    Run Keyword If    ${len}==1    Should Be Equal As Integers    ${len_wx}    0
+    ...    ELSE    Should Be Equal As Integers    ${len_wx}    1
 
 生成费率
     ${num}    Generate Random String    2    012345678

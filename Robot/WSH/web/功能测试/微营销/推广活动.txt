@@ -280,9 +280,9 @@ Library           Screenshot
     Click Element    id=btnConfirm
     Sleep    1
     Input Text    xpath=//*[@id="rule"]/form/div[1]/div/input    ${actname}
-    Input Text    xpath=//*[@id="end_time"]    2017-07-28 23:59:59
-    等待时间    0.5
-    Input Text    xpath=//*[@id="start_time"]    2017-07-17 23:59:59
+    选择时间
+    #Input Text    xpath=//*[@id="end_time"]    2017-07-28 23:59:59
+    #Input Text    xpath=//*[@id="start_time"]    2017-07-17 23:59:59
     Sleep    1
     ###奖品设置
     ${award}    随机字符    奖品    12
@@ -816,6 +816,7 @@ Library           Screenshot
     Sleep    1
     Click Link    确定
     Sleep    2
+    ####保存
     Click Element    id=post
     Sleep    2
     ${alert}    Get Alert Message
