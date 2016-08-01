@@ -1,13 +1,14 @@
 *** Settings ***
-Suite Setup       登录
+Suite Setup       API登录
 Suite Teardown    关闭浏览器
+Test Teardown     失败重启
 Resource          ../../Resource/常用操作.robot
 Library           Selenium2Library
-Resource          ../../Resource/查询API.robot
+Resource          ../../Resource/API.robot
 
 *** Test Cases ***
 修改商家信息
-    [Tags]    ready
+    [Tags]    paused
     ####进入页面
     点击链接菜单    运营设置
     ${sub}    Set Variable    商家信息

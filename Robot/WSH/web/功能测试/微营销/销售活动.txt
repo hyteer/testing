@@ -7,6 +7,7 @@ Library           Selenium2Library
 Resource          ../../Resource/常用操作.robot
 Resource          ../../Resource/功能菜单.robot
 Resource          ../../Resource/配置参数.robot
+Library           Ytools
 
 *** Test Cases ***
 满减包邮_首页
@@ -74,7 +75,7 @@ Resource          ../../Resource/配置参数.robot
     Sleep    1
     ####生成参数
     ${活动名称}    随机字符    【满减】    15
-    ${商品选择}    Generate Random String    1    12
+    ${商品选择}    Generate Random String    1    2
     ${满}    Generate Random String    1    12
     ${满-元}    随机数字    2
     ${满-件}    Generate Random String    1    23456789
@@ -236,6 +237,7 @@ Resource          ../../Resource/配置参数.robot
     ${活动说明}    随机字符    【活动说明】    60
     ${运费策略}    Generate Random String    1    0
     ##商品
+    ${商品}    Generate Random String    1    1
     ${团购价}    Generate Random String    1    12345
     ${配额}    随机数字    2
     ${参团人数}    Set Variable    ${配额}
@@ -254,7 +256,7 @@ Resource          ../../Resource/配置参数.robot
     Sleep    0.5
     Input Text    //*[@id="form-field-8"]    ${摘要内容}
     Sleep    0.5
-    Run Keyword If    ${活动图片}==1    选择图片    //*[@id="home"]/div[2]/form/div[3]/div/div/a/label/span
+    Run Keyword If    ${活动图片}==1    选择图片
     Click Element    //*[@id="btnConfirm"]
     Sleep    2
     ####输入活动参数
@@ -264,19 +266,16 @@ Resource          ../../Resource/配置参数.robot
     Sleep    1
     选择时间
     ##选择商品
-    Click Link     选择商品
+    Click Link    选择商品
     Wait Until Page Contains Element    //h4[text()="商品列表"]
     Sleep    1
-    Click Element    //*[@id="product"]/div[1]/table/tbody[2]/tr[1]/td[3]
+    Click Element    //*[@id="product"]/div[1]/table/tbody[${商品}]/tr[1]/td[3]
     Sleep    1.5
-    Click Element    //*[@id="product"]/div[1]/table/tbody[2]/tr[2]/td/table/tbody/tr[2]/td[2]
+    Click Element    //*[@id="product"]/div[1]/table/tbody[${商品}]/tr[2]/td/table/tbody/tr[2]/td[2]
     Sleep    1
     Click Element    //*[@id="productModal"]/div/div/div[3]/a[2]
     Sleep    2
-    Input Text    //*[@id="tbody"]/tr/td[6]/input    0.0${团购价}
-    Input Text    //*[@id="tbody"]/tr/td[8]/input    ${配额}
-    Input Text    //*[@id="tbody"]/tr/td[9]/input    ${参团人数}
-    Input Text    //*[@id="tbody"]/tr/td[10]/input    ${每人限购}
+    拼团商品设置
     Sleep    1
     ##保存商品
     Click Element    //*[@id="tbody"]/tr/td[11]/div/a[1]
@@ -290,7 +289,7 @@ Resource          ../../Resource/配置参数.robot
     ##活动主页面
     Input Text    //*[@id="share"]/div[1]/div/input    ${分享标题}
     Input Text    //*[@id="share"]/div[2]/div/input    ${分享描述}
-    Run Keyword If    ${分享图标}==1    选择图片    //*[@id="share"]/div[3]/div/div/a/label/span
+    Run Keyword If    ${分享图标}==1    选择图片
     Select Radio Button    is_auto_share    ${动态分享标题}
     Sleep    1
     ####保存
@@ -349,9 +348,8 @@ Resource          ../../Resource/配置参数.robot
     Wait Until Page Contains Element    xpath=//*[@id="main-container"]/div/div[2]/div[2]/div/div/div[3]/table/tbody/tr[1]/td[7]/div/a[4]    10    error
     Click Element    xpath=//*[@id="main-container"]/div/div[2]/div[2]/div/div/div[3]/table/tbody/tr[1]/td[7]/div/a[4]
     等待时间    1
-    Wait Until Page Contains Element    xpath=/html/body/div[4]/div/table/tbody/tr[3]/td/div[2]/button[1]    10    error
-    Click Element    xpath=/html/body/div[4]/div/table/tbody/tr[3]/td/div[2]/button[1]
-    等待时间    1
+    Click Element    xpath=//button[@data-id="ok" and text()="删除"]
+    Sleep    2
     confirm action
     等待时间    3
     #关闭浏览器
@@ -519,7 +517,7 @@ Resource          ../../Resource/配置参数.robot
     Click Element    //*[@id="cardModal"]/div/div/form/div[2]/div/div/table/tbody/tr[2]
     Sleep    2
     Click Element    //*[@id="cardModal"]/div/div/form/div[3]/a[2]
-    #Click Link    确定
+    #Click Link    确认
     Sleep    2
     ####适用订单
     Select From List    //*[@id="area"]/tbody/tr[2]/td[2]/div[6]/label[3]/select    ${卡券-适用}
@@ -534,7 +532,7 @@ Resource          ../../Resource/配置参数.robot
     Click Element    //*[@id="redPaceModal"]/div/div/table/tbody/tr[1]/td[1]/label/input
     Sleep    2
     Click Element    //*[@id="redPackModal"]/div/div/div/a[2]
-    #Click Link    确定
+    #Click Link    确认
     Sleep    2
 
 指定区域包邮
@@ -551,10 +549,51 @@ Resource          ../../Resource/配置参数.robot
     Sleep    2
 
 添加商品
+    [Arguments]    ${第一行xpath}=//*[@id="product"]/div[1]/table/tbody[1]/tr[2]/td/table/tbody/tr[1]
     Click Element    id=goods
     Wait Until Page Contains Element    //h4[text()="商品列表"]
     Sleep    1
-    Click Element    //*[@id="product"]/div[1]/table/tbody[1]/tr[1]/td[3]
+    Click Element    //*[@id="product"]/div[1]/table/tbody[1]/tr[1]/td[3]    #选择商品
+    Sleep    1
+    Click Element    ${第一行xpath}    #选择规格
     Sleep    1.5
     Click Element    //*[@id="main-container"]/div[3]/div/div/div[3]/a[2]
+    Sleep    2
+
+拼团商品设置
+    ####获取参数
+    ${销售价}    Get Text    //*[@id="tbody"]/tr/td[5]
+    ${库存}    Get Text    //*[@id="tbody"]/tr/td[7]
+    ${库存}    Convert To Integer    ${库存}
+    ####生成参数
+    ${i1}    Evaluate    ${销售价}*0.6
+    ${i2}    Evaluate    ${销售价}*0.9
+    ${j1}    Evaluate    ${库存}*0.6
+    ${j2}    Evaluate    ${库存}*0.9
+    ${jj1}    Evaluate    int(round(${j1}))
+    ${jj2}    Evaluate    int(round(${j2}))
+    ${团购价}    Yt Get Rand Float    ${i1}    ${i2}    2
+    ${配额}    Yt Get Rand Integer    ${jj1}    ${jj2}
+    ${min}    Evaluate    int(5)
+    ${min}    Run Keyword If    ${min}>${库存}    Set Variable    ${库存}
+    ...    ELSE    Set Variable    ${min}
+    ${max}    Evaluate    ${配额}*0.6
+    ${max}    Evaluate    int(round(${max}))
+    ${max}    Run Keyword If    ${min}>${max}    Set Variable    ${min}
+    ...    ELSE    Set Variable    ${max}
+    ${参团人数}    Yt Get Rand Integer    ${min}    ${max}
+    ##规则限制
+    ${参团人数}    Run Keyword If    ${参团人数}<2    Set Variable    2
+    ...    ELSE    Set Variable    ${参团人数}
+    ${配额}    Run Keyword If    ${参团人数}>${配额}    Set Variable    ${参团人数}
+    ...    ELSE    Set Variable    ${配额}
+    ${每人限购}    Generate Random String    1    23456
+    ${每人限购}    Run Keyword If    ${每人限购}>${参团人数}    Set Variable    ${参团人数}
+    ...    ELSE    Set Variable    ${每人限购}
+    ##类型转换
+    ${团购价}    Yt To String    ${团购价}
+    Input Text    //*[@id="tbody"]/tr/td[6]/input    ${团购价}
+    Input Text    //*[@id="tbody"]/tr/td[8]/input    ${配额}
+    Input Text    //*[@id="tbody"]/tr/td[9]/input    ${参团人数}
+    Input Text    //*[@id="tbody"]/tr/td[10]/input    ${每人限购}
     Sleep    2

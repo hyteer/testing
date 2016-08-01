@@ -20,6 +20,7 @@ Library           Screenshot
     Maximize Browser Window
 
 关闭浏览器
+    Sleep    3
     Close All Browsers
 
 获取分组名
@@ -87,7 +88,7 @@ Library           Screenshot
     ${prelen}    Get Length    ${pre}
     ${randlen}    Evaluate    ${len}-${prelen}
     ${rand}    Generate Random String    ${randlen}
-    ${randstr}    Set Variable    ${pre}-${rand}
+    ${randstr}    Set Variable    ${pre}${rand}
     [Return]    ${randstr}
 
 随机数字
@@ -100,8 +101,10 @@ Library           Screenshot
     Click Element    id=start_time
     Sleep    1
     Select Frame    xpath=//iframe[@hidefocus='true']
-    Click Element    xpath=/html/body/div/div[3]/table/tbody/tr[6]/td[5]
-    Sleep    0.8
+    Click Element    xpath=//*[@id="dpTitle"]/div[6]/a
+    Sleep    1
+    Click Element    xpath=/html/body/div/div[3]/table/tbody/tr[3]/td[2]
+    Sleep    1
     Click Element    id=dpOkInput
     Sleep    1
     Unselect Frame
@@ -110,14 +113,93 @@ Library           Screenshot
     Sleep    1
     Select Frame    xpath=//iframe[@hidefocus='true']
     Click Element    xpath=//*[@id="dpTitle"]/div[6]/a
-    Sleep    0.6
-    Click Element    xpath=/html/body/div/div[3]/table/tbody/tr[4]/td[5]
-    Sleep    0.6
+    Sleep    1
+    Click Element    xpath=/html/body/div/div[3]/table/tbody/tr[5]/td[6]
+    Sleep    1
     Click Element    id=dpOkInput
     Unselect Frame
 
+选择日期
+    #选择开始日期
+    Click Element    id=start_time
+    Sleep    1
+    Select Frame    xpath=//iframe[@hidefocus='true']
+    Click Element    xpath=//*[@id="dpTitle"]/div[6]/a
+    Sleep    1
+    Click Element    xpath=/html/body/div/div[3]/table/tbody/tr[3]/td[2]
+    Sleep    1
+    #Click Element    id=dpOkInput
+    Unselect Frame
+    #选择结束日期
+    Click Element    id=start_end
+    Sleep    1
+    Select Frame    xpath=//iframe[@hidefocus='true']
+    Click Element    xpath=//*[@id="dpTitle"]/div[6]/a
+    Sleep    1
+    Click Element    xpath=/html/body/div/div[3]/table/tbody/tr[5]/td[6]
+    Sleep    1
+    #Click Element    id=dpOkInput
+    Unselect Frame
+
+修改时间
+    #选择结束时间
+    Click Element    id=end_time
+    Sleep    1
+    Select Frame    xpath=//iframe[@hidefocus='true']
+    Click Element    xpath=//*[@id="dpTitle"]/div[6]/a    #下月
+    Sleep    1
+    Click Element    xpath=/html/body/div/div[3]/table/tbody/tr[5]/td[5]
+    Sleep    1
+    Click Element    id=dpOkInput
+    Unselect Frame
+    #选择开始时间
+    Click Element    id=start_time
+    Sleep    1
+    Select Frame    xpath=//iframe[@hidefocus='true']
+    Click Element    xpath=//*[@id="dpTitle"]/div[6]/a
+    Sleep    1
+    Click Element    xpath=/html/body/div/div[3]/table/tbody/tr[4]/td[5]
+    Sleep    1
+    Click Element    id=dpOkInput
+    Sleep    1
+    Unselect Frame
+
+修改日期
+    #选择结束日期
+    Click Element    id=start_end
+    Sleep    1
+    Select Frame    //iframe[@hidefocus='true']
+    Click Element    //*[@id="dpTitle"]/div[6]/a    #下月
+    Sleep    1
+    Click Element    xpath=/html/body/div/div[3]/table/tbody/tr[5]/td[5]
+    Sleep    1
+    #Click Element    id=dpOkInput
+    Unselect Frame
+    #选择开始日期
+    Click Element    id=start_time
+    Sleep    1
+    Select Frame    //iframe[@hidefocus='true']
+    Click Element    //*[@id="dpTitle"]/div[6]/a    #下月
+    Sleep    1
+    Click Element    xpath=/html/body/div/div[3]/table/tbody/tr[2]/td[4]
+    Sleep    1
+    #Click Element    id=dpOkInput
+    Unselect Frame
+
+选择图片
+    Click Element    //div[contains(@class,"ace-file-input")]/a[@data-target="#myModalImage"]
+    Wait Until Page Contains Element    //h4[text()="图片管理器"]
+    Sleep    2
+    Wait Until Page Contains Element    //*[@id="select_ajax_form"]/div[3]/div/ul/li[8]/a/img
+    Sleep    1
+    Click Element    //*[@id="select_ajax_form"]/div[3]/div/ul/li[8]/a/img
+    Sleep    1
+    Click Element    id=submitImage
+    Sleep    2
+
 失败重启
     Run Keyword If Test Failed    Take Screenshot
+    Sleep    1
     Run Keyword If Test Failed    登录
     Sleep    1
 
@@ -179,16 +261,83 @@ Library           Screenshot
     [Return]    ${金额}
 
 弹出信息校验
-    [Arguments]    ${msg}
+    [Arguments]    ${msg}=成功
     ${alert}    Get Alert Message
     Should Contain    ${alert}    ${msg}
 
-选择图片
+随机手机号
+    ${pre}    Generate Random String    1    456789
+    ${num}    Generate Random String    8    0123456789
+    ${phone}    Set Variable    13${pre}${num}
+    [Return]    ${phone}
+
+保存并闭关
+    Click Element    //*[@id="modal-footer"]/a[2]
+
+字段校验
+    [Arguments]    ${xpath}    ${actname}
+    ###结果校验
+    Log    ----结果校验----
+    ${actname2}    Get Text    ${xpath}
+    Should Be Equal As Strings    ${actname}    ${actname2}
+    Log    Sucess!
+
+字段校验Not
     [Arguments]    ${xpath}
-    Click Element    ${xpath}
-    Wait Until Page Contains Element    //h4[text()="图片管理器"]
+    ###结果校验
+    Log    ----结果校验----
+    Page Should Not Contain Element    ${xpath}
+    Log    Sucess!
+
+选择开始日期
+    #选择开始日期
+    Click Element    id=start_time
     Sleep    1
-    Click Element    //*[@id="select_ajax_form"]/div[3]/div/ul/li[8]/a/img
+    Select Frame    xpath=//iframe[@hidefocus='true']
+    Click Element    xpath=//*[@id="dpTitle"]/div[6]/a
     Sleep    1
-    Click Element    id=submitImage
-    Sleep    2
+    Click Element    xpath=/html/body/div/div[3]/table/tbody/tr[3]/td[2]
+    Sleep    1
+    #Click Element    id=dpOkInput
+    Unselect Frame
+
+选择结束日期
+    #选择结束日期
+    Click Element    id=start_end
+    Sleep    1
+    Select Frame    //iframe[@hidefocus='true']
+    Click Element    //*[@id="dpTitle"]/div[6]/a    #下月
+    Sleep    1
+    Click Element    xpath=/html/body/div/div[3]/table/tbody/tr[5]/td[5]
+    Sleep    1
+    #Click Element    id=dpOkInput
+    Unselect Frame
+
+修改开始日期
+    #选择开始日期
+    Click Element    id=start_time
+    Sleep    1
+    Select Frame    //iframe[@hidefocus='true']
+    Click Element    //*[@id="dpTitle"]/div[6]/a    #下月
+    Sleep    1
+    Click Element    xpath=/html/body/div/div[3]/table/tbody/tr[2]/td[4]
+    Sleep    1
+    #Click Element    id=dpOkInput
+    Unselect Frame
+
+修改结束日期
+    #选择结束日期
+    Click Element    id=start_end
+    Sleep    1
+    Select Frame    //iframe[@hidefocus='true']
+    Click Element    //*[@id="dpTitle"]/div[6]/a    #下月
+    Sleep    1
+    Click Element    xpath=/html/body/div/div[3]/table/tbody/tr[5]/td[5]
+    Sleep    1
+    #Click Element    id=dpOkInput
+    Unselect Frame
+
+确认
+    [Arguments]    ${action}=确定
+    [Tags]
+    Click Element    //button[@data-id="ok" and text()="${action}"]

@@ -1,5 +1,5 @@
 *** Settings ***
-Resource          ../../Resource/查询API.robot
+Resource          ../../Resource/API.robot
 
 *** Test Cases ***
 test

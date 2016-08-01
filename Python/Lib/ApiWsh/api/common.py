@@ -24,7 +24,7 @@ class Common(object):
     def wsh_get_cookie(self):
 
         print "---Test get cookie---"
-        url = 'http://betanewwsh.vikduo.com/captcha/getimage'
+        url = self.baseurl+'/captcha/getimage'
         #url = 'http://betanewwsh.vikduo.com/reduction/list-ajax'
         headers = self.headers
 
@@ -68,6 +68,8 @@ class Common(object):
         #print "errcode:",js['errcode'],"errmsg:",js['errmsg']
 
         return r.text
+
+
 
 
 

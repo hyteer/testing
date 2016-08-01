@@ -53,7 +53,7 @@ Library           Screenshot
     Sleep    4
 
 大转盘_新增活动
-    [Tags]    ready
+    [Tags]    ready    add
     点击链接菜单    微营销
     点击链接菜单    大转盘
     Wait Until Page Contains    大转盘活动列表
@@ -66,28 +66,7 @@ Library           Screenshot
     Input Text    id=activity_name    ${actname}
     Sleep    1
     ###活动基本信息设置
-    #选择开始时间
-    Click Element    id=start_time
-    Sleep    1
-    Select Frame    xpath=//iframe[@hidefocus='true']
-    Sleep    1
-    Click Element    xpath=/html/body/div/div[3]/table/tbody/tr[6]/td[5]
-    Sleep    0.8
-    Click Element    id=dpOkInput
-    Sleep    1
-    Unselect Frame
-    #选择结束时间
-    Click Element    id=end_time
-    Sleep    1
-    Select Frame    xpath=//iframe[@hidefocus='true']
-    Click Element    xpath=//*[@id="dpTitle"]/div[6]/a
-    Sleep    0.6
-    Click Element    xpath=/html/body/div/div[3]/table/tbody/tr[4]/td[5]
-    Sleep    1
-    #Click Button    //div[@id="dpControl"]/input[@value="确定"]
-    Click Element    id=dpOkInput
-    Sleep    1
-    Unselect Frame
+    选择时间
     #活动类型
     Click Element    xpath=//*[@id="main-container"]/div/div[2]/div[2]/div/div/div/ng-form/div/div[4]/div/p[2]/label/input
     #是否强制关注
@@ -256,7 +235,7 @@ Library           Screenshot
     Sleep    1
 
 众筹活动_添加
-    [Tags]    ready
+    [Tags]    ready    add
     点击链接菜单    微营销
     点击链接菜单    众筹活动
     点击链接菜单    添加点赞众筹
@@ -293,7 +272,7 @@ Library           Screenshot
     Sleep    0.5
     Click Element    xpath=//*[@id="select_ajax_form"]/div[3]/div/ul/li[4]/a/img
     Sleep    0.5
-    Click Link    确定
+    Click Link    确认
     Sleep    1
     ${奖品数量}    随机数字    3
     Input Text    xpath=//*[@id="soucount"]    ${奖品数量}
@@ -414,7 +393,7 @@ Library           Screenshot
     ###注：导出的文件需进一步做校验
 
 砸金蛋_添加
-    [Tags]    ready
+    [Tags]    ready    add
     点击链接菜单    微营销
     点击链接菜单    砸金蛋
     Wait Until Page Contains    砸金蛋活动列表
@@ -427,27 +406,7 @@ Library           Screenshot
     Input Text    id=activity_name    ${actname}
     Sleep    3
     ###活动基本信息设置
-    #选择开始时间
-    Click Element    id=start_time
-    Sleep    1
-    Select Frame    xpath=//iframe[@hidefocus='true']
-    Sleep    1
-    Click Element    xpath=/html/body/div/div[3]/table/tbody/tr[6]/td[5]
-    Sleep    0.8
-    Click Element    id=dpOkInput
-    Sleep    1
-    Unselect Frame
-    #选择结束时间
-    Click Element    id=end_time
-    Sleep    1
-    Select Frame    xpath=//iframe[@hidefocus='true']
-    Click Element    xpath=//*[@id="dpTitle"]/div[6]/a
-    Sleep    0.6
-    Click Element    xpath=/html/body/div/div[3]/table/tbody/tr[4]/td[5]
-    Sleep    1
-    Click Element    id=dpOkInput
-    Sleep    1
-    Unselect Frame
+    选择时间
     #活动类型
     Click Element    xpath=//*[@id="main-container"]/div/div[2]/div[2]/div/div/div/ng-form/div/div[4]/div/p[2]/label/input
     #是否强制关注
@@ -599,7 +558,7 @@ Library           Screenshot
     查看日志    //*[@id="main-container"]/div/div[2]/div[2]/div/div/div[3]/table/tbody/tr[1]/td[6]/div/a[5]/i
 
 现金红包_添加
-    [Tags]    ready
+    [Tags]    ready    add
     点击链接菜单    微营销
     ${sub}    Set Variable    现金红包
     点击链接菜单    ${sub}
@@ -787,7 +746,7 @@ Library           Screenshot
     Sleep    3
 
 红包_赠送策略_添加
-    [Tags]    ready
+    [Tags]    ready    add
     点击链接菜单    微营销
     ${sub}    Set Variable    现金红包
     点击链接菜单    ${sub}
@@ -814,7 +773,7 @@ Library           Screenshot
     Sleep    1
     Click Element    //*[@id="redCashPackModal"]/div/div/form/div[2]/div/div/table/tbody/tr[2]
     Sleep    1
-    Click Link    确定
+    Click Link    确认
     Sleep    2
     ####保存
     Click Element    id=post
@@ -894,7 +853,7 @@ Library           Screenshot
 
 红包_赠送策略_筛选与搜索
     [Documentation]    查询结果可与后台进行比较
-    [Tags]
+    [Tags]    ready
     点击链接菜单    微营销
     ${sub}    Set Variable    现金红包
     点击链接菜单    ${sub}
@@ -939,7 +898,7 @@ Library           Screenshot
     Sleep    3
 
 红包_手动派发_添加
-    [Tags]
+    [Tags]    ready    add
     点击链接菜单    微营销
     ${sub}    Set Variable    现金红包
     点击链接菜单    ${sub}
@@ -966,7 +925,7 @@ Library           Screenshot
     Sleep    1
     Click Element    //*[@id="redCashPackModal"]/div/div/form/div[2]/div/div/table/tbody/tr[2]
     Sleep    1
-    Click Link    确定
+    Click Link    确认
     Sleep    2
     Click Element    id=post
     Sleep    2
@@ -1052,7 +1011,7 @@ Library           Screenshot
     Sleep    1
     Click Element    //*[@id="select_ajax_form"]/div[3]/div/ul/li[8]/a/img
     Sleep    0.5
-    Click Link    确定
+    Click Link    确认
     Sleep    1
     Input Text    xpath=//*[@id="soucount"]    ${奖品数量}
     Sleep    1

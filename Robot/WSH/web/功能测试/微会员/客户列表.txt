@@ -6,8 +6,18 @@ Library           Selenium2Library
 Resource          ../../Resource/常用操作.robot
 Resource          ../../Resource/功能菜单.robot
 Resource          ../../Resource/配置参数.robot
+Library           Screenshot
 
 *** Test Cases ***
+截屏测试
+    [Tags]    debug
+    Log    Test1...
+    Capture Page Screenshot
+    Sleep    1
+    Log    Test2...
+    Take Screenshot
+    Sleep    2
+
 客户列表
     [Tags]    ready
     [Setup]

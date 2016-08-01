@@ -1,6 +1,7 @@
 # encoding: utf-8
 import os
 import time
+import random
 
 
 class CommonUtils(object):
@@ -82,5 +83,32 @@ class CommonUtils(object):
         else:
             print "活动已经开始"
             return 0
+
+    def yt_get_rand_integer(self,min,max):
+        """ 产生一个随机整数
+        :param min: 最小值
+        :param max: 最大值
+        :return:
+        """
+        rand = random.randint(min, max)
+        return rand
+
+    def yt_get_rand_float(self,minimum,maximum,digits,debug="False"):
+        """ 产生一个随机浮点数
+
+        :param minimum: 最小值
+        :param maximum: 最大值
+        :param digits: 位数
+        :return:
+        """
+        min2 = float(minimum)
+        max2 = float(maximum)
+        digits2 = int(digits)
+
+        if debug == "True":
+            print "min:",min,"max:","digits:",digits
+        rand = round(random.uniform(min2, max2), digits2)
+        return rand
+
 
 

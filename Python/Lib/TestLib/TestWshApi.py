@@ -9,14 +9,14 @@ set = settings.Maisha
 cm = api.Common()
 sp = api.Shop()
 mk = api.Marketing()
-
+pd = api.Product()
 
 # get_cookie
 sid = cm.wsh_get_cookie()
 
 # Login 登录
 resptext = cm.wsh_login(sid)
-
+'''
 # actlist   获取活动列表
 sp.wsh_actlist(sid)
 
@@ -31,4 +31,7 @@ mk.get_reduction_actlist(sid)
 mk.get_secondkill_actlist(sid)
 
 mk.get_collectzan_actlist(sid)
-
+'''
+####Product####
+pd.get_product_list(sid)
+pd.get_product_detail(sid)

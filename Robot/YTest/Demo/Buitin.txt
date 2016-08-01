@@ -1,3 +1,7 @@
+*** Settings ***
+Library           random
+Library           Ytools
+
 *** Variables ***
 ${var}            Test var
 
@@ -47,3 +51,23 @@ Evaluate
 
 time
     ${time}    Get Time
+
+list2
+    @{list}    Create List    Act1    Act2    Act3
+    ${list2}    Create List    Act1    Act2    Act3
+    Log    ${list[1]}
+    Log    ${list2[2]}
+
+取整
+    ${销售价}    Set Variable    12
+    ${库存}    Set Variable    3
+    ${i1}    Evaluate    ${销售价}*0.6
+    ${i2}    Evaluate    ${销售价}*0.9
+    ${j1}    Evaluate    ${库存}*0.6
+    ${j2}    Evaluate    ${库存}*0.9
+    ${jj1}    Evaluate    int(round(${j1}))
+    ${jj2}    Evaluate    int(round(${j2}))
+
+GetRandFloat
+    ${num}    Yt Get Rand Float    0.01    3    2    True
+    Log    Num:${num}

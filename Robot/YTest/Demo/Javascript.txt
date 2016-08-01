@@ -1,6 +1,7 @@
 *** Test Cases ***
 exeJavascript
     Execute Javascript    document.getElementById("share").scrollIntoView();
+    Execute Javascript    var result = evaluator.evaluate('//*[@id="img-cate-scroll"]/ul/li[31]/span', document.documentElement, null,XPathResult.ORDERED_NODE_ITERATOR_TYPE, null); var node = result.iterateNext();node.scrollIntoView();
 
 javascript2
     Execute Javascript    var el=document.getElementById("form-field-8");txt=el.value;txt+='${str2}';el.value=txt;

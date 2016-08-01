@@ -6,6 +6,6 @@ Resource          配置参数.robot
 *** Keywords ***
 点击链接菜单
     [Arguments]    ${links}
-    Set Browser Implicit Wait    10
+    Set Browser Implicit Wait    20
     Click Link    ${links}
     Sleep    1

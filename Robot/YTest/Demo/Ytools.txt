@@ -29,3 +29,48 @@ compare_time
     ${start_time}    Set Variable    2016-07-21 16:58:58
     ${now}    Get Time
     ${status}    Yt Act Time Status    ${start_time}
+
+GetRand
+    ${销售价}    Set Variable    12
+    ${库存}    Set Variable    3
+    ${i1}    Evaluate    ${销售价}*0.6
+    ${i2}    Evaluate    ${销售价}*0.9
+    ${j1}    Evaluate    ${库存}*0.6
+    ${j2}    Evaluate    ${库存}*0.9
+    ${jj1}    Evaluate    int(round(${j1}))
+    ${jj2}    Evaluate    int(round(${j2}))
+    ${团购价}    Yt Get Rand Float    ${i1}    ${i2}    2
+    ${团购价}    Set Variable If    ${团购价}<0.01    0.01
+    ${配额}    Yt Get Rand Integer    ${jj1}    ${jj2}
+    ${配额}    Run Keyword If    ${配额}<1    Set Variable    1
+    ...    ELSE    Set Variable    ${配额}
+    Log    团购价：${团购价}
+    Log    配额：${配额}
+
+随机拼团商品数据
+    ${销售价}    Set Variable    14
+    ${库存}    Set Variable    ${2}
+    ####生成参数
+    ${i1}    Evaluate    ${销售价}*0.6
+    ${i2}    Evaluate    ${销售价}*0.9
+    ${j1}    Evaluate    ${库存}*0.6
+    ${j2}    Evaluate    ${库存}*0.9
+    ${jj1}    Evaluate    int(round(${j1}))
+    ${jj2}    Evaluate    int(round(${j2}))
+    ${团购价}    Yt Get Rand Float    ${i1}    ${i2}    2
+    ${配额}    Yt Get Rand Integer    ${jj1}    ${jj2}
+    ${min}    Evaluate    int(5)
+    ${min}    Run Keyword If    ${min}>${库存}    Set Variable    ${库存}
+    ...    ELSE    Set Variable    ${min}
+    ${max}    Evaluate    ${配额}*0.6
+    ${max}    Evaluate    int(round(${max}))
+    ${max}    Run Keyword If    ${min}>${max}    Set Variable    ${min}
+    ...    ELSE    Set Variable    ${max}
+    ${参团人数}    Yt Get Rand Integer    ${min}    ${max}
+    ${每人限购}    Generate Random String    1    23456
+    ${每人限购}    Run Keyword If    ${每人限购}>${参团人数}    Set Variable    ${参团人数}
+    ...    ELSE    Set Variable    ${每人限购}
+    ####输出数据
+    Log    团购价：${团购价}
+    Log    配额：${配额}
+    Log    参团人数：${参团人数}

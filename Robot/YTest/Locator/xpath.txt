@@ -12,3 +12,4 @@ xpath
     \    //*[title="50"]/parent::store
     #获取先辈    xpath=//*[@id="main-container"]/div/div[2]/div[2]/div/div/div/div/div[1]/form/table/tbody/tr/td[starts-with(text(),'点赞-')]/ancestor::tr[1]/td[1]
     #获取父辈    xpath=//*[@id="main-container"]/div/div[2]/div[2]/div/div/div/div/div[1]/form/table/tbody/tr/td[starts-with(text(),'点赞-')]/parent::tr[1]/td[1]
+    #获取结果中的第N个元素    xpath=(//*[@id="img-cate-scroll"]/ul/li/span[starts-with(text(),"【测试】")])[2]
