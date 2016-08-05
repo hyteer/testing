@@ -7,6 +7,7 @@ Resource          ../../Resource/常用操作.robot
 Resource          ../../Resource/功能菜单.robot
 Resource          ../../Resource/配置参数.robot
 Library           Collections
+Library           Ytools
 
 *** Variables ***
 
@@ -440,8 +441,8 @@ Library           Collections
     Click Element    //*[@id="modal-footer"]/a[2]    #保存
     ####领券设置
     ##生成参数
-    ${生成数量}    随机数字    2
-    ${领取限制}    随机数字    1
+    ${生成数量}    Evaluate    random.randint(50,1000)    random
+    ${领取限制}    Evaluate    int(round(${生成数量}/2))
     ${可转赠其他好友}    Generate Random String    1    01
     ${销券方式}    Generate Random String    1    123
     ${引导提示}    随机字符    请出示二维码    10
@@ -753,7 +754,7 @@ Library           Collections
     ${赠送策略}    Generate Random String    1    12
     ${消费金额}    随机数字    2
     ${订单限制}    Generate Random String    1    01
-    ${关联卡券}    Generate Random String    1    12345
+    ${关联卡券}    Generate Random String    1    01234
     ####输入参数
     Input Text    //*[@id="main-container"]/div/div[2]/div[2]/div[1]/div/form/div[1]/div/input    ${规则名称}
     Select Radio Button    radio_money    ${赠送策略}
@@ -761,13 +762,7 @@ Library           Collections
     Run Keyword If    ${赠送策略}==1    Input Text    id=amountVal    ${消费金额}
     Run Keyword If    ${赠送策略}==2    选择商品    //*[@id="productBody"]/div[2]/a[2]
     ##重新选择卡券
-    Click Link    重新选择
-    Wait Until Page Contains Element    //h4[text()="关联卡券"]
-    Sleep    1
-    Click Element    //*[@id="cardModal"]/div/div/form/div[2]/div/div/table/tbody/tr[${关联卡券}]/td[2]
-    Sleep    1
-    Click Element    //*[@id="cardModal"]/div/div/form/div[3]/a[2]    #确定
-    Sleep    2
+    重新选择卡券    ${关联卡券}
     Select From List    //*[@id="main-container"]/div/div[2]/div[2]/div[1]/div/form/div[6]/div/select    ${订单限制}
     Sleep    1
     ####保存
@@ -822,7 +817,7 @@ Library           Collections
     ${指定}    Generate Random String    1    12
     ${用户}    随机数字    1
     ${分组}    Generate Random String    1    1234
-    ${关联卡券}    Generate Random String    1    12345
+    ${关联卡券}    Generate Random String    1    1234
     ####输入参数
     Select Radio Button    usergroup    ${指定}
     Sleep    1
@@ -896,7 +891,8 @@ Library           Collections
     Sleep    2
     ####选择商品
     ${tr}    Generate Random String    1    1234
-    Click Element    //*[@id="product"]/div[1]/table/tbody/tr[${tr}]
+    ${flag}    Run Keyword And Return Status    Checkbox Should Not Be Selected    //*[@id="product"]/div[1]/table/tbody/tr[${tr}]/td[1]/label/input
+    Run Keyword If    ${flag}==True    Click Element    //*[@id="product"]/div[1]/table/tbody/tr[${tr}]
     Wait Until Element Is Visible    ${confirm_xpath}
     Sleep    1
     Click Element    ${confirm_xpath}
@@ -928,7 +924,7 @@ Library           Collections
 指定分组
     Click Element    //*[@id="tag_group"]/div/div/input
     Wait Until Page Contains Element    //h4[text()="选择分组"]    15
-    Wait Until Page Contains Element    //*[@id="cardGroupModal"]/div/div/form/div[2]/div/div/table/tbody/tr[2]    20
+    Wait Until Page Contains Element    //*[@id="cardGroupModal"]/div/div/form/div[2]/div/div/table/tbody/tr[2]    30
     #Wait Until Page Contains Element    //*[@id="cardGroupModal"]/div/div/form/div[2]/div/div/table/tbody/tr[${分组}]    20
     Sleep    1
     ####指定分组
@@ -940,3 +936,23 @@ Library           Collections
     Sleep    1
     Click Element    //*[@id="cardGroupModal"]/div/div/form/div[3]/a[2]
     Sleep    2
+
+重新选择卡券
+    [Arguments]    ${关联卡券}
+    Click Link    重新选择
+    Wait Until Page Contains Element    //h4[text()="关联卡券"]
+    Sleep    1
+    ####重新选择卡券
+    ${flag}    Run Keyword And Return Status    Radio Button Should Be Set To    Radio    ${关联卡券}
+    Run Keyword If    ${flag}==True    重新生成数字    ${关联卡券}
+    ${关联卡券}    Evaluate    ${关联卡券}+1
+    Click Element    //*[@id="cardModal"]/div/div/form/div[2]/div/div/table/tbody/tr[${关联卡券}]/td[2]
+    Sleep    1
+    Click Element    //*[@id="cardModal"]/div/div/form/div[3]/a[2]    #确定
+    Sleep    2
+
+重新生成数字
+    [Arguments]    ${关联卡券}
+    ${关联卡券}    Run Keyword If    ${关联卡券}==4    Evaluate    ${关联卡券}-1
+    ...    ELSE    Evaluate    ${关联卡券}+1
+    Set Suite Variable    ${关联卡券}

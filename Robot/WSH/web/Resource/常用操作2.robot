@@ -8,7 +8,7 @@ Library           Screenshot
 *** Keywords ***
 登录
     #Set Selenium Implicit Wait    10
-    Set Selenium Timeout    20
+    #Set Selenium Timeout    10
     Open Browser    ${URL}    chrome    #打开浏览器
     界面最大化
     Input Text    id=staff_id    ${USERNAME}    #输入用户名
@@ -143,20 +143,6 @@ Library           Screenshot
     #Click Element    id=dpOkInput
     Unselect Frame
 
-选择图片
-    [Arguments]    ${xpath}=//div[contains(@class,"ace-file-input")]/a[@data-target="#myModalImage"]
-    Click Element    ${xpath}
-    Wait Until Page Contains Element    //h4[text()="图片管理器"]    15
-    ####选择图片
-    ${图片}    Evaluate    random.randint(1,15)    random
-    Sleep    2
-    Wait Until Page Contains Element    //*[@id="select_ajax_form"]/div[3]/div/ul/li[${图片}]/a/img    15
-    Sleep    1
-    Click Element    //*[@id="select_ajax_form"]/div[3]/div/ul/li[${图片}]/a/img
-    Sleep    1
-    Click Element    id=submitImage
-    Sleep    2
-
 修改时间
     #选择结束时间
     Click Element    id=end_time
@@ -202,6 +188,20 @@ Library           Screenshot
     #Click Element    id=dpOkInput
     Unselect Frame
 
+选择图片
+    [Arguments]    ${xpath}=//div[contains(@class,"ace-file-input")]/a[@data-target="#myModalImage"]
+    Click Element    ${xpath}
+    Wait Until Page Contains Element    //h4[text()="图片管理器"]
+    ####选择图片
+    ${图片}    Evaluate    random.randint(0,15)    random
+    Sleep    2
+    Wait Until Page Contains Element    //*[@id="select_ajax_form"]/div[3]/div/ul/li[${图片}]/a/img
+    Sleep    1
+    Click Element    //*[@id="select_ajax_form"]/div[3]/div/ul/li[${图片}]/a/img
+    Sleep    1
+    Click Element    id=submitImage
+    Sleep    2
+
 失败重启
     Run Keyword If Test Failed    Take Screenshot
     Sleep    1
@@ -224,17 +224,6 @@ Library           Screenshot
     Sleep    2
     Close Window
     Sleep    1
-
-查看二维码_弹出窗
-    [Arguments]    ${xpath}
-    ####查看二维码
-    Click Element    ${xpath}
-    Wait Until Page Contains Element    //h4[contains(text(),"二维码")]
-    Sleep    1
-    Wait Until Element Is Visible    //*[@id="query"]/div/div/div[2]/div/div/img[starts-with(@src,"https://mp.weixin.qq.com/cgi-bin/showqrcode")]
-    Sleep    1
-    Click Element    //*[@id="query"]/div/div/div[1]/a
-    Sleep    2
 
 查看参与人员
     [Arguments]    ${xpath}    ${title}
@@ -281,43 +270,6 @@ Library           Screenshot
     ${alert}    Get Alert Message
     Should Contain    ${alert}    ${msg}
 
-随机选择下拉框
-    [Arguments]    ${path}
-    [Tags]
-    Click Element    xpath=${path}
-    等待时间    1
-    ${count}    Get Matching Xpath Count    xpath=${path}/option    #获取总数
-    log    ${count}
-    sleep    0.5
-    ${j}    Evaluate    random.randint(1,${count})    random
-    Run Keyword If    ${count}>1    Click Element    xpath=${path}/option[${j}]
-    ...    ELSE    Click Element    xpath=${path}/option[1]
-    ${title}    Get Text    xpath=${path}/option[${j}]
-    log    ${title}
-    [Return]    ${title}
-
-分页操作
-    [Arguments]    ${totle_path}    ${pange_number}=10    # ${totle_path}为总数所在的xpath的路径值，${pange_number}为每页展示的数据，默认是10条数据
-    sleep    0.5
-    #下面步骤根据总数计算出页数
-    ${totle}    get text    ${totle_path}    #获取列表总条数
-    ${page_num}    Evaluate    ${totle}/float(${pange_number})
-    ${yyy}    Evaluate    int(math.ceil(${page_num}))    math
-    #log    总页数为：${yyy}
-    #点击每页，且统计总数
-    ${sum}    Get Matching Xpath Count    //tr[@class='ng-scope']
-    : FOR    ${i}    IN RANGE    1    ${yyy}
-    \    点击链接菜单    »
-    \    sleep    1
-    \    ${count}    Get Matching Xpath Count    //tr[@class='ng-scope']
-    \    #sleep    2
-    \    log    ${count}
-    \    ${sum}    Evaluate    ${sum}+${count}
-    sleep    0.5
-    Run Keyword If    '${sum}'=='${totle}'    log    列表总数正确，总数为：${sum}，总页数为：${yyy}
-    ...    ELSE    log    列表总数错误
-    [Return]    ${totle}
-
 随机手机号
     ${pre}    Generate Random String    1    456789
     ${num}    Generate Random String    8    0123456789
@@ -328,11 +280,11 @@ Library           Screenshot
     Click Element    //*[@id="modal-footer"]/a[2]
 
 字段校验
-    [Arguments]    ${xpath}    ${校验字段}
+    [Arguments]    ${xpath}    ${actname}
     ###结果校验
     Log    ----结果校验----
-    ${校验字段2}    Get Text    ${xpath}
-    Should Be Equal As Strings    ${校验字段}    ${校验字段2}
+    ${actname2}    Get Text    ${xpath}
+    Should Be Equal As Strings    ${actname}    ${actname2}
     Log    Sucess!
 
 字段校验Not
@@ -394,7 +346,43 @@ Library           Screenshot
     [Arguments]    ${action}=确定
     [Tags]
     Click Element    //button[@data-id="ok" and text()="${action}"]
-    Sleep    1.5
+
+随机下拉框
+    [Arguments]    ${path}
+    Click Element    xpath=${path}
+    等待时间    1
+    ${count}    Get Matching Xpath Count    xpath=${path}/option    #获取总数
+    log    ${count}
+    sleep    0.5
+    ${j}    Evaluate    random.randint(1,${count})    random
+    Run Keyword If    ${count}>1    Click Element    xpath=${path}/option[${j}]
+    ...    ELSE    Click Element    xpath=${path}/option[1]    #Run Keyword If    ${count}>1    Click Element
+    ...    # xpath=${path}/option[${j}]    # ELSE    Click Element    xpath=${path}/option[1]
+    ${title}    Get Text    xpath=${path}/option[${j}]
+    log    ${title}
+    [Return]    ${title}
+
+分页操作
+    [Arguments]    ${totle_path}    ${pange_number}=10    # ${totle_path}为总数所在的xpath的路径值，${pange_number}为每页展示的数据，默认是10条数据
+    sleep    0.5
+    #下面步骤根据总数计算出页数
+    ${totle}    get text    ${totle_path}    #获取列表总条数
+    ${page_num}    Evaluate    ${totle}/float(${pange_number})
+    ${yyy}    Evaluate    int(math.ceil(${page_num}))    math
+    #log    总页数为：${yyy}
+    #点击每页，且统计总数
+    ${sum}    Get Matching Xpath Count    //tr[@class='ng-scope']
+    : FOR    ${i}    IN RANGE    1    ${yyy}
+    \    点击链接菜单    »
+    \    sleep    1
+    \    ${count}    Get Matching Xpath Count    //tr[@class='ng-scope']
+    \    #sleep    2
+    \    log    ${count}
+    \    ${sum}    Evaluate    ${sum}+${count}
+    sleep    0.5
+    Run Keyword If    '${sum}'=='${totle}'    log    列表总数正确，总数为：${sum}，总页数为：${yyy}
+    ...    ELSE    log    列表总数错误
+    [Return]    ${totle}
 
 弹出窗信息校验
     [Arguments]    ${msg}

@@ -11,7 +11,8 @@ class Wsh():
     user = '20151228'
     password = '123456'
     #baseurl = 'http://betanewwsh.snsshop.net'
-    baseurl = 'http://testnewwsh.nexto2o.com/'
+    baseurl = 'http://testnewwsh.snsshop.net/'
+    #baseurl = 'http://testnewwsh.nexto2o.com/'
 
     headers = {
             'Accept-Language': 'zh-CN,zh;q=0.8',

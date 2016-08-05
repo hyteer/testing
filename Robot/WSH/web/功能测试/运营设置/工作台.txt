@@ -13,7 +13,7 @@ Resource          ../../Resource/API.robot
     Log    --查询API：工作台数据--
     ${data}    工作台数据
     ${pay_money}    Get From Dictionary    ${data}    pay_money
-    ${pay_money}    Convert To Number    ${pay_money}
+    ${pay_money}    Convert To Integer    ${pay_money}
     ${pay_money}    Evaluate    ${pay_money}/100
     ${order_total}    Get From Dictionary    ${data}    order_total
     ${payed_order_total}    Get From Dictionary    ${data}    payed_order_total
@@ -61,7 +61,7 @@ Resource          ../../Resource/API.robot
     ${len}    Get Length    ${data}
     ${list1}    Create List
     Set Suite Variable    ${list1}
-    :FOR    ${i}    IN RANGE    5
+    : FOR    ${i}    IN RANGE    5
     \    获取公告信息_API    ${data}    ${i}    ${list1}
     Log    List1:${list1}
     ####进入页面
@@ -73,7 +73,7 @@ Resource          ../../Resource/API.robot
     ##获取页面数据
     ${list2}    Create List
     Set Suite Variable    ${list2}
-    :FOR    ${i}    IN RANGE    5
+    : FOR    ${i}    IN RANGE    5
     \    获取公告信息_页面    ${i}    ${list2}
     Log    Titles:${list2}
     Should Be Equal    ${list1}    ${list2}

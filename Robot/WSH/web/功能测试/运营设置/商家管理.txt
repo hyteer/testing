@@ -1,5 +1,5 @@
 *** Settings ***
-Suite Setup       API登录
+Suite Setup       登录
 Suite Teardown    关闭浏览器
 Test Teardown     失败重启
 Resource          ../../Resource/常用操作.robot

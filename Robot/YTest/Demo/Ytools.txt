@@ -74,3 +74,7 @@ GetRand
     Log    团购价：${团购价}
     Log    配额：${配额}
     Log    参团人数：${参团人数}
+
+screenshot
+    Log    Test taking screenshot
+    Yt Screenshot

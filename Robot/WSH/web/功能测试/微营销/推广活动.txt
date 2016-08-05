@@ -9,6 +9,7 @@ Resource          ../../Resource/配置参数.robot
 Library           Ytools
 Library           AutoItLibrary
 Library           Screenshot
+Library           Collections
 
 *** Test Cases ***
 众筹活动_首页检测
@@ -241,14 +242,7 @@ Library           Screenshot
     点击链接菜单    添加点赞众筹
     Sleep    1
     ###图文设置
-    ${str}    随机字符
-    Input Text    xpath=//*[@id="home"]/div[2]/form/div[1]/div/input    ${str}
-    Sleep    1
-    Click Element    xpath=//*[@id="home"]/div[2]/form/div[3]/div/div/a/label    #活动图片
-    Sleep    1.4
-    Click Element    xpath=//*[@id="select_ajax_form"]/div[3]/div/ul/li[7]/a/img
-    Sleep    1
-    Click Element    id=submitImage
+    选择图片
     Sleep    1
     ###活动规则
     ${str2}    随机字符    测试描述：    30
@@ -267,12 +261,7 @@ Library           Screenshot
     ${award}    随机字符    奖品    12
     Input Text    xpath=//*[@id="souname"]    ${award}
     #选择奖品图片
-    Click Element    xpath=//a[@ng-click="sourceImg()"]
-    Wait Until Page Contains Element    xpath=//*[@id="select_ajax_form"]/div[3]/div/ul/li[4]/a/img
-    Sleep    0.5
-    Click Element    xpath=//*[@id="select_ajax_form"]/div[3]/div/ul/li[4]/a/img
-    Sleep    0.5
-    Click Link    确认
+    选择图片
     Sleep    1
     ${奖品数量}    随机数字    3
     Input Text    xpath=//*[@id="soucount"]    ${奖品数量}
@@ -773,7 +762,7 @@ Library           Screenshot
     Sleep    1
     Click Element    //*[@id="redCashPackModal"]/div/div/form/div[2]/div/div/table/tbody/tr[2]
     Sleep    1
-    Click Link    确认
+    Click Element    //div[@class="modal-footer"]/a[text()="确定"]    #确定
     Sleep    2
     ####保存
     Click Element    id=post
@@ -802,6 +791,7 @@ Library           Screenshot
     ${规则名称}    随机字符    【赠送】改    10
     ${规则类型}    Generate Random String    1    12
     ${消费金额}    随机数字    2
+    ${关联红包}    Generate Random String    1    1
     Input Text    //*[@id="main-container"]/div/div[2]/div[2]/div[1]/div/form/div[1]/div/input    ${规则名称}
     Sleep    1
     Select Radio Button    radio_money    ${规则类型}
@@ -810,13 +800,7 @@ Library           Screenshot
     ...    ELSE    选择商品
     Sleep    2
     #重新选择红包
-    Click Element    //*[@id="main-container"]/div/div[2]/div[2]/div[1]/div/form/div[4]/div/div/p/a
-    Wait Until Page Contains Element    //h4[text()="选择现金红包"]    15
-    Sleep    1
-    Click Element    //*[@id="redCashPackModal"]/div/div/form/div[2]/div/div/table/tbody/tr[1]
-    Sleep    1
-    Click Element    //*[@id="redCashPackModal"]/div/div/form/div[3]/a[text()="确定"]
-    Sleep    2
+    重新选择红包    ${关联红包}
     Click Element    id=post
     Sleep    2
     ${alert}    Get Alert Message
@@ -910,32 +894,22 @@ Library           Screenshot
     Click Link    派送红包
     Sleep    2
     #生成随机参数
-    ${红包名称}    随机字符    【测试】    10
-    ${规则类型}    Generate Random String    1    12
-    ${消费金额}    随机数字    2
-    Input Text    //*[@id="main-container"]/div/div[2]/div[2]/div[1]/div/form/div[1]/div/input    ${规则名称}
+    ${派发模式}    Generate Random String    1    12
+    Select Radio Button    usergroup    ${派发模式}
     Sleep    1
-    Select Radio Button    radio_money    ${规则类型}
+    Run Keyword If    ${派发模式}==1    选择用户
+    ...    ELSE    指定分组
     Sleep    1
-    Run Keyword If    ${规则类型}==1    Input Text    //*[@id="amountVal"]    ${消费金额}
-    ...    ELSE    选择商品
-    Sleep    2
-    Click Element    //*[@id="main-container"]/div/div[2]/div[2]/div[1]/div/form/div[5]/div/span    #选择红包
-    Wait Until Page Contains Element    //h4[text()="选择现金红包"]    15
+    选择红包
+    Click Element    //*[@id="next"]
     Sleep    1
-    Click Element    //*[@id="redCashPackModal"]/div/div/form/div[2]/div/div/table/tbody/tr[2]
-    Sleep    1
-    Click Link    确认
-    Sleep    2
     Click Element    id=post
     Sleep    2
     ${alert}    Get Alert Message
-    Should Contain    ${alert}    成功
+    Log    Alert Message:${alert}
+    ${flag}    Run Keyword And Return Status    Should Contain    ${alert}    成功
     Sleep    2
     ###结果校验
-    Page Should Contain Element    //*[@id="main-container"]/div/div[2]/div[2]/div/div/div/div/div/div/form/table/tbody/tr/td[starts-with(text(),"${规则名称}")]
-    Log    Sucess!
-    Sleep    1
 
 众筹活动_添加2
     [Tags]    spec
@@ -991,12 +965,14 @@ Library           Screenshot
     Click Element    //*[@id="productBody"]/div[2]/a[text()="确定"]
 
 选择红包
-    Click Link    link=选择商品
+    Click Element    //*[@id="home"]/form/div[4]/div/div/div/span
     Sleep    2
-    Click Element    //*[@id="product"]/div[1]/table/tbody/tr[2]
-    Wait Until Element Is Visible    //*[@id="productBody"]/div[2]/a[text()="确定"]
+    ${tr}    Generate Random String    1    1234
+    Click Element    //*[@id="redCashPackModal"]/div/div/form/div[2]/div/div/table/tbody/tr[${tr}]
+    Wait Until Element Is Visible    //div[@class="modal-footer"]/a[text()="确定"]
     Sleep    1
-    Click Element    //*[@id="productBody"]/div[2]/a[text()="确定"]
+    Click Element    //div[@class="modal-footer"]/a[text()="确定"]
+    Sleep    2
 
 添加奖品
     ##生成参数
@@ -1037,3 +1013,62 @@ Alert信息判断
 获取alert信息
     ${alert}    Get Alert Message
     Set Suite Variable    ${alert}
+
+选择用户
+    Click Element    //*[@id="tag_user"]/div/div/div[1]/a
+    Wait Until Page Contains Element    //h4[text()="选择用户"]
+    Sleep    1
+    ####用户
+    ${用户组}    Create List    Tony    YT    Dreamwaker
+    ${rand}    Generate Random String    1    012
+    ${用户}    Get From List    ${用户组}    ${rand}
+    ##搜索用户
+    Input Text    //*[@id="userBody"]/div[1]/div[1]/input    ${用户}
+    Sleep    1
+    Click Element    //*[@id="userBody"]/div[1]/div[1]/span/a
+    Sleep    1
+    ##确定
+    ${用户昵称}    Get Text    //*[@id="userBody"]/table/tbody/tr[1]/td[2]
+    Click Element    //*[@id="userBody"]/table/tbody/tr[1]/td[1]
+    #${用户昵称}    Get Text    //*[@id="userBody"]/table/tbody/tr[${用户}]/td[2]
+    #Click Element    //*[@id="userBody"]/table/tbody/tr[${用户}]
+    Sleep    1
+    Click Element    //*[@id="cardUserModal"]/div/div/form/div[3]/a[2]
+    Sleep    2
+    Set Suite Variable    ${用户昵称}
+
+指定分组
+    Click Element    //*[@id="tag_group"]/div/div/input
+    Wait Until Page Contains Element    //h4[text()="选择分组"]    15
+    Wait Until Page Contains Element    //*[@id="cardGroupModal"]/div/div/form/div[2]/div/div/table/tbody/tr[2]    30
+    #Wait Until Page Contains Element    //*[@id="cardGroupModal"]/div/div/form/div[2]/div/div/table/tbody/tr[${分组}]    20
+    Sleep    1
+    ####指定分组
+    Execute Javascript    var evaluator = new XPathEvaluator();var result = evaluator.evaluate('//*[@id="cardGroupModal"]/div/div/form/div[2]/div/div/table/tbody/tr[336]', document.documentElement, null,XPathResult.ORDERED_NODE_ITERATOR_TYPE, null); var node = result.iterateNext();node.scrollIntoView();
+    Sleep    1
+    ####
+    Click Element    //*[@id="cardGroupModal"]/div/div/form/div[2]/div/div/table/tbody/tr[336]
+    #Click Element    //*[@id="cardGroupModal"]/div/div/form/div[2]/div/div/table/tbody/tr[${分组}]
+    Sleep    1
+    Click Element    //*[@id="cardGroupModal"]/div/div/form/div[3]/a[2]
+    Sleep    2
+
+重新选择红包
+    [Arguments]    ${关联红包}
+    Click Link    //*[@id="main-container"]/div/div[2]/div[2]/div[1]/div/form/div[4]/div/div/p/a
+    Wait Until Page Contains Element    //h4[text()="选择现金红包"]
+    Sleep    1
+    ####重新选择卡券
+    ${flag}    Run Keyword And Return Status    Radio Button Should Be Set To    Radio    ${关联红包}
+    Run Keyword If    ${flag}==True    重新生成数字    ${关联红包}
+    ${关联红包}    Evaluate    ${关联红包}+1
+    Click Element    //*[@id="redCashPackModal"]/div/div/form/div[2]/div/div/table/tbody/tr[${关联红包}]
+    Sleep    1
+    Click Element    //*[@id="redCashPackModal"]/div/div/form/div[3]/a[text()="确定"]    #确定
+    Sleep    2
+
+重新生成数字
+    [Arguments]    ${关联红包}
+    ${关联红包}    Run Keyword If    ${关联红包}==4    Evaluate    ${关联红包}-1
+    ...    ELSE    Evaluate    ${关联红包}+1
+    Set Suite Variable    ${关联红包}

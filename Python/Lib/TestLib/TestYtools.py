@@ -35,12 +35,14 @@ print maxt
 t = "2016-07-21 16:58:58"
 status = cm.yt_act_time_status(t)
 print "status:",status
-'''
-
-### yt_get_rand_integer
-randint = cm.yt_get_rand_integer(3,8)
-print randint
 
 ### yt_get_rand_float
 randnum = cm.yt_get_rand_float("0.01","0.28","2")
 print randnum
+
+### yt_screenshot
+cm.yt_screenshot()
+'''
+### yt_get_rand_integer
+randint = cm.yt_get_rand_integer('3','8')
+print randint

@@ -48,6 +48,7 @@ Evaluate
     Log    status:${status}
     ${flag}    Evaluate    not $a
     ${flag2}    Evaluate    $a
+    ${Rand}    Evaluate    random.randint(0,15)    random
 
 time
     ${time}    Get Time
@@ -71,3 +72,11 @@ list2
 GetRandFloat
     ${num}    Yt Get Rand Float    0.01    3    2    True
     Log    Num:${num}
+
+RunIf
+    ${库存}    Set Variable    49
+    ${库存factor}    Run Keyword If    ${库存}>=200    Set Variable    0.3
+    ...    ELSE IF    100<=${库存}<200    Set Variable    0.4
+    ...    ELSE IF    50<=${库存}<100    Set Variable    0.5
+    ...    ELSE    Set Variable    0.6
+    Log    ${库存factor}

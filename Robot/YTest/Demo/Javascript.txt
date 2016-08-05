@@ -1,8 +1,9 @@
 *** Test Cases ***
 exeJavascript
     Execute Javascript    document.getElementById("share").scrollIntoView();
-    Execute Javascript    var result = evaluator.evaluate('//*[@id="img-cate-scroll"]/ul/li[31]/span', document.documentElement, null,XPathResult.ORDERED_NODE_ITERATOR_TYPE, null); var node = result.iterateNext();node.scrollIntoView();
+    Execute Javascript    var evaluator = new XPathEvaluator();var result = evaluator.evaluate('//*[@id="img-cate-scroll"]/ul/li[31]/span', document.documentElement, null,XPathResult.ORDERED_NODE_ITERATOR_TYPE, null); var node = result.iterateNext();node.scrollIntoView();
 
 javascript2
     Execute Javascript    var el=document.getElementById("form-field-8");txt=el.value;txt+='${str2}';el.value=txt;
     Execute Javascript    var el=document.getElementById("bg_color");el.setAttribute('style','background-color: #9faabb !important; color: transparent !important;')
+    Execute Javascript    var el=document.getElementsByTagName("p")[0];el.innerHTML = "3500<br>Test text...";

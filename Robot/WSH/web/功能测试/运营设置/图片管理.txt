@@ -1,5 +1,5 @@
 *** Settings ***
-Suite Setup       API登录
+Suite Setup       登录
 Suite Teardown    关闭浏览器
 Test Teardown     失败重启
 Resource          ../../Resource/常用操作.robot
@@ -358,8 +358,9 @@ Library           Ytools
     Mouse Over    //*[@id="img-cate-scroll"]/ul/li/span[starts-with(text(),"【测试】")][1]/parent::li[1]
     Wait Until Element Is Visible    //*[@id="img-cate-scroll"]/ul/li/span[starts-with(text(),"【测试】")][1]/parent::li[1]/div/a[2]
     Click Element    //*[@id="img-cate-scroll"]/ul/li/span[starts-with(text(),"【测试】")][1]/parent::li[1]/div/a[2]
-    Wait Until Page Contains Element    //div[contains(text(),"删除提示")]
-    Click Element    //td[@i="footer"]/div/button[text()="确定"]
+    #Wait Until Page Contains Element    xpath=/html/body/div[8]/div/table/tbody/tr[3]/td/div[2]/button[text()="确定"]
+    Sleep    2
+    Click Element    xpath=/html/body/div[7]/div/table/tbody/tr[3]/td/div[2]/button[1]    #确定删除
     Sleep    1.5
     弹出信息校验
-    Sleep    3
+    Sleep    1

@@ -13,3 +13,6 @@ xpath
     #获取先辈    xpath=//*[@id="main-container"]/div/div[2]/div[2]/div/div/div/div/div[1]/form/table/tbody/tr/td[starts-with(text(),'点赞-')]/ancestor::tr[1]/td[1]
     #获取父辈    xpath=//*[@id="main-container"]/div/div[2]/div[2]/div/div/div/div/div[1]/form/table/tbody/tr/td[starts-with(text(),'点赞-')]/parent::tr[1]/td[1]
     #获取结果中的第N个元素    xpath=(//*[@id="img-cate-scroll"]/ul/li/span[starts-with(text(),"【测试】")])[2]
+    ####获取先辈元素
+    Get Text    //*[@id="main-container"]/div/div[2]/div[2]/div/div/div[3]/div[3]/ul/li/div/div[5]/div/span[starts-with(text(),"【微信图文】")]/ancestor::ul[1]/li/div/div[5]/div/span[2]
+    ##Not Contains    //*[@id="main-container"]/div/div[2]/div[2]/div/div/div[3]/div[3]/ul/li/div/div[5]/div/span[starts-with(text(),"【微信图文】")]/ancestor::ul[1]/li/div/div[3]/div[2]/a[contains(@title,"查看二维码") and not(contains(@class,'ng-hide'))]

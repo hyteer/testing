@@ -51,7 +51,7 @@ Library           Selenium2Library
     Input Text    //*[@id="main-container"]/div/div[2]/div[2]/div/div/form/div[7]/div/input    ${电话}
     Sleep    1
     ####保存
-    Click Link     确定
+    Click Link    确定
     Sleep    1.5
     弹出信息校验
     Sleep    3
@@ -102,7 +102,7 @@ Library           Selenium2Library
     Sleep    1
     Run Keyword If    ${是否修改密码}==1    修改密码    ${密码}
     ####保存
-    Click Link     确定
+    Click Link    确定
     Sleep    1.5
     弹出信息校验
     Sleep    3
@@ -126,9 +126,11 @@ Library           Selenium2Library
     Sleep    1
     ####删除操作员
     Click Element    //*[@id="home"]/form/table/tbody/tr[1]/td[6]/a[2]
-    Wait Until Page Contains Element    /html/body/div[6]/div/table/tbody/tr[1]/td/div[text()="删除提示"]
+    Wait Until Page Contains Element    //td[@i="header"]/div[text()="删除提示"]
     Sleep    1
-    确认
+    Click Element    //div[@i="button"]/button[text()="确定"]
+    Sleep    1
+    弹出信息校验
     Sleep    2
 
 角色_添加
@@ -162,7 +164,7 @@ Library           Selenium2Library
 修改密码
     [Arguments]    ${密码}=password
     ##修改密码
-    Click Link     修改密码
+    Click Link    修改密码
     Wait Until Page Contains Element    //*[@id="main-container"]/div/div[2]/div[2]/div/div/form/div[2]/div/input[@type="password"]
     Sleep    1
     Input Text    //*[@id="main-container"]/div/div[2]/div[2]/div/div/form/div[2]/div/input[@type="password"]    ${密码}

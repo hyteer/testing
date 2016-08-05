@@ -34,4 +34,8 @@ mk.get_collectzan_actlist(sid)
 '''
 ####Product####
 pd.get_product_list(sid)
-pd.get_product_detail(sid)
+pd.get_order_list(sid)
+pd.page_list_ajax(sid)
+pd.page_edit_ajax(sid)
+#pd.get_order_detail(sid)
+#pd.get_product_detail(sid)
