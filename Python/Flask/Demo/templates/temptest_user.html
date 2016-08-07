@@ -1,0 +1,8 @@
+<h3>User name return by template: {{ user.name }}</h3>
+<h3>
+    {% if user %}
+        Hi {{ user.name }}
+    {% else %}
+        Hello, Stranger!
+    {% endif %}
+</h3>

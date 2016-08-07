@@ -1,0 +1,37 @@
+<p>A value from a dictionary: {{ mydict['key'] }}.</p>
+<p>A value from a list: {{ mylist[2] }}.</p>
+<p>A value from a list, with a variable index: {{ mylist[myintvar] }}.</p>
+<p>A value from an object's method: {{ myobj.name }}.</p>
+<p>Escape testing:
+    <br>
+    escaped:{{ test }}
+    not escaped:{{ test|safe }}
+    capitalized:{{ test2|capitalize }}
+</p>
+<div><h3>UL List testing</h3>
+<ul>
+    {% for comment in comments %}
+        <li>{{ comment }}</li>
+    {% endfor %}
+</ul>
+</div>
+<div><h3>Macro</h3>
+    {% macro render_comment(comment) %}
+        <li>{{ comment }}</li>
+    {% endmacro %}
+
+    <ul>
+        {% for comment in comments %}
+            {{ render_comment(comment) }}
+        {% endfor %}
+    </ul>
+</div>
+<div><h3>Imported Macro</h3>
+    {% import 'macros.html' as macros %}
+    <ul>
+        {% for comment in comments %}
+            {{ macros.render_comment(comment) }}
+        {% endfor %}
+    </ul>
+
+</div>
