@@ -144,8 +144,8 @@ Library           Screenshot
     Unselect Frame
 
 选择图片
-    [Arguments]    ${xpath}=//div[contains(@class,"ace-file-input")]/a[@data-target="#myModalImage"]
-    Click Element    ${xpath}
+    [Arguments]    ${locator}=//div[contains(@class,"ace-file-input")]/a[@data-target="#myModalImage"]
+    Click Element    ${locator}
     Wait Until Page Contains Element    //h4[text()="图片管理器"]    15
     ####选择图片
     ${图片}    Evaluate    random.randint(1,15)    random
@@ -226,9 +226,9 @@ Library           Screenshot
     Sleep    1
 
 查看二维码_弹出窗
-    [Arguments]    ${xpath}
+    [Arguments]    ${locator}
     ####查看二维码
-    Click Element    ${xpath}
+    Click Element    ${locator}
     Wait Until Page Contains Element    //h4[contains(text(),"二维码")]
     Sleep    1
     Wait Until Element Is Visible    //*[@id="query"]/div/div/div[2]/div/div/img[starts-with(@src,"https://mp.weixin.qq.com/cgi-bin/showqrcode")]
@@ -280,6 +280,7 @@ Library           Screenshot
     [Arguments]    ${msg}=成功
     ${alert}    Get Alert Message
     Should Contain    ${alert}    ${msg}
+    Sleep    1.5
 
 随机选择下拉框
     [Arguments]    ${path}

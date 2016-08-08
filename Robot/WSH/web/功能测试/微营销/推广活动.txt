@@ -560,9 +560,11 @@ Library           Collections
     ${商户名}    随机字符    [商户]    7
     ${红包名称}    随机字符    [红包]    7
     ${remark}    随机字符    备注：    10
-    ${红包金额}    随机数字    2
-    ${num}    随机数字    2
+    ${红包金额}    Generate Random String    1    1234
+    ${红包数量}    随机数字    2
     ${红包类型}    Generate Random String    1    01
+    ${是否启用}    Generate Random String    1    01
+    ####输入参数
     Select From List By Value    //*[@id="main-container"]/div/div[2]/div[2]/div/div/div[2]/div[1]/form/div[1]/div/select    ${红包类型}    #选择类型
     Sleep    0.6
     Input Text    //*[@id="main-container"]/div/div[2]/div[2]/div/div/div[2]/div[1]/form/div[2]/div/input    ${商户名}    #商户名
@@ -574,14 +576,12 @@ Library           Collections
     Run Keyword If    ${红包类型}==0    Input Text    id=money    ${红包金额}
     ...    ELSE    输入金额区间
     Sleep    0.8
-    Input Text    //*[@id="main-container"]/div/div[2]/div[2]/div/div/div[2]/div[1]/form/div[8]/div/input    ${num}
+    Input Text    //*[@id="main-container"]/div/div[2]/div[2]/div/div/div[2]/div[1]/form/div[8]/div/input    ${红包数量}
     Sleep    1
-    #Click Element    //*[@id="submit"]
-    #Click Link    link=保存
+    Run Keyword If    ${是否启用}==1    Click Element    //*[@id="main-container"]/div/div[2]/div[2]/div/div/div[2]/div[1]/form/div[9]/div/label/input
+    ####保存
     Sleep    1
-    Capture Page Screenshot
-    Click Element    id=post    #因为id的原因目前无法触发保存事件
-    #Execute Javascript    document.getElementById("post").click;
+    Click Element    id=post
     Sleep    3
     ${alert}    Get Alert Message
     Should Contain    ${alert}    成功
@@ -954,7 +954,7 @@ Library           Collections
 *** Keywords ***
 输入金额区间
     Input Text    //*[@id="main-container"]/div/div[2]/div[2]/div/div/div[2]/div[1]/form/div[7]/div/input[1]    1
-    Input Text    //*[@id="main-container"]/div/div[2]/div[2]/div/div/div[2]/div[1]/form/div[7]/div/input[2]    20
+    Input Text    //*[@id="main-container"]/div/div[2]/div[2]/div/div/div[2]/div[1]/form/div[7]/div/input[2]    5
 
 选择商品
     Click Link    link=选择商品

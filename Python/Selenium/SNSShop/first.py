@@ -4,9 +4,11 @@ from selenium import webdriver
 
 driver = webdriver.Chrome()
 
-driver.get('http://betanewwsh.vikduo.com/login/index')
+driver.get('http://betanewwsh.snsshop.net/login/index')
 
 print driver.title
+
+
 
 time.sleep(2)
 
