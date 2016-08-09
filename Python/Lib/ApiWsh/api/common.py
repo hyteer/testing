@@ -21,6 +21,7 @@ class Common(object):
     def __init__(self):
         pass
 
+    #### 获取Cookie
     def wsh_get_cookie(self):
 
         print "---Test get cookie---"
@@ -47,7 +48,7 @@ class Common(object):
         print "SessionID:", sessionid
         return sessionid
 
-
+    #### 登录获取SessionID
     def wsh_login(self,sessionid):
         # Login
         print "--- Test Login ---"

@@ -22,7 +22,7 @@ class Shop(object):
     def wsh_test(self):
         print "mytest"
 
-
+    #### 获取活动详情
     def wsh_actlist(self,sessionid):
         # Login
         print u"---Test 活动详情---"
@@ -37,9 +37,10 @@ class Shop(object):
 
         return r
 
+    #### 获取商家信息
     def wsh_shop_get(self,sessionid):
         # Login
-        print u"---Test 获取商家信息接口---"
+        print u"---Test 获取商家信息---"
         url = self.baseurl+"/shop/get-ajax"
         #url = "http://betanewwsh.vikduo.com/reduction/list-ajax"
         headers = self.headers

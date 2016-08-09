@@ -4,11 +4,20 @@ Resource          配置参数.robot
 Resource          功能菜单.robot
 Library           String
 Library           Screenshot
+Library           OperatingSystem
 
 *** Keywords ***
 登录
     #Set Selenium Implicit Wait    10
+    #Log    Env:${env}
+    ${env}    Set Variable    beta
+    Set Global Variable    ${env}
+    ####运行环境
+    ${URL}    Run Keyword If    '${env}'=='test'    Set Variable    ${URL_TEST}
+    ...    ELSE IF    '${env}'=='beta'    Set Variable    ${URL_BETA}
+    ...    ELSE    Log    无效的运行参数
     Set Selenium Timeout    20
+    ####启动浏览器
     Open Browser    ${URL}    chrome    #打开浏览器
     界面最大化
     Input Text    id=staff_id    ${USERNAME}    #输入用户名
