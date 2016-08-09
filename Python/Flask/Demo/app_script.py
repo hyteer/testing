@@ -31,7 +31,6 @@ def temptest():
     list1 = ['aaa','bbb','ccc']
     test = "<h3>a variable</h3>"
     test2 = "another variable"
-
     obj = load_user(2)
     return render_template('temptest.html',mydict=dict1,mylist=list1,
                            myobj=obj,myintvar=1,test=test,test2=test2,comments=list1)
@@ -53,6 +52,10 @@ def tempextend():
 @app.route('/bad')
 def bad():
     return 'Bad request.',400
+####
+#url_for('static', filename='css/styles.css', _external=True)
+
+
 
 #### Special Routes
 @app.errorhandler(404)
