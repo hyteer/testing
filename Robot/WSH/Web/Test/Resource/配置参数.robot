@@ -2,7 +2,7 @@
 Library           Selenium2Library
 
 *** Variables ***
-${USERNAME}       20151228
+${USERNAME}       20160705
 ${PASSWORD}       123456
 ${SHOP_ID}        97320
 ${URL_TEST}       http://testnewwsh.snsshop.net/

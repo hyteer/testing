@@ -53,7 +53,7 @@ Resource          ../../Resource/API.robot
     Should Be Equal As Strings    ${商家介绍2}    ${商家描述}
 
 支付管理
-    [Tags]    ready
+    [Tags]
     ####查询接口
     查询支付方式
     ####进入页面
@@ -142,7 +142,7 @@ Resource          ../../Resource/API.robot
     Should Contain    ${alert}    成功
     Sleep    2
     查询支付方式
-    Sleep    3
+    Sleep    2
     Run Keyword If    ${len}==1    Should Be Equal As Integers    ${len_wx}    0
     ...    ELSE    Should Be Equal As Integers    ${len_wx}    1
     ##重置状态    开启微信支付

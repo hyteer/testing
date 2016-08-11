@@ -402,7 +402,7 @@ Library           Screenshot
 确认
     [Arguments]    ${action}=确定
     [Tags]
-    Click Element    //button[@data-id="ok" and text()="${action}"]
+    Click Element    //td[@i="footer"]/div[@class="ui-dialog-button"]/button[@data-id="ok" and text()="${action}"]
     Sleep    1.5
 
 弹出窗信息校验
