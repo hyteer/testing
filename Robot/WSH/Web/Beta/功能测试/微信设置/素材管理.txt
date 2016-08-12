@@ -335,19 +335,21 @@ Library           AutoItLibrary
     Wait Until Page Contains Element    //*[@id="breadcrumbs"]/ul/li[contains(text(),"素材")]
     Sleep    1
     ####添加文本素材
-    Click Link    添加文本
+    ${text}    Get Text    //*[@id="main-container"]//tr[@ng-repeat="list in textList"]//span[contains(@class,"sc_title") and contains(@class,"ng-binding") and starts-with(text(),"【文本素材】")]
+    Click Element    //*[@id="main-container"]//tr[@ng-repeat="list in textList"]//span[contains(@class,"sc_title") and contains(@class,"ng-binding") and starts-with(text(),"【文本素材】")]/ancestor::tr[1]//a[@title="编辑" and @ng-click="edit(list)"]
     Sleep    2
     ####生成参数
-    ${文本标签}    随机字符    【文本素材】    12
+    ${文本标签}    随机字符    【文本素材】改    12
     ${文本内容}    Generate Random String    1    01
     ####输入参数
-    Input Text    //*[@id="newtextbox"]/div/div/div[2]/div/div/form/div[1]/div/input    ${文本标签}
+    Input Text    //ng-form[@name="myformtwo"]//input[@placeholder="请输入名字"]    ${文本标签}
     Sleep    1
     ##表情    Todo
-    ##文字
-    文本编辑器输入
+    添加QQ表情2
     Sleep    1
-    Click Element    //*[@id="newtextbox"]/div/div/div[2]/div/div/form/div[1]/div/input
+    ##文字
+    文本编辑器输入_短文本
+    Click Element    //*[@id="newtextbox"]//input[@ng-model="groupObj.title" and @placeholder="请输入名字"]
     Sleep    1
     Click Element    id=submit
     Sleep    2
@@ -651,7 +653,7 @@ Library           AutoItLibrary
 
 添加QQ表情
     [Documentation]    添加QQ表情
-    ${rand1}    Evaluate    random.randint(2,9)    random
+    ${rand1}    Evaluate    random.randint(1,5)    random
     : FOR    ${i}    IN RANGE    ${rand1}
     \    Click Element    //*[@id="newtextbox"]//div[@class="face-box"]/span[@target="addContent"][1]    #QQ表情
     \    Sleep    1
@@ -659,5 +661,18 @@ Library           AutoItLibrary
     \    ${len}    Get Length    ${els}
     \    ${rand}    Evaluate    random.randint(1,${len})    random
     \    Click Element    //*[@id="newtextbox"]//div[@class="face-box"]/div[@class="qqface-panel"]/img[@class="qqface-img"][${rand}]
+    \    Sleep    1
+    Sleep    1
+
+添加QQ表情2
+    [Documentation]    添加QQ表情
+    ${rand1}    Evaluate    random.randint(1,5)    random
+    :FOR    ${i}    IN RANGE    ${rand1}
+    \    Click Element    //*[@id="textbox"]//div[@class="face-box"]/span[@target="addContent"][1]    #QQ表情
+    \    Sleep    1
+    \    ${els}    Get Webelements    //*[@id="newtextbox"]//div[@class="face-box"]/div[@class="qqface-panel"]/img[@class="qqface-img"]
+    \    ${len}    Get Length    ${els}
+    \    ${rand}    Evaluate    random.randint(1,${len})    random
+    \    Click Element    //*[@id="textbox"]//div[@class="face-box"]/div[@class="qqface-panel"]/img[@class="qqface-img"][${rand}]
     \    Sleep    1
     Sleep    1
