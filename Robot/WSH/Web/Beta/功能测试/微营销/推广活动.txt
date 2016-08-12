@@ -789,7 +789,7 @@ Library           Collections
     Sleep    2
     #生成随机参数
     ${规则名称}    随机字符    【赠送】改    10
-    ${规则类型}    Generate Random String    1    12
+    ${规则类型}    Generate Random String    1    2
     ${消费金额}    随机数字    2
     ${关联红包}    Generate Random String    1    1
     Input Text    //*[@id="main-container"]/div/div[2]/div[2]/div[1]/div/form/div[1]/div/input    ${规则名称}
@@ -797,7 +797,7 @@ Library           Collections
     Select Radio Button    radio_money    ${规则类型}
     Sleep    1
     Run Keyword If    ${规则类型}==1    Input Text    //*[@id="amountVal"]    ${消费金额}
-    ...    ELSE    选择商品
+    ...    ELSE    重新选择商品
     Sleep    2
     #重新选择红包
     重新选择红包    ${关联红包}
@@ -959,6 +959,10 @@ Library           Collections
 选择商品
     Click Link    link=选择商品
     Sleep    2
+    ####生成参数    \    //*[@id="product"]//tr[@ng-click="choose(list)"]
+    ${els}    Get Webelements    //*[@id="product"]//tr[@ng-click="choose(list)"]/td[@ng-bind="list.reserves" and not(text()="0")]
+    ${len}    Get Length    ${els}
+    ${rand}    Evaluate    random.randint(1,${len})    random
     Click Element    //*[@id="product"]/div[1]/table/tbody/tr[2]
     Wait Until Element Is Visible    //*[@id="productBody"]/div[2]/a[text()="确定"]
     Sleep    1
@@ -1053,22 +1057,51 @@ Alert信息判断
     Click Element    //*[@id="cardGroupModal"]/div/div/form/div[3]/a[2]
     Sleep    2
 
+重新选择商品
+    Click Link    link=选择商品
+    Sleep    2
+    ####生成参数
+    #${已选数量}    Checkbox_获取已选中的数量    //*[@id="product"]//tr[@ng-click="choose(list)"]//input[@type="checkbox"]
+    ###选择商品
+    ${已选数}    Checkbox_获取已选中的数量    //*[@id="product"]//tr[@ng-click="choose(list)"]//input[@type="checkbox"]
+    ${库存不为0数量}    Get Matching Xpath Count    //*[@id="product"]//tr[@ng-click="choose(list)"]/td[@ng-bind="list.reserves" and not(text()="0")]
+    Run Keyword If    ${已选数}==1    Checkbox_选择一个当前未选中的    //*[@id="product"]//tr[@ng-click="choose(list)"]/td[@ng-bind="list.reserves" and not(text()="0")]/ancestor::tr[@ng-click="choose(list)"]//input[@type="checkbox"]
+    ...    ELSE    Click Element    xpath=(//*[@id="product"]//tr[@ng-click="choose(list)"]/td[@ng-bind="list.reserves" and not(text()="0")])[1]
+    Wait Until Element Is Visible    //*[@id="productBody"]/div[2]/a[text()="确定"]
+    Sleep    1
+    Click Element    //*[@id="productBody"]/div[2]/a[text()="确定"]
+
 重新选择红包
     [Arguments]    ${关联红包}
     Click Link    //*[@id="main-container"]/div/div[2]/div[2]/div[1]/div/form/div[4]/div/div/p/a
     Wait Until Page Contains Element    //h4[text()="选择现金红包"]
     Sleep    1
     ####重新选择卡券
-    ${flag}    Run Keyword And Return Status    Radio Button Should Be Set To    Radio    ${关联红包}
-    Run Keyword If    ${flag}==True    重新生成数字    ${关联红包}
-    ${关联红包}    Evaluate    ${关联红包}+1
-    Click Element    //*[@id="redCashPackModal"]/div/div/form/div[2]/div/div/table/tbody/tr[${关联红包}]
+    Radio_选择未选中的    //*[@id="redCashPackModal"]//form[@name="myform"]//table/tbody/tr[@ng-repeat="list in redCashPackList"]//input[@type="radio" and not(@checked="checked")]
     Sleep    1
     Click Element    //*[@id="redCashPackModal"]/div/div/form/div[3]/a[text()="确定"]    #确定
     Sleep    2
 
 重新生成数字
     [Arguments]    ${关联红包}
+    ####
+    ${els}    Get Webelements    //*[@id="redCashPackModal"]//form[@name="myform"//tr[@ng-repeat="list in redCashPackList"]
+    ${len}    Get Length    ${els}
     ${关联红包}    Run Keyword If    ${关联红包}==4    Evaluate    ${关联红包}-1
     ...    ELSE    Evaluate    ${关联红包}+1
     Set Suite Variable    ${关联红包}
+
+重新选择红包_bak
+    [Arguments]    ${关联红包}
+    Click Link    //*[@id="main-container"]/div/div[2]/div[2]/div[1]/div/form/div[4]/div/div/p/a
+    Wait Until Page Contains Element    //h4[text()="选择现金红包"]
+    Sleep    1
+    ####重新选择卡券
+    ${els}    Get Webelements    //*[@id="redCashPackModal"]//form[@name="myform"]//table/tbody/tr[@ng-repeat="list in redCashPackList"]//input[@type="radio" and not(@checked="checked")]
+    ${len}    Get Length    ${els}
+    ${rand}    Evaluate    random.randint(1,${len})    random
+    Click Element    xpath=(//*[@id="redCashPackModal"]//form[@name="myform"]//table/tbody/tr[@ng-repeat="list in redCashPackList"]//input[@type="radio" and not(@checked="checked")])[${rand}]
+    Sleep    1
+    Fail
+    Click Element    //*[@id="redCashPackModal"]/div/div/form/div[3]/a[text()="确定"]    #确定
+    Sleep    2

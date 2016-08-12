@@ -3,7 +3,7 @@ Library           RequestsLibrary
 Library           String
 Library           json
 Library           Collections
-Resource          ../Resource/配置参数.robot
+Resource          ../Resource/配置参数.txt
 
 *** Test Cases ***
 获取店铺支付方式

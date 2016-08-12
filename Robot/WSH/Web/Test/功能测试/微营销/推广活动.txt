@@ -16,7 +16,7 @@ Library           Collections
     [Tags]    ready
     点击链接菜单    微营销
     点击链接菜单    众筹活动
-    Wait Until Page Contains    添加点赞众筹
+    Wait Until Page Contains Element    //*[@id="breadcrumbs"]/ul/li[contains(text(),"众筹活动")]
     Sleep    0.5
     ###分页测试
     Click Element    xpath=//*[@id="main-container"]/div/div[2]/div[2]/div/div/div/div/div[2]/ul[1]/li[3]/a

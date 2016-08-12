@@ -411,3 +411,32 @@ Library           OperatingSystem
     sleep    1
     ${alert_msg}    Confirm Action
     Should Contain    ${alert_msg}    ${msg}
+
+Checkbox_获取已选中的数量
+    [Arguments]    ${xpath}
+    ${els}    Get Webelements    ${xpath}
+    ${len}    Get Length    ${els}
+    ${num}    Set Variable    ${0}
+    :FOR    ${i}    IN RANGE    ${len}
+    \    ${flag}    Run Keyword And Return Status    Checkbox Should Be Selected    xpath=(${xpath})[${i+1}]
+    \    ${num}    Set Variable If    ${flag}==True    ${num+1}    ${num}
+    Log    Num:${num}
+    [Return]    ${num}
+
+Checkbox_选择一个当前未选中的
+    [Arguments]    ${xpath}
+    ${els}    Get Webelements    ${xpath}
+    ${len}    Get Length    ${els}
+    :FOR    ${i}    IN RANGE    ${len}
+    \    ${flag}    Run Keyword And Return Status    Checkbox Should Not Be Selected    xpath=(${xpath})[${i+1}]
+    \    Run Keyword if    ${flag}==True    Click Element    xpath=(${xpath})[${i+1}]
+    \    Exit For Loop If    ${flag}==True
+    Sleep    1
+
+Radio_选择未选中的
+    [Arguments]    ${xpath}
+    #选择未选中的Radio
+    ${els}    Get Webelements    ${xpath}
+    ${len}    Get Length    ${els}
+    ${rand}    Evaluate    random.randint(1,${len})    random
+    Click Element    xpath=(${xpath})[${rand}]

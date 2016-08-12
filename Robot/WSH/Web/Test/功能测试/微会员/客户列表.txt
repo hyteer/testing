@@ -99,12 +99,14 @@ Library           Screenshot
     [Setup]    点击链接菜单    微会员
     点击链接菜单    分组管理
     等待时间    1
+    ####生成参数
     ${count}    Get Matching Xpath Count    //tr[@class='ng-scope']
+    ${组名}    Set Variable    【测试分组】可删除
     点击链接菜单    添加分组
     等待时间    0.5
-    Input Text    xpath=//*[@id="myModal-bjhy"]/div/div/div[2]/div/form/div/div/div[1]/div/input    分组
+    Input Text    xpath=//*[@id="myModal-bjhy"]/div/div/div[2]/div/form/div/div/div[1]/div/input    ${组名}
     等待时间    0.2
-    Input Text    xpath=//*[@id="myModal-bjhy"]/div/div/div[2]/div/form/div/div/div[2]/div/input    0
+    Input Text    xpath=//*[@id="myModal-bjhy"]/div/div/div[2]/div/form/div/div/div[2]/div/input    3
     等待时间    0.2
     Wait Until Page Contains Element    xpath=//*[@id="submit"]    5
     Click Element    xpath=//*[@id="submit"]

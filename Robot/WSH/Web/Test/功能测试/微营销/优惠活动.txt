@@ -298,10 +298,11 @@ Library           Ytools
     Wait Until Page Contains Element    //*[@id="breadcrumbs"]/ul/li[contains(text(),"红包活动")]    20
     Sleep    1
     ####删除
-    ${flag}    Run Keyword And Return Status    获取TD1    //*[@id="breadcrumbs"]/ul/li[contains(text(),"红包活动")]
+    ${flag}    Run Keyword And Return Status    Click Element    //*[@id="home"]/form/table/tbody/tr/td[starts-with(text(),"【红包活动】")]
     Sleep    1
+    ${活动名称}    Run Keyword If    ${flag}==True    Get Text    //*[@id="home"]/form/table/tbody/tr/td[starts-with(text(),"【红包活动】")][1]
     Run Keyword If    ${flag}==True    Click Element    //*[@id="home"]/form/table/tbody/tr/td[starts-with(text(),"【红包活动】")]/parent::tr[1]/td[9]/div/a[4]
-    ...    ELSE    \    //*[@id="home"]/form/table/tbody/tr[1]/td[9]/div/a[4]
+    ...    ELSE    Click Element    //*[@id="home"]/form/table/tbody/tr[1]/td[9]/div/a[4]
     Sleep    1
     Click Element    xpath=//button[@data-id="ok" and text()="删除"]
     Sleep    1
@@ -309,7 +310,7 @@ Library           Ytools
     Should Contain    ${alert}    成功
     Sleep    2
     ###结果校验
-    Page Should Not Contain Element    //*[@id="home"]/form/table/tbody/tr/td[starts-with(text(),"${td1}")]
+    Page Should Not Contain Element    //*[@id="home"]/form/table/tbody/tr/td[starts-with(text(),"${活动名称}")]
     Sleep    3
 
 商城红包_活动_二维码
@@ -814,7 +815,7 @@ Library           Ytools
     Click Link    派送卡券
     Sleep    2
     ####生成参数
-    ${指定}    Generate Random String    1    12
+    ${指定}    Generate Random String    1    2
     ${用户}    随机数字    1
     ${分组}    Generate Random String    1    1234
     ${关联卡券}    Generate Random String    1    1234
@@ -924,15 +925,14 @@ Library           Ytools
 指定分组
     Click Element    //*[@id="tag_group"]/div/div/input
     Wait Until Page Contains Element    //h4[text()="选择分组"]    15
-    Wait Until Page Contains Element    //*[@id="cardGroupModal"]/div/div/form/div[2]/div/div/table/tbody/tr[2]    30
-    #Wait Until Page Contains Element    //*[@id="cardGroupModal"]/div/div/form/div[2]/div/div/table/tbody/tr[${分组}]    20
     Sleep    1
     ####指定分组
-    Execute Javascript    var evaluator = new XPathEvaluator();var result = evaluator.evaluate('//*[@id="cardGroupModal"]/div/div/form/div[2]/div/div/table/tbody/tr[336]', document.documentElement, null,XPathResult.ORDERED_NODE_ITERATOR_TYPE, null); var node = result.iterateNext();node.scrollIntoView();
+    ${分组名}    Set Variable    【自动化测试】
+    Wait Until Page Contains Element    //*[@id="cardGroupModal"]//form[@name="myform"]//tr[@ng-repeat="list in groupLists"]/td[text()="${分组名}"]    30
+    Execute Javascript    var evaluator = new XPathEvaluator();var result = evaluator.evaluate('//*[@id="cardGroupModal"]//form[@name="myform"]//tr[@ng-repeat="list in groupLists"]/td[text()="${分组名}"]', document.documentElement, null,XPathResult.ORDERED_NODE_ITERATOR_TYPE, null); var node = result.iterateNext();node.scrollIntoView();
     Sleep    1
     ####
-    Click Element    //*[@id="cardGroupModal"]/div/div/form/div[2]/div/div/table/tbody/tr[336]
-    #Click Element    //*[@id="cardGroupModal"]/div/div/form/div[2]/div/div/table/tbody/tr[${分组}]
+    Click Element    //*[@id="cardGroupModal"]//form[@name="myform"]//tr[@ng-repeat="list in groupLists"]/td[text()="${分组名}"]
     Sleep    1
     Click Element    //*[@id="cardGroupModal"]/div/div/form/div[3]/a[2]
     Sleep    2

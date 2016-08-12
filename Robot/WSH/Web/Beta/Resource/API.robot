@@ -50,7 +50,7 @@ Resource          配置参数.robot
     [Return]    ${errmsg}
 
 API登录
-    Create Session    wsh    ${API_URL}
+    Create Session    wsh    ${URL_BETA}
     &{data}=    Create Dictionary    username=20151228    password=123456    captcha=1111
     &{headers}=    Create Dictionary    Content-Type=application/x-www-form-urlencoded
     ${resp}    Post Request    wsh    /login/login-ajax    data=${data}    headers=${headers}

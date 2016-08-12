@@ -579,8 +579,10 @@ Library           Ytools
     ${参团人数}    Yt Get Rand Integer    ${min}    ${max}
     ##规则限制
     ${参团人数}    Run Keyword If    ${参团人数}<2    Set Variable    2
+    ...    ELSE IF    ${参团人数}>100    Set Variable    100
     ...    ELSE    Set Variable    ${参团人数}
-    ${配额}    Run Keyword If    ${参团人数}>${配额}    Set Variable    ${参团人数}
+    ${配额}    Run Keyword If    ${参团人数}==100    Set Variable    150
+    ...    ELSE IF    ${参团人数}>${配额}    Set Variable    ${参团人数}
     ...    ELSE    Set Variable    ${配额}
     ${每人限购}    Generate Random String    1    23456
     ${每人限购}    Run Keyword If    ${每人限购}>${参团人数}    Set Variable    ${参团人数}

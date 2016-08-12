@@ -74,6 +74,28 @@ class Product(object):
         print "Response:", r.content
         print "Response:",r
         return r
+    '''
+    ########## 订单相关 ##########
+    def order_add_ajax(self,sessionid):
+        """
+        创建普通订单
+        :param sessionid:
+        :return: response content
+        """
+        print u"---Test 创建普通订单---"
+        url = self.baseurl+"/order/order-add-ajax"
+        headers = self.headers
+        cookies = {'PHPSESSID': sessionid}
+        #product_info = [{'id': 286352'},{sku_id': ,'num': 1}]
+
+        #postdata = {'products': product_info}
+
+        r = requests.post(url, data=postdata,headers=headers,cookies=cookies)
+        print "Headers:", r.headers
+        print "Response:", r.content
+        print "Response:",r
+        return r
+    '''
 
     ########## WeiXin相关 ##########
 

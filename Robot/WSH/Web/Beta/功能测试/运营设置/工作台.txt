@@ -14,7 +14,7 @@ Resource          ../../Resource/API.robot
     ${data}    工作台数据
     ${pay_money}    Get From Dictionary    ${data}    pay_money
     ${pay_money}    Convert To Integer    ${pay_money}
-    ${pay_money}    Evaluate    ${pay_money}/100
+    #${pay_money}    Evaluate    ${pay_money}/100
     ${order_total}    Get From Dictionary    ${data}    order_total
     ${payed_order_total}    Get From Dictionary    ${data}    payed_order_total
     ${uv}    Get From Dictionary    ${data}    uv
@@ -32,6 +32,7 @@ Resource          ../../Resource/API.robot
     Sleep    1
     ####今日数据
     ${销售额}    Get Text    //*[@id="main-container"]/div/div[2]/div[2]/div[3]/div[1]/div/div[2]/div/div[1]/div[1]/a
+    ${销售额}    Evaluate    int(${销售额}*100)
     ${订单总数}    Get Text    //*[@id="main-container"]/div/div[2]/div[2]/div[3]/div[1]/div/div[2]/div/div[2]/a
     ${已支付订单数}    Get Text    //*[@id="main-container"]/div/div[2]/div[2]/div[3]/div[1]/div/div[2]/div/div[3]/a
     ${今日UV}    Get Text    //*[@id="main-container"]/div/div[2]/div[2]/div[3]/div[1]/div/div[2]/div/div[4]/a
@@ -63,7 +64,7 @@ Resource          ../../Resource/API.robot
     Set Suite Variable    ${list1}
     : FOR    ${i}    IN RANGE    5
     \    获取公告信息_API    ${data}    ${i}    ${list1}
-    Log    List1:${list1}
+    #Log    List1:${list1}
     ####进入页面
     点击链接菜单    运营设置
     ${sub}    Set Variable    工作台

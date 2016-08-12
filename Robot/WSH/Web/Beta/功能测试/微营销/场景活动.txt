@@ -310,7 +310,7 @@ Resource          ../../Resource/配置参数.robot
     ###结果校验
 
 签到活动_添加
-    [Tags]    ready    add
+    [Tags]    ready    add    removed
     点击链接菜单    微营销
     ${sub}    Set Variable    签到活动
     点击链接菜单    ${sub}
@@ -336,7 +336,7 @@ Resource          ../../Resource/配置参数.robot
     Sleep    4
 
 签到活动_编辑
-    [Tags]    ready
+    [Tags]    ready    removed
     点击链接菜单    微营销
     ${sub}    Set Variable    签到活动
     点击链接菜单    ${sub}
@@ -344,7 +344,7 @@ Resource          ../../Resource/配置参数.robot
     ####编辑活动
 
 签到活动_删除
-    [Tags]    ready
+    [Tags]    ready    removed
     点击链接菜单    微营销
     ${sub}    Set Variable    签到活动
     点击链接菜单    ${sub}
@@ -363,7 +363,7 @@ Resource          ../../Resource/配置参数.robot
     字段校验Not    //*[@id="main-container"]/div[1]/div[2]/div[2]/div/div/div[3]/table/tbody/tr/td[starts-with(text(),"${卡券名称}")]
 
 签到活动_人员列表
-    [Tags]    ready
+    [Tags]    ready    removed
     点击链接菜单    微营销
     ${sub}    Set Variable    签到活动
     点击链接菜单    ${sub}
@@ -377,7 +377,7 @@ Resource          ../../Resource/配置参数.robot
     Sleep    1
 
 签到活动_二维码
-    [Tags]    ready
+    [Tags]    ready    removed
     点击链接菜单    微营销
     ${sub}    Set Variable    签到活动
     点击链接菜单    ${sub}
