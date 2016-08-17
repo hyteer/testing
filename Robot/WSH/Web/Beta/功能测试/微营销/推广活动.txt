@@ -959,7 +959,7 @@ Library           Collections
 选择商品
     Click Link    link=选择商品
     Sleep    2
-    ####生成参数    \    //*[@id="product"]//tr[@ng-click="choose(list)"]
+    ####生成参数    //*[@id="product"]//tr[@ng-click="choose(list)"]
     ${els}    Get Webelements    //*[@id="product"]//tr[@ng-click="choose(list)"]/td[@ng-bind="list.reserves" and not(text()="0")]
     ${len}    Get Length    ${els}
     ${rand}    Evaluate    random.randint(1,${len})    random
@@ -971,8 +971,10 @@ Library           Collections
 选择红包
     Click Element    //*[@id="home"]/form/div[4]/div/div/div/span
     Sleep    2
-    ${tr}    Generate Random String    1    1234
-    Click Element    //*[@id="redCashPackModal"]/div/div/form/div[2]/div/div/table/tbody/tr[${tr}]
+    ${els_num}    Get Matching Xpath Count    //*[@id="redCashPackModal"]/div/div/form/div[2]/div/div/table/tbody/tr[@ng-click="checkList(list,$index)"]
+    ${rand}    Evaluate    random.randint(0,${els_num})    random
+    #${tr}    Generate Random String    1    1234
+    Click Element    xpath=(//*[@id="redCashPackModal"]/div/div/form/div[2]/div/div/table/tbody/tr[@ng-click="checkList(list,$index)"])[${rand}]
     Wait Until Element Is Visible    //div[@class="modal-footer"]/a[text()="确定"]
     Sleep    1
     Click Element    //div[@class="modal-footer"]/a[text()="确定"]

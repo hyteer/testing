@@ -98,7 +98,8 @@ Library           Ytools
     选择时间
     Sleep    1
     Select Radio Button    offline    ${商品选择}
-    Run Keyword If    ${商品选择}==2    选择商品    id=goods    //*[@id="main-container"]/div[3]/div/div/div[3]/a[2]
+    Run Keyword If    ${商品选择}==2    选择商品_loop    id=goods    //*[@id="main-container"]/div[3]/div/div/div[3]/a[2]
+    #Pass Execution    Debug
     ##条件
     Click Element    //*[@id="area"]/tbody/tr[2]/td[1]/div[${满}]/label/input
     Run Keyword If    ${满}==1    Input Text    //*[@id="area"]/tbody/tr[2]/td[1]/div[1]/div/div/input    ${满-元}
@@ -626,3 +627,52 @@ Library           Ytools
     Sleep    1.5
     Click Element    ${确定按钮}    #确定
     Sleep    2
+
+选择商品_loop
+    [Arguments]    ${xpath_商品链接}=No    ${xpath_确定按钮}=No
+    ${myflag}    Set Variable    True
+    ${商品链接}    Run Keyword If    '${xpath_商品链接}'=='No'    Set Variable    id=goods
+    ...    ELSE    Set Variable    ${xpath_商品链接}
+    ${确定按钮}    Run Keyword If    '${xpath_确定按钮}'=='No'    Set Variable    //div[contains(@class,"modal-footer")]/a[contains(@class,"btn btn-primary") and contains(text(),"确定")]
+    ...    ELSE    Set Variable    ${xpath_确定按钮}
+    Click Element    ${xpath_商品链接}
+    Wait Until Page Contains Element    //h4[text()="商品列表"]
+    Sleep    1
+    ####Loop
+    ${num}    Set Variable    10
+    : FOR    ${i}    IN RANGE    ${num}
+    \    ####选择商品
+    \    ##随机分页
+    \    ${flag}    Run Keyword And Return Status    Page Should Contain Element    //*[@id="product"]/div/ul[@class="pagination"]
+    \    ${页数}    Run Keyword If    ${flag}==True    Get Text    //*[@id="product"]/div/ul[@class="pagination"]/li/span/button/span[@ng-bind="page.total_page"]
+    \    ${rand_page}    Evaluate    random.randint(1,${页数})    random
+    \    Input Text    //*[@id="product"]/div/ul[@class="pagination"]/li/span/input[@ng-model="goPage"]    ${rand_page}
+    \    #Input Text    //*[@id="product"]/div/ul[@class="pagination"]/li/span/input[@ng-model="goPage"]    5
+    \    Sleep    1
+    \    Click Element    //*[@id="product"]/div/ul[@class="pagination"]/li/span/button[@ng-click="search()"]
+    \    Sleep    1.5
+    \    ##随机商品
+    \    ${els_库存不为0}    Get Matching Xpath Count    //*[@id="product"]/div/table/tbody[@ng-repeat="goods in goodsList"]/tr[1]/td[@ng-bind="goods.reserves" and not(text()="0")]
+    \    Sleep    2
+    \    ${随机商品}    Evaluate    random.randint(1,${els_库存不为0})    random
+    \    #${随机商品}    Run Keyword If    ${i}==0    Set Variable    9
+    \    #...
+    \    ...    # ELSE    Set Variable    8
+    \    ##随机规格
+    \    #Click Element    xpath=(//*[@id="product"]/div/table/tbody[@ng-repeat="goods in goodsList"]/tr[1]/td[@ng-bind="goods.reserves"])[${随机商品}]    #随机点击一个库存不为0的商品
+    \    Click Element    //*[@id="product"]/div/table/tbody[${随机商品}]
+    \    Sleep    1
+    \    Execute Javascript    var evaluator = new XPathEvaluator();var result = evaluator.evaluate('//*[@id="product"]/div[1]/table/tbody[${随机商品}]/tr[@ng-show="goods.isshow"]', document.documentElement, null,XPathResult.ORDERED_NODE_ITERATOR_TYPE, null); var node = result.iterateNext();node.scrollIntoView();
+    \    ${flag}    Run Keyword And Return Status    Element Should Not Contain    //*[@id="product"]/div[1]/table/tbody[${随机商品}]/tr[@class="products_sku"]//table/tbody    规格下架
+    \    Run Keyword If    ${flag}==False    Log    规格下架或者已选中，需重新选择商品
+    \    Continue For Loop If    ${flag}==False
+    \    ${els_库存为0规格数}    Get Matching Xpath Count    //*[@id="product"]/div[1]/table/tbody[${随机商品}]/tr[@ng-show="goods.isshow"]//tbody/tr[@ng-click="check(sku,goods)"]/td[@ng-bind="sku.reserves" and text()="0"]
+    \    ${els_库存不为0规格数}    Get Matching Xpath Count    //*[@id="product"]/div[1]/table/tbody[${随机商品}]/tr[@ng-show="goods.isshow"]//tbody/tr[@ng-click="check(sku,goods)"]/td[@ng-bind="sku.reserves" and not(text()="0")]
+    \    Continue For Loop If    ${els_库存不为0规格数}==0
+    \    ${随机规格}    Evaluate    random.randint(1,${els_库存不为0规格数})    random
+    \    Sleep    1
+    \    Click Element    xpath=(//*[@id="product"]/div[1]/table/tbody[${随机商品}]/tr[@ng-show="goods.isshow"]//tbody/tr[@ng-click="check(sku,goods)"]/td[@ng-bind="sku.reserves" and not(text()="0")])[${随机规格}]    #随机选择一个库存不为0的规格
+    \    Sleep    2
+    \    Exit For Loop If    ${myflag}==True
+    Click Element    ${确定按钮}    #确定
+    Sleep    3

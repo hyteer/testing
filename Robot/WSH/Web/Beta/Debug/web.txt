@@ -1,6 +1,8 @@
 *** Settings ***
+Suite Setup       登录
+Suite Teardown    关闭浏览器
 Library           Selenium2Library    timeout=5    implicit_wait=5
-Resource          ../Web/Resource/配置参数.robot
+Resource          ../Resource/常用操作.robot
 
 *** Test Cases ***
 login
@@ -10,3 +12,11 @@ login
     Input Text    id=password    ${password}    #输入密码
     Input Text    id=captcha    111111    #输入验证码
     Click Button    id=login    #点击登陆
+
+ShouldNotContain
+    ${flag}    Run Keyword And Return Status    Element Should Not Contain    //*[@id="top-left"]    管理后台
+    Sleep    2
+    ${flag}    Run Keyword And Return Status    Element Should Not Contain    //*[@id="navList"]    扫码支付2
+
+ElementShouldContain
+    Element Should Contain    id=top-left    navbar-brand

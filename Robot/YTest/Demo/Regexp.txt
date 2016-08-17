@@ -1,0 +1,10 @@
+*** Settings ***
+Library           String
+
+*** Test Cases ***
+first
+    ${str}    Set Variable    list.is_subscribe == 2
+    ${str2}    Set Variable    test12usr8
+    Log    ${str}
+    ${matches}    Get Regexp Matches    ${str}    \\d
+    Log    ${matches[0]}

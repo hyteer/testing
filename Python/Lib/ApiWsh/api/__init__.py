@@ -5,10 +5,12 @@ from common import Common
 from marketing import Marketing
 from utils import CommonUtils
 from product import Product
+from member import Member
 __all__ = [
     "Common",
     "Shop",
     "Marketing",
     "Product",
+    "Member",
     "CommonUtils"
 ]

@@ -40,7 +40,7 @@ Library           AutoItLibrary
     Input Text    //textarea[@placeholder="单条图文才显示摘要"]    ${摘要}
     Sleep    1
     ##正文
-    文本编辑器输入
+    编辑器_输入
     ##原文地址
     Run Keyword If    ${原文Rand}==1    Input Text    //input[@type="url" and starts-with(@placeholder,"http://")]    ${原文地址}
     Sleep    1
@@ -85,7 +85,7 @@ Library           AutoItLibrary
     Sleep    1
     Input Text    //textarea[@placeholder="单条图文才显示摘要"]    ${摘要}
     Sleep    1
-    文本编辑器输入
+    编辑器_输入
     Run Keyword If    ${原文Rand}==1    Input Text    //input[@type="url" and starts-with(@placeholder,"http://")]    ${原文地址}
     Sleep    1
     Mouse Out    //input[@type="url" and starts-with(@placeholder,"http://")]
@@ -221,7 +221,7 @@ Library           AutoItLibrary
     Page Should Not Contain Element    //*[@id="js-wxtwInfo"]/li/div[4]/div/span[text()="${标题}"]
     Log    Success!
 
-商户图文_二维码
+图文素材_二维码
     [Tags]    ready
     ####进入页面
     点击链接菜单    微信设置
@@ -230,8 +230,12 @@ Library           AutoItLibrary
     Wait Until Page Contains Element    //*[@id="breadcrumbs"]/ul/li[contains(text(),"素材")]
     Sleep    2
     ####查看二维码
-    查看二维码_商户图文    //*[@id="js-wxtwInfo"]/li/div[4]/div/span[starts-with(text(),"【商户图文】")]/ancestor::li[1]/div[2]/div[2]/a[contains(@title,"查看二维码") and not(contains(@class,'ng-hide'))]
-    ####结果校验
+    Click Element    //li[@ng-repeat="list in tuWenList" and @ng-click="tuPian(list)"]//a[@title="查看二维码" and not(contains(@class,'ng-hide'))]
+    ${els}    Get Matching Xpath Count    //div[@aria-hidden="false"]//img[starts-with(@src,"https://mp.weixin.qq.com/cgi-bin/showqrcode")]
+    Wait Until Element Is Visible    //div[@aria-hidden="false"]//img[starts-with(@src,"https://mp.weixin.qq.com/cgi-bin/showqrcode")]
+    Sleep    1
+    Click Link    ×
+    ####结果校验    //img[starts-with(@src,"https://mp.weixin.qq.com/cgi-bin/showqrcode")]/ancestor::div[@class="modal-content"]/
     Log    Success!
     Sleep    2
 
@@ -264,7 +268,7 @@ Library           AutoItLibrary
 
 图文素材_按类型搜索
     [Documentation]    Bug:按标题搜索后结果与预期不符
-    [Tags]    ready    bug
+    [Tags]    ready
     ####进入页面
     点击链接菜单    微信设置
     ${sub}    Set Variable    图文素材
@@ -272,12 +276,12 @@ Library           AutoItLibrary
     Wait Until Page Contains Element    //*[@id="breadcrumbs"]/ul/li[contains(text(),"素材")]
     Sleep    2
     ####图文类型搜索
-    Select From List By Label    //*[@id="main-container"]/div/div[2]/div[2]/div/div/div[1]/div/div/div[2]/div/select[1]    图文类型
+    Select From List By Label    //*[@id="main-container"]//div/select[@ng-change="changeClack(normalName)"]    图文类型
     Sleep    1
     ##商户图文
-    Select From List By Label    //*[@id="main-container"]/div/div[2]/div[2]/div/div/div[1]/div/div/div[2]/div/select[2]    微商户图文
+    Select From List By Label    //*[@id="main-container"]//div[@class="input-group"]/select[@ng-model="searchTwo"]    微商户图文
     Sleep    1
-    Click Element    //*[@id="main-container"]/div/div[2]/div[2]/div/div/div[1]/div/div/div[2]/div/span/a    #搜索
+    Click Element    //*[@id="main-container"]//div[@class="input-group"]/span/a[@ng-click="searchList()"]    #搜索
     Sleep    2
     ##结果校验
     ${查无数据}    Run Keyword And Return Status    Element Should Be Visible    //*[@id="main-container"]/div/div[2]/div[2]/div/div/div[3]/div[3]/div[contains(text(),"没有") and contains(text(),"数据")]
@@ -286,9 +290,9 @@ Library           AutoItLibrary
     Log    Success!
     Sleep    2
     ##微信图文
-    Select From List By Label    //*[@id="main-container"]/div/div[2]/div[2]/div/div/div[1]/div/div/div[2]/div/select[2]    微信图文
+    Select From List By Label    //*[@id="main-container"]//div[@class="input-group"]/select[@ng-model="searchTwo"]    微信图文
     Sleep    1
-    Click Element    //*[@id="main-container"]/div/div[2]/div[2]/div/div/div[1]/div/div/div[2]/div/span/a    #搜索
+    Click Element    //*[@id="main-container"]//div[@class="input-group"]/span/a[@ng-click="searchList()"]    #搜索
     Sleep    2
     ##结果校验
     ${查无数据}    Run Keyword And Return Status    Element Should Be Visible    //*[@id="main-container"]/div/div[2]/div[2]/div/div/div[3]/div[3]/div[contains(text(),"没有") and contains(text(),"数据")]
@@ -317,17 +321,18 @@ Library           AutoItLibrary
     添加QQ表情
     Sleep    1
     ##文字
-    文本编辑器输入_短文本
+    编辑器_输入短文本
     Click Element    //*[@id="newtextbox"]//input[@ng-model="groupObj.title" and @placeholder="请输入名字"]
     Sleep    1
     Click Element    id=submit
     Sleep    2
-    弹出信息校验
+    Wait Until Keyword Succeeds    10 sec    1 sec    弹出信息校验
     Sleep    2
     ####结果校验
     Page Should Contain Element    //*[@id="main-container"]/div[1]/div[2]/div[2]/div/div/div[3]/div/div/table/tbody/tr/td/span[starts-with(text(),"${文本标签}")]
 
 文本素材_编辑
+    [Tags]    ready
     ####进入页面
     点击链接菜单    微信设置
     ${sub}    Set Variable    文本素材
@@ -344,77 +349,58 @@ Library           AutoItLibrary
     ####输入参数
     Input Text    //ng-form[@name="myformtwo"]//input[@placeholder="请输入名字"]    ${文本标签}
     Sleep    1
+    编辑器_清空内容    ueditor_1
+    Sleep    1
     ##表情    Todo
     添加QQ表情2
     Sleep    1
     ##文字
-    文本编辑器输入_短文本
-    Click Element    //*[@id="newtextbox"]//input[@ng-model="groupObj.title" and @placeholder="请输入名字"]
+    编辑器_修改
     Sleep    1
-    Click Element    id=submit
+    Click Element    id=submit1
     Sleep    2
-    弹出信息校验
+    Wait Until Keyword Succeeds    10 sec    1 sec    弹出信息校验
     Sleep    2
     ####结果校验
     Page Should Contain Element    //*[@id="main-container"]/div[1]/div[2]/div[2]/div/div/div[3]/div/div/table/tbody/tr/td/span[starts-with(text(),"${文本标签}")]
 
 文本素材_删除
+    [Tags]    ready
     ####进入页面
     点击链接菜单    微信设置
     ${sub}    Set Variable    文本素材
     点击链接菜单    ${sub}
     Wait Until Page Contains Element    //*[@id="breadcrumbs"]/ul/li[contains(text(),"素材")]
     Sleep    1
-    ####添加文本素材
-    Click Link    添加文本
+    ####删除文本素材
+    ${文本标签}    Get Text    //*[@id="main-container"]/div[1]/div[2]/div[2]/div/div/div[3]/div/div/table/tbody/tr/td/span[starts-with(text(),"【文本素材】")]
+    Click Element    //*[@id="main-container"]//tr[@ng-repeat="list in textList"]//span[contains(@class,"sc_title") and contains(@class,"ng-binding") and starts-with(text(),"【文本素材】")]/ancestor::tr[1]//a[@title="删除" and @ng-click="deltext(list.id)"]
     Sleep    2
-    ####生成参数
-    ${文本标签}    随机字符    【文本素材】    12
-    ${文本内容}    Generate Random String    1    01
-    ####输入参数
-    Input Text    //*[@id="newtextbox"]/div/div/div[2]/div/div/form/div[1]/div/input    ${文本标签}
-    Sleep    1
-    ##表情    Todo
-    ##文字
-    文本编辑器输入
-    Sleep    1
-    Click Element    //*[@id="newtextbox"]/div/div/div[2]/div/div/form/div[1]/div/input
-    Sleep    1
-    Click Element    id=submit
-    Sleep    2
+    确认
     弹出信息校验
-    Sleep    2
+    Sleep    1.5
     ####结果校验
-    Page Should Contain Element    //*[@id="main-container"]/div[1]/div[2]/div[2]/div/div/div[3]/div/div/table/tbody/tr/td/span[starts-with(text(),"${文本标签}")]
+    Page Should Not Contain Element    //*[@id="main-container"]/div[1]/div[2]/div[2]/div/div/div[3]/div/div/table/tbody/tr/td/span[starts-with(text(),"${文本标签}")]
 
 文本素材_搜索
+    [Tags]    ready
     ####进入页面
     点击链接菜单    微信设置
     ${sub}    Set Variable    文本素材
     点击链接菜单    ${sub}
     Wait Until Page Contains Element    //*[@id="breadcrumbs"]/ul/li[contains(text(),"素材")]
     Sleep    1
-    ####添加文本素材
-    Click Link    添加文本
-    Sleep    2
-    ####生成参数
-    ${文本标签}    随机字符    【文本素材】    12
-    ${文本内容}    Generate Random String    1    01
-    ####输入参数
-    Input Text    //*[@id="newtextbox"]/div/div/div[2]/div/div/form/div[1]/div/input    ${文本标签}
+    ####搜索文本素材
+    ${可选关键字}    Create List    【文本素材】    test    不存储的关键字
+    ${rand}    Generate Random String    1    012
+    ${关键字}    Set Variable    ${可选关键字[${rand}]}
+    Input Text    //*[@id="main-container"]//input[@placeholder="搜索消息相关关键字" and @ng-model="searchText"]    ${关键字}
     Sleep    1
-    ##表情    Todo
-    ##文字
-    文本编辑器输入
-    Sleep    1
-    Click Element    //*[@id="newtextbox"]/div/div/div[2]/div/div/form/div[1]/div/input
-    Sleep    1
-    Click Element    id=submit
-    Sleep    2
-    弹出信息校验
+    Click Element    //*[@id="main-container"]//input[@placeholder="搜索消息相关关键字" and @ng-model="searchText"]/following-sibling::span[1]/a
     Sleep    2
     ####结果校验
-    Page Should Contain Element    //*[@id="main-container"]/div[1]/div[2]/div[2]/div/div/div[3]/div/div/table/tbody/tr/td/span[starts-with(text(),"${文本标签}")]
+    Run Keyword If    ${rand}==2    Page Should Contain Element    //*[@id="main-container"]//div[text()="暂时没有可显示的数据"]
+    ...    ELSE    查询结果校验_文本素材    ${关键字}
 
 图片素材_添加
     [Tags]    ready
@@ -533,8 +519,9 @@ Library           AutoItLibrary
     Sleep    1
     Click Element    ${确定按钮}
 
-文本编辑器输入
+编辑器_输入
     [Arguments]    ${iframeID}=ueditor_0
+    Wait Until Element Is Visible    id=${iframeID}
     Select Frame    id=${iframeID}
     ####输入内容
     ${文本}    随机字符    【测试文本】    200
@@ -546,6 +533,56 @@ Library           AutoItLibrary
     Mouse Out    //html/body/p
     Sleep    1
     ${text2}    Get Text    //html/body/p
+    Unselect Frame
+    Sleep    1
+
+编辑器_输入短文本
+    [Arguments]    ${iframeID}=ueditor_0
+    Wait Until Element Is Visible    id=${iframeID}
+    Select Frame    id=${iframeID}
+    ####输入内容
+    ${文本}    随机字符    \    20
+    #${text}    Get Text    //html/body/p
+    Execute Javascript    var textnode = document.createTextNode("${文本}");var el=document.getElementsByTagName("p")[0];el.appendChild(textnode);
+    #Execute Javascript    var el=document.getElementsByTagName("p")[0];el.innerHTML = "${文本}";
+    Sleep    1
+    #Mouse Out    //html/body/p
+    #Selenium2Library.Mouse Down    //html/body
+    #Selenium2Library.Mouse Up    //html/body
+    #Click Element    //html/body
+    Press Key    //html/body    \\13
+    Sleep    1
+    #Mouse Out    //html/body
+    #${text2}    Get Text    //html/body/p
+    Unselect Frame
+    Sleep    1
+
+编辑器_清空内容
+    [Arguments]    ${iframeID}=ueditor_1
+    Wait Until Element Is Visible    id=${iframeID}
+    Select Frame    id=${iframeID}
+    Execute Javascript    var el=document.getElementsByTagName("body")[0];el.innerHTML="";
+    Sleep    1
+    ${text}    Get Text    //html/body
+    Unselect Frame
+
+编辑器_修改
+    [Arguments]    ${iframeID}=ueditor_1
+    Wait Until Element Is Visible    id=${iframeID}
+    Select Frame    id=${iframeID}
+    ####输入内容
+    ${文本}    随机字符    \    20
+    #${text}    Get Text    //html/body/p
+    Execute Javascript    var textnode = document.createTextNode("${文本}");var el=document.getElementsByTagName("body")[0];el.appendChild(textnode);
+    #Execute Javascript    var el=document.getElementsByTagName("p")[0];el.innerHTML = "${文本}";
+    Sleep    1
+    #Mouse Out    //html/body/p
+    #Selenium2Library.Mouse Down    //html/body
+    #Selenium2Library.Mouse Up    //html/body
+    Press Key    //html/body    \\13
+    Sleep    1
+    #Mouse Out    //html/body
+    #${text2}    Get Text    //html/body/p
     Unselect Frame
     Sleep    1
 
@@ -582,9 +619,9 @@ Library           AutoItLibrary
 
 图文查询结果校验_类型
     [Arguments]    ${类型}
-    ${els1}    Get Webelements    //*[@id="main-container"]/div/div[2]/div[2]/div/div/div[3]/div[3]/ul
+    ${els1}    Get Webelements    //*[@id="js-wxtwInfo"]/li[@ng-click="tuPian(list)"]
     ${len1}    Get Length    ${els1}
-    ${els2}    Get Webelements    //*[@id="main-container"]/div/div[2]/div[2]/div/div/div[3]/div[3]/ul/li/div/div[1]/span[contains(text(),"${类型}")]
+    ${els2}    Get Webelements    //*[@id="js-wxtwInfo"]/li[@ng-click="tuPian(list)"]/div[1]/span[contains(text(),"${类型}")]
     ${len2}    Get Length    ${els2}
     Should Be Equal As Integers    ${len1}    ${len2}
 
@@ -628,29 +665,6 @@ Library           AutoItLibrary
     ${len2}    Get Length    ${els2}
     Should Be Equal As Integers    ${len1}    ${len2}
 
-文本编辑器输入_短文本
-    [Arguments]    ${iframeID}=ueditor_0
-    Select Frame    id=${iframeID}
-    ####输入内容
-    ${文本}    随机字符    \    20
-    ${text}    Get Text    //html/body/p
-    Execute Javascript    var textnode = document.createTextNode("${文本}");var el=document.getElementsByTagName("p")[0];el.appendChild(textnode);
-    #Execute Javascript    var el=document.getElementsByTagName("p")[0];el.innerHTML = "${文本}";
-    Sleep    1
-    Mouse Out    //html/body/p
-    Sleep    1
-    Selenium2Library.Mouse Down    //html/body
-    Sleep    1
-    Selenium2Library.Mouse Up    //html/body
-    Click Element    //html/body
-    Press Key    //html/body    \\13
-    Sleep    1
-    Mouse Out    //html/body
-    Sleep    1
-    ${text2}    Get Text    //html/body/p
-    Unselect Frame
-    Sleep    1
-
 添加QQ表情
     [Documentation]    添加QQ表情
     ${rand1}    Evaluate    random.randint(1,5)    random
@@ -667,12 +681,21 @@ Library           AutoItLibrary
 添加QQ表情2
     [Documentation]    添加QQ表情
     ${rand1}    Evaluate    random.randint(1,5)    random
-    :FOR    ${i}    IN RANGE    ${rand1}
-    \    Click Element    //*[@id="textbox"]//div[@class="face-box"]/span[@target="addContent"][1]    #QQ表情
+    #    //*[@id="textbox"]//div[@class="face-box"]/span[@target="addContent"][1]
+    : FOR    ${i}    IN RANGE    ${rand1}
+    \    Click Element    //*[@id="textbox"]/div/div/div[2]/div/div/div/div/div/div/div[1]/span[1]    #QQ表情
     \    Sleep    1
-    \    ${els}    Get Webelements    //*[@id="newtextbox"]//div[@class="face-box"]/div[@class="qqface-panel"]/img[@class="qqface-img"]
+    \    ${els}    Get Webelements    //*[@id="textbox"]/div/div/div[2]/div/div/div/div/div/div/div[1]/div/img[@class="qqface-img"]
     \    ${len}    Get Length    ${els}
     \    ${rand}    Evaluate    random.randint(1,${len})    random
-    \    Click Element    //*[@id="textbox"]//div[@class="face-box"]/div[@class="qqface-panel"]/img[@class="qqface-img"][${rand}]
+    \    Click Element    xpath=(//*[@id="textbox"]/div/div/div[2]/div/div/div/div/div/div/div[1]/div/img[@class="qqface-img"])[${rand}]
     \    Sleep    1
     Sleep    1
+
+查询结果校验_文本素材
+    [Arguments]    ${keyword}
+    ${els1}    Get Webelements    //*[@id="main-container"]//div/table/tbody/tr[@ng-repeat="list in textList"]
+    ${len1}    Get Length    ${els1}
+    ${els2}    Get Webelements    //*[@id="main-container"]//div/table/tbody/tr/td/span[contains(text(),"${keyword}")]
+    ${len2}    Get Length    ${els2}
+    Should Be Equal As Integers    ${len1}    ${len2}

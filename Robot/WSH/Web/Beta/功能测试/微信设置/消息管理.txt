@@ -33,7 +33,6 @@ Library           AutoItLibrary
     ${class}    Get Element Attribute    //ul[@id="myTab"]/li[@ng-class="{'active': toggleIndex == 1}"]@class
     Should Match Regexp    ${class}    active
     Page Should Contain Element    //tr[@ng-repeat="list in \ listArray[1]"]/td[text()="${发送时间}"]/parent::tr[1]/td[text()="${发送者}"]/parent::tr[1]/td[text()="${消息内容}"]
-    Pass Execution    Test
 
 消息_取消收藏
     [Tags]    ready
@@ -87,16 +86,21 @@ Library           AutoItLibrary
     Wait Until Page Contains Element    //*[@id="breadcrumbs"]/ul/li[contains(text(),"消息管理")]
     Sleep    1
     ####消息管理-按状态查看
+    ##判断当前
+    ${els}    Get Matching Xpath Count    //tr[@ng-repeat="list in \ listArray[0]"]
+    Run Keyword If    ${els}==0    当前页面没有消息，请检查数据是否异常！
     ##未读
     Select From List By Label    //select[@ng-change="changeClack(flag)"]    未读
     Sleep    3
     ##校验
-    Page Should Contain Element    //tr[@ng-repeat="list in \ listArray[0]"]//span[text()="未读" and not(text()="已读")]
+    ${els}    Get Matching Xpath Count    //tr[@ng-repeat="list in \ listArray[0]"]
+    Run Keyword If    ${els}!=0    Page Should Contain Element    //tr[@ng-repeat="list in \ listArray[0]"]//span[text()="未读" and not(text()="已读")]
     ##已读
     Select From List By Label    //select[@ng-change="changeClack(flag)"]    已读
     Sleep    3
     ##校验
-    Page Should Contain Element    //tr[@ng-repeat="list in \ listArray[0]"]//span[text()="已读" and not(text()="未读")]
+    ${els}    Get Matching Xpath Count    //tr[@ng-repeat="list in \ listArray[0]"]
+    Run Keyword If    ${els}!=0    Page Should Contain Element    //tr[@ng-repeat="list in \ listArray[0]"]//span[text()="已读" and not(text()="未读")]
 
 消息_标记已读
     [Documentation]    注：如果当前没有未读消息则直接Pass

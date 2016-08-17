@@ -238,10 +238,9 @@ Resource          ../../Resource/配置参数.robot
     Input Text    //*[@id="cardset2"]/div/ng-form/div[2]/div/input    ${客服电话}
     Sleep    1
     保存并闭关
-    Sleep    3
-    ${alert}    Get Alert Message
-    Should Contain    ${alert}    成功
-    Sleep    2
+    Sleep    1
+    弹出信息校验
+    #Wait Until Keyword Succeeds    10x    1s    弹出信息校验
     ####结果校验
     字段校验    //*[@id="main-container"]/div/div[2]/div[2]/div/div/div/div/div/form/table/tbody/tr[1]/td[1]    ${卡券名称}
 

@@ -35,7 +35,7 @@ Library           AutoItLibrary
     Sleep    1
     Input Text    //*[@id="main-container"]/div/div[2]/div[2]/div[1]/div/div[3]/div/div/form/div/div[4]/div/textarea    ${摘要}
     Sleep    1
-    文本编辑器输入
+    编辑器_输入
     Run Keyword If    ${原文Rand}==1    Input Text    //*[@id="main-container"]/div/div[2]/div[2]/div[1]/div/div[3]/div/div/form/div/div[6]/div/input    ${原文地址}
     Sleep    1
     Mouse Out    //*[@id="main-container"]/div/div[2]/div[2]/div[1]/div/div[3]/div/div/form/div/div[6]/div/input
@@ -76,7 +76,7 @@ Library           AutoItLibrary
     Sleep    1
     Input Text    //*[@id="main-container"]/div/div[2]/div[2]/div[1]/div/div[3]/div/div/form/div/div[4]/div/textarea    ${摘要}
     Sleep    1
-    文本编辑器输入
+    编辑器_输入
     Run Keyword If    ${原文Rand}==1    Input Text    //*[@id="main-container"]/div/div[2]/div[2]/div[1]/div/div[3]/div/div/form/div/div[6]/div/input    ${原文地址}
     Sleep    1
     Mouse Out    //*[@id="main-container"]/div/div[2]/div[2]/div[1]/div/div[3]/div/div/form/div/div[6]/div/input
@@ -305,7 +305,7 @@ Library           AutoItLibrary
     Sleep    1
     ##表情    Todo
     ##文字
-    文本编辑器输入
+    编辑器_输入
     Sleep    1
     Click Element    //*[@id="newtextbox"]/div/div/div[2]/div/div/form/div[1]/div/input
     Sleep    1
@@ -334,7 +334,7 @@ Library           AutoItLibrary
     Sleep    1
     ##表情    Todo
     ##文字
-    文本编辑器输入
+    编辑器_输入
     Sleep    1
     Click Element    //*[@id="newtextbox"]/div/div/div[2]/div/div/form/div[1]/div/input
     Sleep    1
@@ -363,7 +363,7 @@ Library           AutoItLibrary
     Sleep    1
     ##表情    Todo
     ##文字
-    文本编辑器输入
+    编辑器_输入
     Sleep    1
     Click Element    //*[@id="newtextbox"]/div/div/div[2]/div/div/form/div[1]/div/input
     Sleep    1
@@ -392,7 +392,7 @@ Library           AutoItLibrary
     Sleep    1
     ##表情    Todo
     ##文字
-    文本编辑器输入
+    编辑器_输入
     Sleep    1
     Click Element    //*[@id="newtextbox"]/div/div/div[2]/div/div/form/div[1]/div/input
     Sleep    1
@@ -520,7 +520,7 @@ Library           AutoItLibrary
     Sleep    1
     Click Element    ${确定按钮}
 
-文本编辑器输入
+编辑器_输入
     [Arguments]    ${iframeID}=ueditor_0
     Select Frame    id=${iframeID}
     ####输入内容

@@ -10,6 +10,7 @@ cm = api.Common()
 sp = api.Shop()
 mk = api.Marketing()
 pd = api.Product()
+mb = api.Member()
 
 # get_cookie
 sid = cm.wsh_get_cookie()
@@ -31,11 +32,14 @@ mk.get_reduction_actlist(sid)
 mk.get_secondkill_actlist(sid)
 
 mk.get_collectzan_actlist(sid)
-'''
-####Product####
+
+#### Product ####
 pd.get_product_list(sid)
 pd.get_order_list(sid)
 pd.page_list_ajax(sid)
 pd.page_edit_ajax(sid)
 pd.get_order_detail(sid)
 pd.get_product_detail(sid)
+'''
+#### Member ####
+mb.wsh_member_list(sid)

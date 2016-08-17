@@ -1,6 +1,7 @@
 *** Settings ***
 Library           random
 Library           Ytools
+Library           Collections
 
 *** Variables ***
 ${var}            Test var
@@ -11,6 +12,7 @@ dict
     Should Be True    ${dict} == {'key': 'value', 'foo': 'bar'}
     &{dict} =    Create Dictionary    ${1}=${2}    &{dict}    foo=new
     Should Be True    ${dict} == {1: 2, 'key': 'value', 'foo': 'new'}
+    Log    Key:${dict.key}
     Should Be Equal    ${dict.key}    value
 
 dict-yt
@@ -35,6 +37,7 @@ mydict
     &{dict} =    Create Dictionary    key=value    foo=bar
     Log    Var:${var}
     Log    Dict:${dict.foo}
+    ${foo}    Get From Dictionary    ${dict}    foo
 
 list
     @{list}    Create List    Act1    Act2    Act3
@@ -80,3 +83,14 @@ RunIf
     ...    ELSE IF    50<=${库存}<100    Set Variable    0.5
     ...    ELSE    Set Variable    0.6
     Log    ${库存factor}
+
+random_multi
+    ${n}    Evaluate    random.randint(1,5)    random
+    ${list}    Evaluate    random.sample(range(1,31),${n})    random
+    :FOR    ${i}    IN    @{list}
+    \    Log    ${i}
+
+add2dict
+    &{dict}    Create Dictionary    a=test1    b=test2
+    Set To Dictionary    ${dict}    c=test3    d=tet4
+    Log    Dict:${dict}

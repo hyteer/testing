@@ -53,7 +53,7 @@ Resource          ../../Resource/API.robot
     Should Be Equal As Strings    ${商家介绍2}    ${商家描述}
 
 支付管理
-    [Tags]
+    [Tags]    paused
     ####查询接口
     查询支付方式
     ####进入页面
@@ -71,7 +71,7 @@ Resource          ../../Resource/API.robot
     ####操作校验
 
 扫码支付
-    [Tags]    ready
+    [Tags]    ready    paused
     ####进入页面
     点击链接菜单    运营设置
     ${sub}    Set Variable    扫码支付
