@@ -55,3 +55,20 @@ Library           Collections
     Log    Resp:${resp.content}
     Run Keyword If    ${errcode}==0    Log    Success
     ...    ELSE    Log    Failed
+
+获取标签列表
+    [Tags]    ready
+    &{headers}    Create Dictionary    Accept=application/json    Content-Type=application/json
+    ${jsonstr}    Convert To String    {"_page":1,"_page_size":20,"name":""}
+    ${resp}    Post Request    wsh    /members/find-tag-ajax    data=${jsonstr}
+    Log    Response:${resp.content}
+    ${str}    Get Substring    ${resp.content}    3
+    ${js}    loads    ${str}
+    ${errcode}    Get From Dictionary    ${js}    errcode
+    ###
+    ${errmsg}    Get From Dictionary    ${js}    errmsg
+    ${data}    Get From Dictionary    ${errmsg}    data
+    ${标签1}    Get From List    ${data}    0
+    ${num}    Get Length    ${data}
+    ${page}    Get From Dictionary    ${errmsg}    page
+    ${总数}    Get From Dictionary    ${page}    total_count

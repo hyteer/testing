@@ -905,6 +905,8 @@ Library           Collections
     Sleep    1
     Click Element    id=post
     Sleep    2
+    弹出信息校验
+    Pass Execution    Test
     ${alert}    Get Alert Message
     Log    Alert Message:${alert}
     ${flag}    Run Keyword And Return Status    Should Contain    ${alert}    成功

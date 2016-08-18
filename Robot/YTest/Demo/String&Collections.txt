@@ -42,3 +42,11 @@ List
     ${list1}    Create List
     Append To List    ${list1}    test1
     Log    '${list1}'
+
+Dict_pop
+    &{data}    Create Dictionary    a=test1    b=test2    c=test3
+    ${len}    Get Length    ${data}
+    :FOR    ${i}    IN RANGE    ${len}
+    \    Exit For Loop If    ${j}>${len}
+    \    Pop From Dictionary    ${data}    b
+    \    ${j}    Evaluate    ${i+1}

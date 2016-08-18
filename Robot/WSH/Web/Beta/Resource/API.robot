@@ -97,6 +97,20 @@ API登录
     Run Keyword If    ${errcode}!=0    接口返回异常！
     [Return]    ${errmsg}
 
+获取标签列表
+    API登录
+    &{headers}    Create Dictionary    Accept=application/json    Content-Type=application/json
+    ${jsonstr}    Convert To String    {"_page":1,"_page_size":20,"name":""}
+    ${resp}    Post Request    wsh    /members/find-tag-ajax    data=${jsonstr}
+    Log    Response:${resp.content}
+    ${str}    Get Substring    ${resp.content}    3
+    ${js}    loads    ${str}
+    ${errcode}    Get From Dictionary    ${js}    errcode
+    ###
+    ${errmsg}    Get From Dictionary    ${js}    errmsg
+    Run Keyword If    ${errcode}!=0    接口返回异常！
+    [Return]    ${errmsg}
+
 客户统计
     API登录
     ${resp}    Post Request    wsh    /member/count-wx-member

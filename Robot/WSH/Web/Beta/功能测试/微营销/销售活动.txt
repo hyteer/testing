@@ -135,10 +135,70 @@ Library           Ytools
     ${flag}    Run Keyword And Return Status    Should Contain    ${alert}    成功
     Run Keyword If    ${flag}!=True    Fail    保存失败:${alert}
     #Should Contain    ${alert}    成功
-    Sleep    3
+    Sleep    2
     ###结果校验
+    Page Should Contain Element    //*[@id="main-container"]//div[@class="page-content"]//table/tbody/tr/td[text()="${活动名称}"]
 
-满减包邮_活动开启/关闭、编辑
+满减包邮_编辑
+    [Tags]    ready
+    点击链接菜单    微营销
+    ${sub}    Set Variable    满减包邮
+    点击链接菜单    ${sub}
+    Wait Until Page Contains Element    //*[@id="breadcrumbs"]/ul/li[contains(text(),"${sub}")]    20
+    ###满减包邮-编辑
+    Click Link    //*[@id="main-container"]//div[@class="page-content"]//table/tbody/tr/td[starts-with(text(),"【满减】")]/parent::tr[1]/td[7]/div/a[@title="编辑"]
+    Wait Until Page Contains Element    //*[@id="breadcrumbs"]/ul/li[contains(text(),"编辑满减包邮活动")]
+    Sleep    1
+    ####生成参数
+    ${活动名称}    随机字符    【满减】改    15
+    ${商品选择}    Generate Random String    1    2
+    ${满}    Generate Random String    1    12
+    ${满-元}    随机数字    2
+    ${满-件}    Generate Random String    1    23456789
+    ##支付立享优惠
+    ${立享}    Generate Random String    1    12
+    ${立享-包邮}    Generate Random String    1    1
+    ${减-元}    随机数字    1
+    ${减-不封顶}    Generate Random String    1    01
+    ${打折}    Generate Random String    1    456789
+    ${包邮}    Generate Random String    1    2
+    ##完成后赠送
+    ${送积分}    Generate Random String    1    01
+    ${送卡券}    Generate Random String    1    1
+    ${送红包}    Generate Random String    1    1
+    ${积分}    随机数字    1
+    ${积分-不封顶}    Generate Random String    1    01
+    ${卡券-适用}    Generate Random String    1    01
+    Sleep    1
+    ####参数设置
+    Input Text    //*[@id="main-container"]/div[1]/div[2]/div[2]/div[2]/div/form/div[1]/div/input    ${活动名称}
+    选择时间
+    Sleep    1
+    Select Radio Button    offline    ${商品选择}
+    Run Keyword If    ${商品选择}==2    选择商品_loop    id=goods    //*[@id="main-container"]/div[3]/div/div/div[3]/a[2]
+    #Pass Execution    Debug
+    ##条件
+    Click Element    //*[@id="area"]/tbody/tr[2]/td[1]/div[${满}]/label/input
+    Run Keyword If    ${满}==1    Input Text    //*[@id="area"]/tbody/tr[2]/td[1]/div[1]/div/div/input    ${满-元}
+    ...    ELSE    Input Text    //*[@id="area"]/tbody/tr[2]/td[1]/div[2]/div/div/input    ${满-件}
+    Sleep    1
+    ###优惠
+    ##立享优惠
+    #减折
+    #包邮
+    ##完成后赠送
+    ####保存
+    Click Link    保存
+    Sleep    1.5
+    ${alert}    Get Alert Message
+    ${flag}    Run Keyword And Return Status    Should Contain    ${alert}    成功
+    Run Keyword If    ${flag}!=True    Fail    保存失败:${alert}
+    #Should Contain    ${alert}    成功
+    Sleep    2
+    ###结果校验
+    Page Should Contain Element    //*[@id="main-container"]//div[@class="page-content"]//table/tbody/tr/td[text()="${活动名称}"]
+
+满减包邮_活动开启/关闭
     [Tags]    ready
     点击链接菜单    微营销
     点击链接菜单    满减包邮
@@ -656,8 +716,7 @@ Library           Ytools
     \    Sleep    2
     \    ${随机商品}    Evaluate    random.randint(1,${els_库存不为0})    random
     \    #${随机商品}    Run Keyword If    ${i}==0    Set Variable    9
-    \    #...
-    \    ...    # ELSE    Set Variable    8
+    \    #...    # ELSE    Set Variable    8
     \    ##随机规格
     \    #Click Element    xpath=(//*[@id="product"]/div/table/tbody[@ng-repeat="goods in goodsList"]/tr[1]/td[@ng-bind="goods.reserves"])[${随机商品}]    #随机点击一个库存不为0的商品
     \    Click Element    //*[@id="product"]/div/table/tbody[${随机商品}]
