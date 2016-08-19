@@ -440,3 +440,8 @@ Radio_选择未选中的
     ${len}    Get Length    ${els}
     ${rand}    Evaluate    random.randint(1,${len})    random
     Click Element    xpath=(${xpath})[${rand}]
+
+获取弹出信息
+    [Arguments]    ${retry}=10    ${time}=1
+    ${message}    Wait Until Keyword Succeeds    ${retry}x    ${time}s    Get Alert Message
+    [Return]    ${message}

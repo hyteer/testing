@@ -27,7 +27,7 @@ Resource          ../../Resource/API.robot
     ####页面数据
     Run Keyword If    ${总数}>${每页数量}    分页工具条校验    ${总数}
     ${数量}    Get Matching Xpath Count    //*[@id="main-container"]//div[@class="tabbable"]//table/tbody/tr[@ng-repeat="list in lists"]
-    :FOR    ${i}    IN RANGE    3
+    : FOR    ${i}    IN RANGE    3
     \    ${标签数据}    Get From List    ${data}    ${i}
     \    ${标签名称_API}    Get From Dictionary    ${标签数据}    name
     \    ${标签名称_页面}    Get Text    //*[@id="main-container"]//div[@class="tabbable"]//table/tbody/tr[${i+1}]/td[@ng-bind="list.name"]

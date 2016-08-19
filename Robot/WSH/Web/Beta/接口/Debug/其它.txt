@@ -3,6 +3,7 @@ Library           RequestsLibrary
 Library           String
 Library           json
 Library           Collections
+Resource          ../Resource/API.robot
 
 *** Test Cases ***
 baseapi

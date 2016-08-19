@@ -17,14 +17,14 @@ Library           AutoItLibrary
     Wait Until Page Contains Element    //*[@id="breadcrumbs"]/ul/li[contains(text(),"消息管理")]
     Sleep    1
     ####消息管理-收藏
-    ${els}    Get Webelements    //tr[@ng-repeat="list in \ listArray[0]"]
+    ${els}    Get Webelements    //tr[@ng-repeat="list in \ listArray[0]"]//a[@title="收藏" and not(contains(@class,"ng-hide"))]
     ${len}    Get Length    ${els}
-    ${rand}    Evaluate    random.randint(1,${len})    random
+    ${rand}    Evaluate    random.randint(1,1)    random
     ##获取消息参数
     ${发送者}    Get Text    //tr[@ng-repeat="list in \ listArray[0]"][${rand}]/td[@ng-bind="list.to_user_name"]
     ${消息内容}    Get Text    //tr[@ng-repeat="list in \ listArray[0]"][${rand}]/td[@ng-bind="list.content"]
     ${发送时间}    Get Text    //tr[@ng-repeat="list in \ listArray[0]"][${rand}]/td[@ng-bind="list.created * 1000 | date:'yyyy-MM-dd HH:mm:ss'"]
-    Click Element    //tr[@ng-repeat="list in \ listArray[0]"][${rand}]//a[@title="收藏" and not(contains(@class,"ng-hide"))]
+    Click Element    xpath=(//tr[@ng-repeat="list in \ listArray[0]"]//a[@title="收藏" and not(contains(@class,"ng-hide"))])[${rand}]
     Sleep    1
     弹出信息校验
     ####结果校验
@@ -32,7 +32,7 @@ Library           AutoItLibrary
     Sleep    2
     ${class}    Get Element Attribute    //ul[@id="myTab"]/li[@ng-class="{'active': toggleIndex == 1}"]@class
     Should Match Regexp    ${class}    active
-    Page Should Contain Element    //tr[@ng-repeat="list in \ listArray[1]"]/td[text()="${发送时间}"]/parent::tr[1]/td[text()="${发送者}"]/parent::tr[1]/td[text()="${消息内容}"]
+    Page Should Contain Element    //tr[@ng-repeat="list in \ listArray[1]"]/td[text()="${发送时间}"]/parent::tr[1]/td[text()="${消息内容}"]    #//tr[@ng-repeat="list in \ listArray[1]"]/td[text()="${发送时间}"]/parent::tr[1]/td[text()="${发送者}"]/parent::tr[1]/td[text()="${消息内容}"]
 
 消息_取消收藏
     [Tags]    ready
@@ -57,10 +57,10 @@ Library           AutoItLibrary
     Sleep    1
     ####消息管理-回复
     ${回复内容}    随机字符    【测试】    30
-    ${els}    Get Webelements    //tr[@ng-repeat="list in \ listArray[0]"]
+    ${els}    Get Webelements    //tr[@ng-repeat="list in \ listArray[0]"]//a[@ng-click="reply($index, list)" and @title="回复" and not(contains(@class,"ng-hide"))]
     ${len}    Get Length    ${els}
     ${rand}    Evaluate    random.randint(1,${len})    random
-    Click Element    //tr[@ng-repeat="list in \ listArray[0]"][${rand}]//a[@ng-click="reply($index, list)" and @title="回复"]
+    Click Element    xpath=(//tr[@ng-repeat="list in \ listArray[0]"]//a[@ng-click="reply($index, list)" and @title="回复" and not(contains(@class,"ng-hide"))])[${rand}]
     Wait Until Element Is Visible    //*[@id="reply"]//h4[text()="回复消息"]
     Sleep    1
     Input Text    id=textarea    ${回复内容}

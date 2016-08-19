@@ -72,3 +72,15 @@ Library           Collections
     ${num}    Get Length    ${data}
     ${page}    Get From Dictionary    ${errmsg}    page
     ${总数}    Get From Dictionary    ${page}    total_count
+
+会员统计
+    [Tags]    ready
+    ${resp}    Post Request    wsh    /members/last-count-ajax
+    Log    Response:${resp.content}
+    ${str}    Get Substring    ${resp.content}    3
+    ${js}    loads    ${str}
+    ${errcode}    Get From Dictionary    ${js}    errcode
+    Log    errcode is:${errcode}
+    Log    Resp:${resp.content}
+    Run Keyword If    ${errcode}==0    Log    Success
+    ...    ELSE    Log    Failed

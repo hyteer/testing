@@ -1,0 +1,29 @@
+*** Settings ***
+Library           RequestsLibrary
+Library           String
+Library           json
+Library           Collections
+Resource          ../../Resource/API.robot
+
+*** Test Cases ***
+客户统计
+    ${errmsg_客户统计}    API.客户统计
+    ${客户总数_API}    Get From Dictionary    ${errmsg_客户统计}    total
+    ${微信客户总数_API}    Get From Dictionary    ${errmsg_客户统计}    wx_total
+    ${昨日新增客户_API}    Get From Dictionary    ${errmsg_客户统计}    yestodayNew
+    ${昨日新增微信客户_API}    Get From Dictionary    ${errmsg_客户统计}    yestodayWxNew
+
+会员统计
+    ${errmsg_会员统计}    API.会员统计
+    ${会员总数_API}    Get From Dictionary    ${errmsg_会员统计}    total_count
+    ${昨日新增会员_API}    Get From Dictionary    ${errmsg_会员统计}    last_day_count
+
+获取客户列表
+    ${errmsg}    API.获取客户列表
+    ${data}    Get From Dictionary    ${errmsg}    data
+
+获取会员列表
+    ${errmsg}    API.获取会员列表
+    ${data}    Get From Dictionary    ${errmsg}    data
+    ${page}    Get From Dictionary    ${errmsg}    page
+    ${已开卡会员}    Get From Dictionary    ${page}    total_count

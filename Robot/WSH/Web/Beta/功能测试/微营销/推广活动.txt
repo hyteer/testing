@@ -499,7 +499,7 @@ Library           Collections
     [Tags]    ready
     点击链接菜单    微营销
     点击链接菜单    砸金蛋
-    Wait Until Page Contains    砸金蛋活动列表
+    Wait Until Element Contains    //*[@id="breadcrumbs"]/ul[@class="breadcrumb"]    砸金蛋活动列表
     Sleep    1
     ###删除活动
     ${actname}    Get Text    xpath=//*[@id="main-container"]/div/div[2]/div[2]/div/div/div[3]/table/tbody/tr/td[starts-with(text(),'【砸金蛋】')]/parent::tr[1]/td[1]
@@ -905,8 +905,6 @@ Library           Collections
     Sleep    1
     Click Element    id=post
     Sleep    2
-    弹出信息校验
-    Pass Execution    Test
     ${alert}    Get Alert Message
     Log    Alert Message:${alert}
     ${flag}    Run Keyword And Return Status    Should Contain    ${alert}    成功
@@ -974,7 +972,7 @@ Library           Collections
     Click Element    //*[@id="home"]/form/div[4]/div/div/div/span
     Sleep    2
     ${els_num}    Get Matching Xpath Count    //*[@id="redCashPackModal"]/div/div/form/div[2]/div/div/table/tbody/tr[@ng-click="checkList(list,$index)"]
-    ${rand}    Evaluate    random.randint(0,${els_num})    random
+    ${rand}    Evaluate    random.randint(1,${els_num})    random
     #${tr}    Generate Random String    1    1234
     Click Element    xpath=(//*[@id="redCashPackModal"]/div/div/form/div[2]/div/div/table/tbody/tr[@ng-click="checkList(list,$index)"])[${rand}]
     Wait Until Element Is Visible    //div[@class="modal-footer"]/a[text()="确定"]

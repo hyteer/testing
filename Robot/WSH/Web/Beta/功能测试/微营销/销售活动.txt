@@ -333,7 +333,7 @@ Library           Ytools
     ##保存商品
     Click Element    //*[@id="tbody"]/tr/td[11]/div/a[1]
     Sleep    1.5
-    ${alert}    Get Alert Message
+    ${alert}    Wait Until Keyword Succeeds    8x    1s    Get Alert Message
     ${flag}    Run Keyword And Return Status    Should Contain    ${alert}    成功
     Run Keyword If    ${flag}!=True    Fail    保存失败:${alert}
     ##Radio参数
