@@ -3,6 +3,11 @@
 
 # Ada Library Information
 *.ali
-venv
-.idea
+
+
+#IDE metadata
+**.idea/**
+
+# Modules
 node_modules
+**/venv/**
