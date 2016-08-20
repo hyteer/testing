@@ -5,8 +5,9 @@
 *.ali
 
 
+
 #IDE metadata
-**.idea/**
+**/.idea/**
 
 # Modules
 node_modules
