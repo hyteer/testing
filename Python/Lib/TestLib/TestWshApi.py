@@ -43,3 +43,5 @@ pd.get_product_detail(sid)
 '''
 #### Member ####
 mb.wsh_member_list(sid)
+mb.wsh_members_detail(sid)
+

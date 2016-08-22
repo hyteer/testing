@@ -350,7 +350,7 @@ Library           Ytools
     ####保存
     Click Element    id=post
     Sleep    1.5
-    ${alert}    Get Alert Message
+    ${alert}    弹出信息校验
     ${flag}    Run Keyword And Return Status    Should Contain    ${alert}    成功
     Run Keyword If    ${flag}!=True    Fail    保存失败:${alert}
     ####结果校验
@@ -617,6 +617,7 @@ Library           Ytools
     ${销售价}    Get Text    //*[@id="tbody"]/tr/td[5]
     ${库存}    Get Text    //*[@id="tbody"]/tr/td[7]
     ${库存}    Convert To Integer    ${库存}
+    ${库存}    Set Variable If    ${库存}>200    200    ${库存}
     ####生成参数
     ${库存factor}    Run Keyword If    ${库存}>=200    Set Variable    0.2
     ...    ELSE IF    100<=${库存}<200    Set Variable    0.3
@@ -645,6 +646,10 @@ Library           Ytools
     ${配额}    Run Keyword If    ${参团人数}==100    Set Variable    150
     ...    ELSE IF    ${参团人数}>${配额}    Set Variable    ${参团人数}
     ...    ELSE    Set Variable    ${配额}
+    ${配额}    Run Keyword If    ${配额}>${库存}    Set Variable    ${库存}
+    ...    ELSE    Set Variable    ${配额}
+    ${参团人数}    Run Keyword If    ${参团人数}>${库存}    Set Variable    ${库存}
+    ...    ELSE    Set Variable    ${参团人数}
     ${每人限购}    Generate Random String    1    23456
     ${每人限购}    Run Keyword If    ${每人限购}>${参团人数}    Set Variable    ${参团人数}
     ...    ELSE    Set Variable    ${每人限购}
@@ -681,6 +686,7 @@ Library           Ytools
     Click Element    //*[@id="product"]/div[1]/table/tbody[${商品}]/tr[1]    #展开商品
     Sleep    1
     ${库存}    Get Text    //*[@id="product"]/div[1]/table/tbody[${商品}]/tr[2]/td/table/tbody/tr[2]/td[4]
+    ${库存}    Convert To Integer    ${库存}
     Run Keyword If    ${库存}<=2    库存少重新选择商品    ${商品}
     Sleep    1
     Click Element    //*[@id="product"]/div[1]/table/tbody[${商品}]/tr[2]/td/table/tbody/tr[2]    #选择商品第一个规格

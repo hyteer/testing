@@ -57,9 +57,8 @@ Library           AutoItLibrary
     Sleep    1
     ####消息管理-回复
     ${回复内容}    随机字符    【测试】    30
-    ${els}    Get Webelements    //tr[@ng-repeat="list in \ listArray[0]"]//a[@ng-click="reply($index, list)" and @title="回复" and not(contains(@class,"ng-hide"))]
-    ${len}    Get Length    ${els}
-    ${rand}    Evaluate    random.randint(1,${len})    random
+    ${els}    Get Matching Xpath Count    //tr[@ng-repeat="list in \ listArray[0]"]//a[@ng-click="reply($index, list)" and @title="回复" and not(contains(@class,"ng-hide"))]
+    ${rand}    Evaluate    random.randint(1,${els})    random
     Click Element    xpath=(//tr[@ng-repeat="list in \ listArray[0]"]//a[@ng-click="reply($index, list)" and @title="回复" and not(contains(@class,"ng-hide"))])[${rand}]
     Wait Until Element Is Visible    //*[@id="reply"]//h4[text()="回复消息"]
     Sleep    1

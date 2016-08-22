@@ -464,6 +464,7 @@ Resource          ../../Resource/API.robot
     Run Keyword If    ${操作}!=0 and ${当前积分}<${分数}    减少积分异常及恢复
     ...    ELSE    弹出信息校验
     Sleep    3
+    ####调整后校验
     [Teardown]
 
 客户列表_批量补全归属
@@ -574,9 +575,9 @@ Resource          ../../Resource/API.robot
     Input Text    //*[@id="myModal-bjhy"]//input[@name="sort" and @ng-model="$root.groupObj.sort"]    ${排序}
     Sleep    1
     ##条件判断
-    Run Keyword If    ${rand}==0    确定并校验    #正常
+    Run Keyword If    ${rand}==0    确定并校验
     ...    ELSE IF    ${rand}==1    Element Should Be Visible    //*[@id="myModal-bjhy"]//span[@ng-show="groupForm.name.$error.pattern" and text()="只能输入汉字"]
-    ...    ELSE IF    ${rand}==2    组名过长文字校验    ${组名列表[${rand}]}
+    ...    ELSE IF    ${rand}==2    组名过长文字校验    ${组名列表[${rand}]}    #正常
     Run Keyword If    ${rand}==1    Input Text    //*[@id="myModal-bjhy"]//input[@ng-model="$root.groupObj.group_name" and @placeholder="请输入2-15个汉字"]    ${组名列表[0]}
     Sleep    1
     Run Keyword If    ${rand}!=0    确定并校验
@@ -609,9 +610,9 @@ Resource          ../../Resource/API.robot
     Input Text    //*[@id="myModal-bjhy"]//input[@name="sort" and @ng-model="$root.groupObj.sort"]    ${排序}
     Sleep    1
     ##条件判断
-    Run Keyword If    ${随机组名}==0    确定并校验    #正常
+    Run Keyword If    ${随机组名}==0    确定并校验
     ...    ELSE IF    ${随机组名}==1    Element Should Be Visible    //*[@id="myModal-bjhy"]//span[@ng-show="groupForm.name.$error.pattern" and text()="只能输入汉字"]
-    ...    ELSE IF    ${随机组名}==2    组名过长文字校验    ${组名列表[${随机组名}]}
+    ...    ELSE IF    ${随机组名}==2    组名过长文字校验    ${组名列表[${随机组名}]}    #正常
     Run Keyword If    ${随机组名}==1    Input Text    //*[@id="myModal-bjhy"]//input[@ng-model="$root.groupObj.group_name" and @placeholder="请输入2-15个汉字"]    ${组名列表[0]}
     Sleep    1
     Run Keyword If    ${随机组名}!=0    确定并校验

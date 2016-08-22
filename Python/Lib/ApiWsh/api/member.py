@@ -23,7 +23,7 @@ class Member(object):
     def wsh_test(self):
         print "mytest"
 
-    #### 获取活动详情
+    #### 获取客户列表
     def wsh_member_list(self,sessionid):
         # Login
         print u"---Test 获取客户列表---"
@@ -40,16 +40,18 @@ class Member(object):
 
         return r
 
-    #### 获取商家信息
-    def wsh_shop_get(self,sessionid):
+    #### 获取会员详情
+    def wsh_members_detail(self,sessionid):
         # Login
-        print u"---Test 获取商家信息---"
-        url = self.baseurl+"/shop/get-ajax"
+        print u"---Test 获取会员详情---"
+        url = self.baseurl+"/members/detail-ajax"
         #url = "http://betanewwsh.vikduo.com/reduction/list-ajax"
-        headers = self.headers
-        cookies = {'PHPSESSID': sessionid}
 
-        r = requests.post(url, headers=headers,cookies=cookies)
+        headers = self.headers_json
+        cookies = {'PHPSESSID': sessionid}
+        postdata = '{"id":261}'
+
+        r = requests.post(url,data=postdata,headers=headers,cookies=cookies)
         print "Headers:", r.headers
         print "Response:", r.content
 

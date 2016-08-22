@@ -54,7 +54,7 @@ Resource          ../../Resource/API.robot
     Sleep    1
     ####生成参数
     ${标签名}    随机字符    【测试标签】    10
-    ${排序}    Generate Random String    1    01234
+    ${排序}    Generate Random String    1    4
     ${事件_rand}    Generate Random String    1    0
     ${事件模块}    Generate Random String    1    012
     ####输入参数
@@ -66,7 +66,10 @@ Resource          ../../Resource/API.robot
     Wait Until Page Contains Element    //*[@id="breadcrumbs"]/ul/li[contains(text(),"标签管理")]
     Sleep    1
     ####结果校验
-    Page Should Contain Element    //*[@id="main-container"]//div[@class="tabbable"]//table/tbody/tr[@ng-repeat="list in lists"]/td[@ng-bind="list.name" and text()="${标签名}"]
+    ${flag}    Run Keyword And Return Status    Page Should Contain Element    //*[@id="main-container"]//div[@class="tabbable"]//table/tbody/tr[@ng-repeat="list in lists"]/td[@ng-bind="list.name" and text()="${标签名}"]
+    Pass Execution If    ${flag}==True    Success!
+    搜索标签    ${标签名}
+    Page Should Contain Element    //*[@id="main-container"]//div/table/tbody/tr[@ng-repeat="list in lists"]/td[@ng-bind="list.name" and text()="${标签名}"]
     Sleep    3
 
 标签管理_编辑标签
@@ -77,7 +80,7 @@ Resource          ../../Resource/API.robot
     Click Element    //*[@id="navList"]/li/a[@href="/members/tag"]/span[text()="标签管理"]
     Wait Until Page Contains Element    //*[@id="breadcrumbs"]/ul/li[contains(text(),"标签管理")]
     Sleep    1
-    ####
+    ####编辑标签
     ${els}    Get Matching Xpath Count    //*[@id="main-container"]//div[@class="tabbable"]//table/tbody/tr[@ng-repeat="list in lists"]/td[starts-with(text(),"【测试标签】")]
     Click Element    //*[@id="main-container"]//div[@class="tabbable"]//table/tbody/tr[@ng-repeat="list in lists"]/td[starts-with(text(),"【测试标签】")]/parent::tr[1]//a[@title="编辑"]
     Wait Until Page Contains Element    //*[@id="breadcrumbs"]/ul/li[contains(text(),"编辑会员标签")]
@@ -112,7 +115,11 @@ Resource          ../../Resource/API.robot
     Wait Until Element Is Visible    //div[@i="title" and text()="删除提示"]
     Sleep    1
     确认
-    弹出信息校验
+    ${msg}    弹出信息校验
+    ${flag}    Run Keyword And Return Status    Should Contain    ${msg}    成功
+    ${flag2}    Run Keyword And Return Status    Should Contain    ${msg}    不能删除
+    Run Keyword If    ${flag}!=True and ${flag2}!=True    Fail    保存失败:${msg}
+    Pass Execution If    ${flag2} == True    ${msg}
     Sleep    3
     ####结果校验
     Page Should Not Contain Element    //*[@id="main-container"]//div[@class="tabbable"]//table/tbody/tr[@ng-repeat="list in lists"]/td[starts-with(text(),"${标签名}")]
@@ -125,7 +132,7 @@ Resource          ../../Resource/API.robot
     Click Element    //*[@id="navList"]/li/a[@href="/members/tag"]/span[text()="标签管理"]
     Wait Until Page Contains Element    //*[@id="breadcrumbs"]/ul/li[contains(text(),"标签管理")]
     Sleep    1
-    ####删除标签
+    ####搜索标签
     ${关键字}    Create List    【测试标签】    不存在的标签
     ${rand}    Generate Random String    1    01
     Input Text    //input[@placeholder="搜索标签"]    ${关键字[${rand}]}
@@ -149,3 +156,10 @@ Resource          ../../Resource/API.robot
     Log    校验成功！
 
 添加事件
+
+搜索标签
+    [Arguments]    ${关键字}
+    Input Text    //input[@placeholder="搜索标签"]    ${关键字}
+    Sleep    1
+    Click Element    //span[@ng-click="search()"]
+    Sleep    2

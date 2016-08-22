@@ -18,6 +18,7 @@ dict
 dict-yt
     &{info} =    Create Dictionary    msg=a test    type=success
     &{data}=    Create Dictionary    phone=13823114422    username=YT
+    Log    type:${info.type}
     Should Be True    ${info} == {'msg':'a test','type':'success'}
     &{dict} =    Create Dictionary    ${1}=${2}    &{info}    error=0
     Should Be True    ${dict} == {1: 2, 'msg':'a test','type':'success','error':'0'}
@@ -87,10 +88,16 @@ RunIf
 random_multi
     ${n}    Evaluate    random.randint(1,5)    random
     ${list}    Evaluate    random.sample(range(1,31),${n})    random
-    :FOR    ${i}    IN    @{list}
+    : FOR    ${i}    IN    @{list}
     \    Log    ${i}
 
 add2dict
     &{dict}    Create Dictionary    a=test1    b=test2
     Set To Dictionary    ${dict}    c=test3    d=tet4
     Log    Dict:${dict}
+
+dict_test
+    ${等级字典}    Create Dictionary    1=木头会员    key=白银会员    3=黄金会员    4=白金会员
+    ${data}    Get From Dictionary    ${等级字典}    3
+    Log    ${data}
+    Log    ${等级字典.key}

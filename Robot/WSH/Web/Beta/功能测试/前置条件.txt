@@ -71,7 +71,7 @@ Resource          ../Resource/常用操作.robot
     Sleep    1
 
 商品规格
-    [Arguments]    ${arg_path}    ${reserves}=200    ${market_price0}=100    ${retail_price0}=0.01    ${sku_no}=000001
+    [Arguments]    ${arg_path}    ${reserves}=2000    ${market_price0}=100    ${retail_price0}=0.01    ${sku_no}=000001
     Sleep    1s
     ${z}    Evaluate    random.randint(10000,99999)    random    #随机选择一个条形码
     Click Element    ${arg_path}

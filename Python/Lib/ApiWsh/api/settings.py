@@ -27,7 +27,7 @@ class Wsh():
         'Upgrade-Insecure-Requests':'1',
         'Accept-Encoding': 'gzip, deflate, sdch',
         'User-Agent': 'Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/51.0.2704.103 Safari/537.36',
-        'Accept': 'Accept: application/json, text/plain, */*',
+        'Accept': 'application/json, text/plain, */*',
         'Content-Type':'application/json;charset=UTF-8',
         'YT': 'for debug'
     }

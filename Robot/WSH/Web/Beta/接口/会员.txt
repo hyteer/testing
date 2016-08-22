@@ -84,3 +84,16 @@ Library           Collections
     Log    Resp:${resp.content}
     Run Keyword If    ${errcode}==0    Log    Success
     ...    ELSE    Log    Failed
+
+会员详情
+    [Tags]    ready
+    &{headers}    Create Dictionary    Accept=application/json, text/plain, */*    Content-Type=application/json
+    ${jsonstr}    Convert To String    {"id":261}
+    ${resp}    Post Request    wsh    /members/detail-ajax    data=${jsonstr}    headers=${headers}
+    Log    Response:${resp.content}
+    ${str}    Get Substring    ${resp.content}    3
+    ${js}    loads    ${str}
+    ${errcode}    Get From Dictionary    ${js}    errcode
+    ###
+    ${errmsg}    Get From Dictionary    ${js}    errmsg
+    ${member_no}    Get From Dictionary    ${errmsg}    member_no

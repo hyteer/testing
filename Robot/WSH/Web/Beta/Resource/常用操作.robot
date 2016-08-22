@@ -290,6 +290,7 @@ Library           OperatingSystem
     ${alert}    Wait Until Keyword Succeeds    ${retry}x    ${time}s    Get Alert Message
     Should Contain    ${alert}    ${msg}
     Sleep    1.5
+    [Return]    ${alert}
 
 随机选择下拉框
     [Arguments]    ${path}
