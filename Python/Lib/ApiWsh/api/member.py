@@ -32,7 +32,62 @@ class Member(object):
 
         headers = self.headers_json
         cookies = {'PHPSESSID': sessionid}
-        postdata = '{"_page":1,"_page_size":20,"nickname":"","group_id":null,"shop_sub_id":"","agent_id":"","is_search":false,"belong_to_staff_id":"","createStart":"","createEnd":"","group_ids":[],"yestoday":false,"user_platform":0,"tags":[]}'
+        postdata = '{"_page":1,"_page_size":20,"nickname":"","group_id":null,"shop_sub_id":"",' \
+                   '"agent_id":"","is_search":false,"belong_to_staff_id":"","createStart":"",' \
+                   '"createEnd":"","group_ids":[],"yestoday":false,"user_platform":0,"tags":[]}'
+
+        r = requests.post(url,data=postdata,headers=headers,cookies=cookies)
+        print "Headers:", r.headers
+        print "Response:", r.content
+
+        return r
+
+    #### 获取客户详情
+    def wsh_member_detail_ajax(self,sessionid):
+        # Login
+        print u"---Test 获取客户详情---"
+        url = self.baseurl+"/member/member-detail-ajax"
+        #url = "http://betanewwsh.vikduo.com/reduction/list-ajax"
+
+        headers = self.headers_json
+        cookies = {'PHPSESSID': sessionid}
+        postdata = '{"id": 13764502}'
+
+        r = requests.post(url,data=postdata,headers=headers,cookies=cookies)
+        print "Headers:", r.headers
+        print "Response:", r.content
+
+        return r
+
+    #### 获取客户积分列表
+    def wsh_member_point_list(self,sessionid):
+        # Login
+        print u"---Test 获取客户积分列表---"
+        url = self.baseurl+"/member/point-list-ajax"
+
+        headers = self.headers_json
+        cookies = {'PHPSESSID': sessionid}
+        postdata = '{"_page":1,"_page_size":20,"type_id":1,"id":"11540725"}'
+
+        r = requests.post(url,data=postdata,headers=headers,cookies=cookies)
+        print "Headers:", r.headers
+        print "Response:", r.content
+
+        return r
+
+    #### 获取会员列表
+    def wsh_members_list_ajax(self,sessionid):
+        # Login
+        print u"---Test 获取会员列表---"
+        url = self.baseurl+"/members/list-ajax"
+        #url = "http://betanewwsh.vikduo.com/reduction/list-ajax"
+
+        headers = self.headers_json
+        cookies = {'PHPSESSID': sessionid}
+        postdata = '{"_page":1,"_page_size":20,"keyword":"","real_name":"",' \
+                   '"create_start":"","create_end":"","bind_mobile":"","status":[],' \
+                   '"source":[],"level":[],"member_group_id":[],"tags":[],"sex":[],' \
+                   '"city_id":[],"city":[],"shop_sub_id":""}'
 
         r = requests.post(url,data=postdata,headers=headers,cookies=cookies)
         print "Headers:", r.headers
@@ -41,7 +96,7 @@ class Member(object):
         return r
 
     #### 获取会员详情
-    def wsh_members_detail(self,sessionid):
+    def wsh_members_detail(self,sessionid,id=259):
         # Login
         print u"---Test 获取会员详情---"
         url = self.baseurl+"/members/detail-ajax"
@@ -49,7 +104,23 @@ class Member(object):
 
         headers = self.headers_json
         cookies = {'PHPSESSID': sessionid}
-        postdata = '{"id":261}'
+        postdata = '{"id":%d}' % id
+
+        r = requests.post(url,data=postdata,headers=headers,cookies=cookies)
+        print "Headers:", r.headers
+        print "Response:", r.content
+
+        return r
+
+    #### 获取会员标签
+    def wsh_members_get_tag(self,sessionid):
+        # Remark
+        print u"---Test 获取会员标签---"
+        url = self.baseurl+"/members/get-tag-ajax"
+
+        headers = self.headers_json
+        cookies = {'PHPSESSID': sessionid}
+        postdata = '{"id":259}'
 
         r = requests.post(url,data=postdata,headers=headers,cookies=cookies)
         print "Headers:", r.headers

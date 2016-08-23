@@ -182,7 +182,7 @@ Resource          ../../Resource/API.robot
     Run Keyword If    ${客户总数_API}>20    Page Should Contain Element    //ul[@boundary-links="true" and @total-items="page.total_count"]
     ${总计}    Get Text    //*[@id="hitTagTabble"]/div/ul[@class="pagination"]/li[@class="ng-paginate-search"]//span[@ng-bind="page.total_count"]
     Pass Execution    Test
-    ${errmsg}    API.获取客户列表
+    ${errmsg}    API.客户_列表
     ${data}    Get From Dictionary    ${errmsg}    data
     : FOR    ${i}    IN RANGE    ${num}
     \    ${user}    Get From List    ${data}    ${i}

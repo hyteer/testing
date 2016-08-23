@@ -8,3 +8,10 @@ first
     Log    ${str}
     ${matches}    Get Regexp Matches    ${str}    \\d
     Log    ${matches[0]}
+
+yt
+    ${str}    Set Variable    list.is_subscribe == 2
+    ${url}    Set Variable    http://betanewwsh.snsshop.net/members/detail?id=259&u_id=13764485
+    Log    ${str}
+    ${matches}    Get Regexp Matches    ${str}    \\d
+    ${mat2}    Get Regexp Matches    ${url}    (?<=\\bid=)\\w+\\b

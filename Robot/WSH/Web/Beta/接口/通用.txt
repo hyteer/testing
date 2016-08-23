@@ -1,5 +1,5 @@
 *** Settings ***
-Suite Setup       登录
+Suite Setup       API登录
 Library           RequestsLibrary
 Resource          Lib/通用操作.robot
 Resource          Lib/配置参数.robot
@@ -9,6 +9,7 @@ Library           Collections
 
 *** Test Cases ***
 工作台数据
+    [Tags]    ready
     ${resp}    Post Request    wsh    /data-center/workbench-count-data-ajax
     Log    Response:${resp.content}
     ${str}    Get Substring    ${resp.content}    3

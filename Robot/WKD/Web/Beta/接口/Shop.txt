@@ -1,5 +1,5 @@
 *** Settings ***
-Suite Setup       登录
+Suite Setup       API登录
 Library           RequestsLibrary
 Resource          Lib/通用操作.robot
 Resource          Lib/配置参数.robot

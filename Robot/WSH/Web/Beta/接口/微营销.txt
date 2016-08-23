@@ -1,5 +1,5 @@
 *** Settings ***
-Suite Setup       登录
+Suite Setup       API登录
 Library           RequestsLibrary
 Resource          Lib/通用操作.robot
 Library           json
@@ -8,6 +8,7 @@ Library           String
 
 *** Test Cases ***
 获取拼团活动列表
+    [Tags]    ready
     ${resp}    Post Request    wsh    /together-buy/list-ajax
     Log    Response:${resp.content}
     ${str}    Get Substring    ${resp.content}    3
@@ -18,6 +19,7 @@ Library           String
     ...    ELSE    Log    Failed
 
 获取秒杀活动列表
+    [Tags]    ready
     ${resp}    Post Request    wsh    /second-kill/list-ajax
     Log    Response:${resp.content}
     ${str}    Get Substring    ${resp.content}    3
@@ -28,6 +30,7 @@ Library           String
     ...    ELSE    Log    Failed
 
 获取满减活动列表
+    [Tags]    ready
     ${resp}    Post Request    wsh    /reduction/list-ajax
     Log    Response:${resp.content}
     ${str}    Get Substring    ${resp.content}    3
@@ -38,6 +41,7 @@ Library           String
     ...    ELSE    Log    Failed
 
 获取众筹活动列表
+    [Tags]    ready
     ${resp}    Post Request    wsh    /collect-zan/list-ajax
     Log    Response:${resp.content}
     ${str}    Get Substring    ${resp.content}    3
@@ -48,6 +52,7 @@ Library           String
     ...    ELSE    Log    Failed
 
 获取现金红包活动列表
+    [Tags]    ready
     ${resp}    Post Request    wsh    /cash-redpack/list-ajax
     Log    Response:${resp.content}
     ${str}    Get Substring    ${resp.content}    3
@@ -58,6 +63,7 @@ Library           String
     ...    ELSE    Log    Failed
 
 获取大转盘活动列表
+    [Tags]    ready
     ${resp}    Post Request    wsh    /market-activity/list-ajax
     Log    Response:${resp.content}
     ${str}    Get Substring    ${resp.content}    3
@@ -68,6 +74,7 @@ Library           String
     ...    ELSE    Log    Failed
 
 获取砸金蛋活动列表
+    [Tags]    ready
     ${resp}    Post Request    wsh    /market-activity/smashegg-list-ajax
     Log    Response:${resp.content}
     ${str}    Get Substring    ${resp.content}    3

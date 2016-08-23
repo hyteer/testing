@@ -101,3 +101,9 @@ dict_test
     ${data}    Get From Dictionary    ${等级字典}    3
     Log    ${data}
     Log    ${等级字典.key}
+
+Get_time
+    #指定timestamp时间
+    ${time}    Get Time    \     1470987250
+    #当前
+    ${time}    Get Time

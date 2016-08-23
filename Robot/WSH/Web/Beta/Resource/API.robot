@@ -49,6 +49,20 @@ Resource          配置参数.robot
     ...    ELSE    Log    Failed
     [Return]    ${errmsg}
 
+工作台广告
+    API登录
+    ${resp}    Post Request    wsh    /data-center/workbench-ad-ajax
+    Log    Response:${resp.content}
+    ${str}    Get Substring    ${resp.content}    3
+    ${js}    loads    ${str}
+    ${errcode}    Get From Dictionary    ${js}    errcode
+    ${errmsg}    Get From Dictionary    ${js}    errmsg
+    Log    errcode is:${errcode}
+    Log    Resp:${resp.content}
+    Run Keyword If    ${errcode}==0    Log    Success
+    ...    ELSE    Log    Failed
+    [Return]    ${errmsg}
+
 API登录
     Create Session    wsh    ${URL_BETA}
     &{data}=    Create Dictionary    username=20151228    password=123456    captcha=1111
@@ -70,21 +84,7 @@ API登录
     ...    ELSE    Log    Failed
     [Return]    ${errmsg}
 
-工作台广告
-    API登录
-    ${resp}    Post Request    wsh    /data-center/workbench-ad-ajax
-    Log    Response:${resp.content}
-    ${str}    Get Substring    ${resp.content}    3
-    ${js}    loads    ${str}
-    ${errcode}    Get From Dictionary    ${js}    errcode
-    ${errmsg}    Get From Dictionary    ${js}    errmsg
-    Log    errcode is:${errcode}
-    Log    Resp:${resp.content}
-    Run Keyword If    ${errcode}==0    Log    Success
-    ...    ELSE    Log    Failed
-    [Return]    ${errmsg}
-
-获取标签列表
+标签列表
     API登录
     &{headers}    Create Dictionary    Accept=application/json    Content-Type=application/json
     ${jsonstr}    Convert To String    {"_page":1,"_page_size":20,"name":""}
@@ -95,10 +95,12 @@ API登录
     ${errcode}    Get From Dictionary    ${js}    errcode
     ###
     ${errmsg}    Get From Dictionary    ${js}    errmsg
-    Run Keyword If    ${errcode}!=0    接口返回异常！
+    Run Keyword If    ${errcode}!=0    Fail    接口返回异常！
     [Return]    ${errmsg}
 
-获取客户列表
+-----1-----
+
+客户_列表
     API登录
     &{headers}    Create Dictionary    Accept=application/json    Content-Type=application/json
     ${jsonstr}    Convert To String    {"_page":1,"_page_size":20,"nickname":"","group_id":null,"shop_sub_id":"","agent_id":"","is_search":false,"belong_to_staff_id":"","createStart":"","createEnd":"","group_ids":[],"yestoday":false,"user_platform":0,"tags":[]}
@@ -111,20 +113,21 @@ API登录
     Run Keyword If    ${errcode}!=0    接口返回异常！
     [Return]    ${errmsg}
 
-获取会员列表
+客户_详情
+    [Arguments]    ${id}
     API登录
     &{headers}    Create Dictionary    Accept=application/json    Content-Type=application/json
-    ${jsonstr}    Convert To String    {"_page":0,"_page_size":1,"is_get_card":1}
-    ${resp}    Post Request    wsh    /members/list-ajax    data=${jsonstr}
+    ${jsonstr}    Convert To String    {"id":${id}}
+    ${resp}    Post Request    wsh    /member/member-detail-ajax    data=${jsonstr}    headers=${headers}
     Log    Response:${resp.content}
     ${str}    Get Substring    ${resp.content}    3
     ${js}    loads    ${str}
     ${errcode}    Get From Dictionary    ${js}    errcode
     ${errmsg}    Get From Dictionary    ${js}    errmsg
-    Run Keyword If    ${errcode}!=0    接口返回异常！
+    Run Keyword If    ${errcode}!=0    Fail    接口返回异常！
     [Return]    ${errmsg}
 
-客户统计
+客户_统计
     API登录
     ${resp}    Post Request    wsh    /member/count-wx-member
     Log    Response:${resp.content}
@@ -136,10 +139,39 @@ API登录
     Run Keyword If    ${errcode}==0    Log    Success
     ...    ELSE    Log    Failed
     ${errmsg}    Get From Dictionary    ${js}    errmsg
-    Run Keyword If    ${errcode}!=0    接口返回异常！
+    Run Keyword If    ${errcode}!=0    Fail    接口返回异常！
     [Return]    ${errmsg}
 
-会员统计
+客户_积分统计
+    [Arguments]    ${id}
+    API登录
+    &{headers}    Create Dictionary    Accept=application/json    Content-Type=application/json
+    ${jsonstr}    Convert To String    {"user_id":${id}}
+    ${resp}    Post Request    wsh    /data/user-point-count-ajax    data=${jsonstr}    headers=${headers}
+    Log    Response:${resp.content}
+    ${str}    Get Substring    ${resp.content}    3
+    ${js}    loads    ${str}
+    ${errcode}    Get From Dictionary    ${js}    errcode
+    ${errmsg}    Get From Dictionary    ${js}    errmsg
+    Run Keyword If    ${errcode}!=0    Fail    接口返回异常！
+    [Return]    ${errmsg}
+
+-----2-----
+
+会员_列表
+    API登录
+    &{headers}    Create Dictionary    Accept=application/json    Content-Type=application/json
+    ${jsonstr}    Convert To String    {"_page":0,"_page_size":1,"is_get_card":1}
+    ${resp}    Post Request    wsh    /members/list-ajax    data=${jsonstr}
+    Log    Response:${resp.content}
+    ${str}    Get Substring    ${resp.content}    3
+    ${js}    loads    ${str}
+    ${errcode}    Get From Dictionary    ${js}    errcode
+    ${errmsg}    Get From Dictionary    ${js}    errmsg
+    Run Keyword If    ${errcode}!=0    Fail    接口返回异常！
+    [Return]    ${errmsg}
+
+会员_统计
     API登录
     ${resp}    Post Request    wsh    /members/last-count-ajax
     Log    Response:${resp.content}
@@ -151,5 +183,33 @@ API登录
     Run Keyword If    ${errcode}==0    Log    Success
     ...    ELSE    Log    Failed
     ${errmsg}    Get From Dictionary    ${js}    errmsg
-    Run Keyword If    ${errcode}!=0    接口返回异常！
+    Run Keyword If    ${errcode}!=0    Fail    接口返回异常！
+    [Return]    ${errmsg}
+
+会员_详情
+    [Arguments]    ${id}
+    API登录
+    &{headers}    Create Dictionary    Accept=application/json    Content-Type=application/json
+    ${jsonstr}    Convert To String    {"id":${id}}
+    ${resp}    Post Request    wsh    /members/detail-ajax    data=${jsonstr}    headers=${headers}
+    Log    Response:${resp.content}
+    ${str}    Get Substring    ${resp.content}    3
+    ${js}    loads    ${str}
+    ${errcode}    Get From Dictionary    ${js}    errcode
+    ${errmsg}    Get From Dictionary    ${js}    errmsg
+    Run Keyword If    ${errcode}!=0    Fail    接口返回异常！
+    [Return]    ${errmsg}
+
+客户_积分列表
+    [Arguments]    ${id}
+    API登录
+    &{headers}    Create Dictionary    Accept=application/json    Content-Type=application/json
+    ${jsonstr}    Convert To String    {"_page":1,"_page_size":20,"type_id":1,"id":"${id}"}
+    ${resp}    Post Request    wsh    /member/point-list-ajax    data=${jsonstr}    headers=${headers}
+    Log    Response:${resp.content}
+    ${str}    Get Substring    ${resp.content}    3
+    ${js}    loads    ${str}
+    ${errcode}    Get From Dictionary    ${js}    errcode
+    ${errmsg}    Get From Dictionary    ${js}    errmsg
+    Run Keyword If    ${errcode}!=0    Fail    接口返回异常！
     [Return]    ${errmsg}

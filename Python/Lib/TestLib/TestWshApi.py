@@ -41,7 +41,11 @@ pd.page_edit_ajax(sid)
 pd.get_order_detail(sid)
 pd.get_product_detail(sid)
 '''
-#### Member ####
+#### Members ####
 mb.wsh_member_list(sid)
-mb.wsh_members_detail(sid)
+mb.wsh_member_detail_ajax(sid)
+mb.wsh_member_point_list(sid)
+mb.wsh_members_detail(sid,256)
+mb.wsh_members_list_ajax(sid)
+mb.wsh_members_get_tag(sid)
 
