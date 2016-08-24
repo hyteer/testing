@@ -34,15 +34,15 @@ Resource          ../../Resource/API.robot
     ${微信客户总数}    Get Text    //div[@class="page-content"]//div[starts-with(@ng-bind,"wx_totalaa?wx_totalaa")]
     ${昨日新增微信客户数}    Get Text    //div[@class="page-content"]//div[starts-with(@ng-bind,"yestodayNewaa?yestodayNewaa")]
     ##查询API
-    ${errmsg_客户统计}    API.客户统计
+    ${errmsg_客户统计}    API.客户_统计
     ${客户总数_API}    Get From Dictionary    ${errmsg_客户统计}    total
     ${微信客户总数_API}    Get From Dictionary    ${errmsg_客户统计}    wx_total
     ${昨日新增客户_API}    Get From Dictionary    ${errmsg_客户统计}    yestodayNew
     ${昨日新增微信客户_API}    Get From Dictionary    ${errmsg_客户统计}    yestodayWxNew
-    ${errmsg_会员统计}    API.会员统计
+    ${errmsg_会员统计}    API.会员_统计
     ${会员总数_API}    Get From Dictionary    ${errmsg_会员统计}    total_count
     ${昨日新增会员_API}    Get From Dictionary    ${errmsg_会员统计}    last_day_count
-    ${errmsg}    API.获取会员列表
+    ${errmsg}    API.会员_列表
     ${data}    Get From Dictionary    ${errmsg}    data
     ${page}    Get From Dictionary    ${errmsg}    page
     ${已开卡会员_API}    Get From Dictionary    ${page}    total_count
@@ -178,7 +178,7 @@ Resource          ../../Resource/API.robot
     ${errmsg_会员统计}    API.会员统计
     ${会员总数_API}    Get From Dictionary    ${errmsg_会员统计}    total_count
     ${昨日新增会员_API}    Get From Dictionary    ${errmsg_会员统计}    last_day_count
-    ${errmsg}    API.获取会员列表
+    ${errmsg}    API.会员列表
     ${data}    Get From Dictionary    ${errmsg}    data
     ${page}    Get From Dictionary    ${errmsg}    page
     ${已开卡会员_API}    Get From Dictionary    ${page}    total_count
@@ -471,7 +471,7 @@ Resource          ../../Resource/API.robot
 
 -----2-----
 
-会员列表_查看会员详情
+会员详情_基本信息
     [Tags]    ready
     ####进入页面
     点击链接菜单    微会员
@@ -506,17 +506,16 @@ Resource          ../../Resource/API.robot
     ${belongToFxMember}    Get From Dictionary    ${wxUserInfos}    belongToFxMember
     ${belongToFxMember_len}    Get Length    ${belongToFxMember}
     #----
-    ${激活时间_API}    Get From Dictionary    ${errmsg}    created     #返回值是timestamp
+    ${激活时间_API}    Get From Dictionary    ${errmsg}    created    #返回值是timestamp
     ${激活时间_API}    Get Time    \    ${激活时间_API}
     ${登录时间_API}    Get From Dictionary    ${wxUserInfos}    lastlogintime
     ${登录时间_API}    Get Time    \    ${登录时间_API}
     ${会员卡编号_API}    Get From Dictionary    ${errmsg}    member_no
     ${会员卡状态_API}    Get From Dictionary    ${errmsg}    member_card_activate_id
-    ${会员卡状态_API}    Set Variable If    ${会员卡状态_API}==1    正常
-    ...    ${会员卡状态_API}==2    禁止
+    ${会员卡状态_API}    Set Variable If    ${会员卡状态_API}==1    正常    ${会员卡状态_API}==2    禁止
     ${会员等级_API}    Get From Dictionary    ${memberGrade}    name
     ${会员成长值_API}    Get From Dictionary    ${errmsg}    growth
-    ${会员折扣_API}    Get From Dictionary    ${memberGrade}    discount     #返回值是10倍
+    ${会员折扣_API}    Get From Dictionary    ${memberGrade}    discount    #返回值是10倍
     ${会员折扣_API}    Evaluate    int(${会员折扣_API}*0.1)
     ${账户积分_API}    Get From Dictionary    ${wxUserInfos}    point
     #${消费次数_API}    #注：需确认字段
@@ -580,8 +579,8 @@ Resource          ../../Resource/API.robot
     Should Be Equal As Strings    ${所属员工}    ${所属员工_API}
     Should Be Equal As Strings    ${所属推广员}    ${所属推广员_API}
 
-会员列表_资产明细
-    [Tags]
+会员详情_资产明细
+    [Tags]    ready
     ####进入页面
     点击链接菜单    微会员
     ${sub}    Set Variable    会员列表
@@ -606,45 +605,225 @@ Resource          ../../Resource/API.robot
     Wait Until Page Contains Element    //li[@class="active"]/a[text()="资产明细"]
     Sleep    1
     ####查询API
-    ${errmsg_count}    API.客户_积分统计    11540725    # 客户id
+    ${errmsg_count}    API.客户_积分统计    ${u_id}    # 客户id
     ${账户积分_API}    Get From Dictionary    ${errmsg_count}    point
     ${累计获得积分_API}    Get From Dictionary    ${errmsg_count}    add_point
     ${累计消耗积分_API}    Get From Dictionary    ${errmsg_count}    del_point
-    ${errmsg_list}    API.客户_积分列表    11540725    # 客户id
+    ${errmsg_list}    API.客户_积分列表    ${u_id}    # 客户id
     ${data_list}    Get From Dictionary    ${errmsg_list}    data
     ${data_len}    Get Length    ${data_list}
     ####页面数据
     ${账户积分}    Get Text    //span[@ng-bind="detail.point"]
     ${累计获得积分}    Get Text    //span[@ng-bind="detail.add_point"]
     ${累计消耗积分}    Get Text    //span[@ng-bind="detail.del_point"]
+    ####结果校验
+    Should Be Equal As Strings    ${账户积分}    ${账户积分_API}
+    Should Be Equal As Strings    ${累计获得积分}    ${累计获得积分_API}
+    Should Be Equal As Strings    ${累计消耗积分}    ${累计消耗积分_API}
     #----
     ${积分列表数据}    Create List
-    Pass Execution    test
-    :FOR    ${i}    IN RANGE    ${data_len}
+    : FOR    ${i}    IN RANGE    ${data_len}
+    \    ${时间}    Get Text    //tr[@ng-repeat="item in list"][${i+1}]//td[starts-with(@ng-bind,"item.created*1000")]
+    \    ${类型}    Get Text    //tr[@ng-repeat="item in list"][${i+1}]//span[@ng-bind="item.type| orderSelType"]
+    \    ${积分数量}    Get Text    //tr[@ng-repeat="item in list"][${i+1}]//td[@ng-bind="item.change"]
+    \    ${事件}    Get Text    //tr[@ng-repeat="item in list"][${i+1}]//span[@ng-bind="item.source"]
+    \    #----API data
+    \    ${data}    Get From List    ${data_list}    ${i}
+    \    ${时间_API}    Get From Dictionary    ${data}    created
+    \    ${时间_API}    Get Time    \    ${时间_API}
+    \    ${积分数量_API}    Get From Dictionary    ${data}    change
+    \    ${事件_API}    Get From Dictionary    ${data}    source
+    \    Should Be Equal As Strings    ${时间}    ${时间_API}
+    \    Should Be Equal As Strings    ${积分数量}    ${积分数量_API}
+    \    Should Be Equal As Strings    ${事件}    ${事件_API}
 
-会员列表_成长值明细
-    [Tags]
+会员详情_成长值明细
+    [Tags]    ready
     ####进入页面
     点击链接菜单    微会员
     ${sub}    Set Variable    会员列表
     点击链接菜单    ${sub}
     Wait Until Page Contains Element    //*[@id="breadcrumbs"]/ul/li[contains(text(),"会员列表")]
     Sleep    1
-    ####会员列表-高级搜索
-    Click Link    高级搜索
-    Wait Until Element Is Visible    //a[text()="返回精简搜索"]
+    ####会员列表-成长值明细
+    ${当前页数量}    Get Matching Xpath Count    //*[@id="integralTable"]/tbody/tr[@ng-repeat="i in lists track by $index"]
+    ${rand}    Evaluate    random.randint(1,${当前页数量})    random
+    ##获取ID
+    ${href}    Get Element Attribute    //*[@id="integralTable"]/tbody/tr[${rand}]/td/div[@class="action-buttons"]/a[@title="查看"]@href
+    ${match}    Get Regexp Matches    ${href}    (?<=\\bid=)\\w+\\b
+    ${id}    Set Variable    ${match[0]}
+    ##详情
+    Click Element    //*[@id="integralTable"]/tbody/tr[${rand}]/td/div[@class="action-buttons"]/a[@title="查看"]
+    Sleep    1
+    Select Window    会员详情
+    Title Should Be    会员详情
+    Sleep    1
+    ##成长
+    Click Link    成长值明细
+    Wait Until Element Is Visible    //*[@id="breadcrumbs"]/ul/li[contains(text(),"成长值明细")]
+    Wait Until Page Contains Element    //li[@class="active"]/a[text()="成长值明细"]
+    Sleep    1
+    ####查询API
+    ${errmsg}    API.会员_成长明细    ${id}    # 客户id
+    ${data_list}    Get From Dictionary    ${errmsg}    data
+    ${data_len}    Get Length    ${data_list}
+    ${data_0}    Run Keyword If    ${data_len}!=0    Get From List    ${data_list}    0
+    ...    ELSE    Set Variable    0
+    ${当前成长值_API}    Run Keyword If    ${data_len}!=0    Get From Dictionary    ${data_0}    growth_total
+    ...    ELSE    Set Variable    0
+    ####页面数据
+    ${当前成长值}    Get Text    //span[@ng-bind="currentGrowth"]
+    ####结果校验
+    Should Be Equal As Strings    ${当前成长值}    ${当前成长值_API}
+    #----
+    Run Keyword If    ${当前成长值}==0    Element Should Be Visible    //td[@ng-if="listsLen == 0" and contains(text(),"没有数据")]
+    Pass Execution If    ${当前成长值}==0    无成长明细数据...
+    : FOR    ${i}    IN RANGE    ${data_len}
+    \    ${时间}    Get Text    //tr[@ng-repeat="item in lists"][${i+1}]//td[starts-with(@ng-bind,"item.created*1000")]
+    \    ${事件类型_attr}    Get Element Attribute    //tr[@ng-repeat="item in lists"][${i+1}]//td[starts-with(@ng-if,"item.type")]@ng-if
+    \    ${类型_match}    Get Regexp Matches    ${事件类型_attr}    (?<=\\btype.==.)\\w+\\b
+    \    ${事件类型}    Set Variable    ${类型_match[0]}
+    \    ${事件来源_attr}    Get Element Attribute    //tr[@ng-repeat="item in lists"][${i+1}]//td[starts-with(@ng-if,"item.event")]@ng-if
+    \    ${来源_match}    Get Regexp Matches    ${事件来源_attr}    (?<=\\bevent.==.)\\w+\\b
+    \    ${事件来源}    Set Variable    ${来源_match[0]}
+    \    ${成长值数量}    Get Text    //tr[@ng-repeat="item in lists"][${i+1}]//td[@ng-bind="item.growth"]
+    \    ${备注}    Get Text    //tr[@ng-repeat="item in lists"][${i+1}]//td[@ng-bind="item.source"]
+    \    #----API data
+    \    ${data}    Get From List    ${data_list}    ${i}
+    \    ${时间_API}    Get From Dictionary    ${data}    modified
+    \    ${时间_API}    Get Time    \    ${时间_API}
+    \    ${事件类型_API}    Get From Dictionary    ${data}    type
+    \    ${事件来源_API}    Get From Dictionary    ${data}    event
+    \    ${成长值数量_API}    Get From Dictionary    ${data}    growth
+    \    ${备注_API}    Get From Dictionary    ${data}    source
+    \    Should Be Equal As Strings    ${时间}    ${时间_API}
+    \    Should Be Equal As Strings    ${事件类型}    ${事件类型_API}
+    \    Should Be Equal As Strings    ${事件来源}    ${事件来源_API}
+    \    Should Be Equal As Strings    ${成长值数量}    ${成长值数量_API}
+    \    Should Be Equal As Strings    ${备注}    ${备注_API}
 
-会员列表_消费记录
-    [Tags]
+会员详情_消费记录
+    [Documentation]    注：引用全局参数${G订单类型}
+    [Tags]    ready
     ####进入页面
     点击链接菜单    微会员
     ${sub}    Set Variable    会员列表
     点击链接菜单    ${sub}
     Wait Until Page Contains Element    //*[@id="breadcrumbs"]/ul/li[contains(text(),"会员列表")]
     Sleep    1
-    ####会员列表-消费记录
+    ####会员列表-成长值明细
+    ${当前页数量}    Get Matching Xpath Count    //*[@id="integralTable"]/tbody/tr[@ng-repeat="i in lists track by $index"]
+    ${rand}    Evaluate    random.randint(1,${当前页数量})    random
+    ##获取ID
+    ${href}    Get Element Attribute    //*[@id="integralTable"]/tbody/tr[${rand}]/td/div[@class="action-buttons"]/a[@title="查看"]@href
+    ${match}    Get Regexp Matches    ${href}    (?<=\\u_id=)\\w+\\b
+    ${id}    Set Variable    ${match[0]}
+    ##详情
+    Click Element    //*[@id="integralTable"]/tbody/tr[19]/td/div[@class="action-buttons"]/a[@title="查看"]
+    Sleep    1
+    Select Window    会员详情
+    Title Should Be    会员详情
+    Sleep    1
+    ##消费
     Click Link    消费记录
-    Wait Until Element Is Visible    //a[text()="返回精简搜索"]
+    Wait Until Element Is Visible    //*[@id="breadcrumbs"]/ul/li[contains(text(),"消费记录")]
+    Wait Until Page Contains Element    //li[@class="active"]/a[text()="消费记录"]
+    Sleep    1
+    ####查询API
+    ${errmsg}    API.客户_消费记录    13723226    # 客户id
+    ${data_list}    Get From Dictionary    ${errmsg}    data
+    ${data_len}    Get Length    ${data_list}
+    ${累计消费次数_API}    Get Length    ${data_list}
+    ${累计消费金额_API}    Get From Dictionary    ${errmsg}    all_member_payed
+    ${累计消费金额_API}    Evaluate    ${累计消费金额_API}*0.01
+    ####页面数据
+    ${累计消费次数}    Get Text    //span[@ng-bind="useCnt"]
+    ${累计消费金额}    Get Text    //span[starts-with(@ng-bind,"useMoney")]
+    ####结果校验
+    Should Be Equal As Strings    ${累计消费次数}    ${累计消费次数_API}
+    Should Be Equal As Strings    ${累计消费金额}    ${累计消费金额_API}
+    #----
+    Run Keyword If    ${累计消费次数}==0    Element Should Be Visible    //td[@ng-if="listsLen == 0" and contains(text(),"没有数据")]
+    Pass Execution If    ${累计消费次数}==0    无消费数据...
+    : FOR    ${i}    IN RANGE    ${data_len}
+    \    ${时间}    Get Text    //tr[@ng-repeat="item in list"][${i+1}]//td[starts-with(@ng-bind,"item.created*1000")]
+    \    ${消费金额}    Get Text    //tr[@ng-repeat="item in list"][${i+1}]//td[starts-with(@ng-bind,"item.should_pay/100")]
+    \    ${订单号}    Get Text    //tr[@ng-repeat="item in list"][${i+1}]//td/a[@ng-bind="item.order_no"]
+    \    ${订单类型}    Get Text    //tr[@ng-repeat="item in list"][${i+1}]//td[@ng-bind="item.order_type|orderpayType"]
+    \    ${所属门店}    Get Text    //tr[@ng-repeat="item in list"][${i+1}]//td[@ng-bind="item.shopSub.shopInfo.name||'线上商城'"]
+    \    #----API data
+    \    ${data}    Get From List    ${data_list}    ${i}
+    \    ${时间_API}    Get From Dictionary    ${data}    created
+    \    ${时间_API}    Get Time    \    ${时间_API}
+    \    ${消费金额_API}    Get From Dictionary    ${data}    payed
+    \    ${消费金额_API}    Evaluate    ${消费金额_API}*0.01
+    \    ${订单号_API}    Get From Dictionary    ${data}    order_no
+    \    ${订单类型_index}    Get From Dictionary    ${data}    order_type
+    \    ${订单类型_API}    Set Variable    ${G订单类型[${订单类型_index-1}]}
+    \    ${shopSub}    Get From Dictionary    ${data}    shopSub
+    \    ${shopInfo}    Run Keyword If    ${shopSub} != []    Get From Dictionary    ${shopSub}    shopInfo
+    \    ${所属门店_API}    Run Keyword If    ${shopSub} != []    Get From Dictionary    ${shopInfo}    name
+    \    ...    ELSE    Set Variable    线上商城
+    \    Should Be Equal As Strings    ${时间}    ${时间_API}
+    \    Should Be Equal As Numbers    ${消费金额}    ${消费金额_API}
+    \    Should Be Equal As Strings    ${订单号}    ${订单号_API}
+    \    Should Be Equal As Strings    ${订单类型}    ${订单类型_API}
+    \    Should Be Equal As Strings    ${所属门店}    ${所属门店_API}
+
+会员消费记录
+    [Documentation]    注：引用全局参数${G订单类型}
+    [Tags]    ready
+    ####进入页面
+    点击链接菜单    微会员
+    ${sub}    Set Variable    会员消费记录
+    点击链接菜单    ${sub}
+    Wait Until Page Contains Element    //*[@id="breadcrumbs"]/ul/li[contains(text(),"会员消费记录")]
+    Sleep    1
+    ####会员消费记录
+    ####查询API
+    ${errmsg}    API.全部客户_消费记录
+    ${data_list}    Get From Dictionary    ${errmsg}    data
+    ${data_len}    Get Length    ${data_list}
+    ${page}    Get From Dictionary    ${errmsg}    page
+    ${累计消费次数_API}    Get From Dictionary    ${page}    total_count
+    ${累计消费金额_API}    Get From Dictionary    ${errmsg}    all_member_payed
+    ${累计消费金额_API}    Evaluate    ${累计消费金额_API}*0.01
+    ####页面数据
+    ${累计消费金额}    Get Text    //span[starts-with(@ng-bind,"all_member_payed")]
+    ${累计消费次数}    Get Text    //span[starts-with(@ng-bind,"page.total_count")]
+    ####结果校验
+    Should Be Equal As Strings    ${累计消费次数}    ${累计消费次数_API}
+    Should Be Equal As Strings    ${累计消费金额}    ${累计消费金额_API}
+    ####
+    ${当前页数量}    Get Matching Xpath Count    //*[@id="main-container"]//tbody/tr[@ng-repeat="i in lists"]
+    #----
+    :FOR    ${i}    IN RANGE    ${data_len}
+    \    ${时间}    Get Text    //tr[@ng-repeat="i in lists"][${i+1}]//td[starts-with(@ng-bind,"i.created")]
+    \    ${会员姓名}    Get Text    //tr[@ng-repeat="i in lists"][${i+1}]//td/a[@ng-bind="i.wxUserInfos.real_name"]
+    \    ${手机}    Get Text    //tr[@ng-repeat="i in lists"][${i+1}]//td[@ng-bind="i.wxUserInfos.bind_mobile"]
+    \    ${消费门店}    Get Text    //tr[@ng-repeat="i in lists"][${i+1}]//td[starts-with(@ng-bind,"i.shopSub.shopInfo.name")]
+    \    ${订单号}    Get Text    //tr[@ng-repeat="i in lists"][${i+1}]//td/a[@ng-bind="i.order_no"]
+    \    ${订单金额}    Get Text    //tr[@ng-repeat="i in lists"][${i+1}]//td[starts-with(@ng-bind,"i.total_price/100")]
+    \    ${实付金额}    Get Text    //tr[@ng-repeat="i in lists"][${i+1}]//td[starts-with(@ng-bind,"i.should_pay/100")]
+    \    ${订单类型}    Get Text    //tr[@ng-repeat="i in lists"][${i+1}]//td[@ng-bind="i.order_type|orderpayType"]
+    \    #----API data
+    \    ${data}    Get From List    ${data_list}    ${i}
+    \    ${wxUserInfos}    Get From Dictionary    ${data}    wxUserInfos
+    \    ${时间_API}    Get From Dictionary    ${data}    created
+    \    ${时间_API}    Get Time    \    ${时间_API}
+    \    ${会员姓名_API}    Get From Dictionary    ${wxUserInfos}    real_name
+    \    ${手机_API}    Get From Dictionary    ${wxUserInfos}    bind_mobile
+    \    ${订单号}    Get From Dictionary    ${data}    order_no
+    \    ${订单金额_API}    Get From Dictionary    ${data}    total_price
+    \    ${订单金额_API}    Evaluate    ${订单金额_API}*0.01
+    \    ${实付金额_API}    Get From Dictionary    ${data}    payed
+    \    ${实付金额_API}    Evaluate    ${实付金额_API}*0.01
+    \    Should Be Equal As Strings    ${时间}    ${时间_API}
+    \    Should Be Equal As Strings    ${会员姓名}    ${会员姓名_API}
+    \    Should Be Equal As Strings    ${手机}    ${手机_API}
+    \    Should Be Equal As Strings    ${订单号}    ${订单号}
+    \    Should Be Equal As Numbers    ${订单金额}    ${订单金额_API}
+    \    Should Be Equal As Numbers    ${实付金额}    ${实付金额_API}
 
 *** Keywords ***
 分页工具条校验

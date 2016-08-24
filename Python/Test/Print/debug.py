@@ -1,9 +1,15 @@
 # encoding:utf-8
+import time
+from datetime import datetime
 
 str = u"测试组"
 ustr = str.encode('utf-8')
 print "ustr:",ustr
 
+print "-------- Time --------"
+stamp = 1472024262
+local_dt = datetime.fromtimestamp(stamp)
+print "time:",local_dt
 
 ########## Wechat ##########
 print u'\u5546\u57ce'

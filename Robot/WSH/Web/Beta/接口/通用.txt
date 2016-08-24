@@ -21,3 +21,6 @@ Library           Collections
     #Log    scan_limit_amount:${scan_limit}
     Run Keyword If    ${errcode}==0    Log    Success
     ...    ELSE    Log    Failed
+    ###
+    ${uv}    Get From Dictionary    ${errmsg}    uv
+    ${pv}    Get From Dictionary    ${errmsg}    pv

@@ -43,3 +43,12 @@ Resource          ../../Resource/API.robot
 
 客户_积分列表
     ${errmsg}    API.客户_积分列表    13764485    # 客户id
+
+会员_成长明细
+    ${errmsg}    API.会员_成长明细    258    # 客户id
+
+客户_消费记录
+    ${errmsg}    API.客户_消费记录    13723238    # 客户id
+
+全部客户_消费记录
+    ${errmsg}    API.全部客户_消费记录

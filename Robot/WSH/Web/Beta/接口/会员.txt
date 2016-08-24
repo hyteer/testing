@@ -92,6 +92,8 @@ Library           Collections
     ${总数}    Get From Dictionary    ${page}    total_count
     Run Keyword If    ${errcode}!=0    Fail    接口返回异常！
 
+-----1-----
+
 会员_统计
     [Tags]    ready
     ${resp}    Post Request    wsh    /members/last-count-ajax
@@ -132,6 +134,19 @@ Library           Collections
     ${errmsg}    Get From Dictionary    ${js}    errmsg
     ${data}    Get From Dictionary    ${errmsg}    data
 
+会员_成长明细
+    [Tags]    ready
+    &{headers}    Create Dictionary    Accept=application/json, text/plain, */*    Content-Type=application/json
+    ${jsonstr}    Convert To String    {"_page":1,"_page_size":20,"member_id":258}
+    ${resp}    Post Request    wsh    /member/member-growth-detail    data=${jsonstr}    headers=${headers}
+    Log    Response:${resp.content}
+    ${str}    Get Substring    ${resp.content}    3
+    ${js}    loads    ${str}
+    ${errcode}    Get From Dictionary    ${js}    errcode
+    Run Keyword If    ${errcode}!=0    Fail    接口返回异常！
+    ###
+    ${errmsg}    Get From Dictionary    ${js}    errmsg
+
 客户_积分统计
     [Tags]    ready
     &{headers}    Create Dictionary    Accept=application/json, text/plain, */*    Content-Type=application/json
@@ -150,6 +165,32 @@ Library           Collections
     &{headers}    Create Dictionary    Accept=application/json, text/plain, */*    Content-Type=application/json
     ${jsonstr}    Convert To String    {"_page":1,"_page_size":20,"type_id":1,"id":"13764485"}
     ${resp}    Post Request    wsh    /member/point-list-ajax    data=${jsonstr}    headers=${headers}
+    Log    Response:${resp.content}
+    ${str}    Get Substring    ${resp.content}    3
+    ${js}    loads    ${str}
+    ${errcode}    Get From Dictionary    ${js}    errcode
+    Run Keyword If    ${errcode}!=0    Fail    接口返回异常！
+    ###
+    ${errmsg}    Get From Dictionary    ${js}    errmsg
+
+客户_消费记录
+    [Tags]    ready
+    &{headers}    Create Dictionary    Accept=application/json, text/plain, */*    Content-Type=application/json
+    ${jsonstr}    Convert To String    {"_page":1,"_page_size":20,"uid":"13723238"}
+    ${resp}    Post Request    wsh    /members/find-member-order-list-ajax    data=${jsonstr}    headers=${headers}
+    Log    Response:${resp.content}
+    ${str}    Get Substring    ${resp.content}    3
+    ${js}    loads    ${str}
+    ${errcode}    Get From Dictionary    ${js}    errcode
+    Run Keyword If    ${errcode}!=0    Fail    接口返回异常！
+    ###
+    ${errmsg}    Get From Dictionary    ${js}    errmsg
+
+全部客户_消费记录
+    [Tags]    ready
+    &{headers}    Create Dictionary    Accept=application/json, text/plain, */*    Content-Type=application/json
+    ${jsonstr}    Convert To String    {"_page":1,"_page_size":20,"real_name":"","bind_mobile":"","order_no":"","createStart":"","createEnd":"","total_price_min":"","total_price_max":"","shop_sub_id":[],"order_type":[]}
+    ${resp}    Post Request    wsh    /members/find-member-order-list-ajax    data=${jsonstr}    headers=${headers}
     Log    Response:${resp.content}
     ${str}    Get Substring    ${resp.content}    3
     ${js}    loads    ${str}

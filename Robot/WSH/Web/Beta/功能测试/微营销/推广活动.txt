@@ -59,6 +59,7 @@ Library           Collections
     点击链接菜单    大转盘
     Wait Until Page Contains    大转盘活动列表
     Sleep    1
+    ####生成参数
     ###新增加活动
     Click Link    新增活动
     Sleep    2
@@ -95,15 +96,11 @@ Library           Collections
     Sleep    1
     Execute Javascript    document.getElementById("prizename").scrollIntoView();
     Sleep    1.5
-    Click Element    xpath=//span[contains(text(),'选择现金红包')]    #选择红包
-    Wait Until Page Contains Element    xpath=//h4[text()='选择现金红包']
-    Sleep    1
-    Click Element    xpath=//*[@id="redCashPackModal"]/div/div/form/div[2]/div/div/table/tbody/tr[2]/td[2]
-    Sleep    1
-    Click Element    xpath=//*[@id="redCashPackModal"]/div/div/form/div[3]/a[2]
-    #Click Link    确定
-    Sleep    2
-    Input Text    xpath=//*[@id="main-container"]/div/div[2]/div[2]/div/div/div/ng-form/div/div[15]/div[2]/table/tbody/tr[3]/td[5]/input    100
+    ${红包剩余数量}    选择现金红包    //span[@ng-show="!prizeList.name" and contains(text(),"选择现金红包")]
+    ${红包剩余数量}    Run Keyword If    ${红包剩余数量}>20    Evaluate    int(${红包剩余数量}*0.5)
+    ...    ELSE    Set Variable    ${红包剩余数量}
+    ${随机红包数量}    Evaluate    random.randint(1,${红包剩余数量})    random
+    Input Text    xpath=//*[@id="main-container"]/div/div[2]/div[2]/div/div/div/ng-form/div/div[15]/div[2]/table/tbody/tr[3]/td[5]/input    ${随机红包数量}
     Sleep    1
     #三等奖
     Select From List    xpath=//*[@id="main-container"]/div/div[2]/div[2]/div/div/div/ng-form/div/div[15]/div[2]/table/tbody/tr[4]/td[2]/select    2
@@ -425,15 +422,11 @@ Library           Collections
     Sleep    1
     Execute Javascript    document.getElementById("prizename").scrollIntoView();
     Sleep    1.5
-    Click Element    xpath=//span[contains(text(),'选择现金红包')]    #选择红包
-    Wait Until Page Contains Element    xpath=//h4[text()='选择现金红包']
-    Sleep    1
-    Click Element    xpath=//*[@id="redCashPackModal"]/div/div/form/div[2]/div/div/table/tbody/tr[2]/td[2]
-    Sleep    1
-    Click Element    xpath=//*[@id="redCashPackModal"]/div/div/form/div[3]/a[2]
-    #Click Link    确定
-    Sleep    2
-    Input Text    xpath=//*[@id="main-container"]/div/div[2]/div[2]/div/div/div/ng-form/div/div[15]/div[2]/table/tbody/tr[3]/td[5]/input    80
+    ${红包剩余数量}    选择现金红包    //span[@ng-show="!prizeList.name" and contains(text(),"选择现金红包")]
+    ${红包剩余数量}    Run Keyword If    ${红包剩余数量}>20    Evaluate    int(${红包剩余数量}*0.5)
+    ...    ELSE    Set Variable    ${红包剩余数量}
+    ${随机红包数量}    Evaluate    random.randint(1,${红包剩余数量})    random
+    Input Text    xpath=//*[@id="main-container"]/div/div[2]/div[2]/div/div/div/ng-form/div/div[15]/div[2]/table/tbody/tr[3]/td[5]/input    ${随机红包数量}
     Sleep    1
     #三等奖
     Select From List    xpath=//*[@id="main-container"]/div/div[2]/div[2]/div/div/div/ng-form/div/div[15]/div[2]/table/tbody/tr[4]/td[2]/select    2
@@ -1107,3 +1100,18 @@ Alert信息判断
     Fail
     Click Element    //*[@id="redCashPackModal"]/div/div/form/div[3]/a[text()="确定"]    #确定
     Sleep    2
+
+选择现金红包
+    [Arguments]    ${locator}
+    Click Element    ${locator}
+    Wait Until Page Contains Element    xpath=//h4[text()='选择现金红包']
+    Sleep    1
+    ###
+    ${els}    Get Matching Xpath Count    //tr[@ng-repeat="list in redCashPackList"]/td[@ng-bind="list.act_name"]
+    ${rand}    Evaluate    random.randint(1,${els})    random
+    Click Element    xpath=(//tr[@ng-repeat="list in redCashPackList"]/td[@ng-bind="list.act_name"])[${rand}]
+    Sleep    1
+    Click Element    xpath=//*[@id="redCashPackModal"]/div/div/form/div[3]/a[2]
+    ${红包剩余数量}    Get Text    xpath=(//tr[@ng-repeat="list in redCashPackList"]/td[@ng-bind="list.act_name"]/parent::tr[1]/td[3])[${rand}]
+    Sleep    2
+    [Return]    ${红包剩余数量}

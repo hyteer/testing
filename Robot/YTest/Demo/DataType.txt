@@ -1,1 +1,8 @@
 *** Test Cases ***
+Get Type
+    ${失败数}    Set Variable    ${0}
+    ${str}    Set Variable    'Test'
+    ${str2}    Set Variable    Test
+    ${type}    Evaluate    type(${0})
+    ${type}    Evaluate    type(${str})
+    Log    ${失败数}

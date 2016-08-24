@@ -19,7 +19,7 @@ Resource          ../../Resource/API.robot
     Wait Until Page Contains Element    //*[@id="breadcrumbs"]/ul/li[contains(text(),"标签管理")]
     Sleep    1
     ####API查询
-    ${errmsg}    API.获取标签列表
+    ${errmsg}    API.标签列表
     ${data}    Get From Dictionary    ${errmsg}    data
     ${page}    Get From Dictionary    ${errmsg}    page
     ${每页数量}    Get From Dictionary    ${page}    per_page

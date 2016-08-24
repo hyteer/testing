@@ -156,6 +156,20 @@ API登录
     Run Keyword If    ${errcode}!=0    Fail    接口返回异常！
     [Return]    ${errmsg}
 
+客户_积分列表
+    [Arguments]    ${id}
+    API登录
+    &{headers}    Create Dictionary    Accept=application/json    Content-Type=application/json
+    ${jsonstr}    Convert To String    {"_page":1,"_page_size":20,"type_id":1,"id":"${id}"}
+    ${resp}    Post Request    wsh    /member/point-list-ajax    data=${jsonstr}    headers=${headers}
+    Log    Response:${resp.content}
+    ${str}    Get Substring    ${resp.content}    3
+    ${js}    loads    ${str}
+    ${errcode}    Get From Dictionary    ${js}    errcode
+    ${errmsg}    Get From Dictionary    ${js}    errmsg
+    Run Keyword If    ${errcode}!=0    Fail    接口返回异常！
+    [Return]    ${errmsg}
+
 -----2-----
 
 会员_列表
@@ -200,12 +214,39 @@ API登录
     Run Keyword If    ${errcode}!=0    Fail    接口返回异常！
     [Return]    ${errmsg}
 
-客户_积分列表
+会员_成长明细
     [Arguments]    ${id}
     API登录
     &{headers}    Create Dictionary    Accept=application/json    Content-Type=application/json
-    ${jsonstr}    Convert To String    {"_page":1,"_page_size":20,"type_id":1,"id":"${id}"}
-    ${resp}    Post Request    wsh    /member/point-list-ajax    data=${jsonstr}    headers=${headers}
+    ${jsonstr}    Convert To String    {"_page":1,"_page_size":20,"member_id":${id}}
+    ${resp}    Post Request    wsh    /member/member-growth-detail    data=${jsonstr}    headers=${headers}
+    Log    Response:${resp.content}
+    ${str}    Get Substring    ${resp.content}    3
+    ${js}    loads    ${str}
+    ${errcode}    Get From Dictionary    ${js}    errcode
+    ${errmsg}    Get From Dictionary    ${js}    errmsg
+    Run Keyword If    ${errcode}!=0    Fail    接口返回异常！
+    [Return]    ${errmsg}
+
+客户_消费记录
+    [Arguments]    ${id}
+    API登录
+    &{headers}    Create Dictionary    Accept=application/json    Content-Type=application/json
+    ${jsonstr}    Convert To String    {"_page":1,"_page_size":20,"uid":"${id}"}
+    ${resp}    Post Request    wsh    /members/find-member-order-list-ajax    data=${jsonstr}    headers=${headers}
+    Log    Response:${resp.content}
+    ${str}    Get Substring    ${resp.content}    3
+    ${js}    loads    ${str}
+    ${errcode}    Get From Dictionary    ${js}    errcode
+    ${errmsg}    Get From Dictionary    ${js}    errmsg
+    Run Keyword If    ${errcode}!=0    Fail    接口返回异常！
+    [Return]    ${errmsg}
+
+全部客户_消费记录
+    API登录
+    &{headers}    Create Dictionary    Accept=application/json    Content-Type=application/json
+    ${jsonstr}    Convert To String    {"_page":1,"_page_size":20,"real_name":"","bind_mobile":"","order_no":"","createStart":"","createEnd":"","total_price_min":"","total_price_max":"","shop_sub_id":[],"order_type":[]}
+    ${resp}    Post Request    wsh    /members/find-member-order-list-ajax    data=${jsonstr}    headers=${headers}
     Log    Response:${resp.content}
     ${str}    Get Substring    ${resp.content}    3
     ${js}    loads    ${str}
