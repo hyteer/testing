@@ -46,7 +46,59 @@ List
 Dict_pop
     &{data}    Create Dictionary    a=test1    b=test2    c=test3
     ${len}    Get Length    ${data}
-    :FOR    ${i}    IN RANGE    ${len}
+    : FOR    ${i}    IN RANGE    ${len}
     \    Exit For Loop If    ${j}>${len}
     \    Pop From Dictionary    ${data}    b
     \    ${j}    Evaluate    ${i+1}
+
+Dict&Num
+    ${key1}    Set Variable    1
+    ${key2}    Set Variable    2
+    ${key3}    Set Variable    '3'
+    ${typetest}    Evaluate    type(${key1})
+    ${dict}    Create Dictionary    ${key1}=正常    2=未绑定    ${key3}=冻结
+    ${len}    Get Length    ${dict}
+    ${d1}    Get From Dictionary    ${dict}    ${key1}
+    ${d2}    Get From Dictionary    ${dict}    2
+    ###
+    ${keylist}    Create List    ${key1}    ${key2}    ${key3}
+    ${n}    Evaluate    random.randint(1,3)    random
+    ${会员卡状态}    Evaluate    random.sample(range(1,4),${n})    random
+    : FOR    ${i}    IN    @{keylist}
+    \    Log    i:${i}
+    \    ${d1}    Get From Dictionary    ${dict}    ${i}
+    Log    Test...
+    ${dtest}    Get From Dictionary    ${dict}    2
+    #
+    ${dict2}    Create Dictionary
+    :FOR    ${i}    IN RANGE    3
+    \    Set To Dictionary    ${dict2}    '${i+1}'='test${i+1}'
+    Log    ${dict2}
+    Pass Execution    Test
+
+Dict&Num2
+    ${n}    Evaluate    random.randint(1,3)    random
+    ${quelist}    Create List    ${1}    ${3}    ${2}
+    ${quelist2}    Create List    1    3    2
+    ${会员卡状态}    Evaluate    random.sample(${quelist},${n})    random
+
+DictComplicate
+    ${grouplist}    Evaluate    [99, 61, 52,33,44,78]
+    ${len_list}    Get Length    ${grouplist}
+    Log    ${grouplist[2]}
+    ${groupdict}    Create Dictionary
+    :FOR    ${i}    IN RANGE    ${len_list}
+    \    ${typetest}    Evaluate    type(${i})
+    \    Set To Dictionary    ${groupdict}    '${i+1}'='${grouplist[${i}]}'    #"${i+1}=${grouplist[${i}]}"
+    Log    ${groupdict}
+    ##Get
+    ${n}    Evaluate    random.randint(1,3)    random
+    ${会员分组}    Evaluate    random.sample(range(1,${len_list}),${n})    random
+    ${len}    Get Length    ${会员分组}
+    ${valuelist}    Create List
+    :FOR    ${i}    IN    @{会员分组}
+    \    ${value}    Get From Dictionary    ${groupdict}    '${i}'
+    \    ${value}    Evaluate    int(${value})
+    \    Append To List    ${valuelist}    ${value}
+    Log    ValueList:${valuelist}
+    #

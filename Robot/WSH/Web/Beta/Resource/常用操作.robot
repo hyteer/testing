@@ -5,6 +5,7 @@ Resource          功能菜单.robot
 Library           String
 Library           Screenshot
 Library           OperatingSystem
+Resource          API.robot
 
 *** Keywords ***
 登录
@@ -446,3 +447,44 @@ Radio_选择未选中的
     [Arguments]    ${retry}=10    ${time}=1
     ${message}    Wait Until Keyword Succeeds    ${retry}x    ${time}s    Get Alert Message
     [Return]    ${message}
+
+获取会员分组列表
+    [Arguments]    ${amount}=all
+    ${errmsg}    API.会员_分组列表
+    ${分组列表}    Create List
+    ###
+    ${page}    Get From Dictionary    ${errmsg}    page
+    ${total}    Get From Dictionary    ${page}    total_count
+    ###
+    ${data}    Get From Dictionary    ${errmsg}    data
+    ${len}    Get Length    ${data}
+    ${len}    Set Variable If    '${amount}'=='all'    ${len}
+    ...    '${amount}'!='all' and ${len}>${amount}    ${amount}    ${len}
+    :FOR    ${i}    IN RANGE    ${len}
+    \    ${data_i}    Get From List    ${data}    ${i}
+    \    ${id}    Get From Dictionary    ${data_i}    id
+    \    ${name}    Get From Dictionary    ${data_i}    name
+    \    Append To List    ${分组列表}    ${id}
+    Log    ${分组列表}
+    [Return]    ${分组列表}
+
+获取标签列表
+    [Arguments]    ${amount}=all
+    ${errmsg}    API.会员_标签列表
+    ${标签列表}    Create List
+    ###
+    ${page}    Get From Dictionary    ${errmsg}    page
+    ${total}    Get From Dictionary    ${page}    total_count
+    ###
+    ${data}    Get From Dictionary    ${errmsg}    data
+    ${len}    Get Length    ${data}
+    ${len}    Set Variable If    '${amount}'=='all'    ${len}
+    ...    '${amount}'!='all' and ${len}>${amount}    ${amount}    ${len}
+    :FOR    ${i}    IN RANGE    ${len}
+    \    ${data_i}    Get From List    ${data}    ${i}
+    \    ${id}    Get From Dictionary    ${data_i}    id
+    \    ${name}    Get From Dictionary    ${data_i}    name
+    \    Append To List    ${标签列表}    ${id}
+    Log    ${标签列表}
+    #
+    [Return]    ${标签列表}

@@ -13,10 +13,12 @@ pd = api.Product()
 mb = api.Member()
 
 # get_cookie
-sid = cm.wsh_get_cookie()
+#sid = cm.wsh_get_cookie()
+wxcookies = cm.wsh_weixin_cookie()
 
 # Login 登录
-resptext = cm.wsh_login(sid)
+#resptext = cm.wsh_login(sid)
+
 '''
 # actlist   获取活动列表
 sp.wsh_actlist(sid)
@@ -42,10 +44,17 @@ pd.get_order_detail(sid)
 pd.get_product_detail(sid)
 '''
 #### Members ####
+
+#pd.order_test(wxcookies)
+pd.order_add_ajax(wxcookies)
+"""
 mb.wsh_member_list(sid)
+mb.wsh_members_get_all_tags(sid)
 mb.wsh_member_detail_ajax(sid)
+
 mb.wsh_member_point_list(sid)
 mb.wsh_members_detail(sid,256)
 mb.wsh_members_list_ajax(sid)
 mb.wsh_members_get_tag(sid)
+"""
 

@@ -128,4 +128,21 @@ class Member(object):
 
         return r
 
+    #### 获取会员全部分组
+    def wsh_members_get_all_tags(self,sessionid):
+        # Remark
+        print u"---Test 获取会员全部分组---"
+        url = self.baseurl+"/members/find-all-group-ajax"
+
+        headers = self.headers_json
+        cookies = {'PHPSESSID': sessionid}
+        #postdata = '{"id":259}'
+
+        r = requests.post(url,headers=headers,cookies=cookies)
+        print "Headers:", r.headers
+        print "Response:", r.content
+
+        return r
+
+
 

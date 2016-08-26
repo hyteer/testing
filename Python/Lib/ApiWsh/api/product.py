@@ -11,6 +11,7 @@ class Product(object):
     baseurl = ws.baseurl
     proxylist = {'http' : 'http://127.0.0.1:8888'}
     headers = ws.headers
+    headers_json = ws.headers_json
 
     ######### 商品 ##########
     def get_product_list(self,sessionid):
@@ -74,28 +75,40 @@ class Product(object):
         print "Response:", r.content
         print "Response:",r
         return r
-    '''
+
     ########## 订单相关 ##########
-    def order_add_ajax(self,sessionid):
+    def order_add_ajax(self,wxcookie):
         """
         创建普通订单
         :param sessionid:
         :return: response content
         """
         print u"---Test 创建普通订单---"
-        url = self.baseurl+"/order/order-add-ajax"
+        url = "http://weishanghuzhushou.betanewwx.snsshop.net/order/order-add-ajax"
         headers = self.headers
-        cookies = {'PHPSESSID': sessionid}
+
+        sessionid = wxcookie['PHPSESSID'].value
+        csrf = wxcookie['_csrf'].value
+
+        print dir(wxcookie)
+        print "Cookie Values:",wxcookie.viewvalues
+        cookies = {'PHPSESSID': sessionid,'_csrf':csrf}
+        print "new cookies:",cookies
+
         #product_info = [{'id': 286352'},{sku_id': ,'num': 1}]
 
-        #postdata = {'products': product_info}
+        postdata = {'products[0][id]': 286603,'products[0][sku_id]':1167425,'products[0][num]':1,'pickup_type':1}
 
         r = requests.post(url, data=postdata,headers=headers,cookies=cookies)
         print "Headers:", r.headers
         print "Response:", r.content
         print "Response:",r
         return r
-    '''
+
+    def order_test(self,mycookies):
+        print '----Temp Test----'
+        print mycookies
+
 
     ########## WeiXin相关 ##########
 

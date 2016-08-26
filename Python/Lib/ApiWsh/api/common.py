@@ -23,7 +23,7 @@ class Common(object):
 
     #### 获取Cookie
     def wsh_get_cookie(self):
-
+        #,pgv_pvi,pgv_si,_csrf
         print "---Test get cookie---"
         url = self.baseurl+'/captcha/getimage'
         #url = 'http://betanewwsh.vikduo.com/reduction/list-ajax'
@@ -39,7 +39,6 @@ class Common(object):
         sessionid = cookie['PHPSESSID'].value
 
         #js = json.loads(cookies)
-
         print "Headers:",r.headers
         #print "Cookies:",r.cookies
         #print "Raw:",r.raw
@@ -47,6 +46,7 @@ class Common(object):
         print "cookies:", cookies
         print "SessionID:", sessionid
         return sessionid
+
 
     #### 登录获取SessionID
     def wsh_login(self,sessionid):
@@ -70,6 +70,38 @@ class Common(object):
 
         return r.text
 
+    def wsh_weixin_cookie(self):
+
+        print "---Test WeiXin Get cookie---"
+        url = 'http://weishanghuzhushou.betanewwx.snsshop.net/weishanghuzhushou/oauth/testing?id=13723226'
+        #url = 'http://betanewwsh.vikduo.com/reduction/list-ajax'
+        headers = self.headers
+
+
+        r = requests.post(url, headers=headers)
+        cookies = r.headers['Set-Cookie']
+        #cookie = re.match("'PHPSESSID':'(.+?)',.", cookies)
+        #cookies.load(headers['Set-Cookie'])
+        #print cookies
+        #session = cookies['PHPSESSID'].value
+        cookie = Cookie.SimpleCookie(r.headers['Set-Cookie'])
+        sessionid = cookie['PHPSESSID'].value
+        #pgv_pvi = cookie['pgv_pvi'].value
+        #pgv_si = cookie['pgv_si'].value
+        #_csrf = cookie['_csrf'].value
+
+        #js = json.loads(cookies)
+
+        print "Headers:",r.headers
+        print "Response:", r.content
+        print "cookie:", cookie
+        #print "Cookies:",r.cookies
+        #print "Raw:",r.raw
+        #print "Set-Cookie:",r.headers['Set-Cookie']
+        #print "cookies:", cookies
+        #print "SessionID:", sessionid
+        #return sessionid
+        return cookie
 
 
 

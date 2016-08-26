@@ -90,6 +90,8 @@ random_multi
     ${list}    Evaluate    random.sample(range(1,31),${n})    random
     : FOR    ${i}    IN    @{list}
     \    Log    ${i}
+    ${n2}    Evaluate    random.randint(1,3)    random
+    ${statlist}    Evaluate    random.sample(range(1,4),${n2})    random
 
 add2dict
     &{dict}    Create Dictionary    a=test1    b=test2
@@ -104,6 +106,6 @@ dict_test
 
 Get_time
     #指定timestamp时间
-    ${time}    Get Time    \     1470987250
+    ${time}    Get Time    \    1470987250
     #当前
     ${time}    Get Time

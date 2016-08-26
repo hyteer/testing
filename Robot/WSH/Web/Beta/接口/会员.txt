@@ -198,3 +198,33 @@ Library           Collections
     Run Keyword If    ${errcode}!=0    Fail    接口返回异常！
     ###
     ${errmsg}    Get From Dictionary    ${js}    errmsg
+
+会员_分组列表
+    [Tags]    ready
+    &{headers}    Create Dictionary    Accept=application/json, text/plain, */*    Content-Type=application/json
+    ${jsonstr}    Convert To String    {"_page":1,"_page_size":20,"name":""}
+    ${resp}    Post Request    wsh    /members/find-group-ajax    data=${jsonstr}    headers=${headers}
+    Log    Response:${resp.content}
+    ${str}    Get Substring    ${resp.content}    3
+    ${js}    loads    ${str}
+    ${errcode}    Get From Dictionary    ${js}    errcode
+    Run Keyword If    ${errcode}!=0    Fail    接口返回异常！
+    ###
+    ${errmsg}    Get From Dictionary    ${js}    errmsg
+    ${page}    Get From Dictionary    ${errmsg}    page
+    ${total}    Get From Dictionary    ${page}    total_count
+
+会员_等级列表
+    [Tags]    ready
+    &{headers}    Create Dictionary    Accept=application/json, text/plain, */*    Content-Type=application/json
+    ${jsonstr}    Convert To String    {"_page":1,"_page_size":10,"name":""}
+    ${resp}    Post Request    wsh    /members/find-grade-ajax    data=${jsonstr}    headers=${headers}
+    Log    Response:${resp.content}
+    ${str}    Get Substring    ${resp.content}    3
+    ${js}    loads    ${str}
+    ${errcode}    Get From Dictionary    ${js}    errcode
+    Run Keyword If    ${errcode}!=0    Fail    接口返回异常！
+    ###
+    ${errmsg}    Get From Dictionary    ${js}    errmsg
+    ${page}    Get From Dictionary    ${errmsg}    page
+    ${total}    Get From Dictionary    ${page}    total_count

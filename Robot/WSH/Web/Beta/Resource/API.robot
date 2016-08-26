@@ -6,6 +6,12 @@ Library           json
 Resource          配置参数.robot
 
 *** Keywords ***
+API登录
+    Create Session    wsh    ${URL_BETA}
+    &{data}=    Create Dictionary    username=20151228    password=123456    captcha=1111
+    &{headers}=    Create Dictionary    Content-Type=application/x-www-form-urlencoded
+    ${resp}    Post Request    wsh    /login/login-ajax    data=${data}    headers=${headers}
+
 获取店铺支付方式
     Create Session    baseapi    http://betanewapi.snsshop.net/v1
     &{headers}    Create Dictionary    Accept=application/json    Content-Type=application/json
@@ -63,12 +69,6 @@ Resource          配置参数.robot
     ...    ELSE    Log    Failed
     [Return]    ${errmsg}
 
-API登录
-    Create Session    wsh    ${URL_BETA}
-    &{data}=    Create Dictionary    username=20151228    password=123456    captcha=1111
-    &{headers}=    Create Dictionary    Content-Type=application/x-www-form-urlencoded
-    ${resp}    Post Request    wsh    /login/login-ajax    data=${data}    headers=${headers}
-
 商家信息
     API登录
     ${resp}    Post Request    wsh    /shop/get-ajax
@@ -84,7 +84,7 @@ API登录
     ...    ELSE    Log    Failed
     [Return]    ${errmsg}
 
-标签列表
+会员_标签列表
     API登录
     &{headers}    Create Dictionary    Accept=application/json    Content-Type=application/json
     ${jsonstr}    Convert To String    {"_page":1,"_page_size":20,"name":""}
@@ -214,6 +214,19 @@ API登录
     Run Keyword If    ${errcode}!=0    Fail    接口返回异常！
     [Return]    ${errmsg}
 
+会员_分组列表
+    API登录
+    &{headers}    Create Dictionary    Accept=application/json    Content-Type=application/json
+    ${jsonstr}    Convert To String    {"_page":1,"_page_size":20,"name":""}    # 分页参数：{"_page":1,"_page_size":20,"name":""}
+    ${resp}    Post Request    wsh    /members/find-group-ajax    data=${jsonstr}    headers=${headers}
+    Log    Response:${resp.content}
+    ${str}    Get Substring    ${resp.content}    3
+    ${js}    loads    ${str}
+    ${errcode}    Get From Dictionary    ${js}    errcode
+    ${errmsg}    Get From Dictionary    ${js}    errmsg
+    Run Keyword If    ${errcode}!=0    Fail    接口返回异常！
+    [Return]    ${errmsg}
+
 会员_成长明细
     [Arguments]    ${id}
     API登录
@@ -253,4 +266,64 @@ API登录
     ${errcode}    Get From Dictionary    ${js}    errcode
     ${errmsg}    Get From Dictionary    ${js}    errmsg
     Run Keyword If    ${errcode}!=0    Fail    接口返回异常！
+    [Return]    ${errmsg}
+
+会员列表_条件查询
+    [Arguments]    ${name}=${EMPTY}    ${start}=${EMPTY}    ${end}=${EMPTY}    ${mobile}=${EMPTY}    ${status}=[]    ${source}=[]
+    ...    ${level}=[]    ${group_id}=[]    ${tags}=[]    ${sex}=[]
+    [Documentation]    查询参数：
+    ...    {"_page":1,"_page_size":20,"keyword":"","real_name":"","create_start":1467611419,"create_end":1472104227,"bind_mobile":"","status":[],"source":[],"level":[],"member_group_id":[],"tags":[],"sex":[],"city_id":[],"city":[],"shop_sub_id":""}
+    API登录
+    &{headers}    Create Dictionary    Accept=application/json    Content-Type=application/json
+    ${jsonstr}    Convert To String    {"_page":1,"_page_size":20,"keyword":"","real_name":"${name}","create_start":"${start}","create_end":"${end}","bind_mobile":"${mobile}","status":${status},"source":${source},"level":${level},"member_group_id":${group_id},"tags":${tags},"sex":${sex},"city_id":[],"city":[],"shop_sub_id":""}
+    ${resp}    Post Request    wsh    /members/list-ajax    data=${jsonstr}    headers=${headers}
+    Log    Response:${resp.content}
+    ${str}    Get Substring    ${resp.content}    3
+    ${js}    loads    ${str}
+    ${errcode}    Get From Dictionary    ${js}    errcode
+    ${errmsg}    Get From Dictionary    ${js}    errmsg
+    Run Keyword If    ${errcode}!=0    Fail    接口返回异常！
+    [Return]    ${errmsg}
+
+会员列表_条件查询2
+    [Arguments]    ${args}
+    [Documentation]    查询参数：
+    ...    {"_page":1,"_page_size":20,"keyword":"","real_name":"","create_start":1467611419,"create_end":1472104227,"bind_mobile":"","status":[],"source":[],"level":[],"member_group_id":[],"tags":[],"sex":[],"city_id":[],"city":[],"shop_sub_id":""}
+    API登录
+    &{headers}    Create Dictionary    Accept=application/json    Content-Type=application/json
+    ${jsonstr}    Convert To String    ${args}
+    ${resp}    Post Request    wsh    /members/list-ajax    data=${jsonstr}    headers=${headers}
+    Log    Response:${resp.content}
+    ${str}    Get Substring    ${resp.content}    3
+    ${js}    loads    ${str}
+    ${errcode}    Get From Dictionary    ${js}    errcode
+    ${errmsg}    Get From Dictionary    ${js}    errmsg
+    Run Keyword If    ${errcode}!=0    Fail    接口返回异常！
+    [Return]    ${errmsg}
+
+会员_获取全部分组
+    API登录
+    &{headers}    Create Dictionary    Accept=application/json    Content-Type=application/json
+    ${jsonstr}    Convert To String    {"_page":1,"_page_size":20,"name":""}    # 分页参数：{"_page":1,"_page_size":20,"name":""}
+    ${resp}    Post Request    wsh    /members/find-all-group-ajax    \    headers=${headers}
+    Log    Response:${resp.content}
+    ${str}    Get Substring    ${resp.content}    3
+    ${js}    loads    ${str}
+    ${errcode}    Get From Dictionary    ${js}    errcode
+    ${errmsg}    Get From Dictionary    ${js}    errmsg
+    Run Keyword If    ${errcode}!=0    Fail    接口返回异常！
+    [Return]    ${errmsg}
+
+微信_获取二维码详情
+    API登录
+    &{headers}    Get_Headers
+    &{data}=    Create Dictionary    model=member_card    model_id=1    shop_sub_id=0
+    ${resp}    Post Request    wsh    /members/find-all-group-ajax    data=${data}    headers=${headers}
+    Log    Response:${resp.content}
+    ${str}    Get Substring    ${resp.content}    3
+    ${js}    loads    ${str}
+    ${errcode}    Get From Dictionary    ${js}    errcode
+    ${errmsg}    Get From Dictionary    ${js}    errmsg
+    Run Keyword If    ${errcode}!=0    Fail    接口返回异常！
+    ##
     [Return]    ${errmsg}

@@ -1,0 +1,60 @@
+*** Settings ***
+Suite Setup       登录
+Suite Teardown    关闭浏览器
+Test Teardown     失败重启
+Library           Selenium2Library
+Resource          ../../Resource/常用操作.robot
+Resource          ../../Resource/功能菜单.robot
+Resource          ../../Resource/配置参数.robot
+Library           Screenshot
+Resource          ../../Resource/API.robot
+
+*** Test Cases ***
+会员卡设置_页面校验
+    [Tags]    ready
+    ####进入页面
+    点击链接菜单    微会员
+    ${sub}    Set Variable    会员卡设置
+    点击链接菜单    ${sub}
+    Wait Until Element Is Visible    //*[@id="main-container"]//ng-form/h4[text()="会员卡详情"]
+    Sleep    1
+    #
+    Element Should Be Visible    //*[@id="main-container"]//ng-form/h4[text()="服务信息"]
+    Element Should Contain    id=phone_page1    积分
+    Element Should Contain    id=phone_page1    等级
+    Element Should Contain    id=phone_page1    折扣
+    ##
+    ${商户名}    Get Text    //span[@ng-bind="model.brand_name"]
+    ${会员卡标题}    Get Text    //p[@ng-bind="model.title"]
+    Page Should Contain Element    //div[@class="uc-card"]//div[@ng-bind="model.brand_name" and text()="${商户名}"]
+    Page Should Contain Element    //div[@class="uc-card"]//div[@ng-bind="model.title" and text()="${会员卡标题}"]
+    #
+
+会员卡设置_查看终端店二维码
+    ####进入页面
+    点击链接菜单    微会员
+    ${sub}    Set Variable    会员卡设置
+    点击链接菜单    ${sub}
+    Wait Until Element Is Visible    //*[@id="main-container"]//ng-form/h4[text()="会员卡详情"]
+    Sleep    1
+    ####进入投放界面
+    Click Element    //a[@href="/members/delivery" and contains(text(),"投放")]
+    Wait Until Element Is Visible    //*[@id="main-container"]//ng-form/h4[text()="直接投放"]
+    Title Should Be    直接投放
+    #
+
+会员卡设置_编辑投放信息
+
+会员卡设置_修改
+
+开卡优惠设置
+
+长成值管理
+
+会员等级管理_页面校验
+
+会员等级管理_新增
+
+会员等级管理_编辑
+
+会员等级管理_删除

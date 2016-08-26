@@ -458,16 +458,83 @@ Resource          ../../Resource/API.robot
     Sleep    3
 
 会员列表_高级搜索
-    [Tags]
+    [Tags]    ready
     ####进入页面
     点击链接菜单    微会员
     ${sub}    Set Variable    会员列表
     点击链接菜单    ${sub}
     Wait Until Page Contains Element    //*[@id="breadcrumbs"]/ul/li[contains(text(),"会员列表")]
     Sleep    1
-    ####会员列表-高级搜索
+    ####Flags
+    ${flag_姓名}    Generate Random String    1    00100
+    ${flag_手机}    Generate Random String    1    00100
+    ${flag_时间}    Generate Random String    1    101
+    ${flag_会员卡状态}    Generate Random String    1    0001
+    ${flag_会员来源}    Generate Random String    1    1110
+    ${flag_会员等级}    Generate Random String    1    0001
+    ${flag_会员分组}    Generate Random String    1    0001
+    ${flag_会员标签}    Generate Random String    1    0001
+    ${flag_会员性别}    Generate Random String    1    001
+    ${flags}    Evaluate    [${flag_姓名},${flag_手机},${flag_时间},${flag_会员卡状态},${flag_会员卡状态},${flag_会员来源},${flag_会员等级},${flag_会员分组},${flag_会员分组},${flag_会员标签},${flag_会员性别}]
+    ####参数
+    ${els}    Get Matching Xpath Count    //*[@id="integralTable"]/tbody/tr[@ng-repeat="i in lists track by $index"]
+    ${rand}    Evaluate    random.randint(1,${els})    random
+    ####页面查询
     Click Link    高级搜索
     Wait Until Element Is Visible    //a[text()="返回精简搜索"]
+    Sleep    1
+    ####输入参数
+    ${姓名}    Run Keyword If    ${flag_姓名}==1    输入姓名
+    ${手机}    Run Keyword If    ${flag_手机}==1    输入手机    ${flag_姓名}
+    ${时间}    Run Keyword If    ${flag_时间}==1    输入时间
+    ${会员卡状态}    Run Keyword If    ${flag_会员卡状态}==1    输入会员卡状态
+    ${会员来源}    Run Keyword If    ${flag_会员来源}==1    输入会员来源
+    ${会员等级}    Run Keyword If    ${flag_会员等级}==1    输入会员等级
+    ${会员分组}    Run Keyword If    ${flag_会员分组}==1    输入会员分组
+    ${会员标签}    Run Keyword If    ${flag_会员标签}==1    输入会员标签
+    ${会员性别}    Run Keyword If    ${flag_会员性别}==1    输入会员性别
+    Sleep    1
+    Click Element    //button[@ng-click="seniorSearch()" and text()="搜索"]
+    Sleep    4
+    Wait Until Element Is Visible    //button[starts-with(@ng-click,"singleClear") and @ng-repeat="list in searchArray"]
+    Element Should Be Visible    //a[text()="高级搜索"]
+    ##
+    ${name}    Set Variable If    ${flag_姓名}==1    ${姓名}    ${EMPTY}
+    ${mobile}    Set Variable If    ${flag_手机}==1    ${手机}    ${EMPTY}
+    ${start}    Set Variable If    ${flag_时间}==1    ${时间[0]}    ${EMPTY}
+    ${end}    Set Variable If    ${flag_时间}==1    ${时间[1]}    ${EMPTY}
+    ${status}    Set Variable If    ${flag_会员卡状态}==1    ${会员卡状态}    []
+    ${source}    Set Variable If    ${flag_会员来源}==1    ${会员来源}    []
+    ${level}    Set Variable If    ${flag_会员等级}==1    ${会员等级}    []
+    ${group}    Set Variable If    ${flag_会员分组}==1    ${会员分组}    []
+    ${tags}    Set Variable If    ${flag_会员标签}==1    ${会员标签}    []
+    ${sex}    Set Variable If    ${flag_会员性别}==1    ${会员性别}    []
+    #
+    ${args}    Set Variable    {"_page":1,"_page_size":20,"real_name":"${name}","create_start":"${start}","create_end":"${end}","bind_mobile":"${mobile}","status":${status},"source":${source},"level":${level},"member_group_id":${group},"tags":${tags},"sex":${sex}}
+    ${查询结果}    会员列表API查询    ${args}
+    ####结果校验
+    ${searchFlags}    Set Variable    ${0}
+    :FOR    ${i}    IN    @{flags}
+    \    ${searchFlags}    Set Variable If    ${i}==1    ${searchFlags+1}    ${searchFlags}
+    Log    FlagsCount:${searchFlags}
+    Run Keyword If    ${searchFlags}>=1    Page Should Contain Element    //button[@ng-click="singleClear(list, $index, list.val)"]
+    ${searchTags}    Get Matching Xpath Count    //button[@ng-click="singleClear(list, $index, list.val)"]
+    ##数据校验
+    Run Keyword If    ${查询结果[0]}!=0    查询结果校验    ${查询结果[1]}
+    ...    ELSE    Log    查无数据...
+    Pass Execution    Test
+    ####
+    Sleep    2
+    Click Element    xpath=(//button[starts-with(@ng-click,"singleClear") and @ng-repeat="list in searchArray"])[1]
+    Sleep    2
+    ${els_now}    Get Matching Xpath Count    //tr[@ng-repeat="i in lists track by $index"]
+    Should Be True    ${els_now}==${els}
+    #回到搜索界面
+    Click Link    高级搜索
+    Wait Until Element Is Visible    //a[text()="返回精简搜索"]
+    Sleep    1
+    #
+    Pass Execution    Test
 
 -----2-----
 
@@ -516,7 +583,7 @@ Resource          ../../Resource/API.robot
     ${会员等级_API}    Get From Dictionary    ${memberGrade}    name
     ${会员成长值_API}    Get From Dictionary    ${errmsg}    growth
     ${会员折扣_API}    Get From Dictionary    ${memberGrade}    discount    #返回值是10倍
-    ${会员折扣_API}    Evaluate    int(${会员折扣_API}*0.1)
+    ${会员折扣_API}    Evaluate    ${会员折扣_API}*0.1
     ${账户积分_API}    Get From Dictionary    ${wxUserInfos}    point
     #${消费次数_API}    #注：需确认字段
     #${累计消费_API}    #注：需确认字段
@@ -569,7 +636,7 @@ Resource          ../../Resource/API.robot
     Should Be Equal As Strings    ${会员卡编号}    ${会员卡编号_API}
     Should Be Equal As Strings    ${会员等级}    ${会员等级_API}
     Should Be Equal As Strings    ${会员成长值}    ${会员成长值_API}
-    Should Be Equal As Strings    ${会员折扣}    ${会员折扣_API}
+    Should Be Equal As Numbers    ${会员折扣}    ${会员折扣_API}
     #----
     Should Be Equal As Strings    ${姓名}    ${姓名_API}
     Should Be Equal As Strings    ${手机}    ${手机_API}
@@ -624,18 +691,22 @@ Resource          ../../Resource/API.robot
     ${积分列表数据}    Create List
     : FOR    ${i}    IN RANGE    ${data_len}
     \    ${时间}    Get Text    //tr[@ng-repeat="item in list"][${i+1}]//td[starts-with(@ng-bind,"item.created*1000")]
-    \    ${类型}    Get Text    //tr[@ng-repeat="item in list"][${i+1}]//span[@ng-bind="item.type| orderSelType"]
+    \    #${类型}    Get Text    //tr[@ng-repeat="item in list"][${i+1}]//span[@ng-bind="item.type| orderSelType"]
     \    ${积分数量}    Get Text    //tr[@ng-repeat="item in list"][${i+1}]//td[@ng-bind="item.change"]
-    \    ${事件}    Get Text    //tr[@ng-repeat="item in list"][${i+1}]//span[@ng-bind="item.source"]
     \    #----API data
     \    ${data}    Get From List    ${data_list}    ${i}
     \    ${时间_API}    Get From Dictionary    ${data}    created
     \    ${时间_API}    Get Time    \    ${时间_API}
+    \    ${类型_API}    Get From Dictionary    ${data}    type
     \    ${积分数量_API}    Get From Dictionary    ${data}    change
-    \    ${事件_API}    Get From Dictionary    ${data}    source
+    \    ${事件}    Run Keyword If    ${类型_API}==5    Set Variable    会员开卡送积分
+    \    ...    ELSE IF    ${类型_API}!=1 and ${类型_API}!=2    Get Text    //tr[@ng-repeat="item in list"][${i+1}]//span[@ng-bind="item.source"]
+    \    ${事件_API}    Run Keyword If    ${类型_API}==5    Set Variable    会员开卡送积分
+    \    ...    ELSE    Get From Dictionary    ${data}    source
+    \    Run Keyword If    ${类型_API}==1 or ${类型_API}==2    类型为消费时事件校验    ${i}    ${事件_API}
+    \    ...    ELSE    Should Be Equal As Strings    ${事件}    ${事件_API}
     \    Should Be Equal As Strings    ${时间}    ${时间_API}
     \    Should Be Equal As Strings    ${积分数量}    ${积分数量_API}
-    \    Should Be Equal As Strings    ${事件}    ${事件_API}
 
 会员详情_成长值明细
     [Tags]    ready
@@ -797,7 +868,7 @@ Resource          ../../Resource/API.robot
     ####
     ${当前页数量}    Get Matching Xpath Count    //*[@id="main-container"]//tbody/tr[@ng-repeat="i in lists"]
     #----
-    :FOR    ${i}    IN RANGE    ${data_len}
+    : FOR    ${i}    IN RANGE    ${data_len}
     \    ${时间}    Get Text    //tr[@ng-repeat="i in lists"][${i+1}]//td[starts-with(@ng-bind,"i.created")]
     \    ${会员姓名}    Get Text    //tr[@ng-repeat="i in lists"][${i+1}]//td/a[@ng-bind="i.wxUserInfos.real_name"]
     \    ${手机}    Get Text    //tr[@ng-repeat="i in lists"][${i+1}]//td[@ng-bind="i.wxUserInfos.bind_mobile"]
@@ -824,6 +895,45 @@ Resource          ../../Resource/API.robot
     \    Should Be Equal As Strings    ${订单号}    ${订单号}
     \    Should Be Equal As Numbers    ${订单金额}    ${订单金额_API}
     \    Should Be Equal As Numbers    ${实付金额}    ${实付金额_API}
+
+搜索时间
+
+会员_Debug
+    ####进入页面
+    点击链接菜单    微会员
+    ${sub}    Set Variable    会员列表
+    点击链接菜单    ${sub}
+    Wait Until Page Contains Element    //*[@id="breadcrumbs"]/ul/li[contains(text(),"会员列表")]
+    Sleep    1
+    ####参数
+    ${时间}    参数_时间
+    ${开始时间}    Get Time    \    ${时间[0]}
+    ${结束时间}    Get Time    \    ${时间[1]}
+    ####API查询
+    ${errmsg}    API.会员列表_条件查询    start=${时间[0]}    end=${时间[1]}
+    ${data}    Get From Dictionary    ${errmsg}    data
+    ${page}    Get From Dictionary    ${errmsg}    page
+    ${结果数量}    Get From Dictionary    ${page}    total_count
+    ####页面查询
+    Click Link    高级搜索
+    Wait Until Element Is Visible    //a[text()="返回精简搜索"]
+    Sleep    1
+    输入时间    ${开始时间}    ${结束时间}
+    Sleep    3
+    Click Element    //button[@ng-click="seniorSearch()" and text()="搜索"]
+    Wait Until Element Is Visible    //button[starts-with(@ng-click,"singleClear") and contains(text(),"${list[${rand}].phone}")]
+    Element Should Be Visible    //a[text()="高级搜索"]
+    Click Element    //button[starts-with(@ng-click,"singleClear") and contains(text(),"${list[${rand}].phone}")]
+    Sleep    2
+    ####结果校验
+    ${els_now}    Get Matching Xpath Count    //tr[@ng-repeat="i in lists track by $index"]
+    Should Be True    ${els_now}==${els}
+    #回到搜索界面
+    Click Link    高级搜索
+    Wait Until Element Is Visible    //a[text()="返回精简搜索"]
+    Sleep    1
+    #
+    Pass Execution    Test
 
 *** Keywords ***
 分页工具条校验
@@ -903,3 +1013,336 @@ Resource          ../../Resource/API.robot
     Sleep    1
     Click Link    //div[@class="modal-footer"]/a[@ng-click="btnIntegral()" and text()="确定"]
     弹出信息校验
+
+类型为消费时事件校验
+    [Arguments]    ${i}    ${事件_API}
+    ${事件_订单号}    Get Text    //tr[@ng-repeat="item in list"][${i+1}]//span/a[@ng-bind="item.source.name"]
+    #${事件_名称}    Get Text    //tr[@ng-repeat="item in list"][${i+1}]//span/span[starts-with(@ng-bind,"item.source.type")]
+    Should Match Regexp    ${事件_API}    ${事件_订单号}
+
+搜索_姓名
+    [Arguments]    ${list}    ${rand}
+    ##按姓名
+    Input Text    //input[@placeholder="搜索会员姓名" and @ng-model="real_name"]    ${list[${rand}].name}
+    Sleep    1
+    Click Element    //button[@ng-click="seniorSearch()" and text()="搜索"]
+    Wait Until Element Is Visible    //button[starts-with(@ng-click,"singleClear") and contains(text(),"${list[${rand}].name}")]
+    Element Should Be Visible    //a[text()="高级搜索"]
+    Sleep    1
+    ${els}    Get Matching Xpath Count    //tr[@ng-repeat="i in lists track by $index"]
+    Should Be Equal As Integers    ${els}    1
+    Element Should Contain    //tr[@ng-repeat="i in lists track by $index"]    ${list[${rand}].name}
+    Element Should Contain    //tr[@ng-repeat="i in lists track by $index"]    ${list[${rand}].phone}
+    Element Should Contain    //tr[@ng-repeat="i in lists track by $index"]    ${list[${rand}].point}
+    #---
+    Click Element    //button[starts-with(@ng-click,"singleClear") and contains(text(),"${list[${rand}].name}")]
+    Sleep    2
+    #Element Should Not Be Visible    //button[starts-with(@ng-click,"singleClear") and contains(text(),"${list[${rand}].name}")]
+    ${els}    Get Matching Xpath Count    //tr[@ng-repeat="i in lists track by $index"]
+    Should Be True    ${els}==${els_page}
+    #回到搜索界面
+    Click Link    高级搜索
+    Wait Until Element Is Visible    //a[text()="返回精简搜索"]
+    Sleep    1
+
+选择开卡时间
+    ##选择开卡时间
+    #选择开始时间
+    Click Element    id=start_time
+    Sleep    1
+    Select Frame    xpath=//iframe[@hidefocus='true']
+    Click Element    xpath=//*[@id="dpTitle"]/div[2]/a
+    Sleep    1
+    ${class}    Get Element Attribute    //body/div/div[3]/table/tbody/tr[3]/td[2]@class
+    Click Element    //body/div/div[3]/table/tbody/tr[3]/td[2]
+    Sleep    1
+    Run Keyword If    '${class}'!='Wselday'    Click Element    id=dpOkInput
+    Sleep    1
+    Unselect Frame
+    #选择结束时间
+    Click Element    id=end_time
+    Sleep    1
+    Select Frame    xpath=//iframe[@hidefocus='true']
+    #Click Element    xpath=//*[@id="dpTitle"]/div[6]/a
+    Sleep    1
+    Click Element    id=dpOkInput
+    Unselect Frame
+
+输入姓名
+    ##姓名参数
+    ${errmsg}    API.会员列表
+    ${data}    Get From Dictionary    ${errmsg}    data
+    ${len}    Get Length    ${data}
+    ${rand}    Evaluate    random.randint(0,${len-1})    random
+    ${data_rand}    Get From List    ${data}    ${rand}
+    ${wxUserInfos}    Get From Dictionary    ${data_rand}    wxUserInfos
+    ${姓名}    Get From Dictionary    ${wxUserInfos}    real_name
+    ${手机_suit}    Get From Dictionary    ${wxUserInfos}    bind_mobile
+    Set Suite Variable    ${手机_suit}
+    ##输入
+    Input Text    //input[@placeholder="搜索会员姓名" and @ng-model="real_name"]    ${姓名}
+    Sleep    1
+    [Return]    ${姓名}
+
+输入手机
+    [Arguments]    ${flag_姓名}
+    ${flag}    Generate Random String    1    1
+    ##手机参数
+    ${errmsg}    API.会员列表
+    ${data}    Get From Dictionary    ${errmsg}    data
+    ${len}    Get Length    ${data}
+    ${rand}    Evaluate    random.randint(0,${len-1})    random
+    ${data_rand}    Get From List    ${data}    ${rand}
+    ${wxUserInfos}    Get From Dictionary    ${data_rand}    wxUserInfos
+    ${手机}    Get From Dictionary    ${wxUserInfos}    bind_mobile
+    ${手机}    Set Variable If    ${flag_姓名}==1 and ${flag}==1    ${手机_suit}    ${手机}
+    ##输入
+    Input Text    //input[@placeholder="手机号" and @ng-model="phone_on"]    ${手机}
+    Sleep    1
+    [Return]    ${手机}
+
+输入时间
+    ##时间参数
+    ${time_now}    Get Time    epoch
+    ${time_120day}    Evaluate    3600*24*120
+    ${time_3day}    Evaluate    3600*24*3
+    ${time1}    Evaluate    ${time_now}-${time_120day}
+    ${time2}    Evaluate    ${time_now}-${time_3day}
+    ${开始时间_stamp}    Evaluate    random.randint(${time1},${time2})    random
+    ${结束时间_stamp}    Set Variable    ${time_now}
+    ${开始时间}    Get Time    \    ${开始时间_stamp}
+    ${结束时间}    Get Time    \    ${结束时间_stamp}
+    ##输入时间
+    Input Text    id=start_time    ${开始时间}
+    Sleep    1
+    Input Text    id=end_time    ${结束时间}
+    Sleep    1
+    Press Key    id=start_time    \\27
+    Sleep    1
+    [Return]    ${开始时间_stamp}    ${结束时间_stamp}
+
+输入会员卡状态
+    ##参数
+    ${n}    Evaluate    random.randint(1,3)    random
+    ${quelist}    Create List    ${1}    ${3}    ${2}
+    ${会员卡状态}    Evaluate    random.sample(${quelist},${n})    random
+    ${len}    Get Length    ${会员卡状态}
+    ${dict}    Create Dictionary    1=正常    3=未绑定    2=冻结
+    ##勾选状态
+    : FOR    ${i}    IN    @{会员卡状态}
+    \    Click Element    xpath=(//label[@ng-repeat="i in cardType"]/input[@ng-model="i.type" and @type="checkbox"])[${i}]
+    \    Sleep    0.6
+    Sleep    3
+    [Return]    ${会员卡状态}
+
+会员列表API查询
+    [Arguments]    ${args}
+    [Documentation]    {"_page":1,"_page_size":20,"keyword":"","real_name":"${name}","create_start":"${start}","create_end":"${end}","bind_mobile":"${mobile}","status":${status},"source":${source},"level":${level},"member_group_id":${group_id},"tags":${tags},"sex":${sex},"city_id":[],"city":[],"shop_sub_id":""}
+    ${flag}    Set Variable    ${0}
+    ###
+    ${status}    Set Variable    [2]
+    ${name}    Set Variable    ${EMPTY}
+    ###查询API
+    ${errmsg}    API.会员列表_条件查询2    ${args}
+    Log    API查询完毕，读取数据...
+    ${data}    Get From Dictionary    ${errmsg}    data
+    ${page}    Get From Dictionary    ${errmsg}    page
+    ${结果数量}    Get From Dictionary    ${page}    total_count
+    ###
+    ${data}    Get From Dictionary    ${errmsg}    data
+    ${len}    Get Length    ${data}
+    ${rand}    Run keyword If    ${len}!=0 and ${len}<=10    Evaluate    random.randint(0,${len-1})    random
+    ...    ELSE    Evaluate    random.randint(0,10)    random
+    ${flag}    Set Variable If    ${len}!=0    ${1}    ${0}
+    [Return]    ${flag}    ${errmsg}
+
+会员列表API查询_debug
+    [Arguments]    ${args}
+    [Documentation]    {"_page":1,"_page_size":20,"keyword":"","real_name":"${name}","create_start":"${start}","create_end":"${end}","bind_mobile":"${mobile}","status":${status},"source":${source},"level":${level},"member_group_id":${group_id},"tags":${tags},"sex":${sex},"city_id":[],"city":[],"shop_sub_id":""}
+    ###
+    ${status}    Set Variable    [2]
+    ${name}    Set Variable    ${EMPTY}
+    ###查询API
+    #${args}    Set Variable    {"_page":1,"_page_size":20,"real_name":"${name}","status":${status}}
+    #${args}    Set Variable    {"_page":1,"_page_size":20,"keyword":"","real_name":"${name}","create_start":"${start}","create_end":"${end}","bind_mobile":"${mobile}","status":${status},"source":${source},"level":${level},"member_group_id":${group_id},"tags":${tags},"sex":${sex},"city_id":[],"city":[],"shop_sub_id":""}
+    ${errmsg}    API.会员列表_条件查询2    ${args}
+    Log    API查询完毕，读取数据...
+    ${data}    Get From Dictionary    ${errmsg}    data
+    ${page}    Get From Dictionary    ${errmsg}    page
+    ${结果数量}    Get From Dictionary    ${page}    total_count
+    ###
+    ${data}    Get From Dictionary    ${errmsg}    data
+    ${len}    Get Length    ${data}
+    ${rand}    Run keyword If    ${len}!=0 and ${len}<=10    Evaluate    random.randint(0,${len-1})    random
+    ...    ELSE    Evaluate    random.randint(0,10)    random
+    Run Keyword If    ${len}==0    Pass Execution    Test
+    ${data_rand}    Get From List    ${data}    ${rand}
+    ${wxUserInfos}    Get From Dictionary    ${data_rand}    wxUserInfos
+    ${姓名}    Get From Dictionary    ${wxUserInfos}    real_name
+    ${手机}    Get From Dictionary    ${wxUserInfos}    bind_mobile
+
+分页判断
+    [Arguments]    ${总数}
+    Element Should Be Visible    //ul[@total-items="page.total_count"]
+    ${总数_页面}    Get Text    //span[@ng-bind="page.total_count"]
+    Should Be Equal As Strings    ${总数_页面}    ${总数}
+    Log    校验成功！
+
+会员列表API查询_debug2
+    [Arguments]    ${args}
+    [Documentation]    {"_page":1,"_page_size":20,"keyword":"","real_name":"${name}","create_start":"${start}","create_end":"${end}","bind_mobile":"${mobile}","status":${status},"source":${source},"level":${level},"member_group_id":${group_id},"tags":${tags},"sex":${sex},"city_id":[],"city":[],"shop_sub_id":""}
+    ###
+    ${status}    Set Variable    [2]
+    ${name}    Set Variable    ${EMPTY}
+    ###查询API
+    #${args}    Set Variable    {"_page":1,"_page_size":20,"real_name":"${name}","status":${status}}
+    #${args}    Set Variable    {"_page":1,"_page_size":20,"keyword":"","real_name":"${name}","create_start":"${start}","create_end":"${end}","bind_mobile":"${mobile}","status":${status},"source":${source},"level":${level},"member_group_id":${group_id},"tags":${tags},"sex":${sex},"city_id":[],"city":[],"shop_sub_id":""}
+    ${start}
+    ${end}
+    ${status}
+    ${args}    Set Variable    {"_page":1,"_page_size":20,"real_name":"","create_start":"1462282235","create_end":"1472126492","bind_mobile":"","status":[u'1', u'3']}
+    ${errmsg}    API.会员列表_条件查询2    ${args}
+    Log    API查询完毕，读取数据...
+    ${data}    Get From Dictionary    ${errmsg}    data
+    ${page}    Get From Dictionary    ${errmsg}    page
+    ${结果数量}    Get From Dictionary    ${page}    total_count
+    ###
+    ${data}    Get From Dictionary    ${errmsg}    data
+    ${len}    Get Length    ${data}
+    Run Keyword If    ${len}==0    Pass Execution    Test
+    ${data_0}    Get From List    ${data}    0
+    ${wxUserInfos}    Get From Dictionary    ${data_0}    wxUserInfos
+    ${姓名}    Get From Dictionary    ${wxUserInfos}    real_name
+    ${手机}    Get From Dictionary    ${wxUserInfos}    bind_mobile
+
+输入会员来源
+    ##参数
+    ${n}    Evaluate    random.randint(1,2)    random
+    ${quelist}    Create List    ${1}    ${2}
+    ${会员来源}    Evaluate    random.sample(${quelist},${n})    random
+    ${len}    Get Length    ${会员来源}
+    ##勾选来源
+    :FOR    ${i}    IN    @{会员来源}
+    \    Click Element    xpath=(//label[@ng-repeat="i in sourceType"]/input[@ng-model="i.type" and @type="checkbox"])[${i}]
+    \    Sleep    0.6
+    Sleep    3
+    [Return]    ${会员来源}
+
+输入会员等级
+    ##参数
+    ${n}    Evaluate    random.randint(1,4)    random
+    ${quelist}    Create List    ${1}    ${2}    ${3}    ${4}
+    ${会员等级}    Evaluate    random.sample(${quelist},${n})    random
+    ${len}    Get Length    ${会员等级}
+    ##勾选来源
+    Click Element    //button[@id="level" and contains(text(),"选择等级")]
+    Wait Until Element Is Visible    //div[@class="modal-header"]/h4[@class="modal-title" and text()="选择等级"]
+    Sleep    1
+    :FOR    ${i}    IN    @{会员等级}
+    \    Click Element    xpath=(//input[@type="checkbox" and @ng-click="check(grade,false,$event)"])[${i}]
+    \    Sleep    0.6
+    Sleep    2
+    Click Element    //div[@class="modal-footer"]/a[@ng-click="confirm()" and text()="确定"]
+    Sleep    2
+    [Return]    ${会员等级}
+
+输入会员分组
+    ${会员分组_API}    Create List
+    ##参数
+    ${grouplist}    获取会员分组列表    10
+    ${len_org}    Get Length    ${grouplist}
+    ${groupdict}    Create Dictionary
+    :FOR    ${i}    IN RANGE    ${len_org}
+    \    Set To Dictionary    ${groupdict}    '${i+1}'='${grouplist[${i}]}'
+    Log    GroupDict:${groupdict}
+    ##随机数
+    ${n}    Evaluate    random.randint(1,4)    random
+    ${会员分组}    Evaluate    random.sample(range(1,${len_org}),${n})    random
+    ${len}    Get Length    ${会员分组}
+    ##勾选来源
+    Click Element    //button[@id="group" and contains(text(),"分组")]
+    Wait Until Element Is Visible    //div[@class="modal-header"]/h4[@class="modal-title" and text()="分组"]
+    Sleep    1
+    :FOR    ${i}    IN    @{会员分组}
+    \    Click Element    xpath=(//input[@type="checkbox" and @ng-click="check(group,false,$event)"])[${i}]
+    \    Sleep    0.6
+    \    ${value}    Get From Dictionary    ${groupdict}    '${i}'
+    \    ${value}    Evaluate    int(${value})
+    \    Append To List    ${会员分组_API}    ${value}
+    Log    ${会员分组_API}
+    Click Element    //div[@list="groupList"]//div[@class="modal-footer"]/a[@ng-click="confirm()" and text()="确定"]
+    Sleep    2
+    #
+    [Return]    ${会员分组_API}
+
+输入会员标签
+    ${会员标签_API}    Create List
+    ##参数
+    ${tagslist}    获取标签列表    10
+    ${len_org}    Get Length    ${tagslist}
+    ${tagsdict}    Create Dictionary
+    :FOR    ${i}    IN RANGE    ${len_org}
+    \    Set To Dictionary    ${tagsdict}    '${i+1}'='${tagslist[${i}]}'
+    Log    TagsDict:${tagsdict}
+    ##随机数
+    ${n}    Evaluate    random.randint(2,5)    random
+    ${会员标签}    Evaluate    random.sample(range(1,${len_org}),${n})    random
+    ${len}    Get Length    ${会员标签}
+    ##勾选来源
+    Click Element    //button[@id="tag" and contains(text(),"标签")]
+    Wait Until Element Is Visible    //div[@class="modal-header"]/h4[@class="modal-title" and text()="标签"]
+    Sleep    1
+    :FOR    ${i}    IN    @{会员标签}
+    \    Click Element    xpath=(//input[@type="checkbox" and @ng-click="check(tag,false,$event)"])[${i}]
+    \    Sleep    0.6
+    \    ${value}    Get From Dictionary    ${tagsdict}    '${i}'
+    \    ${value}    Evaluate    int(${value})
+    \    Append To List    ${会员标签_API}    ${value}
+    Log    ${会员标签_API}
+    Click Element    //div[@list="tagList"]//div[@class="modal-footer"]/a[@ng-click="confirm()" and text()="确定"]
+    Sleep    2
+    ##
+    [Return]    ${会员标签_API}
+
+输入会员性别
+    ##参数
+    ${n}    Evaluate    random.randint(1,3)    random
+    ${sexlist}    Create List    ${1}    ${2}    ${3}
+    ${会员性别}    Evaluate    random.sample(${sexlist},${n})    random
+    ${len}    Get Length    ${会员性别}
+    ##勾选性别
+    :FOR    ${i}    IN    @{会员性别}
+    \    Click Element    xpath=(//label[@ng-repeat="i in ogenderType"]/input[@type="checkbox" and @ng-model="i.type"])[${i}]
+    \    Sleep    0.6
+    Sleep    1
+    [Return]    ${会员性别}
+
+查询结果校验
+    [Arguments]    ${errmsg}
+    [Tags]    ready
+    ###查询结果校验
+    Log    查询结果数据校验...
+    Log    ${errmsg}
+    ${data}    Get From Dictionary    ${errmsg}    data
+    ${len}    Get Length    ${data}
+    ${els_now}    Get Matching Xpath Count    //tr[@ng-repeat="i in lists track by $index"]
+    Should Be Equal As Integers    ${els_now}    ${len}
+    :FOR    ${i}    IN RANGE    ${len}
+    \    ${data_i}    Get From List    ${data}    ${i}
+    \    ${wxUserInfos}    Get From Dictionary    ${data_i}    wxUserInfos
+    \    ${会员姓名}    Get Text    xpath=(//tr[@ng-repeat="i in lists track by $index"]/td[@ng-bind="i.wxUserInfos.real_name"])[${i+1}]
+    \    ${会员手机}    Get Text    xpath=(//tr[@ng-repeat="i in lists track by $index"]/td[@ng-bind="i.wxUserInfos.bind_mobile"])[${i+1}]
+    \    ${会员姓名_API}    Get From Dictionary    ${wxUserInfos}    real_name
+    \    ${会员手机_API}    Get From Dictionary    ${wxUserInfos}    bind_mobile
+    \    Should Be Equal As Strings    ${会员姓名}    ${会员姓名_API}
+    \    Should Be Equal As Integers    ${会员手机}    ${会员手机_API}
+    Log    结果校验成功...
+
+随机打印一条数据
+    [Arguments]    ${errmsg}    ${rand}
+    ${data}    Get From Dictionary    ${errmsg}    data
+    ${data_rand}    Get From List    ${data}    ${rand}
+    ${wxUserInfos}    Get From Dictionary    ${data_rand}    wxUserInfos
+    ${姓名}    Get From Dictionary    ${wxUserInfos}    real_name
+    ${手机}    Get From Dictionary    ${wxUserInfos}    bind_mobile
+    #
