@@ -5,7 +5,6 @@ Resource          功能菜单.robot
 Library           String
 Library           Screenshot
 Library           OperatingSystem
-Resource          API.robot
 
 *** Keywords ***
 登录
@@ -301,7 +300,10 @@ Resource          API.robot
     ${count}    Get Matching Xpath Count    xpath=${path}/option    #获取总数
     log    ${count}
     sleep    0.5
-    ${j}    Evaluate    random.randint(1,${count})    random
+    #${j}    Evaluate    random.randint(1,${count})    random
+    : FOR    ${i}    IN RANGE    10
+    \    ${j}    Evaluate    random.randint(1,${count})    random
+    \    Run Keyword If    ${j}!=1    Exit For Loop
     Run Keyword If    ${count}>1    Click Element    xpath=${path}/option[${j}]
     ...    ELSE    Click Element    xpath=${path}/option[1]
     ${title}    Get Text    xpath=${path}/option[${j}]
@@ -448,6 +450,130 @@ Radio_选择未选中的
     ${message}    Wait Until Keyword Succeeds    ${retry}x    ${time}s    Get Alert Message
     [Return]    ${message}
 
+随机数字2
+    [Arguments]    ${XX}=none    ${len}=4
+    ${num}    Generate Random String    ${len}    123456789
+    ${randnum}    Set Variable    ${XX}${num}
+    [Return]    ${randnum}
+
+门店/员工策略码时间选择
+    #门店/员工策略码时间选择
+    #开始时间选择
+    Click Element    id=start_time
+    sleep    1
+    select frame    xpath=/html/body/div[6]/iframe[@hidefocus='true']    #定位
+    #sleep    1
+    #input text    xpath=//*[@id="dpTime"]/table/tbody/tr[1]/td[1]/input[3]    59    #输入时间的分为59分
+    #sleep    1
+    #input text    xpath=//*[@id="dpTime"]/table/tbody/tr[1]/td[1]/input[5]    59    #输入时间的秒为59分
+    #sleep    1
+    click element    id=dpOkInput    #点击确定
+    Unselect Frame
+    sleep    1
+    #结束时间
+    click element    id=end_time
+    sleep    1
+    select frame    xpath=/html/body/div[6]/iframe[@hidefocus='true']
+    sleep    1
+    click element    //*[@id="dpTitle"]/div[6]/a    #点击下一月
+    sleep    1
+    click element    id=dpOkInput    #点击确定
+    Unselect Frame
+
+修改门店/员工码时间
+    ######
+    #开始时间选择
+    Click Element    id=start_time
+    sleep    1
+    select frame    xpath=/html/body/div[6]/iframe[@hidefocus='true']    #定位
+    sleep    1
+    input text    //*[@id="dpTime"]/table/tbody/tr[1]/td[1]/input[1]    23
+    input text    xpath=//*[@id="dpTime"]/table/tbody/tr[1]/td[1]/input[3]    59    #输入时间的分为59分
+    sleep    1
+    input text    xpath=//*[@id="dpTime"]/table/tbody/tr[1]/td[1]/input[5]    59    #输入时间的秒为59分
+    sleep    1
+    click element    id=dpOkInput    #点击确定
+    Unselect Frame
+    ${star_time}    Get text    id=start_time
+    Set Suite Variable    ${star_time}
+    sleep    1
+    #结束时间
+    click element    id=end_time
+    sleep    1
+    select frame    xpath=/html/body/div[6]/iframe[@hidefocus='true']
+    sleep    1
+    click element    //*[@id="dpTitle"]/div[6]/a    #点击下一月
+    click element    //*[@id="dpTitle"]/div[6]/a
+    sleep    1
+    click element    id=dpOkInput    #点击确定
+    Unselect Frame
+    ${end_time}    Get text    id=end_time
+    Set Suite Variable    ${end_time}
+
+随机金额（小数）
+    [Arguments]    ${len}
+    ${num1}    Generate Random String    ${len}    123456789
+    ${num2}    Generate Random String    2    0123456789
+    ${num3}    Set Variable    ${num1}.${num2}
+    [Return]    ${num3}
+
+微信/商圈分类非一级
+    [Arguments]    ${路径}
+    sleep    1
+    Click Element    ${路径}
+    ${总数}    Get Matching Xpath Count    xpath=${路径}/option    #统计微信店铺分类总数
+    log    ${总数}
+    Run Keyword If    '${总数}'=='1'    Click Element    xpath=//*[@id="wxShopThirdId"]/option[${总数}]
+    ...    ELSE    随机选择微信分类/商圈    ${路径}
+    Set Suite Variable    ${总数}
+
+随机选择微信分类/商圈
+    [Arguments]    ${统计路径}
+    sleep    1
+    Click Element    xpath=${统计路径}
+    ${分类总数}    Get Matching Xpath Count    xpath=${统计路径}/option    #统计微信店铺分类总数
+    ${随机分类}    Evaluate    random.randint(2,${分类总数})    random    #随机某个微信分类
+    sleep    1
+    Click Element    xpath=${统计路径}/option[${随机分类}]
+    Set Suite Variable    ${随机分类}
+
+获取列表总数
+    sleep    0.5
+    ${显示属性值}    Set Variable    ng-paginate ng-isolate-scope
+    ${获取属性值}    Get Element Attribute    xpath=//div[@page="page"]@class    #获取分页栏的属性
+    log    ${获取属性值}
+    ${单页数据统计}    Get Matching Xpath Count    xpath=//table/tbody/tr[contains(@ng-repeat,"list")]    #获取首页的数量
+    #${单页数据统计加1}    Evaluate    int(${单页数据统计}+1)
+    ${总数}=    Run Keyword If    '${获取属性值}'=='${显示属性值}'    Get Text    xpath=//div[@page="page"]/ul[2]/li[3]/span/span
+    ...    ELSE    fail    ${单页数据统计}
+    sleep    0.5
+    [Return]    ${总数}
+
+随机获取会员微信id
+    ####进入页面
+    点击链接菜单    微会员
+    ${sub}    Set Variable    会员列表
+    点击链接菜单    ${sub}
+    Wait Until Page Contains Element    //*[@id="breadcrumbs"]/ul/li[contains(text(),"会员列表")]
+    Sleep    1
+    ####会员列表-查看会员详情
+    ${当前页数量}    Get Matching Xpath Count    //*[@id="integralTable"]/tbody/tr[@ng-repeat="i in lists track by $index"]
+    ${rand}    Evaluate    random.randint(1,${当前页数量})    random
+    ##获取ID
+    ${href}    Get Element Attribute    //*[@id="integralTable"]/tbody/tr[${rand}]/td/div[@class="action-buttons"]/a[@title="查看"]@href
+    ${match}    Get Regexp Matches    ${href}    (?<=\\bu_id=)\\w+\\b
+    ${u_id}    Set Variable    ${match[0]}
+    Sleep    0.5
+    [Return]    ${u_id}
+
+微信手机端登录(pc版)
+    ${u_id}    随机获取会员微信id
+    ###pc端模拟手机前端登录
+    #Open Browser    ${URL_BETA_WX}/weishanghuzhushou/oauth/testing?id=${u_id}    chrome
+    Open Browser    ${URL_BETA_WX}/weishanghuzhushou/oauth/testing?id=13723226    chrome
+    Maximize Browser Window
+    sleep    1
+
 获取会员分组列表
     [Arguments]    ${amount}=all
     ${errmsg}    API.会员_分组列表
@@ -458,9 +584,8 @@ Radio_选择未选中的
     ###
     ${data}    Get From Dictionary    ${errmsg}    data
     ${len}    Get Length    ${data}
-    ${len}    Set Variable If    '${amount}'=='all'    ${len}
-    ...    '${amount}'!='all' and ${len}>${amount}    ${amount}    ${len}
-    :FOR    ${i}    IN RANGE    ${len}
+    ${len}    Set Variable If    '${amount}'=='all'    ${len}    '${amount}'!='all' and ${len}>${amount}    ${amount}    ${len}
+    : FOR    ${i}    IN RANGE    ${len}
     \    ${data_i}    Get From List    ${data}    ${i}
     \    ${id}    Get From Dictionary    ${data_i}    id
     \    ${name}    Get From Dictionary    ${data_i}    name
@@ -478,9 +603,8 @@ Radio_选择未选中的
     ###
     ${data}    Get From Dictionary    ${errmsg}    data
     ${len}    Get Length    ${data}
-    ${len}    Set Variable If    '${amount}'=='all'    ${len}
-    ...    '${amount}'!='all' and ${len}>${amount}    ${amount}    ${len}
-    :FOR    ${i}    IN RANGE    ${len}
+    ${len}    Set Variable If    '${amount}'=='all'    ${len}    '${amount}'!='all' and ${len}>${amount}    ${amount}    ${len}
+    : FOR    ${i}    IN RANGE    ${len}
     \    ${data_i}    Get From List    ${data}    ${i}
     \    ${id}    Get From Dictionary    ${data_i}    id
     \    ${name}    Get From Dictionary    ${data_i}    name
@@ -488,3 +612,36 @@ Radio_选择未选中的
     Log    ${标签列表}
     #
     [Return]    ${标签列表}
+
+分页工具条校验
+    [Arguments]    ${总数}
+    Element Should Be Visible    //ul[@total-items="page.total_count"]
+    ${总数_页面}    Get Text    //span[@ng-bind="page.total_count"]
+    Should Be Equal As Strings    ${总数_页面}    ${总数}
+    Log    校验成功！
+
+随机URL
+    ${后缀}    Create List    com    net    cn    com.cn
+    ${后缀Rand}    Generate Random String    1    0123
+    ${域名}    Generate Random String    8    [LOWER]
+    ${URL}    Set Variable    http://www.${域名}.${后缀[${后缀Rand}]}
+    [Return]    ${URL}
+
+微信模拟页面登录
+    [Arguments]    ${客户ID}
+    ###模拟微信前端页面登录
+    Open Browser    ${URL_BETA_WX}/weishanghuzhushou/oauth/testing?id=${客户ID}    chrome
+    Maximize Browser Window
+    Set Selenium Timeout    20
+    sleep    1
+
+随机价格
+    [Documentation]    说明：随机生成0.01~100之间的价格
+    ${price}    Evaluate    round(random.uniform(0.01,100),2)    random
+    [Return]    ${price}
+
+随机编码
+    [Arguments]    ${前缀}=${EMPTY}    ${后缀}=${EMPTY}    ${len}=2    # ${len}为动态值长度，不含前后缀
+    ###
+    ${随机码}    Generate Random String    ${len}    123456789
+    ${编码}    Set Variable    ${前缀}${随机码}${后缀}

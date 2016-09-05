@@ -2,16 +2,19 @@
 import requests
 import json
 import Cookie,os
-import settings as set
+#import settings as set
+from settings import config
 
-ws = set.Wsh()
+cfg = config()
+
+#ws = set.Wsh()
 
 
 class Product(object):
-    baseurl = ws.baseurl
-    proxylist = {'http' : 'http://127.0.0.1:8888'}
-    headers = ws.headers
-    headers_json = ws.headers_json
+    baseurl = cfg.URL
+    proxylist = cfg.PROXY
+    headers = cfg.HEADERS
+    headers_json = cfg.HEADERS_JSON
 
     ######### 商品 ##########
     def get_product_list(self,sessionid):

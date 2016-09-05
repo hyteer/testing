@@ -3,17 +3,22 @@ import requests
 import json
 import Cookie,os
 from urllib import urlencode
-import settings as set
 import re
+from settings import config
 
-ws = set.Wsh()
+cfg = config()
+#ws = set.Wsh()
 
 defaultapp = 'android'
 
 class Shop(object):
-    baseurl = ws.baseurl
-    proxylist = {'http' : 'http://127.0.0.1:8888'}
-    headers = ws.headers
+    capt = cfg.CAPTCHA
+    user = cfg.USER
+    passwd = cfg.PASSWORD
+    baseurl = cfg.URL
+    proxylist = cfg.PROXY
+    headers = cfg.HEADERS
+    headers_json = cfg.HEADERS_JSON
 
 
     def __init__(self):

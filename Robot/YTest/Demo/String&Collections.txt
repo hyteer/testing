@@ -71,7 +71,7 @@ Dict&Num
     ${dtest}    Get From Dictionary    ${dict}    2
     #
     ${dict2}    Create Dictionary
-    :FOR    ${i}    IN RANGE    3
+    : FOR    ${i}    IN RANGE    3
     \    Set To Dictionary    ${dict2}    '${i+1}'='test${i+1}'
     Log    ${dict2}
     Pass Execution    Test
@@ -87,7 +87,7 @@ DictComplicate
     ${len_list}    Get Length    ${grouplist}
     Log    ${grouplist[2]}
     ${groupdict}    Create Dictionary
-    :FOR    ${i}    IN RANGE    ${len_list}
+    : FOR    ${i}    IN RANGE    ${len_list}
     \    ${typetest}    Evaluate    type(${i})
     \    Set To Dictionary    ${groupdict}    '${i+1}'='${grouplist[${i}]}'    #"${i+1}=${grouplist[${i}]}"
     Log    ${groupdict}
@@ -96,9 +96,15 @@ DictComplicate
     ${会员分组}    Evaluate    random.sample(range(1,${len_list}),${n})    random
     ${len}    Get Length    ${会员分组}
     ${valuelist}    Create List
-    :FOR    ${i}    IN    @{会员分组}
+    : FOR    ${i}    IN    @{会员分组}
     \    ${value}    Get From Dictionary    ${groupdict}    '${i}'
     \    ${value}    Evaluate    int(${value})
     \    Append To List    ${valuelist}    ${value}
     Log    ValueList:${valuelist}
     #
+
+Dict_Temp
+    ${菜单名}    Set Variable    惊喜
+    ${底部菜单}    Create Dictionary    首页=icon-home    列表=icon-goods    购物车=icon-cart    惊喜=icon-surprise    我=icon-user
+    ${菜单}    Get From Dictionary    ${底部菜单}    ${菜单名}
+    Log    菜单：${菜单}

@@ -2,15 +2,22 @@
 import requests
 import json
 import Cookie,os
-import settings as set
+#import settings as set
+from settings import config
 
-ws = set.Wsh()
+cfg = config()
+
+#ws = set.Wsh()
 
 
 class Marketing(object):
-    baseurl = ws.baseurl
-    proxylist = {'http' : 'http://127.0.0.1:8888'}
-    headers = ws.headers
+    capt = cfg.CAPTCHA
+    user = cfg.USER
+    passwd = cfg.PASSWORD
+    baseurl = cfg.URL
+    proxylist = cfg.PROXY
+    headers = cfg.HEADERS
+    headers_json = cfg.HEADERS_JSON
 
     ######### 销售活动 ##########
     def get_group_actlist(self,sessionid):

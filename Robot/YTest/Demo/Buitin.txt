@@ -2,6 +2,7 @@
 Library           random
 Library           Ytools
 Library           Collections
+Library           String
 
 *** Variables ***
 ${var}            Test var
@@ -109,3 +110,17 @@ Get_time
     ${time}    Get Time    \    1470987250
     #当前
     ${time}    Get Time
+
+random_float
+    ${num}    Evaluate    round(random.uniform(0.01,100),2)    random
+
+rand_code
+    ${前缀}    Set Variable    C0000    #${EMPTY}
+    ${后缀}    Set Variable    ${EMPTY}
+    ${随机长度}    Set Variable    ${2}
+    ###
+    ${前缀长度}    Get Length    ${前缀}
+    ${后缀长度}    Get Length    ${后缀}
+    #${随机长度}    Evaluate    ${长度}-(${prefix_len}+${sufix_len})
+    ${随机码}    Generate Random String    ${随机长度}    123456789
+    ${编码}    Set Variable    ${前缀}${随机码}${后缀}

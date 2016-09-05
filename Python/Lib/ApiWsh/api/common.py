@@ -5,17 +5,20 @@ import Cookie,os
 from urllib import urlencode
 from utils import CommonUtils
 import settings as set
-ws = set.Wsh()
+from settings import config
+
+cfg = config()
+#ws = set.Wsh()
 
 
 class Common(object):
-    baseurl = ws.baseurl
-    proxylist = {'http' : 'http://127.0.0.1:8888'}
-    headers = ws.headers
-    capt = ws.captcha
-    user = ws.user
-    passwd = ws.password
-
+    capt = cfg.CAPTCHA
+    user = cfg.USER
+    passwd = cfg.PASSWORD
+    baseurl = cfg.URL
+    proxylist = cfg.PROXY
+    headers = cfg.HEADERS
+    headers_json = cfg.HEADERS_JSON
 
 
     def __init__(self):

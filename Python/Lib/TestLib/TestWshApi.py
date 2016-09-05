@@ -3,7 +3,7 @@
 from Lib.ApiWsh import api
 from Lib.ApiWsh.api import settings
 
-set = settings.Maisha
+#set = settings.Maisha
 
 ############ Wsh ###########
 cm = api.Common()
@@ -13,11 +13,11 @@ pd = api.Product()
 mb = api.Member()
 
 # get_cookie
-#sid = cm.wsh_get_cookie()
-wxcookies = cm.wsh_weixin_cookie()
+sid = cm.wsh_get_cookie()
+#wxcookies = cm.wsh_weixin_cookie()
 
 # Login 登录
-#resptext = cm.wsh_login(sid)
+resptext = cm.wsh_login(sid)
 
 '''
 # actlist   获取活动列表
@@ -44,10 +44,14 @@ pd.get_order_detail(sid)
 pd.get_product_detail(sid)
 '''
 #### Members ####
+mb.wsh_member_list(sid)
+mb.wsh_members_get_all_tags(sid)
+mb.wsh_member_detail_ajax(sid)
 
+"""
 #pd.order_test(wxcookies)
 pd.order_add_ajax(wxcookies)
-"""
+
 mb.wsh_member_list(sid)
 mb.wsh_members_get_all_tags(sid)
 mb.wsh_member_detail_ajax(sid)
