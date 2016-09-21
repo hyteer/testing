@@ -9,25 +9,6 @@ Resource          Lib/配置参数.robot
 Resource          ../Resource/常用操作.robot
 
 *** Test Cases ***
-获取会员列表
-    [Tags]    ready
-    ${resp}    Post Request    wsh    /members/list-ajax
-    ${预期返回码}    Set Variable    0
-    Log    Response:${resp.content}
-    ${str}    Get Substring    ${resp.content}    3
-    ${会员列表响应}    loads    ${str}
-    ${返回码}    Get From Dictionary    ${会员列表响应}    errcode
-    Log    errcode is:${返回码}
-    Should Be Equal As Strings    ${返回码}    ${预期返回码}
-    ${返回码信息}    Get From Dictionary    ${会员列表响应}    errmsg
-    ${列表数据}    Get From Dictionary    ${返回码信息}    data
-    ${会员列表数量}    Get Length    ${列表数据}
-    ${随机选择一个会员}    Evaluate    random.randint(1,${会员列表数量})    random
-    ${获取会员内容}    Get From List    ${列表数据}    ${随机选择一个会员}
-    ${获取微信内容信息}    Get From Dictionary    ${获取会员内容}    wxUserInfos
-    ${获取用户ID}    Get From Dictionary    ${获取微信内容信息}    id
-    log    ${获取用户ID}
-
 创建普通订单
     [Tags]
     创建普通订单

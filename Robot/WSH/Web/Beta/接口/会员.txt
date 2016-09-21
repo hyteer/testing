@@ -109,7 +109,7 @@ Library           Collections
 会员_详情
     [Tags]    ready
     &{headers}    Create Dictionary    Accept=application/json, text/plain, */*    Content-Type=application/json
-    ${jsonstr}    Convert To String    {"id":261}
+    ${jsonstr}    Convert To String    {"id":255}
     ${resp}    Post Request    wsh    /members/detail-ajax    data=${jsonstr}    headers=${headers}
     Log    Response:${resp.content}
     ${str}    Get Substring    ${resp.content}    3

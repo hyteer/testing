@@ -1,5 +1,6 @@
 *** Settings ***
 Library           String
+Library           Collections
 
 *** Test Cases ***
 first
@@ -15,3 +16,18 @@ yt
     Log    ${str}
     ${matches}    Get Regexp Matches    ${str}    \\d
     ${mat2}    Get Regexp Matches    ${url}    (?<=\\bid=)\\w+\\b
+
+OrgPythonRegexp
+    ${str}    Set Variable    -Ewmsls-eWMMDn-
+    ${match}    Evaluate    re.findall(r'Ewm', '${str}', flags=re.IGNORECASE)    re
+
+RF
+    ${str}    Set Variable    -Ewmsls-eWMMDn-
+    Get Lines Containing String    ${str}    Ewm    True
+    ${list}    Create List    sfs ewm    eWMMDn-
+    ${match_count}    Get Match Count    ${list}    regexp=\\beWM    case_insensitive=True
+
+Float
+    ${num}    Set Variable    ${79.339}
+    ${match}    Evaluate    re.findall(r'\\d*\\d\\.\\d{2}','${num}')    re
+    ${price}    Evaluate    float(${match[0]})

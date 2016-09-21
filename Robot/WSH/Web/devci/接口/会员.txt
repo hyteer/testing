@@ -1,8 +1,8 @@
 *** Settings ***
 Suite Setup       API登录
 Library           RequestsLibrary
-Resource          Lib/通用操作.robot
-Resource          Lib/配置参数.robot
+Resource          ../Resource/API.robot
+Resource          ../Resource/配置参数.robot
 Library           String
 Library           json
 Library           Collections
@@ -48,7 +48,7 @@ Library           Collections
     ${js}    loads    ${str}
     ${errcode}    Get From Dictionary    ${js}    errcode
     Run Keyword If    ${errcode}!=0    Fail    接口返回异常！
-    ###
+    ###校验
     ${data}    Get From Dictionary    ${js}    errmsg
     ${num}    Get Length    ${data}
     ###生成List

@@ -645,3 +645,4 @@ Radio_选择未选中的
     ###
     ${随机码}    Generate Random String    ${len}    123456789
     ${编码}    Set Variable    ${前缀}${随机码}${后缀}
+    [Return]    ${编码}

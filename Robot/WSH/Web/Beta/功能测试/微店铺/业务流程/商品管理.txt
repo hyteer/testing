@@ -9,7 +9,7 @@ Resource          ../../../Resource/配置参数.robot
 Resource          ../../../Resource/API.robot
 
 *** Test Cases ***
-添加商品-简单
+添加商品_简单
     [Documentation]    添加商品的简单冒烟用例
     ####进入页面
     点击链接菜单    微店铺
@@ -44,7 +44,7 @@ Resource          ../../../Resource/API.robot
     ${n}    Evaluate    random.randint(1,${规格数量})    random
     ${随机选取的规格}    Evaluate    random.sample(range(1,${规格数量}),${n})    random
     ${len}    Get Length    ${随机选取的规格}
-    :FOR    ${i}    IN    @{随机选取的规格}
+    : FOR    ${i}    IN    @{随机选取的规格}
     \    Log    规格：${i}
     \    Click Element    xpath=(//input[@ng-model="lis.ischoose"])[${i}]
     \    Sleep    0.8
@@ -53,6 +53,8 @@ Resource          ../../../Resource/API.robot
     输入商品规格
     Sleep    3
     #
+
+添加商品_API
 
 *** Keywords ***
 输入商品规格

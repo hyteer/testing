@@ -15,7 +15,7 @@ Resource          ../Resource/API.robot
     ${str}    Get Substring    ${resp.content}    3
     ${js}    loads    ${str}
     ${errcode}    Get From Dictionary    ${js}    errcode
-    Log    errcode is:${errcode}
+    Run Keyword If    ${errcode}!=0    Fail    接口返回异常！
     Log    Resp:${resp.content}
 
 获取商品详细信息

@@ -108,3 +108,7 @@ Dict_Temp
     ${底部菜单}    Create Dictionary    首页=icon-home    列表=icon-goods    购物车=icon-cart    惊喜=icon-surprise    我=icon-user
     ${菜单}    Get From Dictionary    ${底部菜单}    ${菜单名}
     Log    菜单：${菜单}
+
+list2
+    &{data}=    Create Dictionary    products[0][id]=265190    products[0][sku_id]=1098428    products[0][num]=1    pickup_type=1
+    Log    ${data}

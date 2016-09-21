@@ -4,6 +4,9 @@ Library           String
 Library           json
 Library           Collections
 Resource          ../../Resource/API.robot
+Library           String
+Resource          ../../Resource/常用操作.robot
+Resource          ../../Resource/API常用操作.robot
 
 *** Variables ***
 @{会员卡状态}          1    2    3
@@ -183,7 +186,7 @@ Resource          ../../Resource/API.robot
     ${data}    Get From Dictionary    ${errmsg}    data
     ${len}    Get Length    ${data}
     ${Agents_count}    Set Variable    ${0}
-    :FOR    ${i}    IN RANGE    ${len}
+    : FOR    ${i}    IN RANGE    ${len}
     \    ${data_i}    Get From List    ${data}    ${i}
     \    ${shopInfo}    Get From Dictionary    ${data_i}    shopInfo
     \    ${flag}    Run Keyword And Return Status    Get From Dictionary    ${data_i}    shopAgents
@@ -197,6 +200,69 @@ Resource          ../../Resource/API.robot
     \    ${shop_sub_id }    Run Keyword If    ${flag2}==True    Get From Dictionary    ${shopInfo}    shop_sub_id
     \    ...    ELSE    Set Variable    ${EMPTY}
     #
+
+添加商品
+    ${产品名称}    随机字符    【YT商品】    12
+    ${价格}    随机价格
+    ${销量}    Evaluate    random.randint(10,10000)    random
+    ${库存}    Evaluate    random.randint(100,5000)    random
+    ${条件码1}    随机数字    8
+    ${条件码2}    随机数字    8
+    ###
+    ${args}    Set Variable    {"productInfo":{"detail_pic":"504883,504865,","detail":"<p>YT的测试商品介绍。。。</p>"},"product":{"product_type":1,"name":"${产品名称}","sales":"${销量}","covers_id":504883,"quota":"3","sort":"0","sale_scope":"1","product_category_id":33694,"product_category_path":"/33691/33694/","status":2,"postage_fee_type":0,"product_kind_ids":"205477;","show_sale_num":2,"prod_weight":"200"},"shareMessage":{"desc":"优惠多多,欢迎选购","title":"YT测试商品0905","file_cdn_path":"http://imgcache.vikduo.com/static/2a32cbf5f166995eb5dbfca47e4de0ca.png","pic_id":504883},"kindBody":[{"firstName":"50g","firstRowSpan":1,"firstShow":true,"id":"50g","status":false},{"firstName":"150g","firstRowSpan":1,"firstShow":true,"id":"150g","status":false}],"skus":[{"status":1,"reserves":${库存},"market_price":"80","retail_price":"${价格}","sku_no":"T000101","barcode":"${条件码1}","sales":0,"name":"YT测试商品0905","kind_value_ids":[846106],"kind_ids":[205477]},{"status":1,"reserves":300,"market_price":"120","retail_price":"99","sku_no":"T000102","barcode":"${条件码2}","sales":0,"name":"YT测试商品0905","kind_value_ids":[846108],"kind_ids":[205477]}]}
+    ${errmsg}    API.商品_添加商品    ${args}
+    #
+
+获取随机商品
+    ${随机商品}    随机获取一个商品
+
+获取特定库存商品
+    ${product}    获取一个特定条件商品
+    ${id}    Get From Dictionary    ${product}    id
+    ${reserves}    Get From Dictionary    ${product}    reserves
+    ${name}    Get From Dictionary    ${product}    name
+
+更新订单设置
+    ${errmsg}    订单_更新订单设置
+
+删除商品
+    ${product}    获取一个特定条件商品    status=2
+    ${id}    Get From Dictionary    ${product}    id
+    ###
+    商品_删除商品    ${id}
+
+获取会员优惠信息
+    ${优惠信息}    获取会员优惠信息    255
+    ${折扣}    Get From Dictionary    ${优惠信息}    折扣
+    ${积分}    Get From Dictionary    ${优惠信息}    积分
+
+创建普通订单
+    ${res}    订单_创建普通订单
+
+参团商品详情
+    ##获取创建订单请求参数
+    ${商品信息}    商品_详情
+    ${product}    Get From Dictionary    ${商品信息}    product
+    ${productSkus数组}    Get From Dictionary    ${product}    productSkus
+    ${productSkus}    Get From List    ${productSkus数组}    0
+    ${商品ID}    Get From Dictionary    ${productSkus}    product_id
+    ${商品sku_id}    Get From Dictionary    ${productSkus}    id
+    ###在微信前端创建订单    pickup_type=1 快递配送    pickup_type=2 到店自提
+    微信登录
+    &{data}=    Create Dictionary    products[0][id]= 288197    products[0][sku_id]=1167425    products[0][num]=1    pickup_type=1
+    &{headers}=    Create Dictionary    Content-Type=application/x-www-form-urlencoded
+    ${resp}    Post Request    wx    /weishanghuzhushou/order/order-add-ajax    data=${data}    headers=${headers}
+    Log    Response:${resp.content}
+    ${预期返回码}    Set Variable    0
+    ${会员列表响应}    loads    ${resp.content}
+    ${返回码}    Get From Dictionary    ${会员列表响应}    errcode
+    ${返回响应}    Get From Dictionary    ${会员列表响应}    errmsg
+    Log    errcode is:${返回码}
+    Should Be Equal As Strings    ${返回码}    ${预期返回码}
+    #
+
+商品详情
+    ${商品信息}    商品_详情
 
 *** Keywords ***
 获取分组列表

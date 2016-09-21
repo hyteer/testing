@@ -480,6 +480,24 @@ API登录
     Should Be Equal As Strings    ${返回码}    ${预期返回码}
     [Return]    ${返回响应}
 
+订单_更新订单设置
+    [Arguments]    ${订单自动关闭}=1    ${订单回收时间}=60    ${秒杀订单自动关闭}=2    ${发货自动确认}=2    ${收货自动评价}=2    # 各类订单自动处理机制，1为开启，2为关闭
+    [Documentation]    状态说明：1为开启，2为关闭
+    ...
+    ...    {"id":2,"simple_order_close_unpay_time":60,"auto_receive_time":60,"sk_order_close_unpay_time":120,"order_comment_time":60,"simple_order_close_unpay_status":2,"auto_receive_status":2,"sk_order_close_unpay_status":1,"order_comment_status":2,"simple_order_close_unpay_time_type":1,"auto_receive_time_type":1,"sk_order_close_unpay_time_type":1,"order_comment_time_type":1}
+    API登录
+    &{headers}    Get_Headers
+    ${jsonstr}    Convert To String    {"id":2,"simple_order_close_unpay_time":${订单回收时间},"auto_receive_time":60,"sk_order_close_unpay_time":120,"order_comment_time":60,"simple_order_close_unpay_status":${订单自动关闭},"auto_receive_status":${发货自动确认},"sk_order_close_unpay_status":${秒杀订单自动关闭},"order_comment_status":${收货自动评价},"simple_order_close_unpay_time_type":1,"auto_receive_time_type":1,"sk_order_close_unpay_time_type":1,"order_comment_time_type":1}
+    ${resp}    Post Request    wsh    /shop/update-shop-order-auto-settings-ajax    data=${jsonstr}    headers=${headers}
+    Log    Response:${resp.content}
+    ${str}    Get Substring    ${resp.content}    3
+    ${js}    loads    ${str}
+    ${errcode}    Get From Dictionary    ${js}    errcode
+    ${errmsg}    Get From Dictionary    ${js}    errmsg
+    Run Keyword If    ${errcode}!=0    Fail    接口返回异常！
+    ##
+    [Return]    ${errmsg}
+
 商品_列表
     API登录
     ${resp}    Post Request    wsh    /product/list-ajax
@@ -519,6 +537,21 @@ API登录
     Should Be Equal As Strings    ${返回码}    ${预期返回码}
     ${返回码信息}    Get From Dictionary    ${商品详情响应}    errmsg
     [Return]    ${返回码信息}
+
+商品_添加商品
+    [Arguments]    ${args}
+    [Documentation]    {"productInfo":{"detail_pic":"504875,504865,","detail":"<p>YT的测试商品介绍。。。</p>"},"product":{"product_type":1,"name":"${产品名称}","sales":"${销量}","covers_id":504875,"quota":"3","sort":"0","sale_scope":"1","product_category_id":33694,"product_category_path":"/33691/33694/","status":2,"postage_fee_type":0,"product_kind_ids":"205477;","show_sale_num":2,"prod_weight":"200"},"shareMessage":{"desc":"优惠多多,欢迎选购","title":"YT测试商品0905","file_cdn_path":"http://imgcache.vikduo.com/static/89c357c48d8830326acfa5fb4b4cc3f7.png","pic_id":504875},"kindBody":[{"firstName":"50g","firstRowSpan":1,"firstShow":true,"id":"50g","status":false},{"firstName":"150g","firstRowSpan":1,"firstShow":true,"id":"150g","status":false}],"skus":[{"status":1,"reserves":${库存},"market_price":"80","retail_price":"${价格}","sku_no":"T000101","barcode":"${条件码1}","sales":0,"name":"YT测试商品0905","kind_value_ids":[846106],"kind_ids":[205477]},{"status":1,"reserves":300,"market_price":"120","retail_price":"99","sku_no":"T000102","barcode":"${条件码2}","sales":0,"name":"YT测试商品0905","kind_value_ids":[846108],"kind_ids":[205477]}]}
+    API登录
+    &{headers}    Create Dictionary    Accept=application/json    Content-Type=application/json
+    ${jsonstr}    Convert To String    ${args}
+    ${resp}    Post Request    wsh    /product/add-ajax    data=${jsonstr}    headers=${headers}
+    Log    Response:${resp.content}
+    ${str}    Get Substring    ${resp.content}    3
+    ${js}    loads    ${str}
+    ${errcode}    Get From Dictionary    ${js}    errcode
+    ${errmsg}    Get From Dictionary    ${js}    errmsg
+    Run Keyword If    ${errcode}!=0    Fail    接口返回异常！
+    [Return]    ${errmsg}
 
 -----4-----
 
@@ -580,4 +613,46 @@ API登录
     ${errmsg}    Get From Dictionary    ${js}    errmsg
     Run Keyword If    ${errcode}!=0    Fail    接口返回异常！
     ##
+    [Return]    ${errmsg}
+
+商品_上架
+    [Arguments]    ${id}
+    API登录
+    &{headers}    Create Dictionary    Accept=application/json    Content-Type=application/json
+    ${jsonstr}    Convert To String    {"ids":[${id}]}
+    ${resp}    Post Request    wsh    /product/on-sale-ajax    data=${jsonstr}    headers=${headers}
+    Log    Response:${resp.content}
+    ${str}    Get Substring    ${resp.content}    3
+    ${js}    loads    ${str}
+    ${errcode}    Get From Dictionary    ${js}    errcode
+    ${errmsg}    Get From Dictionary    ${js}    errmsg
+    Run Keyword If    ${errcode}!=0    Fail    接口返回异常！
+    [Return]    ${errmsg}
+
+商品_下架
+    [Arguments]    ${id}
+    API登录
+    &{headers}    Create Dictionary    Accept=application/json    Content-Type=application/json
+    ${jsonstr}    Convert To String    {"ids":[${id}]}
+    ${resp}    Post Request    wsh    /product/off-sale-ajax    data=${jsonstr}    headers=${headers}
+    Log    Response:${resp.content}
+    ${str}    Get Substring    ${resp.content}    3
+    ${js}    loads    ${str}
+    ${errcode}    Get From Dictionary    ${js}    errcode
+    ${errmsg}    Get From Dictionary    ${js}    errmsg
+    Run Keyword If    ${errcode}!=0    Fail    接口返回异常！
+    [Return]    ${errmsg}
+
+商品_删除商品
+    [Arguments]    ${id}
+    API登录
+    &{headers}    Create Dictionary    Accept=application/json    Content-Type=application/json
+    ${jsonstr}    Convert To String    {"ids":[${id}]}
+    ${resp}    Post Request    wsh    /product/del-ajax    data=${jsonstr}    headers=${headers}
+    Log    Response:${resp.content}
+    ${str}    Get Substring    ${resp.content}    3
+    ${js}    loads    ${str}
+    ${errcode}    Get From Dictionary    ${js}    errcode
+    ${errmsg}    Get From Dictionary    ${js}    errmsg
+    Run Keyword If    ${errcode}!=0    Fail    接口返回异常！
     [Return]    ${errmsg}

@@ -1,0 +1,197 @@
+The file Api-YT.txt contains:
+*** Settings ***
+Library           ApiWsh
+
+*** Test Cases ***
+first
+    ${session}    Wsh Get Cookie
+    Wsh Login    ${session}
+    Wsh Actlist    ${session}
+
+The file Api.txt contains:
+*** Settings ***
+Library           RequestsLibrary
+
+*** Test Cases ***
+first
+    Create Session    wsh    http://betanewwsh.vikduo.com
+    ${url}    Set Variable    http://betanewwsh.vikduo.com
+    &{data}=    Create Dictionary    username=20151228    password=123456    captcha=1111
+    &{headers}=    Create Dictionary    Content-Type=application/x-www-form-urlencoded
+    ${resp}    Post Request    wsh    /login/login-ajax    data=${data}    headers=${headers}
+    Log    Response:${resp.content}
+    ${resp}    Post Request    wsh    /shop/get-ajax    data=${data}    headers=${headers}
+    Log    Response:${resp.content}
+
+The file my-directory-list.txt contains:
+
+The file Repeat.txt contains:
+*** Settings ***
+Resource          ../Resource/常用操作.robot
+Library           Selenium2Library
+Resource          ../Resource/API.robot
+
+*** Test Cases ***
+Run
+    ${失败数}    Set Variable    ${0}
+    Log    失败数：${失败数}
+    : FOR    ${i}    IN RANGE    4
+    \    登录
+    \    ${flag}    Run Keyword And Return Status    工作台今日数据
+    \    ${失败数}    Set Variable If    ${flag}==False    ${失败数+1}    ${失败数}
+    \    关闭浏览器
+    \    Sleep    2
+    Log    失败数：${失败数}
+
+Temp
+    ${失败数}    Set Variable    ${0}
+    ${type}    Evaluate    type(${0})
+    Log    ${失败数}
+
+*** Keywords ***
+工作台今日数据
+    ####查询API
+    Log    --查询API：工作台数据--
+    ${data}    工作台数据
+    ${pay_money}    Get From Dictionary    ${data}    pay_money
+    ${pay_money}    Convert To Integer    ${pay_money}
+    #${pay_money}    Evaluate    ${pay_money}/100
+    ${order_total}    Get From Dictionary    ${data}    order_total
+    ${payed_order_total}    Get From Dictionary    ${data}    payed_order_total
+    ${uv}    Get From Dictionary    ${data}    uv
+    ${pv}    Get From Dictionary    ${data}    pv
+    ##
+    ${need_deliver_num}    Get From Dictionary    ${data}    need_deliver_num
+    ${need_return_goods}    Get From Dictionary    ${data}    need_return_goods
+    ${need_refund}    Get From Dictionary    ${data}    need_refund
+    ${stock_warning}    Get From Dictionary    ${data}    stock_warning
+    ${unread_message}    Get From Dictionary    ${data}    unread_message
+    ####进入页面
+    #点击链接菜单    运营设置
+    ${sub}    Set Variable    工作台
+    Wait Until Page Contains Element    //*[@id="breadcrumbs"]/ul/li[contains(text(),"${sub}")]
+    Sleep    5
+    ####今日数据
+    ${销售额}    Get Text    //a[@ng-bind="lists.pay_money" and contains(@ng-href,"/order/list?createStart=")]
+    ${销售额}    Evaluate    int(${销售额}*100)
+    ${订单总数}    Get Text    //a[@ng-bind="lists.order_total" and contains(@href,"/order/list?createStart=")]
+    ${已支付订单数}    Get Text    //a[@ng-bind="lists.payed_order_total" and contains(@href,"/order/list?createStart=")]
+    ${今日UV}    Get Text    //a[@ng-bind="lists.uv" and @href="/data-center/today"]
+    ${今日PV}    Get Text    //a[@ng-bind="lists.pv" and @href="/data-center/today"]
+    Should Be Equal As Strings    ${pay_money}    ${销售额}
+    Should Be Equal As Strings    ${order_total}    ${订单总数}
+    Should Be Equal As Strings    ${payed_order_total}    ${已支付订单数}
+    Should Be Equal As Strings    ${uv}    ${今日UV}
+    Should Be Equal As Strings    ${pv}    ${今日PV}
+    ####每日操作
+    ${待发货订单}    Get Text    //a[@ng-bind="lists.need_deliver_num" and @href="/order/list?statue=3"]
+    ${待处理退货}    Get Text    //a[@ng-bind="lists.need_return_goods" and @href="/order/refund-list?type=3"]
+    ${待处理退款}    Get Text    //a[@ng-bind="lists.need_refund" and @href="/order/refund-list?type=1"]
+    ${预警库存}    Get Text    //a[@ng-bind="lists.stock_warning" and @href="/product/list?waring=1"]
+    ${未读消息}    Get Text    //a[@ng-bind="lists.unread_message" and @href="/weixin/message-list?flag=1"]
+    Should Be Equal As Strings    ${need_deliver_num}    ${待发货订单}
+    Should Be Equal As Strings    ${need_return_goods}    ${待处理退货}
+    Should Be Equal As Strings    ${need_refund}    ${待处理退款}
+    Should Be Equal As Strings    ${stock_warning}    ${预警库存}
+    Should Be Equal As Strings    ${unread_message}    ${未读消息}
+
+The file Temp.txt contains:
+*** Settings ***
+Resource          ../Resource/常用操作.robot
+Resource          ../Resource/YT.robot
+
+*** Test Cases ***
+会员搜索
+    ${time_now}    Get Time    epoch
+    ${time_30day}    Evaluate    3600*24*30
+    ${time_3day}    Evaluate    3600*24*3
+    ${time1}    Evaluate    ${time_now}-${time_30day}
+    ${time2}    Evaluate    ${time_now}-${time_3day}
+    ${开始时间}    Evaluate    random.randint(${time1},${time2})    random
+    ${结束时间}    Set Variable    ${time_now}
+    #    1467611419    14676104227
+
+会员分组列表
+    ${会员分组_API}    Create List
+    ##参数
+    ${grouplist}    获取会员分组列表    10
+    ${len_org}    Get Length    ${grouplist}
+    ${groupdict}    Create Dictionary
+    : FOR    ${i}    IN RANGE    ${len_org}
+    \    Set To Dictionary    ${groupdict}    '${i+1}'='${grouplist[${i}]}'
+    Log    GroupDict:${groupdict}
+    ##
+    ${n}    Evaluate    random.randint(1,4)    random
+    ${会员分组}    Evaluate    random.sample(range(1,${len_org}),${n})    random
+    ${len}    Get Length    ${会员分组}
+    ##
+    ${valuelist}    Create List
+    : FOR    ${i}    IN    @{会员分组}
+    \    ${value}    Get From Dictionary    ${groupdict}    '${i}'
+    \    ${value}    Evaluate    int(${value})
+    \    Append To List    ${valuelist}    ${value}
+    Log    ${valuelist}
+    #
+
+会员标签列表
+    ${会员标签_API}    Create List
+    ##参数
+    ${tagslist}    获取标签列表    10
+    ${len_org}    Get Length    ${tagslist}
+    ${tagsdict}    Create Dictionary
+    : FOR    ${i}    IN RANGE    ${len_org}
+    \    Set To Dictionary    ${tagsdict}    '${i+1}'='${tagslist[${i}]}'
+    Log    GroupDict:${tagsdict}
+    ##
+    ${n}    Evaluate    random.randint(1,4)    random
+    ${会员标签}    Evaluate    random.sample(range(1,${len_org}),${n})    random
+    ${len}    Get Length    ${会员标签}
+    ##
+    ${valuelist}    Create List
+    : FOR    ${i}    IN    @{会员标签}
+    \    ${value}    Get From Dictionary    ${tagsdict}    '${i}'
+    \    ${value}    Evaluate    int(${value})
+    \    Append To List    ${valuelist}    ${value}
+    Log    ${valuelist}
+    #
+
+GetHeaders
+    ${headers}    Get_Headers
+    Log    ${headers}
+
+The file web.txt contains:
+*** Settings ***
+Suite Setup       登录
+Suite Teardown    关闭浏览器
+Library           Selenium2Library    timeout=5    implicit_wait=5
+Resource          ../Resource/常用操作.robot
+
+*** Test Cases ***
+login
+    Open Browser    ${url}    Chrome    #打开浏览器
+    #界面最大化
+    Input Text    id=staff_id    ${username}    #输入用户名
+    Input Text    id=password    ${password}    #输入密码
+    Input Text    id=captcha    111111    #输入验证码
+    Click Button    id=login    #点击登陆
+
+ShouldNotContain
+    ${flag}    Run Keyword And Return Status    Element Should Not Contain    //*[@id="top-left"]    管理后台
+    Sleep    2
+    ${flag}    Run Keyword And Return Status    Element Should Not Contain    //*[@id="navList"]    扫码支付2
+
+ElementShouldContain
+    Element Should Contain    id=top-left    navbar-brand
+
+The file Ytest.txt contains:
+*** Settings ***
+Library           Ytools
+Library           Screenshot
+
+*** Test Cases ***
+screenshot
+    Log    Test taking screenshot:YTools
+    Yt Screenshot
+    Log    Screenshot Library
+    Take Screenshot
+

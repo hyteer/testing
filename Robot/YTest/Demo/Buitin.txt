@@ -124,3 +124,7 @@ rand_code
     #${随机长度}    Evaluate    ${长度}-(${prefix_len}+${sufix_len})
     ${随机码}    Generate Random String    ${随机长度}    123456789
     ${编码}    Set Variable    ${前缀}${随机码}${后缀}
+
+rand_range_multi
+    ${n}    Evaluate    random.randint(1,4)    random
+    ${code}    Evaluate    random.sample(range(100000,999999),${n})    random

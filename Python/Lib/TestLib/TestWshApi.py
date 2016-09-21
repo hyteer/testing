@@ -34,20 +34,23 @@ mk.get_reduction_actlist(sid)
 mk.get_secondkill_actlist(sid)
 
 mk.get_collectzan_actlist(sid)
-
+'''
 #### Product ####
+pd.get_product_list(sid)
+pd.get_togetherbuy_detail(sid)
+'''
 pd.get_product_list(sid)
 pd.get_order_list(sid)
 pd.page_list_ajax(sid)
 pd.page_edit_ajax(sid)
 pd.get_order_detail(sid)
 pd.get_product_detail(sid)
-'''
+
 #### Members ####
 mb.wsh_member_list(sid)
 mb.wsh_members_get_all_tags(sid)
 mb.wsh_member_detail_ajax(sid)
-
+'''
 """
 #pd.order_test(wxcookies)
 pd.order_add_ajax(wxcookies)

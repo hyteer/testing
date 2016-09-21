@@ -77,8 +77,8 @@ Resource          ../../Resource/API.robot
     Log    ${分组列表}
     #
 
-会员_标签列表
-    ${errmsg}    API.会员_标签列表
+标签列表
+    ${errmsg}    API.标签列表
     ${标签列表}    Create List
     ###
     ${page}    Get From Dictionary    ${errmsg}    page
@@ -183,7 +183,7 @@ Resource          ../../Resource/API.robot
     ${data}    Get From Dictionary    ${errmsg}    data
     ${len}    Get Length    ${data}
     ${Agents_count}    Set Variable    ${0}
-    :FOR    ${i}    IN RANGE    ${len}
+    : FOR    ${i}    IN RANGE    ${len}
     \    ${data_i}    Get From List    ${data}    ${i}
     \    ${shopInfo}    Get From Dictionary    ${data_i}    shopInfo
     \    ${flag}    Run Keyword And Return Status    Get From Dictionary    ${data_i}    shopAgents

@@ -1,33 +1,14 @@
 *** Settings ***
 Suite Setup       API登录
 Library           RequestsLibrary
-Resource          Lib/通用操作.robot
 Library           json
 Library           Collections
 Library           String
 Resource          Lib/配置参数.robot
 Resource          ../Resource/常用操作.robot
+Resource          ../Resource/API常用操作.robot
 
 *** Test Cases ***
-获取会员列表
-    [Tags]    ready
-    ${resp}    Post Request    wsh    /members/list-ajax
-    ${预期返回码}    Set Variable    0
-    Log    Response:${resp.content}
-    ${str}    Get Substring    ${resp.content}    3
-    ${会员列表响应}    loads    ${str}
-    ${返回码}    Get From Dictionary    ${会员列表响应}    errcode
-    Log    errcode is:${返回码}
-    Should Be Equal As Strings    ${返回码}    ${预期返回码}
-    ${返回码信息}    Get From Dictionary    ${会员列表响应}    errmsg
-    ${列表数据}    Get From Dictionary    ${返回码信息}    data
-    ${会员列表数量}    Get Length    ${列表数据}
-    ${随机选择一个会员}    Evaluate    random.randint(1,${会员列表数量})    random
-    ${获取会员内容}    Get From List    ${列表数据}    ${随机选择一个会员}
-    ${获取微信内容信息}    Get From Dictionary    ${获取会员内容}    wxUserInfos
-    ${获取用户ID}    Get From Dictionary    ${获取微信内容信息}    id
-    log    ${获取用户ID}
-
 创建普通订单
     [Tags]
     创建普通订单
@@ -306,6 +287,88 @@ Resource          ../Resource/常用操作.robot
     Run Keyword If    ${配送方式}==1    收货（快递配送）    ${用户id}    ${订单id号}
     ...    ELSE    收货（到店自提）    ${订单id号}    ${提货码}
 
+添加商品
+    [Tags]    ready
+    ${产品名称}    随机字符    【YT商品】    12
+    ${价格}    随机价格
+    ${销量}    Evaluate    random.randint(10,10000)    random
+    ${库存}    Evaluate    random.randint(100,5000)    random
+    ${条件码1}    随机数字    8
+    ${条件码2}    随机数字    8
+    ###
+    &{headers}    Create Dictionary    Accept=application/json, text/plain, */*    Content-Type=application/json
+    ${jsonstr}    Convert To String    {"productInfo":{"detail_pic":"504875,504865,","detail":"<p>YT的测试商品介绍。。。</p>"},"product":{"product_type":1,"name":"${产品名称}","sales":"${销量}","covers_id":504875,"quota":"3","sort":"0","sale_scope":"1","product_category_id":33694,"product_category_path":"/33691/33694/","status":2,"postage_fee_type":0,"product_kind_ids":"205477;","show_sale_num":2,"prod_weight":"200"},"shareMessage":{"desc":"优惠多多,欢迎选购","title":"YT测试商品0905","file_cdn_path":"http://imgcache.vikduo.com/static/89c357c48d8830326acfa5fb4b4cc3f7.png","pic_id":504875},"kindBody":[{"firstName":"50g","firstRowSpan":1,"firstShow":true,"id":"50g","status":false},{"firstName":"150g","firstRowSpan":1,"firstShow":true,"id":"150g","status":false}],"skus":[{"status":1,"reserves":${库存},"market_price":"80","retail_price":"${价格}","sku_no":"T000101","barcode":"${条件码1}","sales":0,"name":"YT测试商品0905","kind_value_ids":[846106],"kind_ids":[205477]},{"status":1,"reserves":300,"market_price":"120","retail_price":"99","sku_no":"T000102","barcode":"${条件码2}","sales":0,"name":"YT测试商品0905","kind_value_ids":[846108],"kind_ids":[205477]}]}
+    ${resp}    Post Request    wsh    /product/add-ajax    data=${jsonstr}    headers=${headers}
+    Log    Response:${resp.content}
+    ${str}    Get Substring    ${resp.content}    3
+    ${js}    loads    ${str}
+    ${errcode}    Get From Dictionary    ${js}    errcode
+    Run Keyword If    ${errcode}!=0    Fail    接口返回异常！
+    ###
+    ${errmsg}    Get From Dictionary    ${js}    errmsg
+
+商品上架
+    [Tags]    ready
+    ###
+    &{headers}    Create Dictionary    Accept=application/json, text/plain, */*    Content-Type=application/json
+    ${jsonstr}    Convert To String    {"ids":[287549]}
+    ${resp}    Post Request    wsh    /product/on-sale-ajax    data=${jsonstr}    headers=${headers}
+    Log    Response:${resp.content}
+    ${str}    Get Substring    ${resp.content}    3
+    ${js}    loads    ${str}
+    ${errcode}    Get From Dictionary    ${js}    errcode
+    Run Keyword If    ${errcode}!=0    Fail    接口返回异常！
+    ###
+    ${errmsg}    Get From Dictionary    ${js}    errmsg
+
+商品下架
+    [Tags]    ready
+    ###
+    &{headers}    Create Dictionary    Accept=application/json, text/plain, */*    Content-Type=application/json
+    ${jsonstr}    Convert To String    {"ids":[287549]}
+    ${resp}    Post Request    wsh    /product/off-sale-ajax    data=${jsonstr}    headers=${headers}
+    Log    Response:${resp.content}
+    ${str}    Get Substring    ${resp.content}    3
+    ${js}    loads    ${str}
+    ${errcode}    Get From Dictionary    ${js}    errcode
+    Run Keyword If    ${errcode}!=0    Fail    接口返回异常！
+    ###
+    ${errmsg}    Get From Dictionary    ${js}    errmsg
+
+更新订单设置
+    [Tags]    ready
+    ###
+    &{headers}    Create Dictionary    Accept=application/json, text/plain, */*    Content-Type=application/json
+    ${jsonstr}    Convert To String    {"id":2,"simple_order_close_unpay_time":60,"auto_receive_time":60,"sk_order_close_unpay_time":120,"order_comment_time":60,"simple_order_close_unpay_status":2,"auto_receive_status":2,"sk_order_close_unpay_status":2,"order_comment_status":2,"simple_order_close_unpay_time_type":1,"auto_receive_time_type":1,"sk_order_close_unpay_time_type":1,"order_comment_time_type":1}
+    ${resp}    Post Request    wsh    /shop/update-shop-order-auto-settings-ajax    data=${jsonstr}    headers=${headers}
+    Log    Response:${resp.content}
+    ${str}    Get Substring    ${resp.content}    3
+    ${js}    loads    ${str}
+    ${errcode}    Get From Dictionary    ${js}    errcode
+    Run Keyword If    ${errcode}!=0    Fail    接口返回异常！
+    ###
+    ${errmsg}    Get From Dictionary    ${js}    errmsg
+
+删除商品
+    [Tags]    ready
+    ${product}    获取一个特定条件商品    status=1
+    ${id}    Get From Dictionary    ${product}    id
+    ###
+    &{headers}    Create Dictionary    Accept=application/json, text/plain, */*    Content-Type=application/json
+    ${jsonstr}    Convert To String    {"ids":[${id}]}
+    ${resp}    Post Request    wsh    /product/del-ajax    data=${jsonstr}    headers=${headers}
+    Log    Response:${resp.content}
+    ${str}    Get Substring    ${resp.content}    3
+    ${js}    loads    ${str}
+    ${errcode}    Get From Dictionary    ${js}    errcode
+    Run Keyword If    ${errcode}!=0    Fail    接口返回异常！
+    ###
+    ${errmsg}    Get From Dictionary    ${js}    errmsg
+
+创建订单
+    微信登录
+    ${res}    订单_创建普通订单
+
 *** Keywords ***
 获取微信用户ID
     微信登录
@@ -328,7 +391,7 @@ Resource          ../Resource/常用操作.robot
     [Return]    ${获取用户ID}
 
 微信登录
-    [Arguments]    ${微信用户ID}=13723226
+    [Arguments]    ${微信用户ID}=13723232
     #${用户ID}    获取微信用户ID
     Create Session    wsh1    ${URL_TEST_WX}
     #&{data}=    Create Dictionary    ${微信用户ID}
@@ -338,7 +401,8 @@ Resource          ../Resource/常用操作.robot
 创建普通订单
     微信登录
     #############
-    &{data}=    Create Dictionary    products[0][id]=265190    products[0][sku_id]=1098428    products[0][num]=1    pickup_type=1    #shop_id=97320
+    #&{data}=    Create Dictionary    products[0][id]=265190    products[0][sku_id]=1098428    products[0][num]=1    pickup_type=1    #shop_id=97320
+    &{data}=    Create Dictionary    products[0][id]= 288197    products[0][sku_id]= T000101    products[0][num]=1    pickup_type=1    #shop_id=97320
     &{headers}=    Create Dictionary    Content-Type=application/x-www-form-urlencoded
     ${resp}    Post Request    wsh    /weishanghuzhushou/order/order-add-ajax    data=${data}    headers=${headers}
     Log    Response:${resp.content}

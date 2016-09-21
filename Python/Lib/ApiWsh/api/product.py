@@ -38,7 +38,7 @@ class Product(object):
         headers = self.headers
         cookies = {'PHPSESSID': sessionid}
 
-        r = requests.post(url, headers=headers,cookies=cookies)
+        r = requests.get(url, headers=headers,cookies=cookies)
         print "Headers:", r.headers
         print "Response:", r.content
         return r
@@ -78,6 +78,25 @@ class Product(object):
         print "Response:", r.content
         print "Response:",r
         return r
+
+    def get_togetherbuy_detail(self,sessionid):
+        """
+        获取商品详情
+        :param sessionid:
+        :return: response content
+        """
+        print u"---Test 获取参团商品详情---"
+        url = self.baseurl+"/together-buy/join-detail"
+        headers = self.headers
+        cookies = {'PHPSESSID': sessionid}
+        postdata = {'id[]': 658,'act_id[]': 3166}
+
+        r = requests.post(url, data=postdata,headers=headers,cookies=cookies)
+        print "Headers:", r.headers
+        print "Response:", r.content
+        print "Response:",r
+        return r
+
 
     ########## 订单相关 ##########
     def order_add_ajax(self,wxcookie):

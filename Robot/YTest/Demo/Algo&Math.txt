@@ -1,0 +1,6 @@
+*** Test Cases ***
+round_up&down
+    ${price_org}    Set Variable    ${79.33}
+    ${discount}    Set Variable    9
+    ${price_new}    Evaluate    ${price_org}*${discount}*0.1
+    #

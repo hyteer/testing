@@ -5,7 +5,7 @@ Library           Dialogs
 
 *** Test Cases ***
 start
-    Open Application    http://localhost:4722/wd/hub    alias=browser    platformName=Android    platformVersion=4.4    deviceName='emulator-5554'    appPackage=com.android.browser
+    Open Application    http://localhost:4722/wd/hub    alias=browser    platformName=Android    platformVersion=5.1    deviceName='emulator-5554'    appPackage=com.android.browser
     ...    appActivity=.BrowserActivity
     ${a}    Get Contexts
     Log    ${a}

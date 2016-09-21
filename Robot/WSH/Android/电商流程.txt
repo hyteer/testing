@@ -1,0 +1,125 @@
+*** Settings ***
+Suite Teardown    Close Application
+Library           AppiumLibrary
+
+*** Test Cases ***
+start
+    Open Application    http://localhost:4734/wd/hub    alias=wechat    platformName=Android    platformVersion=4.4.2    deviceName='emulator-5554'    appPackage=com.tencent.mm
+    ...    appActivity=com.tencent.mm.ui.LauncherUI    unicodeKeyboard=True    resetKeyboard=True
+    Wait Until Page Contains    微信    20s    等待超时
+    Sleep    2s
+    #Close Application
+
+wsh
+    Start_H6
+    Wait Until Page Contains    微商户助手
+    Click Element    xpath=//android.view.View[contains(@text,'微商户助手')]
+    Log    Success...
+    Wait Until Page Contains    商城
+    Click Element    xpath=//android.widget.TextView[contains(@text,'商城')]
+    Sleep    1s
+    Click Element    xpath=//android.widget.TextView[contains(@text,'商品列表1')]
+    Wait Until Page Contains    商品列表
+    Wait Until Page Contains Element    xpath=//android.view.View[contains(@content-desc,'st0908-5')]
+    Sleep    1
+    Click Element    xpath=//android.view.View[contains(@content-desc,'st0908-5')]
+    #Click Element    xpath=//android.view.View[@index='6' and @content-desc='04.23商品测试']
+    Wait Until Page Contains Element    xpath=//android.view.View[contains(@content-desc,'立即购买')]
+    Sleep    1
+    Click Element    xpath=//android.view.View[contains(@content-desc,'立即购买')]
+    Sleep    1
+    Wait Until Page Contains Element    xpath=//android.view.View[contains(@content-desc,'确认购买')]
+    Sleep    1
+    Click Element    xpath=//android.view.View[contains(@content-desc,'确认购买')]
+    Sleep    3
+    Wait Until Page Contains Element    xpath=//android.view.View[contains(@content-desc,'st0908-5')]
+    \    微信安全支付
+    #
+
+Group
+    Start_H6
+    Wait Until Page Contains    微信    20
+    Wait Until Page Contains    微商户助手
+    Click Element    xpath=//android.view.View[contains(@text,'微商户助手')]
+    Log    Success...
+    Wait Until Page Contains    商城
+    Click Element    xpath=//android.widget.TextView[contains(@text,'商城')]
+    Sleep    1s
+    Click Element    xpath=//android.widget.TextView[contains(@text,'首页')]
+    Wait Until Page Contains    列表    10
+    sleep    3
+    log source
+    Click Element    xpath=//android.view.View[contains(@content-desc,'惊喜')]
+    sleep    2
+    Click Element    xpath=//android.view.View[contains(@content-desc,' 拼团活动')]
+    sleep    2
+    Wait Until Page Contains    我的拼团
+    Click Element    xpath=//android.view.View[contains(@content-desc,'玄姬0825002')]
+    Wait Until Page Contains    规则
+    Click Element    xpath=//android.view.View[contains(@content-desc,'68.42元/件')]
+    sleep    1
+    Wait Until Page Contains Element    xpath=//android.view.View[@content-desc='商品详情']//android.view.View[contains(@content-desc,'确认购买')]
+    Sleep    1
+    Click Element    xpath=//android.view.View[@content-desc='商品详情']//android.view.View[contains(@content-desc,'确认购买')]
+    sleep    4
+    Pass Execution    Test
+    Wait Until Page Contains    微信安全支付
+    Sleep    3
+    Pass Execution    Test
+    Sleep    1
+    Click Button    微信安全支付
+    sleep    5
+    [Teardown]    Close All Applications
+
+Input
+    Click Element    xpath=//android.view.View[contains(@text,'文件传输助手')]
+    Sleep    1s
+    Click Element    xpath=//android.widget.RelativeLayout[@index='1']
+    Input Text    xpath=//android.widget.RelativeLayout[@index='1']    中文测试
+    Sleep    2s
+    Click Element    xpath=//android.widget.Button[@text='发送']
+
+wsh_groupbuy
+    Start_H6
+    Wait Until Page Contains    微商户助手
+    Click Element    xpath=//android.view.View[contains(@text,'微商户助手')]
+    Log    Success...
+    Wait Until Page Contains    商城
+    Click Element    xpath=//android.widget.TextView[contains(@text,'商城')]
+    Sleep    1s
+    Click Element    xpath=//android.widget.TextView[contains(@text,'首页')]
+    Wait Until Page Contains    列表
+    Wait Until Page Contains Element    xpath=//android.view.View[contains(@content-desc,'惊喜')]
+    Sleep    1
+    Click Element    xpath=//android.view.View[contains(@content-desc,'惊喜')]
+    Wait Until Page Contains Element    xpath=//android.view.View[contains(@content-desc,' 拼团活动')]
+    sleep    1
+    Click Element    xpath=//android.view.View[contains(@content-desc,' 拼团活动')]
+    Wait Until Page Contains    我的拼团
+    Sleep    1
+    Click Element    xpath=//android.view.View[contains(@content-desc,'玄姬0825002')]
+    Wait Until Page Contains    规则
+    Sleep    1
+    Click Element    xpath=//android.view.View[contains(@content-desc,'68.42元/件')]
+    Wait Until Page Contains Element    xpath=//android.view.View[@index='8']/android.view.View[@index='0' and @content-desc='确认购买']
+    Sleep    1
+    Click A Point    100    2600
+    #Click Element    xpath=//android.view.View[@index='8']/android.view.View[@index='0' and @content-desc='确认购买']
+    Wait Until Page Contains Element    xpath=//android.widget.EditText[contains(@content-desc,'请输入您的留言')]
+    Sleep    5
+    #
+
+*** Keywords ***
+Start_XiaoMi
+    Open Application    http://localhost:4733/wd/hub    alias=wechat    platformName=Android    platformVersion=6.0.1    deviceName='emulator-5554'    appPackage=com.tencent.mm
+    ...    appActivity=com.tencent.mm.ui.LauncherUI    unicodeKeyboard=True    resetKeyboard=True
+    Wait Until Page Contains    微信    20s    等待超时
+    Sleep    2s
+    #Close Application
+
+Start_H6
+    Open Application    http://localhost:4734/wd/hub    alias=wechat    platformName=Android    platformVersion=4.4.2    deviceName='emulator-5554'    appPackage=com.tencent.mm
+    ...    appActivity=com.tencent.mm.ui.LauncherUI    unicodeKeyboard=True    resetKeyboard=True
+    Wait Until Page Contains    微信    20s    等待超时
+    Sleep    2s
+    #Close Application

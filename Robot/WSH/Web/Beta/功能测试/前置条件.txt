@@ -1,13 +1,11 @@
 *** Settings ***
-Suite Setup       登录
-Suite Teardown    关闭浏览器
-Test Teardown     失败重启
 Library           Selenium2Library
 Resource          ../Resource/常用操作.robot
+Resource          ../Resource/API常用操作.robot
 
 *** Test Cases ***
 添加商品并激活
-    商品添加
+    添加一个商品    True    【Test0908-5】    0.03
 
 *** Keywords ***
 添加商品

@@ -1,0 +1,60 @@
+*** Settings ***
+Suite Teardown    Close Application
+Library           AppiumLibrary
+
+*** Test Cases ***
+start
+    Open Application    http://localhost:4734/wd/hub    alias=wechat    platformName=Android    platformVersion=4.4.2    deviceName='emulator-5554'    appPackage=com.tencent.mm
+    ...    appActivity=com.tencent.mm.ui.LauncherUI    unicodeKeyboard=True    resetKeyboard=True
+    Wait Until Page Contains    微信    20s    等待超时
+    Sleep    2s
+    #Close Application
+
+wsh
+    Start_H6
+    Wait Until Page Contains    微商户助手
+    Click Element    xpath=//android.view.View[contains(@text,'微商户助手')]
+    Log    Success...
+    Wait Until Page Contains    商城
+    Click Element    xpath=//android.widget.TextView[contains(@text,'商城')]
+    Sleep    1s
+    Click Element    xpath=//android.widget.TextView[contains(@text,'商品列表1')]
+    Wait Until Page Contains    商品列表
+    Wait Until Page Contains Element    xpath=//android.view.View[contains(@content-desc,'st0908-5')]
+    Sleep    1
+    Click Element    xpath=//android.view.View[contains(@content-desc,'st0908-5')]
+    #Click Element    xpath=//android.view.View[@index='6' and @content-desc='04.23商品测试']
+    Wait Until Page Contains Element    xpath=//android.view.View[contains(@content-desc,'立即购买')]
+    Sleep    1
+    Click Element    xpath=//android.view.View[contains(@content-desc,'立即购买')]
+    Sleep    1
+    Wait Until Page Contains Element    xpath=//android.view.View[contains(@content-desc,'确认购买')]
+    Sleep    1
+    Click Element    xpath=//android.view.View[contains(@content-desc,'确认购买')]
+    Sleep    3
+    Wait Until Page Contains Element    xpath=//android.view.View[contains(@content-desc,'st0908-5')]
+    \    微信安全支付
+    #
+
+Input
+    Click Element    xpath=//android.view.View[contains(@text,'文件传输助手')]
+    Sleep    1s
+    Click Element    xpath=//android.widget.RelativeLayout[@index='1']
+    Input Text    xpath=//android.widget.RelativeLayout[@index='1']    中文测试
+    Sleep    2s
+    Click Element    xpath=//android.widget.Button[@text='发送']
+
+*** Keywords ***
+Start_XiaoMi
+    Open Application    http://localhost:4733/wd/hub    alias=wechat    platformName=Android    platformVersion=6.0.1    deviceName='emulator-5554'    appPackage=com.tencent.mm
+    ...    appActivity=com.tencent.mm.ui.LauncherUI    unicodeKeyboard=True    resetKeyboard=True
+    Wait Until Page Contains    微信    20s    等待超时
+    Sleep    2s
+    #Close Application
+
+Start_H6
+    Open Application    http://localhost:4734/wd/hub    alias=wechat    platformName=Android    platformVersion=4.4.2    deviceName='emulator-5554'    appPackage=com.tencent.mm
+    ...    appActivity=com.tencent.mm.ui.LauncherUI    unicodeKeyboard=True    resetKeyboard=True
+    Wait Until Page Contains    微信    20s    等待超时
+    Sleep    2s
+    #Close Application
