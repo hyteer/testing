@@ -1,0 +1,31 @@
+*** Settings ***
+Library           AppiumLibraryYT
+
+*** Test Cases ***
+getSize
+    start memo
+    ${size}    Yt Get Window Size
+    Log    Size is: ${size}
+    ${width}    Evaluate    ${size}[0]
+    ${height}    Evaluate    ${size}[1]
+    Log    Width: ${width}, Height: ${height}
+    Click Element    id=menu_create_note
+    Sleep    1
+    Input Text    xpath=//android.widget.EditText[@NAF='true']    Test YT AppiumLibrary...
+    Sleep    3
+    Close Application
+
+getMax
+    YT Demo
+    ${x}    Set Variable    a
+    ${y}    Set Variable    b
+    ${themax}    Yt Get Max    ${x}    ${y}
+    Log    ${themax}
+
+*** Keywords ***
+start memo
+    #Open Application    http://localhost:4723/wd/hub    alias=memo    platformName=Android    platformVersion=5.1.1    deviceName='emulator-5554'    appPackage=com.example.android.notepad
+    # appActivity=.NotePadActivity    unicodeKeyboard=True    resetKeyboard=True
+    Open Application    http://localhost:4734/wd/hub    alias=memo    platformName=Android    platformVersion=5.1.1    deviceName='emulator-5554'    appPackage=com.example.android.notepad
+    ...    appActivity=.NotePadActivity    unicodeKeyboard=True    resetKeyboard=True
+    Sleep    2

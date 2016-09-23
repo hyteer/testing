@@ -1,0 +1,22 @@
+*** Test Cases ***
+xpath
+    Wait Until Page Contains Element    xpath=//android.widget.TextView[contains(@id,'com.maishalei.seller:id/centerView')][contains(@text,'拼啥嘞')]
+    \    //a[contains(.,'立即飞')]
+    \    xpath=/*[@id="rule"]/ng-form/div[13]/label/following-sibling::div[1]
+    Get Element Attribute    xpath=//tr[@class='products_sku'][1]@class
+    #Click Element    xpath=//*[@id="main-container"]/div/div[2]/div[2]/div/div/div/div/div[1]/form/table/tbody/tr[1]/td[text()='点赞-qrN0APVLdEpFwG']
+    Click Element    xpath=//*[@id="main-container"]/div/div[2]/div[2]/div/div/div/div/div[1]/form/table/tbody/tr[1]/td[starts-with(text(),'点赞-qrN0APVLdEpFwG')]
+    # Locate Parent \ Node
+    \    //*[title="50"]/parent::*
+    \    //*[title="50"]/..
+    \    //*[title="50"]/parent::store
+    #获取先辈    xpath=//*[@id="main-container"]/div/div[2]/div[2]/div/div/div/div/div[1]/form/table/tbody/tr/td[starts-with(text(),'点赞-')]/ancestor::tr[1]/td[1]
+    \    //*[@id="product"]//tr[@ng-click="choose(list)"]/td[@ng-bind="list.reserves" and not(text()="0")]/ancestor::tr[@ng-click="choose(list)"]//input[@type="checkbox"]
+    \    //*[@id="product"]//tr[@ng-click="choose(list)"]/td[@ng-bind="list.reserves" and not(text()="0")]/ancestor::tr//input[@type="checkbox"]
+    #获取父辈    xpath=//*[@id="main-container"]/div/div[2]/div[2]/div/div/div/div/div[1]/form/table/tbody/tr/td[starts-with(text(),'点赞-')]/parent::tr[1]/td[1]
+    #获取结果中的第N个元素    xpath=(//*[@id="img-cate-scroll"]/ul/li/span[starts-with(text(),"【测试】")])[2]
+    ####获取先辈元素
+    Get Text    //*[@id="main-container"]/div/div[2]/div[2]/div/div/div[3]/div[3]/ul/li/div/div[5]/div/span[starts-with(text(),"【微信图文】")]/ancestor::ul[1]/li/div/div[5]/div/span[2]
+    ##Not Contains    //*[@id="main-container"]/div/div[2]/div[2]/div/div/div[3]/div[3]/ul/li/div/div[5]/div/span[starts-with(text(),"【微信图文】")]/ancestor::ul[1]/li/div/div[3]/div[2]/a[contains(@title,"查看二维码") and not(contains(@class,'ng-hide'))]
+    兄弟元素    //*[@id="main-container"]//input[@ng-model="searchKeyword"]//following-sibling::span[@class="float-left"]/a
+    #多重属性校验    //tr[@ng-repeat="list in \ listArray[1]"]/td[text()="${发送时间}"]/parent::tr[1]/td[text()="${发送者}"]/parent::tr[1]/td[text()="${消息内容}"]

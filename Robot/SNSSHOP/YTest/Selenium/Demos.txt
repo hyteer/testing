@@ -1,0 +1,12 @@
+*** Settings ***
+Library           Selenium2Library
+
+*** Test Cases ***
+Demo
+    Title Should Be    工作台
+    Wait Until Element Contains    id=uniStartGrab    开始抢
+    Click Link    商家信息
+    Switch Browser    ff
+    Set Window Size    1280    1000
+    Select Window    title=工作台
+    Select Frame    id=frame15

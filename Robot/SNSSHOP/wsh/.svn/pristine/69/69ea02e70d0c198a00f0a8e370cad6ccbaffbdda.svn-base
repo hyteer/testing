@@ -1,0 +1,116 @@
+*** Settings ***
+Suite Setup       API登录
+Library           RequestsLibrary
+Resource          ../Resource/API/Common.txt
+Library           json
+Library           Collections
+Library           String
+Resource          ../Resource/常用操作.robot
+Resource          ../Resource/API/营销.txt
+Resource          ../Resource/API/API操作.txt
+
+*** Test Cases ***
+获取拼团活动列表
+    [Tags]    ready
+    ${resp}    Post Request    wsh    /together-buy/list-ajax
+    Log    Response:${resp.content}
+    ${js}    loads    ${resp.content}
+    ${errcode}    Get From Dictionary    ${js}    errcode
+    Log    errcode is:${errcode}
+    Run Keyword If    ${errcode}==0    Log    Success
+    ...    ELSE    Log    Failed
+
+获取秒杀活动列表
+    [Tags]    ready
+    ${resp}    Post Request    wsh    /second-kill/list-ajax
+    Log    Response:${resp.content}
+    ${js}    loads    ${resp.content}
+    ${errcode}    Get From Dictionary    ${js}    errcode
+    Log    errcode is:${errcode}
+    Run Keyword If    ${errcode}==0    Log    Success
+    ...    ELSE    Log    Failed
+
+获取满减活动列表
+    [Tags]    ready
+    ${resp}    Post Request    wsh    /reduction/list-ajax
+    Log    Response:${resp.content}
+    ${js}    loads    ${resp.content}
+    ${errcode}    Get From Dictionary    ${js}    errcode
+    Log    errcode is:${errcode}
+    Run Keyword If    ${errcode}==0    Log    Success
+    ...    ELSE    Log    Failed
+
+获取众筹活动列表
+    [Tags]    ready
+    ${resp}    Post Request    wsh    /collect-zan/list-ajax
+    Log    Response:${resp.content}
+    ${js}    loads    ${resp.content}
+    ${errcode}    Get From Dictionary    ${js}    errcode
+    Log    errcode is:${errcode}
+    Run Keyword If    ${errcode}==0    Log    Success
+    ...    ELSE    Log    Failed
+
+获取现金红包活动列表
+    [Tags]    ready
+    ${resp}    Post Request    wsh    /cash-redpack/list-ajax
+    Log    Response:${resp.content}
+    ${js}    loads    ${resp.content}
+    ${errcode}    Get From Dictionary    ${js}    errcode
+    Log    errcode is:${errcode}
+    Run Keyword If    ${errcode}==0    Log    Success
+    ...    ELSE    Log    Failed
+
+获取大转盘活动列表
+    [Tags]    ready
+    ${resp}    Post Request    wsh    /market-activity/list-ajax
+    Log    Response:${resp.content}
+    ${js}    loads    ${resp.content}
+    ${errcode}    Get From Dictionary    ${js}    errcode
+    Log    errcode is:${errcode}
+    Run Keyword If    ${errcode}==0    Log    Success
+    ...    ELSE    Log    Failed
+
+获取砸金蛋活动列表
+    [Tags]    ready
+    ${resp}    Post Request    wsh    /market-activity/smashegg-list-ajax
+    Log    Response:${resp.content}
+    ${js}    loads    ${resp.content}
+    ${errcode}    Get From Dictionary    ${js}    errcode
+    Log    errcode is:${errcode}
+    Run Keyword If    ${errcode}==0    Log    Success
+    ...    ELSE    Log    Failed
+
+获取卡券列表
+    [Tags]    ready
+    ${errmsg}    API.营销_获取卡券列表
+
+添加卡券
+    [Tags]    ready
+    ${title}    随机字符    【测试卡券】    12
+    ${quantity}    Evaluate    random.randint(20,500)    random
+    ${limit}    Set Variable    10
+    ${args}    Set Variable    {"brand_name":"【测试商户】","title":"${title}","logo_url":"http://imgcache.vikduo.com/static/1b6549eaca4feeaf27fab34e16b84e2b.jpg","color":"#55bd47","date_info_type":2,"begin":0,"end":3,"quantity":"${quantity}","get_limit":"${limit}","can_give_friend":2,"code_type":"1","notice":"这是引导提示信息！","description":"这是使用须知介绍。。。","service_phone":"13924628477","card_type":1,"assign":-1,"wx_card_type":1,"card_money":500,"money_limit":800,"card_discount":0,"exchange_content_text":"","product_ids":"","deal_detail":"价值5元代金券1张，全场满8元可用"}
+    ${errmsg}    营销.添加卡券    ${args}
+    ${card_id}    Get From Dictionary    ${errmsg}    id
+    ${card_name}    Get From Dictionary    ${errmsg}    title
+    Set Suite Variable    ${card_id}
+    Set Suite Variable    ${card_name}
+
+手动派发卡券
+    [Tags]    paused
+    ###
+    ${card}    获取一个特定条件卡券
+    ${id}    Get From Dictionary    ${card}    id
+    ###
+    ${errmsg}    营销.手动派发卡券    13723232    1159
+
+删除卡券
+    [Tags]    ready
+    #${card}    获取一个特定条件卡券
+    #${id}    Get From Dictionary    ${card}    id
+    Sleep    6
+    ${errmsg}    营销.删除卡券    ${card_id}
+
+添加并派发一张卡券
+    [Tags]    ready
+    添加并派发一张卡券

@@ -1,0 +1,54 @@
+*** Settings ***
+Library           Collections
+Library           String
+Resource          Res.robot
+Library           json
+Library           RequestsLibrary
+
+*** Test Cases ***
+Get Type
+    ${失败数}    Set Variable    ${0}
+    ${str}    Set Variable    'Test'
+    ${str2}    Set Variable    Test
+    ${type}    Evaluate    type(${0})
+    ${type}    Evaluate    type(${str})
+    Log    ${失败数}
+
+GetConfig
+    ${CI}    Set Variable    ci
+    Log    ${RES_URL}
+    Log    CI:${RES_URL.${CI}}
+
+GetEnv
+    ${flag_env}    Run Keyword And Return Status    Log    env:${env}
+    #${env}    Set Variable If    ${flag_env}==True    beta
+    ${env}    Run Keyword If    ${flag_env}==True    Set Variable    ${env}
+    ...    ELSE    Set Variable    beta
+    ${配置}    环境配置    ${env}
+    Log    ${配置.url}
+    Log    ${配置.username}
+
+Float
+    ${unit_amount}    Evaluate    1
+    ${unit_points}    Evaluate    10
+    ${x}    Evaluate    round(${unit_amount},4)/${unit_points}
+    ${1积分抵扣金额}    Evaluate    ${x}*0.01
+
+Get_Int
+    ${int}    Evaluate    int(2.97)
+
+json_to_dict
+    ${jsonstr}    Set Variable    {"b": 789, "c": 456, "a": 123}
+    ${dict}    json.loads    ${jsonstr}
+    ${name}    Get From Dictionary    ${dict}    c
+
+json_and_dict
+    ${str}    Set Variable    {"name":"Sally","age":23}
+    ${bytes} =    Encode String To Bytes    {'name':'Sally','age':23}    UTF-8
+    ${string}     Decode Bytes To String    ${bytes}    UTF-8
+    ${dict}    json.loads    ${str}
+    ${jsonstr}    json.dumps    ${dict}
+    ${dict2}    Create Dictionary    a='test'    b=33
+    Log    ${dict2.a}
+    ${name}    Get From Dictionary    ${dict}    name
+    Log    ${name}

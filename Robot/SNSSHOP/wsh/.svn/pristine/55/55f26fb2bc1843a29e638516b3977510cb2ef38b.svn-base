@@ -1,0 +1,6 @@
+*** Settings ***
+Resource          ../Common.txt
+
+*** Keywords ***
+订单可用卡券
+    微信登录

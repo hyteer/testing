@@ -1,0 +1,70 @@
+*** Settings ***
+Suite Teardown    关闭浏览器
+Library           Selenium2Library
+Resource          ../../Resource/常用操作.robot
+Resource          ../../Resource/微信模拟端/点击按钮.robot
+
+*** Test Cases ***
+拼团商品详情
+    进入拼团商品详情
+
+单独购买
+    进入拼团商品详情
+    Click Element    partial link=单独购买
+    wait until page contains    拼团测试商品
+    立即购买
+    sleep    3
+    wait until page contains    配送方式
+    Click Element    xpath=//label[@ng-class="{'btn_postage':sendType == 1}"]    #快递配送
+    Click Element    //a[@class="buy_own" and @ng-click="buy()"]
+    sleep    5
+    wait until page contains    微信安全支付    10
+    Click Element    xpath=//button[@class="weixin"]
+    sleep    6
+
+到店自提
+    进入拼团商品详情
+    Click Element    partial link=立即开团
+    sleep    2
+    wait until page contains    配送方式
+    Click Element    xpath=//label[@ng-class="{'btn_postage':sendType == 2}"]
+    Click Element    xpath=//a[@class="tg-btn buy_own"]
+    wait until page contains    微信安全支付    15
+    Press Key    name=consignee    自动化测试
+    Press Key    name=phoneNo    18812345678
+    Click Element    name=address
+    wait until page contains    中国广东省    15
+    Click Element    xpath=//h3[@ng-bind="i.shopInfo.name" and text()="测试pos店铺"]
+    wait until page contains    微信安全支付    15
+    Click Element    xpath=//button[@class="weixin"]
+    wait until page does not contain    微信安全支付    15
+
+快递配送
+    进入拼团商品详情
+    Click Element    partial link=立即开团
+    sleep    2
+    wait until page contains    配送方式
+    Click Element    xpath=//label[@ng-class="{'btn_postage':sendType == 1}"]
+    Click Element    xpath=//a[@class="tg-btn buy_own"]
+    wait until page contains    微信安全支付    15
+    Click Element    xpath=//span[@class="name fl" and text()="选择收货地址"]
+    Click Element    partial link=收货地址列表
+    wait until page contains    新增收货地址
+    Click Element    xpath=//span[@ng-bind="list.detail" and text()="比克大厦"]
+    wait until page contains    微信安全支付    15
+    Click Element    xpath=//button[@class="weixin"]
+    wait until page does not contain    微信安全支付    15
+
+*** Keywords ***
+进入拼团商品详情
+    open browser    http://weishanghuzhushou.betanewwx.snsshop.net/weishanghuzhushou/oauth/testing?id=13723238    gc
+    wait until page contains    首页
+    sleep    2
+    click element    link=惊喜
+    wait until page contains    拼团活动
+    Click Element    partial link=拼团活动
+    wait until page contains    拼团测试商品
+    #sleep    2
+    Click Element    partial link=拼团测试商品
+    Select window    商品详情
+    wait until page contains    拼团测试商品

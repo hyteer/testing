@@ -1,0 +1,8 @@
+*** Settings ***
+Library           AppiumLibrary
+
+*** Test Cases ***
+first
+    Open Application    http://localhost:4723/wd/hub    alias=maisha    platformName=Android    platformVersion=4.4.2    deviceName='emulator-5554'    appPackage=com.maishalei.seller.debug
+    ...    appActivity=com.maishalei.seller.ui.activity.LauncherActivity
+    Sleep    4s

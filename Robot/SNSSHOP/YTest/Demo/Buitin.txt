@@ -1,0 +1,136 @@
+*** Settings ***
+Library           random
+Library           Ytools
+Library           Collections
+Library           String
+
+*** Variables ***
+${var}            Test var
+
+*** Test Cases ***
+dict
+    &{dict} =    Create Dictionary    key=value    foo=bar
+    Should Be True    ${dict} == {'key': 'value', 'foo': 'bar'}
+    &{dict} =    Create Dictionary    ${1}=${2}    &{dict}    foo=new
+    Should Be True    ${dict} == {1: 2, 'key': 'value', 'foo': 'new'}
+    Log    Key:${dict.key}
+    Should Be Equal    ${dict.key}    value
+
+dict-yt
+    &{info} =    Create Dictionary    msg=a test    type=success
+    &{data}=    Create Dictionary    phone=13823114422    username=YT
+    Log    type:${info.type}
+    Should Be True    ${info} == {'msg':'a test','type':'success'}
+    &{dict} =    Create Dictionary    ${1}=${2}    &{info}    error=0
+    Should Be True    ${dict} == {1: 2, 'msg':'a test','type':'success','error':'0'}
+    Should Be Equal    ${dict.msg}    a test
+    &{args}=    Create Dictionary    &{info}    data=&{data}
+    Log    Data:${args.data}
+    Log    Phone:${args.data.phone}
+
+dict-test
+    &{dict} =    Create Dictionary    key=value    foo=bar
+    Should Be True    ${dict} == {'key': 'value', 'foo': 'bar'}
+    &{dict} =    Create Dictionary    ${1}=${2}    &{dict}    foo=new
+    Should Be True    ${dict} == {1: 2, 'key': 'value', 'foo': 'new'}
+    Log    ${dict.key}
+
+mydict
+    &{dict} =    Create Dictionary    key=value    foo=bar
+    Log    Var:${var}
+    Log    Dict:${dict.foo}
+    ${foo}    Get From Dictionary    ${dict}    foo
+
+list
+    @{list}    Create List    Act1    Act2    Act3
+    ${list2}    Create List    Act1    Act2    Act3
+    Log    ${list2[1]}
+
+Evaluate
+    ${x}    Set Variable    3
+    ${a}    Set variable
+    ${status}    Evaluate    ${x}>=3
+    Log    status:${status}
+    ${flag}    Evaluate    not $a
+    ${flag2}    Evaluate    $a
+    ${Rand}    Evaluate    random.randint(0,15)    random
+
+list2
+    @{list}    Create List    Act1    Act2    Act3
+    ${list2}    Create List    Act1    Act2    Act3
+    Log    ${list[1]}
+    Log    ${list2[2]}
+
+取整
+    ${销售价}    Set Variable    12
+    ${库存}    Set Variable    3
+    ${i1}    Evaluate    ${销售价}*0.6
+    ${i2}    Evaluate    ${销售价}*0.9
+    ${j1}    Evaluate    ${库存}*0.6
+    ${j2}    Evaluate    ${库存}*0.9
+    ${jj1}    Evaluate    int(round(${j1}))
+    ${jj2}    Evaluate    int(round(${j2}))
+
+GetRandFloat
+    ${num}    Yt Get Rand Float    0.01    3    2    True
+    Log    Num:${num}
+
+RunIf
+    ${库存}    Set Variable    49
+    ${库存factor}    Run Keyword If    ${库存}>=200    Set Variable    0.3
+    ...    ELSE IF    100<=${库存}<200    Set Variable    0.4
+    ...    ELSE IF    50<=${库存}<100    Set Variable    0.5
+    ...    ELSE    Set Variable    0.6
+    Log    ${库存factor}
+
+random_multi
+    ${n}    Evaluate    random.randint(1,5)    random
+    ${list}    Evaluate    random.sample(range(1,31),${n})    random
+    : FOR    ${i}    IN    @{list}
+    \    Log    ${i}
+    ${n2}    Evaluate    random.randint(1,3)    random
+    ${statlist}    Evaluate    random.sample(range(1,4),${n2})    random
+
+add2dict
+    &{dict}    Create Dictionary    a=test1    b=test2
+    Set To Dictionary    ${dict}    c=test3    d=tet4
+    Log    Dict:${dict}
+
+dict_test
+    ${等级字典}    Create Dictionary    1=木头会员    key=白银会员    3=黄金会员    4=白金会员
+    ${data}    Get From Dictionary    ${等级字典}    3
+    Log    ${data}
+    Log    ${等级字典.key}
+
+random_float
+    ${num}    Evaluate    round(random.uniform(0.01,100),2)    random
+
+rand_code
+    ${前缀}    Set Variable    C0000    #${EMPTY}
+    ${后缀}    Set Variable    ${EMPTY}
+    ${随机长度}    Set Variable    ${2}
+    ###
+    ${前缀长度}    Get Length    ${前缀}
+    ${后缀长度}    Get Length    ${后缀}
+    #${随机长度}    Evaluate    ${长度}-(${prefix_len}+${sufix_len})
+    ${随机码}    Generate Random String    ${随机长度}    123456789
+    ${编码}    Set Variable    ${前缀}${随机码}${后缀}
+
+rand_range_multi
+    ${n}    Evaluate    random.randint(1,4)    random
+    ${code}    Evaluate    random.sample(range(100000,999999),${n})    random
+
+SetVariableIf
+    ${flag_env}    Run Keyword And Return Status    Log    env:${env}
+    ${GLOBAL_ENV}    Set Variable If    ${flag_env}==True    ci    beta
+
+args_transfer_test
+    ${values}    args_transfer
+    Log    积分:${values[1]}
+    Log    金额:${values[0]}
+
+*** Keywords ***
+args_transfer
+    ${积分抵扣金额}    Evaluate    8
+    ${points}    Evaluate    80
+    [Return]    ${积分抵扣金额}    ${points}

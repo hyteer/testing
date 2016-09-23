@@ -1,0 +1,23 @@
+*** Settings ***
+Library           AppiumYT
+Library           Selenium2Library
+
+*** Test Cases ***
+simpletest
+    登录系统
+    Sleep    3
+    Demo Title Should Be    工作台
+    ${status}    Run Keyword And Return Status    Title Should Be    工作台
+    Run Keyword If    '${status}'==True    Log    Success...
+    Sleep    2
+    Close Browser
+
+*** Keywords ***
+登录系统
+    Open Browser    http://betanewwsh.vikduo.com/login/index    chrome
+    Capture Page Screenshot
+    Title Should Be    微商户后台管理
+    Input Text    staff_id    20151228
+    Input Password    password    123456
+    Input Text    id=captcha    1111
+    Click Element    id=login

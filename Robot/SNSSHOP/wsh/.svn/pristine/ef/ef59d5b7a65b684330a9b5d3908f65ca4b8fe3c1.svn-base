@@ -1,0 +1,37 @@
+*** Settings ***
+Suite Setup       API登录    1    1
+Library           RequestsLibrary
+Resource          ../Resource/API/Common.txt
+Library           json
+Library           Collections
+Library           String
+Resource          ../Resource/常用操作.robot
+Resource          ../Resource/API/订单.txt
+Resource          ../Resource/API/商品.txt
+
+*** Test Cases ***
+创建普通订单
+    [Tags]    ready
+    ${errmsg}    WX_商品列表
+    ${data}    Get From Dictionary    ${errmsg}    data
+    ${product_id}    Get From Dictionary    ${data[0]}    id
+    ${errmsg}    商品.商品详情    ${product_id}
+    ${product}    Get From Dictionary    ${errmsg}    product
+    ${productSkus}    Get From Dictionary    ${product}    productSkus
+    ${sku_id}    Get From Dictionary    ${productSkus[0]}    id
+    ${errmsg}    WX_创建普通订单    ${product_id}    ${sku_id}
+
+获取订单列表
+    [Tags]    ready
+    ${errmsg}    获取订单列表
+
+已完成订单收货
+    [Tags]    paused
+    ####    pickup_type=1 快递配送    pickup_type=2 到店自提
+    ${用户id}    ${提货码}    ${订单id号}    ${配送方式}    订单详情    3
+    Run Keyword If    ${配送方式}==1    收货（快递配送）    ${用户id}    ${订单id号}
+    ...    ELSE    收货（到店自提）    ${订单id号}    ${提货码}
+
+更新订单设置
+    [Tags]    ready
+    ${errmsg}    更新订单设置

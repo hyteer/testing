@@ -1,0 +1,9 @@
+*** Settings ***
+Library           Selenium2Library
+
+*** Test Cases ***
+login
+    Open Browser    http://52.221.243.152:8888
+    Input Text    id=username    tony
+    Input Password    id=password    111111
+    Click Button    name=login

@@ -1,0 +1,18 @@
+*** Settings ***
+Library           ApiTest
+
+*** Test Cases ***
+maisha
+    ${session}    Maisha User Login    android    13828821487    2580123456
+    Set Suite Variable    ${session}
+
+getinfo
+    Maisha User Getinfo    ${session}    android
+
+qrcode
+    Maisha Genqrcode    ${session}    android    test
+
+utils
+    Print Version
+    ${path}    Get Path    ${CURDIR}    Res
+    Log    ${path}

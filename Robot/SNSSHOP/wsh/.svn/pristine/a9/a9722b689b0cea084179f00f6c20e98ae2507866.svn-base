@@ -1,0 +1,290 @@
+*** Settings ***
+Library           DateTime
+Resource          Common.txt
+
+*** Keywords ***
+添加卡券
+    [Arguments]    ${args}
+    API登录
+    Log    准备添加卡券...
+    &{headers}    Create Dictionary    Accept=application/json    Content-Type=application/json
+    ${jsonstr}    Convert To String    ${args}
+    ${resp}    Post Request    wsh    /card-coupons/add-ajax    data=${jsonstr}    headers=${headers}
+    Log    Response:${resp.content}
+    #${res_content}    Get Substring    ${resp.content}    3
+    ${json_content}    loads    ${resp.content}
+    ${errcode}    Get From Dictionary    ${json_content}    errcode
+    ${errmsg}    Get From Dictionary    ${json_content}    errmsg
+    Run Keyword If    ${errcode}!=0    Fail    接口返回异常！
+    Log    添加卡券成功...
+    [Return]    ${errmsg}
+
+手动派发卡券
+    [Arguments]    ${用户ID}    ${卡券ID}
+    API登录
+    Log    准备派发卡券...
+    &{headers}    Create Dictionary    Accept=application/json    Content-Type=application/json
+    ${jsonstr}    Convert To String    {"user_type":1,"card_type_id":${卡券ID},"to_user_ids":[${用户ID}]}
+    ${resp}    Post Request    wsh    /card-coupons/send-ajax    data=${jsonstr}    headers=${headers}
+    Log    Response:${resp.content}
+    ${json_content}    loads    ${resp.content}
+    ${errcode}    Get From Dictionary    ${json_content}    errcode
+    ${errmsg}    Get From Dictionary    ${json_content}    errmsg
+    Run Keyword If    ${errcode}!=0    Fail    接口返回异常！${errmsg}
+    Log    派发卡券成功...
+    [Return]    ${errmsg}
+
+获取卡券列表
+    API登录
+    &{headers}    Create Dictionary    Accept=application/json    Content-Type=application/json
+    ${resp}    Post Request    wsh    /card-coupons/list-ajax    \    headers=${headers}
+    Log    Response:${resp.content}
+    ${json_content}    loads    ${resp.content}
+    ${errcode}    Get From Dictionary    ${json_content}    errcode
+    ${errmsg}    Get From Dictionary    ${json_content}    errmsg
+    Run Keyword If    ${errcode}!=0    Fail    接口返回异常！
+    [Return]    ${errmsg}
+
+删除卡券
+    [Arguments]    ${id}
+    API登录
+    &{headers}    Create Dictionary    Accept=application/json    Content-Type=application/json
+    ${jsonstr}    Convert To String    {"id":${id}}
+    ${resp}    Post Request    wsh    /card-coupons/del-ajax    data=${jsonstr}    headers=${headers}
+    Log    Response:${resp.content}
+    ${json_content}    loads    ${resp.content}
+    ${errcode}    Get From Dictionary    ${json_content}    errcode
+    ${errmsg}    Get From Dictionary    ${json_content}    errmsg
+    Run Keyword If    ${errcode}!=0    Fail    接口返回异常！
+    [Return]    ${errmsg}
+
+添加拼团活动
+    ${newscontent}    Create Dictionary    title=成为团长带领小伙伴享受团购价！    description=拼团活动开始啦，赶紧开团召集小伙伴一起团购吧！    document_id=187381
+    ${news}    Create Dictionary    news=${newscontent}
+    &{headers}=    Create Dictionary    Content-Type=application/json;charset=UTF-8
+    ${resp}    Post Request    wsh    /together-buy/add-ajax    data=${news}    headers=${headers}
+    Should Be Equal As Integers    ${resp.status_code}    200
+    ${jsondict}    to json    ${resp.content}
+    ${errcode}    Get From Dictionary    ${jsondict}    errcode
+    Should Be Equal As Integers    ${errcode}    0
+    ${errmsg}    Get From Dictionary    ${jsondict}    errmsg
+    ${togetherinfor}    Get From Dictionary    ${errmsg}    0
+    [Return]    ${togetherinfor}
+
+添加拼团活动商品
+    [Arguments]    ${togetherbuyID}    ${productID}    ${productSkuID}    ${buyPrice}=${5}    ${quota}=10    ${limitBuy}=3
+    ...    ${togetherNum}=3
+    [Documentation]    添加拼团活动商品：
+    ...    1.together_buy_id:拼团ID
+    ...    2.product_id:商品ID
+    ...    3.product_sku_id:商品SKU ID
+    ...    4.buy_price:团购价格
+    ...    5.quota:配额
+    ...    6.limit_buy:限购
+    ...    7.together_num:参团人数
+    ${together}    Create Dictionary    together_buy_id=${togetherbuyID}    product_id=${productID}    product_sku_id=${productSkuID}    buy_price=${buyPrice}    quota=${quota}
+    ...    limit_buy=${limitBuy}    together_num=${togetherNum}
+    &{headers}=    Create Dictionary    Content-Type=application/json;charset=UTF-8
+    ${resp}    Post Request    wsh    /together-buy/together-buy-goods-add-ajax    data=${together}    headers=${headers}
+    Should Be Equal As Integers    ${resp.status_code}    200
+    ${jsondict}    to json    ${resp.content}
+    ${errcode}    Get From Dictionary    ${jsondict}    errcode
+    Should Be Equal As Integers    ${errcode}    0
+    ${errmsg}    Get From Dictionary    ${jsondict}    errmsg
+    [Return]    ${errmsg}
+
+编辑拼团活动
+    [Arguments]    ${togetherbuyID}    ${activityID}
+    ${start}    Get Current Date    result_format=epoch
+    ${end}    Add Time To Date    ${start}    1 days    result_format=epoch
+    ${starttime}    Convert To Integer    ${start}
+    ${endtime}    Convert To Integer    ${end}
+    ${activityinfo}    Create Dictionary    id=${activityID}    name=拼团活动自动化测试    desc=拼团活动自动化测试    expire_type=${1}    start_time=${starttime}
+    ...    end_time=${endtime}    share_type=${1}
+    ${postage}    Create Dictionary    type=${3}    num=${null}    amount=${null}
+    ${authicons}    Create List
+    ${togetherBuy}    Create Dictionary    id=${togetherbuyID}    is_agree=${2}    is_discount=1    is_time_limit=${2}    head_price=${1}
+    ...    time_limit=${null}    is_open=${2}    is_more=${2}    is_auto_share=${1}    auth_icons=${authicons}    description=${EMPTY}
+    ${shareMessage}    Create Dictionary    title=爱拼才会赢抱团才优惠    desc=参与拼团召集小伙伴，一起静享团购优惠    pic_id=${187380}
+    ${editorinfor}    Create Dictionary    activity=${activityinfo}    postageSetting=${postage}    togetherBuy=${togetherBuy}    shareMessage=${shareMessage}
+    &{headers}=    Create Dictionary    Content-Type=application/json;charset=UTF-8
+    ${resp}    Post Request    wsh    /together-buy/edit-ajax    data=${editorinfor}    headers=${headers}
+    Should Be Equal As Integers    ${resp.status_code}    200
+    ${jsondict}    to json    ${resp.content}
+    ${errcode}    Get From Dictionary    ${jsondict}    errcode
+    Should Be Equal As Integers    ${errcode}    0
+    ${errmsg}    Get From Dictionary    ${jsondict}    errmsg
+    [Return]    ${errmsg}
+
+开启拼团活动
+    [Arguments]    ${activityID}
+    ${activityID}    Create Dictionary    id=${activityID}
+    &{headers}=    Create Dictionary    Content-Type=application/json;charset=UTF-8
+    ${resp}    Post Request    wsh    /together-buy/open-ajax    data=${activityID}    headers=${headers}
+    Should Be Equal As Integers    ${resp.status_code}    200
+    ${jsondict}    to json    ${resp.content}
+    ${errcode}    Get From Dictionary    ${jsondict}    errcode
+    Should Be Equal As Integers    ${errcode}    0
+    ${errmsg}    Get From Dictionary    ${jsondict}    errmsg
+    [Return]    ${errmsg}
+
+关闭拼团活动
+    [Arguments]    ${activityID}
+    ${activityID}    Create Dictionary    id=${activityID}
+    &{headers}=    Create Dictionary    Content-Type=application/json;charset=UTF-8
+    ${resp}    Post Request    wsh    /together-buy/close-ajax    data=${activityID}    headers=${headers}
+    Should Be Equal As Integers    ${resp.status_code}    200
+    ${jsondict}    to json    ${resp.content}
+    ${errcode}    Get From Dictionary    ${jsondict}    errcode
+    Should Be Equal As Integers    ${errcode}    0
+    ${errmsg}    Get From Dictionary    ${jsondict}    errmsg
+    [Return]    ${errmsg}
+
+删除拼团活动
+    [Arguments]    ${activityID}
+    ${activityID}    Create Dictionary    id=${activityID}
+    &{headers}=    Create Dictionary    Content-Type=application/json;charset=UTF-8
+    ${resp}    Post Request    wsh    /together-buy/del-ajax    data=${activityID}    headers=${headers}
+    Should Be Equal As Integers    ${resp.status_code}    200
+    ${jsondict}    to json    ${resp.content}
+    ${errcode}    Get From Dictionary    ${jsondict}    errcode
+    Should Be Equal As Integers    ${errcode}    0
+    ${errmsg}    Get From Dictionary    ${jsondict}    errmsg
+    [Return]    ${errmsg}
+
+添加积分抵扣活动
+    [Arguments]    ${expireType}=${2}    ${startTime}=${null}    ${endTime}=${null}    ${minConsumption}=${2}    ${Type}=${1}    ${unitPoints}=10
+    ...    ${unitAmount}=${1}    ${maxAmount}=${10}    ${seckillFlag}=${1}    ${togetherBuyFlag}=${1}    ${scanFlag}=${1}    ${normalFlag}=${1}
+    ${redeeminfor}    Create Dictionary    name=自动化积分抵扣测试    expire_type=${expireType}    start_time=${startTime}    end_time=${endTime}    min_consumption=${minConsumption}
+    ...    type=${Type}    unit_points=${unitPoints}    unit_amount=${unitAmount}    max_amount=${maxAmount}    seckill_flag=${seckillFlag}    together_buy_flag=${togetherBuyFlag}
+    ...    scan_flag=${scanFlag}    normal_flag=${normalFlag}
+    &{headers}=    Create Dictionary    Content-Type=application/json;charset=UTF-8
+    ${resp}    Post Request    wsh    /points-redeem/add-ajax    data=${redeeminfor}    headers=${headers}
+    Should Be Equal As Integers    ${resp.status_code}    200
+    ${respdict}    to json    ${resp.content}
+    ${errcode}    Get From Dictionary    ${respdict}    errcode
+    Should Be Equal As Integers    ${errcode}    0
+    ${errmsg}    Get From Dictionary    ${respdict}    errmsg
+    [Return]    ${errmsg}
+
+启用积分抵扣活动
+    [Arguments]    ${redeemInfor}
+    ${id}    Get From Dictionary    ${redeemInfor}    id
+    ${redeemID}    Create Dictionary    id=${id}
+    &{headers}=    Create Dictionary    Content-Type=application/json;charset=UTF-8
+    ${resp}    Post Request    wsh    /points-redeem/open-ajax    data=${redeemID}    headers=${headers}
+    Should Be Equal As Integers    ${resp.status_code}    200
+    ${respdict}    to json    ${resp.content}
+    ${errcode}    Get From Dictionary    ${respdict}    errcode
+    Should Be Equal As Integers    ${errcode}    0
+
+关闭积分抵扣活动
+    [Arguments]    ${redeemInfor}
+    ${id}    Get From Dictionary    ${redeemInfor}    id
+    ${redeemID}    Create Dictionary    id=${id}
+    &{headers}=    Create Dictionary    Content-Type=application/json;charset=UTF-8
+    ${resp}    Post Request    wsh    /points-redeem/close-ajax    data=${redeemID}    headers=${headers}
+    Should Be Equal As Integers    ${resp.status_code}    200
+    ${respdict}    to json    ${resp.content}
+    ${errcode}    Get From Dictionary    ${respdict}    errcode
+    Should Be Equal As Integers    ${errcode}    0
+
+删除积分抵扣活动
+    [Arguments]    ${redeemInfor}
+    ${id}    Get From Dictionary    ${redeemInfor}    id
+    ${redeemID}    Create Dictionary    id=${id}
+    &{headers}=    Create Dictionary    Content-Type=application/json;charset=UTF-8
+    ${resp}    Post Request    wsh    /points-redeem/del-ajax    data=${redeemID}    headers=${headers}
+    Should Be Equal As Integers    ${resp.status_code}    200
+    ${respdict}    to json    ${resp.content}
+    ${errcode}    Get From Dictionary    ${respdict}    errcode
+    Should Be Equal As Integers    ${errcode}    0
+
+WX_订单可用卡券
+    [Arguments]    ${order_id}    ${order_amount}=100
+    [Documentation]    注：${order_amount}可填任意整数作为参数，这个参数为向下兼容而保留的
+    微信登录
+    &{headers}    Create Dictionary    Accept=application/json    Content-Type=application/json
+    ${jsonstr}    Convert To String    {"order_id":${order_id},"order_amount":${order_amount}}
+    ${resp}    Post Request    wx    /card-coupons/can-use-by-order    data=${jsonstr}    headers=${headers}
+    Should Be Equal As Integers    ${resp.status_code}    200
+    Log    Response:${resp.content}
+    ${content}    loads    ${resp.content}
+    ${errcode}    Get From Dictionary    ${content}    errcode
+    ${errmsg}    Get From Dictionary    ${content}    errmsg
+    Should Be Equal As Strings    ${errcode}    0    接口返回异常！返回信息：${errmsg}
+    [Return]    ${errmsg}
+
+添加满减活动
+    [Arguments]    ${params_jsonstr}
+    [Documentation]    说明：此关键字需自行传递JSON字符串
+    ...
+    ...    例：添加满减活动|${params_jsonstr}
+    ...
+    ...    注：${params_jsonstr}JSON字符串参数
+    ...
+    ...    JSON参数模板：
+    ...    {"name":"满减活动测试0919","is_relate_all":1,"start_time":1474278573,"end_time":1475228976,"conditions":[{"condition_type":1,"level":1,"condition_min":2000,"strategys":[{"reduction_type":1,"amount":200,"discount":"","point":"","card_type_id":"","red_packet_id":"","is_all_area":1,"area_id":"","area_cn":"","is_limit":1}]}],"products":[]}
+    &{headers}    Create Dictionary    Accept=application/json    Content-Type=application/json
+    ${jsonstr}    Convert To String    ${params_jsonstr}
+    ${resp}    Post Request    wsh    /reduction/add-ajax    data=${jsonstr}    headers=${headers}
+    Should Be Equal As Integers    ${resp.status_code}    200
+    Log    Response:${resp.content}
+    ${content}    loads    ${resp.content}
+    ${errcode}    Get From Dictionary    ${content}    errcode
+    ${errmsg}    Get From Dictionary    ${content}    errmsg
+    Should Be Equal As Strings    ${errcode}    0    接口返回异常！返回信息：${errmsg}
+    [Return]    ${errmsg}
+
+开启满减活动
+    [Arguments]    ${id}
+    [Documentation]    说明：此关键字需自行传递JSON字符串
+    ...
+    ...    例：添加满减活动|${params_jsonstr}
+    ...
+    ...    注：${params_jsonstr}JSON字符串参数
+    ...
+    ...    JSON参数模板：
+    ...    {"name":"满减活动测试0919","is_relate_all":1,"start_time":1474278573,"end_time":1475228976,"conditions":[{"condition_type":1,"level":1,"condition_min":2000,"strategys":[{"reduction_type":1,"amount":200,"discount":"","point":"","card_type_id":"","red_packet_id":"","is_all_area":1,"area_id":"","area_cn":"","is_limit":1}]}],"products":[]}
+    &{headers}    Create Dictionary    Accept=application/json    Content-Type=application/json
+    ${jsonstr}    Convert To String    {"id":${id}}
+    ${resp}    Post Request    wsh    /reduction/open-ajax    data=${jsonstr}    headers=${headers}
+    Should Be Equal As Integers    ${resp.status_code}    200
+    Log    Response:${resp.content}
+    ${content}    loads    ${resp.content}
+    ${errcode}    Get From Dictionary    ${content}    errcode
+    ${errmsg}    Get From Dictionary    ${content}    errmsg
+    Should Be Equal As Strings    ${errcode}    0    接口返回异常！返回信息：${errmsg}
+
+关闭满减活动
+    [Arguments]    ${id}
+    [Documentation]    参数id为满减活动ID
+    &{headers}    Create Dictionary    Accept=application/json    Content-Type=application/json
+    ${jsonstr}    Convert To String    {"id":${id}}
+    ${resp}    Post Request    wsh    /reduction/close-ajax    data=${jsonstr}    headers=${headers}
+    Should Be Equal As Integers    ${resp.status_code}    200
+    Log    Response:${resp.content}
+    ${content}    loads    ${resp.content}
+    ${errcode}    Get From Dictionary    ${content}    errcode
+    ${errmsg}    Get From Dictionary    ${content}    errmsg
+    Should Be Equal As Strings    ${errcode}    0    接口返回异常！返回信息：${errmsg}
+
+删除满减活动
+    [Arguments]    ${id}
+    [Documentation]    说明：此关键字需自行传递JSON字符串
+    ...
+    ...    例：添加满减活动|${params_jsonstr}
+    ...
+    ...    注：${params_jsonstr}JSON字符串参数
+    ...
+    ...    JSON参数模板：
+    ...    {"name":"满减活动测试0919","is_relate_all":1,"start_time":1474278573,"end_time":1475228976,"conditions":[{"condition_type":1,"level":1,"condition_min":2000,"strategys":[{"reduction_type":1,"amount":200,"discount":"","point":"","card_type_id":"","red_packet_id":"","is_all_area":1,"area_id":"","area_cn":"","is_limit":1}]}],"products":[]}
+    &{headers}    Create Dictionary    Accept=application/json    Content-Type=application/json
+    ${jsonstr}    Convert To String    {"id":${id}}
+    ${resp}    Post Request    wsh    /reduction/delete-ajax    data=${jsonstr}    headers=${headers}
+    Should Be Equal As Integers    ${resp.status_code}    200
+    Log    Response:${resp.content}
+    ${content}    loads    ${resp.content}
+    ${errcode}    Get From Dictionary    ${content}    errcode
+    ${errmsg}    Get From Dictionary    ${content}    errmsg
+    Should Be Equal As Strings    ${errcode}    0    接口返回异常！返回信息：${errmsg}

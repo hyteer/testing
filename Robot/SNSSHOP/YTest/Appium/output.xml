@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<robot generated="20160630 18:22:01.196" generator="Robot 3.0 (Python 2.7.11 on win32)">
+<suite source="D:\Testing\Robot\YTest\Appium\Demos.robot" id="s1" name="Demos">
+<test id="s1-t1" name="bootArgs">
+<kw name="Log" library="BuiltIn">
+<doc>Logs the given message with the given level.</doc>
+<arguments>
+<arg>${arg1}</arg>
+</arguments>
+<msg timestamp="20160630 18:22:01.356" level="INFO">11</msg>
+<status status="PASS" endtime="20160630 18:22:01.357" starttime="20160630 18:22:01.356"></status>
+</kw>
+<kw name="Log" library="BuiltIn">
+<doc>Logs the given message with the given level.</doc>
+<arguments>
+<arg>${arg2}</arg>
+</arguments>
+<msg timestamp="20160630 18:22:01.357" level="INFO">22</msg>
+<status status="PASS" endtime="20160630 18:22:01.357" starttime="20160630 18:22:01.357"></status>
+</kw>
+<status status="PASS" endtime="20160630 18:22:01.358" critical="yes" starttime="20160630 18:22:01.355"></status>
+</test>
+<status status="PASS" endtime="20160630 18:22:01.359" starttime="20160630 18:22:01.198"></status>
+</suite>
+<statistics>
+<total>
+<stat fail="0" pass="1">Critical Tests</stat>
+<stat fail="0" pass="1">All Tests</stat>
+</total>
+<tag>
+</tag>
+<suite>
+<stat fail="0" id="s1" name="Demos" pass="1">Demos</stat>
+</suite>
+</statistics>
+<errors>
+</errors>
+</robot>

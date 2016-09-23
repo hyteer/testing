@@ -1,0 +1,32 @@
+*** Settings ***
+Library           RequestsLibrary
+Library           Collections
+Library           String
+Library           json
+Resource          ../配置参数.robot
+
+*** Keywords ***
+API登录
+    [Arguments]    ${后端}=1    ${前端}=0
+    [Documentation]    说明：登录API获取Session，可选后端和前端，1为开启，其它值不登录
+    ...
+    ...    默认登录后端。
+    ...
+    ...    示例：API登录|1|1 \ #前后端全部登录
+    初始化
+    Run Keyword If    ${后端}==1    后端API
+    Run Keyword If    ${前端}==1    微信登录
+
+微信登录
+    Create Session    wx    ${GLOBAL_CONFIG.wx_url}/${GLOBAL_CONFIG.wx_acc}
+    &{headers}=    Create Dictionary    Content-Type=text/html    charset=UTF-8
+    ${resp}    Post Request    wx    /oauth/testing?id=${GLOBAL_CONFIG.wx_user}    headers=${headers}
+    Log    Response:${resp.content}
+
+后端API
+    Log    测试URL：${GLOBAL_CONFIG.url}
+    Log    测试用户：${GLOBAL_CONFIG.username}
+    Create Session    wsh    ${GLOBAL_CONFIG.url}
+    &{data}=    Create Dictionary    username=${GLOBAL_CONFIG.username}    password=${GLOBAL_CONFIG.password}    captcha=1111
+    &{headers}=    Create Dictionary    Content-Type=application/x-www-form-urlencoded
+    ${resp}    Post Request    wsh    /login/login-ajax    data=${data}    headers=${headers}

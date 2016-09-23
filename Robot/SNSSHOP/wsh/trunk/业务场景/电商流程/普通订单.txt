@@ -1,0 +1,508 @@
+*** Settings ***
+Suite Setup       API登录    1    1
+Suite Teardown    关闭浏览器
+Test Teardown     失败截图
+Library           Selenium2Library
+Resource          ../../Resource/常用操作.robot
+Resource          ../../Resource/功能菜单.robot
+Resource          ../../Resource/配置参数.robot
+Resource          ../../Resource/API/商品.txt
+Resource          ../../Resource/微信模拟端/操作单元.robot
+Resource          ../../Resource/微信模拟端/点击按钮.robot
+Resource          ../../Resource/API/API操作.txt
+Resource          ../../Resource/业务规则.robot
+Resource          ../../Resource/API/订单.txt
+
+*** Test Cases ***
+基本订单
+    ####前置操作
+    添加一个商品    上架=True
+    ${product}    获取一个特定条件商品
+    Pass Execution    Test
+    ####进入前端页面
+    微信模拟页面登录    13723232
+    Wait Until Page Contains Element    //div[@class="footer_menu"]
+    Wait Until Element Contains    //div[@class="footer_menu"]    首页
+    Wait Until Element Contains    //div[@class="footer_menu"]    列表
+    Sleep    1
+    点击底部菜单    列表
+    ####进入商品列表页面
+    ${id}    Get From Dictionary    ${product}    id
+    ${reserves}    Get From Dictionary    ${product}    reserves
+    ${name}    Get From Dictionary    ${product}    name
+    ${price}    Get From Dictionary    ${product}    show_price
+    ${price}    Evaluate    ${price}*0.01
+    ${skus}    Get From Dictionary    ${product}    productSkus
+    ${skus_count}    Get Length    ${skus}
+    ####查看商品详情
+    Wait Until Element Is Visible    //div[@ng-bind="list.name" and text()="${name}"]
+    Sleep    1
+    Click Element    //div[@ng-bind="list.name" and text()="${name}"]
+    Wait Until Element Contains    //li/a[@class="buy_own" and @ng-click="showModal()"]    立即购买
+    Sleep    1
+    ${价格}    Get Text    //div[@class="detail_title_box"]//span[@ng-bind="model.product.show_price | number:2"]
+    Convert To Number    ${价格}
+    Should Be Equal As Numbers    ${价格}    ${price}
+    ####购买商品
+    立即购买
+    Wait Until Element Is Visible    //div[@class="close_btn"]/i[@ng-click="close()"]
+    Wait Until Element Is Visible    //div[@class="detail_select_rule"]
+    Element Should Contain    //div[@class="detail_select_rule"]//div[@class="price"]    库存
+    ${库存}    Get Text    //div[@class="detail_select_rule"]//div[@class="price"]//span[@ng-bind="modelObj.reserves"]
+    ${价格2}    Get Text    //div[@class="detail_select_rule"]//div[@class="title"]//span[starts-with(@ng-bind,"modelObj.retail_price*skunum")]
+    Should Be True    ${库存}>0
+    Element Should Contain    //a[@class="buy_own" and @ng-click="buy()"]    确认购买
+    Click Element    //a[@class="buy_own" and @ng-click="buy()"]    # 购买
+    Sleep    3
+    ####支付界面
+    Wait Until Page Contains Element    //textarea[@id="customer_mark" and contains(@placeholder,"请输入您的留言")]
+    Sleep    1
+    ${价格3}    Get Text    //span[@ng-bind="list.price"]
+    ${价格3}    Evaluate    float(${价格3})
+    ${会员折扣}    Get Text    //span[@ng-bind="is_discount"]
+    ${会员折扣}    Evaluate    int(${会员折扣})
+    ${会员折扣}    向下取整    ${会员折扣}
+    ${实付金额}    Evaluate    ${价格3}*${会员折扣}*0.1
+    ${实付金额_page}    Get Text    //span[@ng-bind="priceAll() |number : 2"]
+    ${会员优化}    Evaluate    ${价格3}-${实付金额_page}
+    ${会员优化_page}    Get Text    //span[text()="会员优惠"]//following-sibling::span/span[@class="ng-binding"]
+    Should Be Equal As Numbers    ${实付金额_page}    ${实付金额}
+    Should Be Equal As Numbers    ${会员优化_page}    ${会员优化}
+
+添加订单
+    [Documentation]    说明
+    ...
+    ...    开关：如无特别注明，所有开关默认1为生效，2为关闭状态
+    ...
+    ...    订单回收： 1.开启订单回收 2.关闭订单回收 默认回收时间60秒
+    [Tags]    ready
+    [Setup]    初始化
+    ######前置操作########
+    ${errmsg}    添加一个商品    上架=True
+    ${product}    Get From Dictionary    ${errmsg}    product
+    ${id}    Get From Dictionary    ${product}    id
+    ${商品限额开关}    Generate Random String    1    1
+    ${商品限额数量}    Set Variable    3
+    ${errmsg}    商品详情    ${id}
+    ${product}    Get From Dictionary    ${errmsg}    product
+    ${product_name}    Get From Dictionary    ${product}    name
+    ${can_use_member_discount}    Get From Dictionary    ${product}    can_use_member_discount
+    ${auto_close_rand}    Generate Random String    1    2
+    Run Keyword If    ${auto_close_rand}==1    订单.更新订单设置    ${auto_close_rand}
+    ...    ELSE    订单.更新订单设置    2
+    Sleep    1
+    #######生成参数########
+    #活动参数
+    ${unit_amount}    Evaluate    10
+    ${unit_points}    Evaluate    10
+    ${minConsumption}    Evaluate    3
+    ${act_points_amount}    Evaluate    20
+    ${act_points_points}    Evaluate    3
+    ${1积分抵扣金额}    Evaluate    round(${unit_amount},4)/${unit_points}*0.01
+    ${优惠信息}    获取会员优惠信息    255    #255为测试用会员ID
+    ${会员折扣_API}    Get From Dictionary    ${优惠信息}    折扣
+    ${会员积分_API}    Get From Dictionary    ${优惠信息}    积分
+    #获取商品信息
+    ${product_id}    Get From Dictionary    ${product}    id
+    ${product_name}    Get From Dictionary    ${product}    name
+    ${价格_API}    Get From Dictionary    ${product}    show_price
+    ${规格}    Get From Dictionary    ${product}    productSkus
+    ${规格数量}    Get Length    ${规格}
+    #随机开关
+    ${会员折扣开关}    Generate Random String    1    1
+    ${卡券共享开关}    Generate Random String    1    1
+    ${积分抵扣开关}    Generate Random String    1    1
+    ${积分赠送开关}    Generate Random String    1    1
+    ${满减活动开关}    Generate Random String    1    1
+    会员.折扣与卡券优惠开关    ${会员折扣开关}    ${卡券共享开关}
+    #生成活动
+    ${reduction_id}    Run Keyword If    ${满减活动开关}==1    添加一个满减活动    减=3
+    ${redeemInfor}    Run Keyword If    ${积分抵扣开关}==1    添加积分抵扣活动    unitAmount=${unit_amount}    maxAmount=1000    minConsumption=${minConsumption}
+    Run Keyword If    ${积分抵扣开关}==1    启用积分抵扣活动    ${redeemInfor}
+    ${act_points_id}    Run Keyword If    ${积分赠送开关}==1    添加积分赠送活动    amount=${act_points_amount}    points=${act_points_points}
+    Run Keyword If    ${积分赠送开关}==1    开启积分赠送活动    ${act_points_id}
+    ######进入前端页面######
+    微信模拟页面登录    13723232
+    Wait Until Page Contains Element    //div[@class="footer_menu"]
+    Wait Until Element Contains    //div[@class="footer_menu"]    首页
+    Wait Until Element Contains    //div[@class="footer_menu"]    列表
+    Sleep    1
+    点击底部菜单    列表
+    #######商品详情########
+    Wait Until Element Is Visible    //div[@ng-bind="list.name" and text()="${product_name}"]
+    Sleep    5
+    Click Element    //div[@ng-bind="list.name" and text()="${product_name}"]    #点击商品进入详情页
+    Wait Until Element Contains    //li/a[@class="buy_own" and @ng-click="showModal()"]    立即购买
+    Sleep    1
+    ${价格}    Get Text    //div[@class="detail_title_box"]//span[@ng-bind="model.product.show_price | number:2"]
+    Convert To Number    ${价格}
+    Should Be Equal As Numbers    ${价格}    ${价格_API}
+    Run Keyword If    ${满减活动开关}==1    商品详情页校验_满减活动    ${价格_API}
+    ...    ELSE    Element Should Not Be Visible    //section[@ng-if="isPostage == 1"]
+    Sleep    10
+    立即购买    # 进入购买界面
+    Wait Until Element Is Visible    //div[@class="close_btn"]/i[@ng-click="close()"]
+    Wait Until Element Is Visible    //div[@class="detail_select_rule"]
+    Element Should Contain    //div[@class="detail_select_rule"]//div[@class="price"]    库存
+    ${库存}    Get Text    //div[@class="detail_select_rule"]//div[@class="price"]//span[@ng-bind="modelObj.reserves"]
+    ${价格2}    Get Text    //div[@class="detail_select_rule"]//div[@class="title"]//span[starts-with(@ng-bind,"modelObj.retail_price*skunum")]
+    Should Be True    ${库存}>0
+    Element Should Contain    //a[@class="buy_own" and @ng-click="buy()"]    确认购买
+    Click Element    //a[@class="buy_own" and @ng-click="buy()"]    # 确认购买
+    Sleep    1
+    #######支付界面########
+    ####页面校验
+    Wait Until Page Contains Element    //textarea[@id="customer_mark" and contains(@placeholder,"请输入您的留言")]
+    Sleep    1
+    Run Keyword If    ${auto_close_rand}==1    订单回收校验
+    ${价格3}    Get Text    //span[@ng-bind="list.price"]
+    ${价格3}    Evaluate    float(${价格3})
+    ####满减优惠
+    Log    ---满减活动优惠计算---
+    ${满减优惠}    Run Keyword If    ${满减活动开关}==1 and ${价格_API}>=20    满减满折优惠    ${价格_API}
+    ...    ELSE    Evaluate    0
+    ${满减优惠后金额}    Evaluate    ${价格_API}-${满减优惠}
+    ####会员优惠
+    Log    ---会员优惠计算---
+    ${折扣数据}    Run Keyword If    ${can_use_member_discount}==True    会员折扣校验    ${会员折扣_API}    ${满减优惠后金额}
+    ${会员优惠_page}    Run Keyword If    ${can_use_member_discount}==True    Get From Dictionary    ${折扣数据}    会员优惠_page
+    ${会员折扣_page}    Run Keyword If    ${can_use_member_discount}==True    Get From Dictionary    ${折扣数据}    会员折扣_page
+    ${会员优惠}    Run Keyword If    ${can_use_member_discount}==True    Get From Dictionary    ${折扣数据}    会员优惠
+    ...    ELSE    Evaluate    0
+    ${会员优惠后金额}    Evaluate    ${满减优惠后金额}-${会员优惠}
+    ####卡券优惠
+    Log    ---卡券优惠计算---
+    ${current_url}    Get Location
+    ${matches}    Get Regexp Matches    ${current_url}    (?<=id=)\\d*\\d    #获取订单ID
+    ${order_id}    Evaluate    ${matches[0]}
+    ${cards}    获取指定价格下可用卡券数量    ${order_id}    ${会员优惠后金额}
+    ${cards_len}    Get Length    ${cards}
+    Run Keyword If    ${cards_len}>=1    支付页校验_卡券    ${cards_len}
+    ${卡券优惠}    Run Keyword If    ${卡券共享开关}==1 and ${cards_len}>=1    卡券优惠校验
+    ...    ELSE    Evaluate    0
+    ${卡券优惠后金额}    Evaluate    ${会员优惠后金额}-${卡券优惠}
+    ####邮费计算
+    #Todo
+    ####积分抵扣
+    Log    ---积分抵扣优惠计算---
+    Run Keyword If    ${积分抵扣开关}==1    支付页校验_积分抵扣    ${会员积分_API}
+    ${积分抵扣数据}    Run Keyword If    ${积分抵扣开关}==1    积分抵扣校验    ${1积分抵扣金额}
+    ...    ELSE    Evaluate    0
+    ${积分抵扣金额}    Run Keyword If    ${积分抵扣开关}==1    Set Variable    ${积分抵扣数据[0]}
+    ...    ELSE    Evaluate    0
+    ${积分抵扣数量}    Run Keyword If    ${积分抵扣开关}==1    Set Variable    ${积分抵扣数据[1]}
+    ...    ELSE    Evaluate    0
+    ${积分抵扣优惠后金额}    Evaluate    ${卡券优惠后金额}-${积分抵扣金额}
+    #######页面校验#######
+    ${实付金额}    Evaluate    ${卡券优惠后金额}-${积分抵扣金额}
+    ${实付金额}    Set Variable If    ${实付金额}<0    0    ${实付金额}
+    ${实付金额_page}    Get Text    //span[@ng-bind="priceAll() |number : 2"]
+    #######数据校验########
+    Sleep    1
+    Should Be Equal As Numbers    ${会员折扣_page}    ${会员折扣_API}
+    Should Be Equal As Numbers    ${会员优惠_page}    ${会员优惠}
+    Should Be Equal As Numbers    ${实付金额_page}    ${实付金额}
+    ########支付#########
+    ####货到付款
+    Element Should Be Visible    //button[@ng-click="clickOther()"]
+    Element Should Contain    //button[@ng-click="clickOther()"]    其他支付
+    Click Element    //button[@ng-click="clickOther()"]
+    Sleep    1
+    Element Should Be Visible    //button[@ng-show="isshowdelivery()"]
+    Element Should Contain    //button[@ng-show="isshowdelivery()"]    货到付款
+    Click Element    //button[@ng-show="isshowdelivery()"]
+    Sleep    3
+    Wait Until Page Contains Element    //h4[@class="fl" and contains(text(),"订单状态")]
+    Element Should Be Visible    //h4[@class="fl" and contains(text(),"订单状态")]
+    Element Should Be Visible    //span[@ng-bind="model.orderStatusText" and contains(text(),"待发货")]
+    Sleep    2
+    #Todo:其它校验
+    ########发货#########
+    订单发货    ${order_id}
+    Sleep    2
+    #刷新页面
+    ${url_page}    Get Location
+    Go To    ${url_page}
+    Sleep    1
+    Element Should Be Visible    //span[@ng-bind="model.orderStatusText" and text()="待收货"]
+    Sleep    2
+    #######确认收货########
+    Element Should Be Visible    //a[@ng-click="$root.save()" and text()="确认收货"]
+    Click Element    //a[@ng-click="$root.save()" and text()="确认收货"]
+    ####评论
+    Wait Until Element Is Visible    //a[@ng-click="details(list)"]    #底部按钮
+    Element Should Contain    //a[@ng-click="details(list)"]    立即评论
+    Element Should Be Visible    //span[@ng-bind="list.product_sku_name" and text()="${product_name}"]
+    Element Should Be Visible    //span[@ng-bind="list.price" and text()="${价格_API}"]
+    ${star_rand}    Generate Random String    1    01234
+    Click Element    //i[@ng-click="star(${star_rand}, list)"]
+    Sleep    1
+    Input Text    //textarea[@ng-model="list.content"]    东东不错！这是订单${order_id}的商品评论。
+    Sleep    1
+    Click Element    //a[@ng-click="details(list)"]
+    ####跳转页面校验
+    Wait Until Element Is Visible    //a[@class="my_order wsh_cell"]
+    Wait Until Page Contains Element    //div[@class="footer_menu"]
+    Wait Until Element Contains    //div[@class="footer_menu"]    首页
+    Element Should Contain    //a[@class="my_order wsh_cell"]    全部订单
+    Sleep    1
+    #######数据清理########
+    数据清理    ${product_id}    ${redeemInfor}    ${reduction_id}    ${act_points_id}
+    Pass Execution    Test
+    ########积分赠送校验
+    Run Keyword If    ${积分赠送开关}==1 and ${价格_API}>=${act_points_amount}    积分赠送校验    ${会员积分_API}    ${act_points_points}    ${积分抵扣数量}
+    Log    测试成功！
+    Sleep    6
+    #
+
+删除订单
+
+添加购物车
+
+到店自提
+    ######前置操作########
+    ${errmsg}    添加一个商品    上架=True
+    ${product}    Get From Dictionary    ${errmsg}    product
+    ${id}    Get From Dictionary    ${product}    id
+    ${商品限额开关}    Generate Random String    1    1
+    ${商品限额数量}    Set Variable    3
+    ${errmsg}    商品详情    ${id}
+    ${product}    Get From Dictionary    ${errmsg}    product
+    ${name}    Get From Dictionary    ${product}    name
+    ${can_use_member_discount}    Get From Dictionary    ${product}    can_use_member_discount
+    ${auto_close_rand}    Generate Random String    1    2
+    Run Keyword If    ${auto_close_rand}==1    订单.更新订单设置    ${auto_close_rand}
+    ...    ELSE    订单.更新订单设置    2
+    Sleep    1
+    #######生成参数########
+    ${unit_amount}    Evaluate    100
+    ${unit_points}    Evaluate    10
+    ${1积分抵扣金额}    Evaluate    round(${unit_amount},4)/${unit_points}*0.01
+    ${优惠信息}    获取会员优惠信息    255    #255为测试用会员ID
+    ${会员折扣_API}    Get From Dictionary    ${优惠信息}    折扣
+    ${会员积分_API}    Get From Dictionary    ${优惠信息}    积分
+    #获取商品信息
+    ${product_id}    Get From Dictionary    ${product}    id
+    ${name}    Get From Dictionary    ${product}    name
+    ${价格_API}    Get From Dictionary    ${product}    show_price
+    ${规格}    Get From Dictionary    ${product}    productSkus
+    ${规格数量}    Get Length    ${规格}
+    ####随机开关
+    ${会员折扣开关}    Generate Random String    1    1
+    ${卡券共享开关}    Generate Random String    1    1
+    ${积分抵扣开关}    Generate Random String    1    1
+    ${满减活动开关}    Generate Random String    1    1
+    会员.折扣与卡券优惠开关    ${会员折扣开关}    ${卡券共享开关}
+    ${reduction_id}    Run Keyword If    ${满减活动开关}==1    添加一个满减活动    减=3
+    #积分抵扣
+    ${redeemInfor}    Run Keyword If    ${积分抵扣开关}==1    添加积分抵扣活动    unitAmount=${unit_amount}    maxAmount=1000
+    Run Keyword If    ${积分抵扣开关}==1    启用积分抵扣活动    ${redeemInfor}
+    ######进入前端页面######
+    微信模拟页面登录    13723232
+    Wait Until Page Contains Element    //div[@class="footer_menu"]
+    Wait Until Element Contains    //div[@class="footer_menu"]    首页
+    Wait Until Element Contains    //div[@class="footer_menu"]    列表
+    Sleep    1
+    点击底部菜单    列表
+    #######商品详情########
+    Wait Until Element Is Visible    //div[@ng-bind="list.name" and text()="${name}"]
+    Sleep    5
+    Click Element    //div[@ng-bind="list.name" and text()="${name}"]    #点击商品进入详情页
+    Wait Until Element Contains    //li/a[@class="buy_own" and @ng-click="showModal()"]    立即购买
+    Sleep    1
+    ${价格}    Get Text    //div[@class="detail_title_box"]//span[@ng-bind="model.product.show_price | number:2"]
+    Convert To Number    ${价格}
+    Should Be Equal As Numbers    ${价格}    ${价格_API}
+    Run Keyword If    ${满减活动开关}==1    商品详情页校验_满减活动    ${价格_API}
+    Sleep    10
+    立即购买    # 进入购买界面
+    Wait Until Element Is Visible    //div[@class="close_btn"]/i[@ng-click="close()"]
+    Wait Until Element Is Visible    //div[@class="detail_select_rule"]
+    Element Should Contain    //div[@class="detail_select_rule"]//div[@class="price"]    库存
+    ${库存}    Get Text    //div[@class="detail_select_rule"]//div[@class="price"]//span[@ng-bind="modelObj.reserves"]
+    ${价格2}    Get Text    //div[@class="detail_select_rule"]//div[@class="title"]//span[starts-with(@ng-bind,"modelObj.retail_price*skunum")]
+    Should Be True    ${库存}>0
+    Element Should Contain    //a[@class="buy_own" and @ng-click="buy()"]    确认购买
+    Click Element    //a[@class="buy_own" and @ng-click="buy()"]    # 确认购买
+    Sleep    1
+    #######支付界面########
+    ####页面校验
+    Wait Until Page Contains Element    //textarea[@id="customer_mark" and contains(@placeholder,"请输入您的留言")]
+    Sleep    1
+    Run Keyword If    ${auto_close_rand}==1    订单回收校验
+    ${价格3}    Get Text    //span[@ng-bind="list.price"]
+    ${价格3}    Evaluate    float(${价格3})
+    ####满减优惠
+    Log    ---满减活动优惠计算---
+    ${满减优惠}    Run Keyword If    ${满减活动开关}==1 and ${价格_API}>=20    满减满折优惠    ${价格_API}
+    ${满减优惠后金额}    Evaluate    ${价格_API}-${满减优惠}
+    ####会员优惠
+    Log    ---会员优惠计算---
+    ${折扣数据}    Run Keyword If    ${can_use_member_discount}==True    会员折扣校验    ${会员折扣_API}    ${满减优惠后金额}
+    ${会员优惠_page}    Run Keyword If    ${can_use_member_discount}==True    Get From Dictionary    ${折扣数据}    会员优惠_page
+    ${会员折扣_page}    Run Keyword If    ${can_use_member_discount}==True    Get From Dictionary    ${折扣数据}    会员折扣_page
+    ${会员优惠}    Run Keyword If    ${can_use_member_discount}==True    Get From Dictionary    ${折扣数据}    会员优惠
+    ...    ELSE    Evaluate    0
+    ${会员优惠后金额}    Evaluate    ${满减优惠后金额}-${会员优惠}
+    ####卡券优惠
+    Log    ---卡券优惠计算---
+    ${current_url}    Get Location
+    ${matches}    Get Regexp Matches    ${current_url}    (?<=id=)\\d*\\d    #获取订单ID
+    Log    ${matches[0]}
+    ${cards}    获取指定价格下可用卡券数量    ${matches[0]}    ${会员优惠后金额}
+    ${cards_len}    Get Length    ${cards}
+    Run Keyword If    ${cards_len}>=1    支付页校验_卡券    ${cards_len}
+    ${卡券优惠}    Run Keyword If    ${卡券共享开关}==1    卡券优惠校验
+    ...    ELSE    Evaluate    0
+    ${卡券优惠后金额}    Evaluate    ${会员优惠后金额}-${卡券优惠}
+    ####邮费计算
+    ####积分抵扣
+    Log    ---积分抵扣优惠计算---
+    Run Keyword If    ${积分抵扣开关}==1    支付页校验_积分抵扣    ${会员积分_API}
+    ${积分抵扣金额}    Run Keyword If    ${积分抵扣开关}==1    积分抵扣校验    ${1积分抵扣金额}
+    ...    ELSE    Evaluate    0
+    ${积分抵扣优惠后金额}    Evaluate    ${卡券优惠后金额}-${积分抵扣金额}
+    #######数据清理########
+    数据清理    ${product_id}    ${redeemInfor}    ${reduction_id}
+    ${实付金额_page}    Get Text    //span[@ng-bind="priceAll() |number : 2"]
+    Should Be Equal As Numbers    ${实付金额_page}    ${积分抵扣优惠后金额}
+    Pass Execution    Test
+    ##Debug
+    #######页面校验#######
+    ${实付金额}    Evaluate    ${卡券优惠后金额}-${积分抵扣金额}
+    ${实付金额_page}    Get Text    //span[@ng-bind="priceAll() |number : 2"]
+    #######数据校验########
+    Sleep    1
+    Should Be Equal As Numbers    ${会员折扣_page}    ${会员折扣_API}
+    Should Be Equal As Numbers    ${会员优惠_page}    ${会员优惠}
+    Should Be Equal As Numbers    ${实付金额_page}    ${实付金额}
+    Pass Execution    Test
+
+*** Keywords ***
+订单回收校验
+    Wait Until Element Is Visible    //*[@id="time"]/div[contains(@class,"ddzt-tips")]    12
+    Sleep    65
+    Wait Until Element Is Visible    //div[@class="poplayer_section"]//div[@class="q" and contains(text(),"订单未支付已超时关闭")]    10
+    Sleep    1
+    Click Element    //a[@ng-click="determine()" and text()="确定"]
+    Sleep    1
+    Wait Until Element Is Not Visible    //*[@id="time"]/div[contains(@class,"ddzt-tips")]
+    Sleep    1
+    Element Should Contain    //span[@ng-bind="model.orderStatusText"]    已关闭
+    Sleep    1
+
+会员折扣校验
+    [Arguments]    ${会员折扣_API}    ${价格_API}
+    Element Should Be Visible    //section/div[starts-with(@ng-show,"model.can_use_member_discount")]
+    Element Should Be Visible    //div[contains(@class,"usertag") and starts-with(@ng-if,"list.can_use_member_discount") and text()="会员折扣"]
+    ${会员折扣_page}    Get Text    //span[@ng-bind="is_discount"]
+    ${会员优惠_page}    Get Text    //span[text()="会员优惠"]//following-sibling::span/span[@class="ng-binding"]
+    #
+    ${折扣数据}    Create Dictionary
+    ${会员优惠}    Evaluate    ${价格_API}*(1-${会员折扣_API}*0.1)
+    ${会员优惠}    向下取整    ${会员优惠}
+    Should Be Equal As Numbers    ${会员优惠}    ${会员优惠_page}
+    Set To Dictionary    ${折扣数据}    会员优惠=${会员优惠}
+    Set To Dictionary    ${折扣数据}    会员折扣_page=${会员折扣_page}
+    Set To Dictionary    ${折扣数据}    会员优惠_page=${会员优惠_page}
+    #
+    [Return]    ${折扣数据}
+
+卡券优惠校验
+    Click Element    //dt[@ng-click="cardCouponBox();"]
+    ${cards_page_len}    Get Matching Xpath Count    //div[@id="order_cardCouponBox"]//div[@ng-bind="list.cardTypeInfo.title"]
+    ${card_rand}    Evaluate    random.randint(1,${cards_page_len})    random
+    Click Element    //div[@ng-repeat="list in card"][${card_rand}]/div[@class="checkbox"]/i
+    Sleep    1
+    ${coupon_price}    Get Text    //div[@ng-repeat="list in card"][${card_rand}]/div[@class="moneykaq"]/em[@ng-bind="list.card_money | price"]
+    Sleep    1
+    Click Element    //dt[@ng-click="cardCouponBox();"]
+    Sleep    3
+    [Return]    ${coupon_price}
+
+积分抵扣校验
+    [Arguments]    ${1积分抵扣金额}
+    [Documentation]    使用随机积分数
+    Click Element    //section[@id="bg_point"]//dt[@ng-click="frezze();"]
+    Wait Until Element Is Visible    id=point
+    Sleep    1
+    ##
+    ${points}    Evaluate    random.randint(1,9)*10    random
+    ##
+    Input Text    id=point    ${points}
+    Sleep    1
+    ${used_points}    Get Value    id=point
+    ${积分抵扣金额}    Evaluate    ${used_points}*${1积分抵扣金额}
+    ${积分抵扣金额}    向下取整    ${积分抵扣金额}
+    [Return]    ${积分抵扣金额}    ${used_points}
+
+满减满折优惠
+    [Arguments]    ${商品价格}
+    ${multiple}    Evaluate    int(${商品价格}/20)
+    ${满减优惠金额}    Evaluate    3*${multiple}
+    [Return]    ${满减优惠金额}
+
+--------1--------
+
+积分赠送校验
+    [Arguments]    ${会员积分_API}    ${act_points_points}    ${积分抵扣数量}
+    [Documentation]    说明：可设置订单完成后是否赠送积分
+    ${会员积分_New}    Evaluate    ${会员积分_API}-${积分抵扣数量}-${act_points_points}
+    ${会员积分_page}    Get Text    //span[starts-with(@ng-bind,"userInfo.point")]
+    Should Be Equal As Integers    ${会员积分_page}    ${会员积分_New}
+
+规格信息校验
+
+商城红包校验
+
+加入购物车
+
+货到付款支付校验
+
+获取用户优惠信息
+    ${优惠信息}    获取会员优惠信息    255
+    ${折扣}    Get From Dictionary    ${优惠信息}    折扣
+    ${积分}    Get From Dictionary    ${优惠信息}    积分
+
+订单限制校验
+
+_获取可用卡券数量
+
+--------2--------
+
+支付页校验_卡券
+    [Arguments]    ${卡券_len}
+    Element Should Be Visible    id=bg_card
+    Element Should Contain    id=bg_card    卡券
+    ${cards_num_page}    Get Text    //p[@ng-show="cardCount"]/em
+    Should Be Equal As Integers    ${cards_num_page}    ${卡券_len}
+
+支付页校验_积分抵扣
+    [Arguments]    ${现有积分}
+    Element Should Be Visible    id=bg_point
+    Element Should Contain    id=bg_point    积分抵扣
+    ${total_point_page}    Get Text    //em[@ng-bind="shopPoint.userPoint"]
+    Should Be Equal As Integers    ${total_point_page}    ${现有积分}
+
+商品详情页校验_满减活动
+    [Arguments]    ${商品价格}
+    Element Should Be Visible    //section[@ng-if="isPostage == 1"]
+    Element Should Be Visible    id=tg-cell
+    Element Should Contain    id=tg-cell    优惠
+    Element Should Be Visible    //div[@id="tg-cell"]//span[@ng-bind="strategy" and contains(text(),"20") and contains(text(),"3")]
+
+数据清理
+    [Arguments]    ${product_id}    ${redeemInfor}    ${reduction_id}    ${act_points_id}
+    Log    测试完成,准备清理数据...
+    商品.删除商品    ${product_id}
+    Log    删除成功！
+    #积分抵扣
+    Run Keyword If    ${redeemInfor}!=None    关闭积分抵扣活动    ${redeemInfor}
+    Run Keyword If    ${redeemInfor}!=None    删除积分抵扣活动    ${redeemInfor}
+    #满减活动
+    Sleep    1
+    Run Keyword If    ${reduction_id}!=None    关闭满减活动    ${reduction_id}
+    Run Keyword If    ${reduction_id}!=None    删除满减活动    ${reduction_id}
+    #积分赠送
+    Run Keyword If    ${act_points_id}!=None    关闭积分赠送活动    ${act_points_id}
+    Run Keyword If    ${act_points_id}!=None    删除积分赠送活动    ${act_points_id}

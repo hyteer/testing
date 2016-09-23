@@ -1,0 +1,39 @@
+*** Settings ***
+Library           String
+Library           Collections
+
+*** Test Cases ***
+first
+    ${str}    Set Variable    list.is_subscribe == 2
+    ${str2}    Set Variable    test12usr8
+    Log    ${str}
+    ${matches}    Get Regexp Matches    ${str}    \\d
+    Log    ${matches[0]}
+
+yt
+    ${str}    Set Variable    list.is_subscribe == 2
+    ${url}    Set Variable    http://betanewwsh.snsshop.net/members/detail?id=259&u_id=13764485
+    Log    ${str}
+    ${matches}    Get Regexp Matches    ${str}    \\d
+    ${mat2}    Get Regexp Matches    ${url}    (?<=\\bid=)\\w+\\b
+
+OrgPythonRegexp
+    ${str}    Set Variable    -Ewmsls-eWMMDn-
+    ${match}    Evaluate    re.findall(r'Ewm', '${str}', flags=re.IGNORECASE)    re
+
+RF
+    ${str}    Set Variable    -Ewmsls-eWMMDn-
+    Get Lines Containing String    ${str}    Ewm    True
+    ${list}    Create List    sfs ewm    eWMMDn-
+    ${match_count}    Get Match Count    ${list}    regexp=\\beWM    case_insensitive=True
+
+Float
+    ${num}    Set Variable    ${79}
+    ${match_digits}    Evaluate    re.findall(r'(?<=\\d\\.)\\d*\\d','${num}')    re
+    #判断是否为整数
+    ${digits_len}    Run Keyword If    ${match_digits}    Get Length    ${match_digits[0]}
+    ...    ELSE    Set Variable    ${0}
+    #判断是否小于2位小数
+    ${match}    Run Keyword If    ${digits_len}>2    Evaluate    re.findall(r'\\d*\\d\\.\\d{2}','${num}')    re
+    ...    ELSE    Set Variable    ${num}
+    ${price}    Set Variable    ${match}

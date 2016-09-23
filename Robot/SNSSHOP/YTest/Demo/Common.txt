@@ -1,0 +1,22 @@
+*** Settings ***
+Library           OperatingSystem
+
+*** Test Cases ***
+JsonFile
+    ${json}    Get File    D:\\Res\\JSONdata.txt
+    Log    JSON: '${json}'
+    Log    JSON File: ${json}
+    ${phone}    Evaluate    ${json.phone}
+    Log    Phone:${phone}
+
+list
+    @{list} =    Create List    a    b    c
+    ${n}    Set Variable    3
+    : FOR    ${i}    IN RANGE    ${n}
+    \    Log
+
+list2
+    @{list} =    Create List    a    b    c
+    ${list}=    Create List    aa    bb    cc
+    ${list0}    Evaluate    ${list}[0]
+    Log    ${list0}

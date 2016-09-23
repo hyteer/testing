@@ -1,0 +1,21 @@
+*** Test Cases ***
+已完成订单收货
+    [Tags]    paused
+    ####    pickup_type=1 快递配送    pickup_type=2 到店自提
+    ${用户id}    ${提货码}    ${订单id号}    ${配送方式}    订单详情    3
+    Run Keyword If    ${配送方式}==1    收货（快递配送）    ${用户id}    ${订单id号}
+    ...    ELSE    收货（到店自提）    ${订单id号}    ${提货码}
+
+更新订单设置
+    [Tags]    ready
+    ###
+    &{headers}    Create Dictionary    Accept=application/json, text/plain, */*    Content-Type=application/json
+    ${jsonstr}    Convert To String    {"id":2,"simple_order_close_unpay_time":60,"auto_receive_time":60,"sk_order_close_unpay_time":120,"order_comment_time":60,"simple_order_close_unpay_status":2,"auto_receive_status":2,"sk_order_close_unpay_status":2,"order_comment_status":2,"simple_order_close_unpay_time_type":1,"auto_receive_time_type":1,"sk_order_close_unpay_time_type":1,"order_comment_time_type":1}
+    ${resp}    Post Request    wsh    /shop/update-shop-order-auto-settings-ajax    data=${jsonstr}    headers=${headers}
+    Log    Response:${resp.content}
+    #${str}    Get Substring    ${resp.content}    3
+    ${js}    loads    ${resp.content}
+    ${errcode}    Get From Dictionary    ${js}    errcode
+    Run Keyword If    ${errcode}!=0    Fail    接口返回异常！
+    ###
+    ${errmsg}    Get From Dictionary    ${js}    errmsg

@@ -1,0 +1,19 @@
+*** Settings ***
+Library           OperatingSystem
+
+*** Test Cases ***
+File
+    ${path}    Join Path    ${CURDIR}    ..    Res
+    Log    Execdir:${EXECDIR}
+    Log    Path:${path}
+    ${cnpath}    Join Path    D:\\Res\    目录\    test.txt
+    ${file}    Get File    ${cnpath}
+    ${json}    Get Binary File    D:\\Res\\test.png
+    ${png}    Get Binary File    YTest/Res/test.png
+
+path
+    Log    Path:${EXECDIR}
+    Log To Console    Path:${EXECDIR}
+    Log    MyPath:${EXECDIR}\\YTest\\Res\\test.png
+    Log To Console    MyPath:${EXECDIR}\\YTest\\Res\\test.png
+    Log    Current Dir:${CURDIR}

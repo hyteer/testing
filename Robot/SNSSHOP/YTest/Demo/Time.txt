@@ -1,0 +1,8 @@
+*** Test Cases ***
+time
+    ${time}    Get Time    epoch
+
+Get_start_end
+    [Documentation]    获取一个开始时间及结束时间
+    ${start_time}    Get Time    epoch
+    ${end_time}    Evaluate    ${start_time}+(3600*5)

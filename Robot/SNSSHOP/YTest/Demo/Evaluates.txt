@@ -1,0 +1,4 @@
+*** Test Cases ***
+str&list
+    ${str}    Set Variable    [1032,291,196,195,1003]
+    @{list}    Evaluate    list(${str})

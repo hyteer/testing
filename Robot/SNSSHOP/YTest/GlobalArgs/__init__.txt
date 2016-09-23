@@ -1,0 +1,2 @@
+*** Variables ***
+@{brokers}        GFS    BOC    GTJ    IFS

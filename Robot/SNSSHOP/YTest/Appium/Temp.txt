@@ -1,0 +1,11 @@
+*** Settings ***
+Library           AppiumLibrary
+
+*** Test Cases ***
+11
+    #Open Application    http://localhost:4834/wd/hub    alias=maisha    platformName=Android    platformVersion=4.4.2    deviceName='emulator-5554'    appPackage=com.maishalei.seller
+    ...    # appActivity=.ui.activity.LauncherActivity    unicodeKeyboard=True    resetKeyboard=True
+    Open Application    http://localhost:4822/wd/hub    alias=sms    platformName=Android    platformVersion=5.1.1    deviceName='emulator-5554'    appPackage=com.android.mms
+    ...    appActivity=com.android.mms.ui.ConversationList    unicodeKeyboard=True    resetKeyboard=True
+    Sleep    10
+    Close Application

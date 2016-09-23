@@ -1,0 +1,57 @@
+*** Settings ***
+Test Teardown     failReset
+Library           AppiumLibrary
+Library           Dialogs
+
+*** Test Cases ***
+start
+    Open Application    http://localhost:4722/wd/hub    alias=browser    platformName=Android    platformVersion=5.1    deviceName='emulator-5554'    appPackage=com.android.browser
+    ...    appActivity=.BrowserActivity
+    ${a}    Get Contexts
+    Log    ${a}
+    ${url}    Get Element Attribute    id=com.android.browser:id/url    text
+    Input Text    id=com.android.browser:id/url    baidu.com
+    Press Keycode    66
+    ${status}    run keyword and return status    Get Element Attribute    id=com.android.browser:id/share_button    text
+    Log    Status is: ${status}
+    Run Keyword If    ${status}==True    Click Element    id=com.android.browser:id/share_button
+    Log    ${url}
+    Switch To Context    ${a[1]}
+    #Log Source
+    #Pause Execution
+    Input Text    //*[@id="index-kw"]    Test
+    Sleep    3
+    Switch To Context    ${a[0]}
+    Go To Url    http://www.sina.com
+    Sleep    3
+    Close All Applications
+
+wsh
+    ###Open Wechat
+    Open Application    http://localhost:4723/wd/hub    alias=wechat    platformName=Android    platformVersion=5.1.1    deviceName='emulator-5554'    appPackage=com.tencent.mm
+    ...    appActivity=com.tencent.mm.ui.LauncherUI    unicodeKeyboard=True    resetKeyboard=True
+    Wait Until Page Contains    微信    20s    等待超时
+    ###Open WSH ac
+    Wait Until Page Contains    微商户助手
+    Click Element    xpath=//android.view.View[contains(@text,'微商户助手')]
+    Log    Success...
+    Wait Until Page Contains    商城
+    Click Element    xpath=//android.widget.TextView[contains(@text,'商城')]
+    Sleep    1s
+    Click Element    xpath=//android.widget.TextView[contains(@text,'首页')]
+    Sleep    4
+    ### Switch to WebView
+    ${a}    Get Contexts
+    Log    ${a}
+    Switch To Context    ${a[1]}
+    ${cur}    Get Current Context
+    Log    Current context is: ${cur}
+    Sleep    2
+    Input Text    //*[@id="app-body"]/show-build/div/div[1]/module-build/search-module/div/div/div/input    Test
+    Sleep    4
+    Close All Applications
+
+*** Keywords ***
+failReset
+    Sleep    3
+    Run Keyword If Test Failed    Close All Applications

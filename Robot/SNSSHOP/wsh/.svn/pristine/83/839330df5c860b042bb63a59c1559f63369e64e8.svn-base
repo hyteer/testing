@@ -1,0 +1,23 @@
+*** Settings ***
+Library           RequestsLibrary
+Library           Collections
+Library           String
+Library           json
+Resource          ../配置参数.robot
+
+*** Keywords ***
+API登录
+    初始化
+    Log    测试URL：${GLOBAL_CONFIG.url}
+    Log    测试用户：${GLOBAL_CONFIG.username}
+    Create Session    wsh    ${GLOBAL_CONFIG.url}
+    &{data}=    Create Dictionary    username=${GLOBAL_CONFIG.username}    password=${GLOBAL_CONFIG.password}    captcha=1111
+    &{headers}=    Create Dictionary    Content-Type=application/x-www-form-urlencoded
+    ${resp}    Post Request    wsh    /login/login-ajax    data=${data}    headers=${headers}
+
+微信登录
+    初始化
+    Create Session    wx    ${URL_BETA_WX}
+    &{headers}=    Create Dictionary    Content-Type=text/html    charset=UTF-8
+    ${resp}    Post Request    wx    /weishanghuzhushou/oauth/testing?id=${微信用户ID}    headers=${headers}
+    Log    Response:${resp.content}

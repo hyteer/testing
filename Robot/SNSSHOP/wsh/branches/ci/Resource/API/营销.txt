@@ -1,0 +1,55 @@
+*** Keywords ***
+添加卡券
+    [Arguments]    ${args}
+    API登录
+    Log    准备添加卡券...
+    &{headers}    Create Dictionary    Accept=application/json    Content-Type=application/json
+    ${jsonstr}    Convert To String    ${args}
+    ${resp}    Post Request    wsh    /card-coupons/add-ajax    data=${jsonstr}    headers=${headers}
+    Log    Response:${resp.content}
+    #${res_content}    Get Substring    ${resp.content}    3
+    ${json_content}    loads    ${resp.content}
+    ${errcode}    Get From Dictionary    ${json_content}    errcode
+    ${errmsg}    Get From Dictionary    ${json_content}    errmsg
+    Run Keyword If    ${errcode}!=0    Fail    接口返回异常！
+    Log    添加卡券成功...
+    [Return]    ${errmsg}
+
+手动派发卡券
+    [Arguments]    ${用户ID}    ${卡券ID}
+    API登录
+    Log    准备派发卡券...
+    &{headers}    Create Dictionary    Accept=application/json    Content-Type=application/json
+    ${jsonstr}    Convert To String    {"user_type":1,"card_type_id":${卡券ID},"to_user_ids":[${用户ID}]}
+    ${resp}    Post Request    wsh    /card-coupons/send-ajax    data=${jsonstr}    headers=${headers}
+    Log    Response:${resp.content}
+    ${json_content}    loads    ${resp.content}
+    ${errcode}    Get From Dictionary    ${json_content}    errcode
+    ${errmsg}    Get From Dictionary    ${json_content}    errmsg
+    Run Keyword If    ${errcode}!=0    Fail    接口返回异常！${errmsg}
+    Log    派发卡券成功...
+    [Return]    ${errmsg}
+
+获取卡券列表
+    API登录
+    &{headers}    Create Dictionary    Accept=application/json    Content-Type=application/json
+    ${resp}    Post Request    wsh    /card-coupons/list-ajax    \    headers=${headers}
+    Log    Response:${resp.content}
+    ${json_content}    loads    ${resp.content}
+    ${errcode}    Get From Dictionary    ${json_content}    errcode
+    ${errmsg}    Get From Dictionary    ${json_content}    errmsg
+    Run Keyword If    ${errcode}!=0    Fail    接口返回异常！
+    [Return]    ${errmsg}
+
+删除卡券
+    [Arguments]    ${id}
+    API登录
+    &{headers}    Create Dictionary    Accept=application/json    Content-Type=application/json
+    ${jsonstr}    Convert To String    {"id":${id}}
+    ${resp}    Post Request    wsh    /card-coupons/del-ajax    data=${jsonstr}    headers=${headers}
+    Log    Response:${resp.content}
+    ${json_content}    loads    ${resp.content}
+    ${errcode}    Get From Dictionary    ${json_content}    errcode
+    ${errmsg}    Get From Dictionary    ${json_content}    errmsg
+    Run Keyword If    ${errcode}!=0    Fail    接口返回异常！
+    [Return]    ${errmsg}

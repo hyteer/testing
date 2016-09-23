@@ -1,0 +1,5 @@
+*** Settings ***
+Library           MyLibrary2
+
+*** Test Cases ***
+TestLib

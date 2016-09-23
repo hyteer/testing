@@ -1,0 +1,72 @@
+*** Settings ***
+Suite Setup       API登录    1    1
+Library           RequestsLibrary
+Resource          ../Resource/API/Common.txt
+Library           json
+Library           Collections
+Library           String
+Resource          ../Resource/常用操作.robot
+Resource          ../Resource/API/订单.txt
+Resource          ../Resource/API/商品.txt
+Resource          ../Resource/API/API操作.txt
+
+*** Test Cases ***
+创建普通订单_old
+    [Tags]    paused
+    ${errmsg}    WX_商品列表
+    ${data}    Get From Dictionary    ${errmsg}    data
+    ${product_id}    Get From Dictionary    ${data[0]}    id
+    ${errmsg}    商品.商品详情    ${product_id}
+    ${product}    Get From Dictionary    ${errmsg}    product
+    ${productSkus}    Get From Dictionary    ${product}    productSkus
+    ${sku_id}    Get From Dictionary    ${productSkus[0]}    id
+    ${errmsg}    WX_创建普通订单    ${product_id}    ${sku_id}
+
+创建普通订单
+    [Tags]    paused    beta
+    ${errmsg}    添加一个商品    上架=True
+    ${product}    Get From Dictionary    ${errmsg}    product
+    ${product_id}    Get From Dictionary    ${product}    id
+    ${errmsg}    商品.商品详情    ${product_id}
+    ${product}    Get From Dictionary    ${errmsg}    product
+    ${productSkus}    Get From Dictionary    ${product}    productSkus
+    ${sku_id}    Get From Dictionary    ${productSkus[0]}    id
+    ${errmsg}    WX_创建普通订单    ${product_id}    ${sku_id}
+    Sleep    2
+    Log    测试完成,准备清理数据...
+    商品.删除商品    ${product_id}
+
+获取订单列表
+    [Tags]    ready
+    ${errmsg}    获取订单列表
+
+已完成订单收货
+    [Tags]    paused
+    ####    pickup_type=1 快递配送    pickup_type=2 到店自提
+    ${用户id}    ${提货码}    ${订单id号}    ${配送方式}    订单详情    3
+    Run Keyword If    ${配送方式}==1    收货（快递配送）    ${用户id}    ${订单id号}
+    ...    ELSE    收货（到店自提）    ${订单id号}    ${提货码}
+
+更新订单设置
+    [Tags]    ready
+    ${errmsg}    更新订单设置
+
+普通订单流程
+
+订单发货
+    订单发货    990297
+
+确认收货
+    WX_确认收货    990293
+
+订单支付
+    ${errmsg}    订单详情    990326
+    ${args}    Create Dictionary
+    Set To Dictionary    ${args}    id=${order_id}    orderPayInfo[0][pay_type]=pay_type    orderPayInfo[0][amount]=${amount}    orderDetails[0][id]=    orderDetails[0][order_id]=${detail_order_id}
+    Set To Dictionary    ${args}    orderDetails[0][product_name]=    orderDetails[0][product_sku_id]=    orderDetails[0][product_sku_name]=    orderDetails[0][price]=    orderDetails[0][cost_price]=
+    Set To Dictionary    ${args}    orderDetails[0][reduction_discount]=    orderDetails[0][reduction_content]=    orderDetails[0][member_discount_num]=    orderDetails[0][num]=    orderDetails[0][prod_weight]=
+    Set To Dictionary    ${args}    orderDetails[0][product_img]=    orderDetails[0][kinds][总净含量]=    orderDetails[0][shop_id]=    orderDetails[0][shop_sub_id]=    orderDetails[0][barcode]=
+    Set To Dictionary    ${args}    orderDetails[0][sku_no]=    orderDetails[0][comment_status]=    orderDetails[0][postage_fee_type]=    orderDetails[0][created]=    orderDetails[0][modified]=
+    Set To Dictionary    ${args}    orderDetails[0][modified]=    orderDetails[0][policy_type]=
+    Set To Dictionary    ${args}
+    WX_订单支付    ${args}

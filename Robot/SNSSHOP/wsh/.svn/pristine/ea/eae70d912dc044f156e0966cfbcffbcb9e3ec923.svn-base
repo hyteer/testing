@@ -1,0 +1,60 @@
+*** Settings ***
+Suite Setup       API登录    1    1
+Library           RequestsLibrary
+Resource          ../Resource/API/Common.txt
+Library           json
+Library           Collections
+Library           String
+Resource          ../Resource/常用操作.robot
+Resource          ../Resource/API/订单.txt
+Resource          ../Resource/API/商品.txt
+Resource          ../Resource/API/API操作.txt
+
+*** Test Cases ***
+创建普通订单_old
+    [Tags]    paused
+    ${errmsg}    WX_商品列表
+    ${data}    Get From Dictionary    ${errmsg}    data
+    ${product_id}    Get From Dictionary    ${data[0]}    id
+    ${errmsg}    商品.商品详情    ${product_id}
+    ${product}    Get From Dictionary    ${errmsg}    product
+    ${productSkus}    Get From Dictionary    ${product}    productSkus
+    ${sku_id}    Get From Dictionary    ${productSkus[0]}    id
+    ${errmsg}    WX_创建普通订单    ${product_id}    ${sku_id}
+
+创建普通订单
+    [Tags]    paused    beta
+    ${errmsg}    添加一个商品    上架=True
+    ${product}    Get From Dictionary    ${errmsg}    product
+    ${product_id}    Get From Dictionary    ${product}    id
+    ${errmsg}    商品.商品详情    ${product_id}
+    ${product}    Get From Dictionary    ${errmsg}    product
+    ${productSkus}    Get From Dictionary    ${product}    productSkus
+    ${sku_id}    Get From Dictionary    ${productSkus[0]}    id
+    ${errmsg}    WX_创建普通订单    ${product_id}    ${sku_id}
+    Sleep    2
+    Log    测试完成,准备清理数据...
+    商品.删除商品    ${product_id}
+
+获取订单列表
+    [Tags]    ready
+    ${errmsg}    获取订单列表
+
+已完成订单收货
+    [Tags]    paused
+    ####    pickup_type=1 快递配送    pickup_type=2 到店自提
+    ${用户id}    ${提货码}    ${订单id号}    ${配送方式}    订单详情    3
+    Run Keyword If    ${配送方式}==1    收货（快递配送）    ${用户id}    ${订单id号}
+    ...    ELSE    收货（到店自提）    ${订单id号}    ${提货码}
+
+更新订单设置
+    [Tags]    ready
+    ${errmsg}    更新订单设置
+
+普通订单流程
+
+订单发货
+    订单发货    990297
+
+确认收货
+    确认收货    990293

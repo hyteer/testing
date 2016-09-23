@@ -1,0 +1,64 @@
+*** Settings ***
+Library           Selenium2Library
+Resource          ../配置参数.robot
+Resource          ../功能菜单.robot
+Library           String
+Library           Collections
+Library           RequestsLibrary
+Resource          Common.txt
+Library           json
+
+*** Keywords ***
+商家信息
+    API登录
+    ${resp}    Post Request    wsh    /shop/get-ajax
+    Log    Response:${resp.content}
+    ${len}    Get Length    ${resp.content}
+    ${js}    loads    ${resp.content}
+    ${errcode}    Get From Dictionary    ${js}    errcode
+    ${errmsg}    Get From Dictionary    ${js}    errmsg
+    Log    errcode is:${errcode}
+    Run Keyword If    ${errcode}==0    Log    Success
+    ...    ELSE    Log    Failed
+    [Return]    ${errmsg}
+
+支付方式
+    Create Session    baseapi    http://betanewapi.snsshop.net/v1
+    &{headers}    Create Dictionary    Accept=application/json    Content-Type=application/json
+    ${jsonstr}    Set Variable    {"shop_id":${SHOP_ID}}
+    ${resp}    Post Request    baseapi    /payment/find-paytype-list    data=${jsonstr}
+    Log    Response:${resp.content}
+    ${resp_content}    Set Variable    ${resp.content}
+    ${js}    loads    ${resp.content}
+    ${errcode}    Get From Dictionary    ${js}    errcode
+    Log    errcode:${errcode}
+    [Return]    ${resp.content}
+
+终端店列表
+    API登录
+    ${resp}    Post Request    wsh    /terminal/list-ajax
+    ${预期返回码}    Set Variable    0
+    Log    Response:${resp.content}
+    ${商品列表响应}    loads    ${resp.content}
+    ${返回码}    Get From Dictionary    ${商品列表响应}    errcode
+    Log    errcode is:${返回码}
+    Should Be Equal As Strings    ${返回码}    ${预期返回码}
+    ${返回码信息}    Get From Dictionary    ${商品列表响应}    errmsg
+    ${列表数据}    Get From Dictionary    ${返回码信息}    data
+    [Return]    ${返回码信息}
+
+终端店信息
+    [Arguments]    ${search_name}=星之直营店自动化测试专用
+    API登录
+    &{data}=    Create Dictionary    name=${search_name}    is_search=true
+    &{headers}=    Create Dictionary    Content-Type=application/json    charset=UTF-8
+    ${resp}    Post Request    wsh    /terminal/list-ajax    data=${data}    headers=${headers}
+    ${预期返回码}    Set Variable    0
+    Log    Response:${resp.content}
+    ${商品列表响应}    loads    ${resp.content}
+    ${返回码}    Get From Dictionary    ${商品列表响应}    errcode
+    Log    errcode is:${返回码}
+    Should Be Equal As Strings    ${返回码}    ${预期返回码}
+    ${返回码信息}    Get From Dictionary    ${商品列表响应}    errmsg
+    ${列表数据}    Get From Dictionary    ${返回码信息}    data
+    [Return]    ${返回码信息}

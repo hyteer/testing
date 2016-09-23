@@ -1,0 +1,22 @@
+*** Settings ***
+Suite Setup       API登录
+Library           RequestsLibrary
+Resource          ../Resource/API/Common.txt
+Resource          ../Resource/配置参数.robot
+Library           String
+Library           json
+Library           Collections
+Resource          ../Resource/API/其它.txt
+
+*** Test Cases ***
+工作台数据
+    [Tags]    ready
+    ${errmsg}    工作台数据
+
+工作台广告
+    [Tags]    ready
+    ${errmsg}    工作台广告
+
+工作台公告
+    [Tags]    ready
+    ${errmsg}    工作台公告

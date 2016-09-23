@@ -1,0 +1,122 @@
+*** Settings ***
+Suite Setup       创建并开启拼团活动
+Suite Teardown    Close All Browsers
+Library           Selenium2Library
+Resource          ../../Resource/API/营销.txt
+Resource          ../../Resource/API/Common.txt
+Resource          ../../Resource/微信模拟端/点击按钮.robot
+
+*** Test Cases ***
+拼团商品详情
+    进入拼团商品详情    ${productName}
+    Page Should Contain    拼团测试商品
+    Page Should Contain    ${togetherNum}人团
+    Page Should Contain    ￥${buyPrice}元
+    Page Should Contain    ¥${productPrice}元
+    Page Should Contain    每人限购${limitBuy}件
+    Run Keyword If    ${isDiscount} == 1    Page Should Contain    团长立减
+    Run Keyword If    ${isDiscount} == 1    Page Should Contain    ¥${headPrice}
+
+单独购买
+    进入拼团商品详情    ${productName}
+    Click Element    partial link=单独购买
+    wait until page contains    ${productName}
+    立即购买
+    sleep    3
+    wait until page contains    配送方式
+    Click Element    xpath=//label[@ng-class="{'btn_postage':sendType == 1}"]    #快递配送
+    Click Element    //a[@class="buy_own" and @ng-click="buy()"]
+    sleep    5
+    wait until page contains    微信安全支付    10
+    Click Element    xpath=//button[@class="weixin"]
+    sleep    6
+
+到店自提
+    进入拼团商品详情    ${productName}
+    Click Element    partial link=立即开团
+    sleep    2
+    wait until page contains    配送方式
+    Click Element    xpath=//label[@ng-class="{'btn_postage':sendType == 2}"]
+    Click Element    xpath=//a[@class="tg-btn buy_own"]
+    wait until page contains    微信安全支付    15
+    Press Key    name=consignee    自动化测试
+    Press Key    name=phoneNo    18812345678
+    Click Element    name=address
+    wait until page contains    中国广东省    15
+    Click Element    xpath=//h3[@ng-bind="i.shopInfo.name" and text()="测试pos店铺"]
+    wait until page contains    微信安全支付    15
+    Click Element    xpath=//button[@class="weixin"]
+    wait until page does not contain    微信安全支付    15
+
+快递配送
+    进入拼团商品详情    ${productName}
+    Click Element    partial link=立即开团
+    sleep    2
+    wait until page contains    配送方式
+    Click Element    xpath=//label[@ng-class="{'btn_postage':sendType == 1}"]
+    Click Element    xpath=//a[@class="tg-btn buy_own"]
+    wait until page contains    微信安全支付    15
+    Click Element    xpath=//span[@class="name fl" and text()="选择收货地址"]
+    Click Element    partial link=收货地址列表
+    wait until page contains    新增收货地址
+    Click Element    xpath=//span[@ng-bind="list.detail" and text()="比克大厦"]
+    wait until page contains    微信安全支付    15
+    Click Element    xpath=//button[@class="weixin"]
+    wait until page does not contain    微信安全支付    15
+
+*** Keywords ***
+进入拼团商品详情
+    [Arguments]    ${productName}
+    open browser    http://weishanghuzhushou.betanewwx.snsshop.net/weishanghuzhushou/oauth/testing?id=13723238    gc
+    wait until page contains    首页
+    sleep    2
+    click element    link=惊喜
+    wait until page contains    拼团活动
+    Click Element    partial link=拼团活动
+    wait until page contains    ${productName}
+    #sleep    2
+    Click Element    partial link=${productName}
+    Select window    商品详情
+    wait until page contains    ${productName}
+
+创建并开启拼团活动
+    API登录
+    ${together}=    添加拼团活动
+    ${togetherBuyinfo}    Get From Dictionary    ${together}    togetherBuy
+    ${togetherbuyID}    Get From Dictionary    ${togetherBuyinfo}    id
+    ${activityID}    Get From Dictionary    ${togetherBuyinfo}    activity_id
+    添加拼团活动商品    ${togetherbuyID}    287911    1168828
+    编辑拼团活动    ${togetherbuyID}    ${activityID}
+    ${togetherinfor}    开启拼团活动    ${activityID}
+    ${togetherBuy}    Get From Dictionary    ${togetherinfor}    togetherBuy
+    ${isDiscount}    Get From Dictionary    ${togetherBuy}    is_discount
+    ${headPriceTmp}    Get From Dictionary    ${togetherBuy}    head_price
+    ${togetherBuyGoodsInfo}    Get From Dictionary    ${togetherBuy}    togetherBuyGoods
+    ${togetherBuyGoods}    Get From List    ${togetherBuyGoodsInfo}    0
+    ${productName}    Get From Dictionary    ${togetherBuyGoods}    product_name
+    ${productPriceTmp}    Get From Dictionary    ${togetherBuyGoods}    product_price
+    ${buyPriceTmp}    Get From Dictionary    ${togetherBuyGoods}    buy_price
+    ${togetherNum}    Get From Dictionary    ${togetherBuyGoods}    together_num
+    ${limitBuy}    Get From Dictionary    ${togetherBuyGoods}    limit_buy
+    ${headPriceN}    Convert To Number    ${headPriceTmp}
+    ${productPriceN}    Convert To Number    ${productPriceTmp}
+    ${buyPriceN}    Convert To Number    ${buyPriceTmp}
+    ${headPrice}    Evaluate    ${headPriceN}/100
+    ${productPrice}    Evaluate    ${productPriceN}/100
+    ${buyPrice}    Evaluate    ${buyPriceN}/100
+    Set Suite Variable    ${isDiscount}
+    Set Suite Variable    ${headPrice}
+    Set Suite Variable    ${productName}
+    Set Suite Variable    ${productPrice}
+    Set Suite Variable    ${buyPrice}
+    Set Suite Variable    ${togetherNum}
+    Set Suite Variable    ${limitBuy}
+
+添加积分抵扣活动
+    ${redeemInfor}    添加积分抵扣活动
+    启用积分抵扣活动    ${redeemInfor}
+    Set Suite Variable    ${redeemInfor}
+
+删除积分抵扣活动
+    关闭积分抵扣活动    ${redeemInfor}
+    删除积分抵扣活动    ${redeemInfor}

@@ -1,0 +1,110 @@
+*** Settings ***
+Library           String
+Library           Collections
+
+*** Test Cases ***
+decode
+    ${bytes}    Convert To Bytes    \xe5\x95\x86\xe5\x9f\x8e
+    Log    Bytes:${bytes}
+    ${string} =    Decode Bytes To String    ${bytes}    UTF-8
+
+sample
+    ${str}    Set Variable    Sets a var in the hell
+    ${mat}    Get Regexp Matches    ${str}    var
+    ${mat2}    Get Regexp Matches    ${str}    sat
+    Log    Mat:${mat}
+    Log    Mat2:${mat2}
+    ${lenmat}    Get Length    ${mat}
+    ${lenmat2}    Get Length    ${mat2}
+
+Match
+    ${list}    Create List    test    shr    sns
+    ${count}    Get Match Count    ${list}    est
+    ${count2}    Get Regexp Matches    tester    ab
+    ${len}    Get Length    ${count2}
+    ${match}    Get Matches    ${list}    shr*
+    Log    list:'${list}'
+
+match2
+    ${list}    Create List    delivery    newwxpay
+    ${match}    Get Matches    ${list}    delivery
+
+random_num
+    ${long}    Generate Random String    1    34567
+    ${pre}    Generate Random String    1    12345
+    ${zero}    Generate Random String    ${long}    0
+    ${限额}    Set Variable    ${pre}${zero}
+    ${rand}    Generate Random String    1    [NUMBERS]
+    ${random}    Evaluate    random.randint(0,15)    random
+
+List
+    ###
+    ${list1}    Create List
+    Append To List    ${list1}    test1
+    Log    '${list1}'
+
+Dict_pop
+    &{data}    Create Dictionary    a=test1    b=test2    c=test3
+    ${len}    Get Length    ${data}
+    : FOR    ${i}    IN RANGE    ${len}
+    \    Exit For Loop If    ${j}>${len}
+    \    Pop From Dictionary    ${data}    b
+    \    ${j}    Evaluate    ${i+1}
+
+Dict&Num
+    ${key1}    Set Variable    1
+    ${key2}    Set Variable    2
+    ${key3}    Set Variable    '3'
+    ${typetest}    Evaluate    type(${key1})
+    ${dict}    Create Dictionary    ${key1}=正常    2=未绑定    ${key3}=冻结
+    ${len}    Get Length    ${dict}
+    ${d1}    Get From Dictionary    ${dict}    ${key1}
+    ${d2}    Get From Dictionary    ${dict}    2
+    ###
+    ${keylist}    Create List    ${key1}    ${key2}    ${key3}
+    ${n}    Evaluate    random.randint(1,3)    random
+    ${会员卡状态}    Evaluate    random.sample(range(1,4),${n})    random
+    : FOR    ${i}    IN    @{keylist}
+    \    Log    i:${i}
+    \    ${d1}    Get From Dictionary    ${dict}    ${i}
+    Log    Test...
+    ${dtest}    Get From Dictionary    ${dict}    2
+    #
+    ${dict2}    Create Dictionary
+    : FOR    ${i}    IN RANGE    3
+    \    Set To Dictionary    ${dict2}    '${i+1}'='test${i+1}'
+    Log    ${dict2}
+    Pass Execution    Test
+
+Dict&Num2
+    ${n}    Evaluate    random.randint(1,3)    random
+    ${quelist}    Create List    ${1}    ${3}    ${2}
+    ${quelist2}    Create List    1    3    2
+    ${会员卡状态}    Evaluate    random.sample(${quelist},${n})    random
+
+DictComplicate
+    ${grouplist}    Evaluate    [99, 61, 52,33,44,78]
+    ${len_list}    Get Length    ${grouplist}
+    Log    ${grouplist[2]}
+    ${groupdict}    Create Dictionary
+    : FOR    ${i}    IN RANGE    ${len_list}
+    \    ${typetest}    Evaluate    type(${i})
+    \    Set To Dictionary    ${groupdict}    '${i+1}'='${grouplist[${i}]}'    #"${i+1}=${grouplist[${i}]}"
+    Log    ${groupdict}
+    ##Get
+    ${n}    Evaluate    random.randint(1,3)    random
+    ${会员分组}    Evaluate    random.sample(range(1,${len_list}),${n})    random
+    ${len}    Get Length    ${会员分组}
+    ${valuelist}    Create List
+    : FOR    ${i}    IN    @{会员分组}
+    \    ${value}    Get From Dictionary    ${groupdict}    '${i}'
+    \    ${value}    Evaluate    int(${value})
+    \    Append To List    ${valuelist}    ${value}
+    Log    ValueList:${valuelist}
+    #
+
+Dict_Temp
+    ${菜单名}    Set Variable    惊喜
+    ${底部菜单}    Create Dictionary    首页=icon-home    列表=icon-goods    购物车=icon-cart    惊喜=icon-surprise    我=icon-user
+    ${菜单}    Get From Dictionary    ${底部菜单}    ${菜单名}
+    Log    菜单：${菜单}
