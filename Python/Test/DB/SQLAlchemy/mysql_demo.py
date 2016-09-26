@@ -15,6 +15,6 @@ address_table = Table('address', metadata,
     Column('email', String(128), nullable=False)
     )
 
-import pdb; pdb.set_trace()
+#import pdb; pdb.set_trace()
 
 #metadata.create_all()

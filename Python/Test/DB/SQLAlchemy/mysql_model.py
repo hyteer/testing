@@ -19,6 +19,6 @@ class User(Base):
         return "<User(name='%s', fullname='%s', email='%s')>" %\
         (self.name, self.fullname, self.email)
 
-import pdb; pdb.set_trace()
+#import pdb; pdb.set_trace()
 
 #metadata.create_all()
