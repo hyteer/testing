@@ -6,19 +6,37 @@ from Lib.ApiWsh.api import settings
 #set = settings.Maisha
 
 ############ Wsh ###########
-cm = api.Common()
+init = api.InitSession()
+#cm = api.Common()
 sp = api.Shop()
 mk = api.Marketing()
 pd = api.Product()
 mb = api.Member()
+wx = api.Weixin()
 
-# get_cookie
-sid = cm.wsh_get_cookie()
+#### get_cookie
+#sid = cm.wsh_get_cookie()
+
+wxck = init.wsh_weixin_cookie()
+wxss = init.wsh_weixin_session()
+ssid = init.wsh_get_cookie()
 #wxcookies = cm.wsh_weixin_cookie()
 
-# Login 登录
-resptext = cm.wsh_login(sid)
+#### Login 登录
+#resptext = cm.wsh_login(ssid)
+init.wsh_login(ssid)
 
+
+
+#### Marketing ####
+#mk.get_market_act_list(sid)
+#mk.get_market_add_ajax2(sid)
+wx.wx_redpack_list_ss(wxss)
+wx.wx_redpack_list_ck(wxck)
+sp.wsh_shop_get(ssid)
+sp.wsh_terminal_list_ajax(ssid)
+
+#mk.market_egg_add_ajax(sid)
 '''
 # actlist   获取活动列表
 sp.wsh_actlist(sid)
@@ -36,8 +54,8 @@ mk.get_secondkill_actlist(sid)
 mk.get_collectzan_actlist(sid)
 '''
 #### Product ####
-pd.get_product_list(sid)
-pd.get_togetherbuy_detail(sid)
+#pd.get_product_list(sid)
+#pd.get_togetherbuy_detail(sid)
 '''
 pd.get_product_list(sid)
 pd.get_order_list(sid)

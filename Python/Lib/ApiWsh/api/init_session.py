@@ -11,7 +11,7 @@ cfg = config()
 #ws = set.Wsh()
 
 
-class Common(object):
+class InitSession(object):
     capt = cfg.CAPTCHA
     user = cfg.USER
     passwd = cfg.PASSWORD
@@ -28,7 +28,8 @@ class Common(object):
     def wsh_get_cookie(self):
         #,pgv_pvi,pgv_si,_csrf
         print "---Test get cookie---"
-        url = self.baseurl+'/captcha/getimage'
+        #url = self.baseurl+'/captcha/getimage'
+        url = self.baseurl
         #url = 'http://betanewwsh.vikduo.com/reduction/list-ajax'
         headers = self.headers
 
@@ -38,6 +39,7 @@ class Common(object):
         #cookies.load(headers['Set-Cookie'])
         #print cookies
         #session = cookies['PHPSESSID'].value
+
         cookie = Cookie.SimpleCookie(r.headers['Set-Cookie'])
         sessionid = cookie['PHPSESSID'].value
 
@@ -73,10 +75,37 @@ class Common(object):
 
         return r.text
 
+    def wsh_weixin_session(self):
+
+        print "---Test WeiXin Get Session---"
+        url = 'http://wkdianshang.betanewwx.snsshop.net/wkdianshang/oauth/testing?id=13764541'
+
+        headers = self.headers
+
+        ss = requests.Session()
+
+        r = ss.get(url, headers=headers)
+        cookies = r.headers['Set-Cookie']
+        #cookie = re.match("'PHPSESSID':'(.+?)',.", cookies)
+        #cookies.load(headers['Set-Cookie'])
+        #print cookies
+        #session = cookies['PHPSESSID'].value
+        cookie = Cookie.SimpleCookie(r.headers['Set-Cookie'])
+        sessionid = cookie['PHPSESSID'].value
+
+        #js = json.loads(cookies)
+        print "Headers:",r.headers
+        #print "Cookies:",r.cookies
+        #print "Raw:",r.raw
+        #print "Set-Cookie:",r.headers['Set-Cookie']
+        print "cookies:", cookies
+        print "SessionID:", sessionid
+        return ss
+
     def wsh_weixin_cookie(self):
 
         print "---Test WeiXin Get cookie---"
-        url = 'http://wkdianshang.betanewwx.snsshop.net/oauth/testing?id=13764541'
+        url = 'http://wkdianshang.betanewwx.snsshop.net/wkdianshang/oauth/testing?id=13764541'
 
         headers = self.headers
 
