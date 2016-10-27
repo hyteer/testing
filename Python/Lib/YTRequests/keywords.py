@@ -8,6 +8,7 @@ class ReqLib(object):
     urldict = {}
     alias = 'alias'
     ssdict = {}
+    cookies = {}
 
     def __init__(self):
        pass
@@ -15,7 +16,7 @@ class ReqLib(object):
     def version(self):
         print "Version:%s" % VERSION
 
-    def get_request(self,alias, url, headers={},cookies={}):
+    def get_request(self,alias, url, headers={},cookies={}, debug=0):
         """
         Get请求
 
@@ -36,9 +37,16 @@ class ReqLib(object):
             print "Wrong alias."
             return None
         r = self.ss.get(url=url,headers=headers)
+
+        if debug == 1:
+            print("URL: %s") % url
+            #print("Cookies: %s") % cookies
+            print("RespCode: %s") % r.status_code
+            #print("RespContent: %s") % r.text
+
         return r
 
-    def post_request(self,alias, url,data=None, headers={}, cookies={}):
+    def post_request(self,alias, url,data=None, headers={}, cookies={}, debug=0):
         """
         Post请求
 
@@ -56,15 +64,21 @@ class ReqLib(object):
         baseurl = self.urldict.get(alias)
         #print "baseurl:%s" % baseurl
         url = baseurl + url
-        #print "url:%s" % url
 
         if ss == None:
             print "Wrong alias."
             return None
         r = self.ss.post(url=url, data=data, headers=headers)
+
+        if debug == 1:
+            print("URL: %s") % url
+            #print("Cookies: %s") % cookies
+            print("RespCode: %s") % r.status_code
+            #print("RespContent: %s") % r.text
+
         return r
 
-    def create_session(self, name, url, cookies={}):
+    def create_session(self, name, url, cookies={},debug=0):
         """
         创建Session
         示例：
@@ -79,12 +93,14 @@ class ReqLib(object):
         :return:
         """
         print "-- Info: Create Session --"
+
         flag_ss = self.ssdict.get(name)
         flag_url = self.urldict.get(name)
         if flag_ss == None:
             try:
-                resp = self.ss.get(url=url,cookies=cookies)
+                r = self.ss.get(url=url,cookies=cookies)
                 self.url = url
+                self.cookies = cookies
                 #print "session resp:%s" % resp.text
                 #x = 1
             except Exception:
@@ -93,6 +109,13 @@ class ReqLib(object):
             self.urldict[name] = url
         else:
             print "%s already exist."
+
+        if debug == 1:
+            print("URL: %s") % url
+            #print("Cookies: %s") % cookies
+            print("RespCode: %s") % r.status_code
+            #print("RespContent: %s") % r.text
+
         return self.ss
 
     def simple_session(self,url=None):
