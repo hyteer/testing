@@ -66,6 +66,9 @@ data_onsale = '{"ids":[%d]}' % product_id
 r_onsale = req.post_request('wsh',url='/product/on-sale-ajax', data=data_onsale, headers=cfg.HEADERS_JSON,debug=1)
 print r_onsale.text
 
+# 商品详情
+
+
 # 分店
 data = '{"id":981851}'
 login_subshop(cookies)
