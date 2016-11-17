@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 from locust import HttpLocust, TaskSet, task
-import json,re,string,random,time
+import json, re, string, random, time
 
 counter = 0
 counter_success = 0
@@ -12,19 +12,19 @@ url = "http://betagate.speedpos.snsshop.net/unifiedorder"
 url2 = "http://10.100.100.88:16180/unifiedorder"
 
 mch_list = (
-            {"mch_id":"1000000069","mch_key":"22m0fgxvbid1mjgpiq0vfyexwgayzzv1"},
-            {"mch_id":"1000000070","mch_key":"kpy5r160mq0p8idmjt0swj0vl6f4l6fm"},
-            {"mch_id":"1000000072","mch_key":"2bytm9n4ctekl36p3orf5eq6d657zmgn"},
-            {"mch_id":"1000000073","mch_key":"go5vof4cdab4xte4w46g55jljkluvldy"},
-            {"mch_id":"1000000075","mch_key":"ir1o3mpash1qj0kg2ocd1wubqowqq2kg"},
-            {"mch_id":"1000000076","mch_key":"0du7bqrj7m8y9y3goek972xh5vpf86pu"},
-            {"mch_id":"1000000077","mch_key":"31qdxsgvvb2yc3r2zcnure5o80l9hnpz"},
-            )
+    {"mch_id": "1000000069", "mch_key": "22m0fgxvbid1mjgpiq0vfyexwgayzzv1"},
+    {"mch_id": "1000000070", "mch_key": "kpy5r160mq0p8idmjt0swj0vl6f4l6fm"},
+    {"mch_id": "1000000072", "mch_key": "2bytm9n4ctekl36p3orf5eq6d657zmgn"},
+    {"mch_id": "1000000073", "mch_key": "go5vof4cdab4xte4w46g55jljkluvldy"},
+    {"mch_id": "1000000075", "mch_key": "ir1o3mpash1qj0kg2ocd1wubqowqq2kg"},
+    {"mch_id": "1000000076", "mch_key": "0du7bqrj7m8y9y3goek972xh5vpf86pu"},
+    {"mch_id": "1000000077", "mch_key": "31qdxsgvvb2yc3r2zcnure5o80l9hnpz"}
+)
 x = 0
 mch_id = mch_list[x]['mch_id']
 mch_key = mch_list[x]['mch_key']
 #mch_key = "go5vof4cdab4xte4w46g55jljkluvldy" # 1000000073的key
-#mch_key = "31qdxsgvvb2yc3r2zcnure5o80l9hnpz"    # 1000000077的key
+#mch_key = "31qdxsgvvb2yc3r2zcnure5o80l9hnpz"    # 1000000077的ke
 
 # MD5加密
 def md5(str):
