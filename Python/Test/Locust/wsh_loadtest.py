@@ -1,8 +1,10 @@
 from locust import HttpLocust, TaskSet, task
 import json
+counter = 0
 
 class UserBehavior(TaskSet):
-    counter = 0
+    #global counter
+
     def on_start(self):
         """ on_start is called when a Locust start before any task is scheduled """
         self.login()
@@ -15,8 +17,9 @@ class UserBehavior(TaskSet):
             self.count_test()
 
     def count_test(self):
-        self.counter += 1
-        print "counter:%d" % self.counter
+        global counter
+        counter += 1
+        print "counter:%d" % counter
 
     @task(2)
     def index(self):
