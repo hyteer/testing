@@ -1,18 +1,23 @@
 # -*- coding: utf-8 -*-
 from locust import HttpLocust, TaskSet, task
+from locust import web
 import json, re, string, random, time
 
 counter = 0
 counter_success = 0
 total_errors = 0
 gtime = time.time()
+err1 = ""
+err2 = ""
 
 
-url = "http://betagate.speedpos.snsshop.net/unifiedorder"
-url2 = "http://10.100.100.88:16180/unifiedorder"
+url1 = "http://betagate.speedpos.snsshop.net/unifiedorder"
+url = "http://10.100.100.88:16180/unifiedorder"
+url3 = "http://10.100.100.82:16180/unifiedorder"
 
 mch_list = (
-    {"mch_id": "1000000069", "mch_key": "22m0fgxvbid1mjgpiq0vfyexwgayzzv1"},
+    {"mch_id": "1000102875", "mch_key": "ycwth8umslsea4tmy0vhf3jhajzt3rfh"},    # for http://10.100.100.82:16180
+    {"mch_id": "1000000069", "mch_key": "22m0fgxvbid1mjgpiq0vfyexwgayzzv1"},    # for http://betagate.speedpos.snsshop.net
     {"mch_id": "1000000070", "mch_key": "kpy5r160mq0p8idmjt0swj0vl6f4l6fm"},
     {"mch_id": "1000000072", "mch_key": "2bytm9n4ctekl36p3orf5eq6d657zmgn"},
     {"mch_id": "1000000073", "mch_key": "go5vof4cdab4xte4w46g55jljkluvldy"},
@@ -52,11 +57,20 @@ def rand_out_trade_no():
 # 生成XML数据
 def get_xmldata(mch_id,mch_key):
     out_trade_no = rand_out_trade_no()
+    '''
     str = "body=test1&cashierid=1&mch_id="+mch_id+"&nonce_str=xbfg5ewrl44yp46x9dsw6dxzk4ycfhqn&notify_url=\
 http://pay.speedpos.snsshop.net/notify/1000100001/1000100001201611021915213701&\
 openid=odLjYvwUYEEq1HMGQY_3CErEGLSU&out_trade_no="+out_trade_no+"&\
 return_url=http://pay.speedpos.snsshop.net/success/1000100001/1000100001201611021915213701&\
 spbill_create_ip=127.0.0.1&total_fee=1&trade_type=WXPAY.JSAPI&key="+mch_key
+'''
+
+
+    str = "body=test1&cashierid=1&mch_id={mch_id}&nonce_str=xbfg5ewrl44yp46x9dsw6dxzk4ycfhqn&notify_url=\
+http://pay.speedpos.snsshop.net/notify/1000100001/1000100001201611021915213701&\
+openid=odLjYvwUYEEq1HMGQY_3CErEGLSU&out_trade_no={out_trade_no}&\
+return_url=http://pay.speedpos.snsshop.net/success/1000100001/1000100001201611021915213701&\
+spbill_create_ip=127.0.0.1&total_fee=1&trade_type=WXPAY.JSAPI&key={mch_key}".format(mch_id=mch_id,out_trade_no=out_trade_no,mch_key=mch_key)
 
     str2 = "body=test1&cashierid=1&mch_id="+mch_id+"&nonce_str=xbfg5ewrl44yp46x9dsw6dxzk4ycfhqn&\
 notify_url=http://pay.speedpos.snsshop.net/notify/1000100001/1000100001201611021915213701&\
@@ -101,13 +115,14 @@ class UserBehavior(TaskSet):
 
     # 输出控制台日志
     def console_log(self):
-        global counter,counter_success,total_errors
+        global counter,counter_success,total_errors,err1
         total_errors = counter-counter_success
         if total_errors == 0:
             err_rate = float(0.0)
         else:
             err_rate = total_errors/float(counter)
         err_rate_perc = round(err_rate*100,1)
+        print "err1:%s" % err1
         print u"Total:%d, Success:%d, Errors:%d, ErrorRate:%s%%" % (counter,counter_success,total_errors,str(err_rate_perc))
 
     # 触发器
@@ -119,9 +134,10 @@ class UserBehavior(TaskSet):
         else:
             return False
 
-    # 任务
+    # 任务：支付接口
     @task(1)
     def unified_order(self):
+        global err1,err2
         xmldata = get_xmldata(mch_id,mch_key)
         if self.time_triger() == True:
             self.console_log()
@@ -139,21 +155,25 @@ class UserBehavior(TaskSet):
                         response.failure("Response is null.")
                 else:
                     content = response.content.decode("UTF-8")
+                    restext = response.text.decode("UTF-8")
                     #print u"Response status code:", response.status_code
                     #print u"Response content:", content
-                    matchs = re.findall(r"(?<=<retmsg>).*(?=<\/retmsg>)",content)
+                    matchs = re.search("SUCCESS", content)
+                    #matchs = re.findall(r"(?<=<retmsg>).*(?=<\/retmsg>)",content)
+                    #matchs2 = re.findall(r"(?<=<retcode>).*(?=<\/retcode>)",content)
                     #print matchs
-                    if len(matchs):
-                        if matchs[0] == "SUCCESS":
-                            response.success()
-                            self.count_success()
-                        else:
-                            response.failure(u"Response not success, retmsg: %s" % matchs[0])
-                            print u"Response content:", content
+                    if matchs is not None:
+                        response.success()
+                        self.count_success()
                     elif content and content != "":
                         response.failure("Asert Error: %s." % content)
+                        err1 = restext
                     else:
-                        response.failure("No Response Content!")
+                            response.failure(u"Response not contains \"SUCCESS\", content: %s" % content)
+                            #print u"Response content:", content
+                    
+                    #else:
+                    #    response.failure("No Response Content!")
 
             else:
                 response.failure(u"Got wrong response, response code: %r,Content:%r" %(response.status_code,response.text))
@@ -165,9 +185,24 @@ class UserBehavior(TaskSet):
         '''
 
 
+@web.app.route("/info")
+def test_info():
+    global counter,counter_success,total_errors,err1,err2
+    total_errors = counter-counter_success
+    if total_errors == 0:
+        err_rate = float(0.0)
+    else:
+        err_rate = total_errors/float(counter)
+    err_rate_perc = round(err_rate*100,1)
+    if err1 != "":
+        err = err1
+    else:
+        err = "No assertion error."
+    return err
+    #return "测试数据\nTotal:%d, Success:%d, Errors:%d, ErrorRate:%s%%" % (counter,counter_success,total_errors,str(err_rate_perc))
 
 
 class WebsiteUser(HttpLocust):
     task_set = UserBehavior
-    min_wait = 2000
-    max_wait = 6000
+    min_wait = 1000
+    max_wait = 3000
