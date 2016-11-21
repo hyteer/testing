@@ -6,7 +6,8 @@ import json, re, string, random, time
 counter = 0
 counter_success = 0
 total_errors = 0
-gtime = time.time()
+start_time = time.time()
+gtime = start_time
 err1 = ""
 err2 = ""
 
@@ -25,7 +26,7 @@ mch_list = (
     {"mch_id": "1000000076", "mch_key": "0du7bqrj7m8y9y3goek972xh5vpf86pu"},
     {"mch_id": "1000000077", "mch_key": "31qdxsgvvb2yc3r2zcnure5o80l9hnpz"}
 )
-x = 0
+x = 1
 mch_id = mch_list[x]['mch_id']
 mch_key = mch_list[x]['mch_key']
 #mch_key = "go5vof4cdab4xte4w46g55jljkluvldy" # 1000000073的key
@@ -115,15 +116,17 @@ class UserBehavior(TaskSet):
 
     # 输出控制台日志
     def console_log(self):
-        global counter,counter_success,total_errors,err1
+        global counter,counter_success,total_errors,err1,start_time
         total_errors = counter-counter_success
+        time_now = time.time()
+        elapsed = int(time_now - start_time)
         if total_errors == 0:
             err_rate = float(0.0)
         else:
             err_rate = total_errors/float(counter)
         err_rate_perc = round(err_rate*100,1)
         print "err1:%s" % err1
-        print u"Total:%d, Success:%d, Errors:%d, ErrorRate:%s%%" % (counter,counter_success,total_errors,str(err_rate_perc))
+        print u"Elapsed:%s,Total:%d, Success:%d, Errors:%d, ErrRate:%s%%" % (elapsed,counter,counter_success,total_errors,str(err_rate_perc))
 
     # 触发器
     def time_triger(self):
@@ -155,7 +158,7 @@ class UserBehavior(TaskSet):
                         response.failure("Response is null.")
                 else:
                     content = response.content.decode("UTF-8")
-                    restext = response.text.decode("UTF-8")
+                    #restext = response.text.decode("UTF-8")
                     #print u"Response status code:", response.status_code
                     #print u"Response content:", content
                     matchs = re.search("SUCCESS", content)
@@ -167,7 +170,11 @@ class UserBehavior(TaskSet):
                         self.count_success()
                     elif content and content != "":
                         response.failure("Asert Error: %s." % content)
-                        err1 = restext
+                        matchs_msg = re.findall(r"(?<=<retmsg>).*(?=<\/retmsg>)",content)
+                        matchs_code = re.findall(r"(?<=<retcode>).*(?=<\/retcode>)",content)
+                        err1 = "retcode:%s,retmsg:%s" % (matchs_code[0], matchs_msg[0])
+                    elif content == "":
+                        response.failure("No response content.")
                     else:
                             response.failure(u"Response not contains \"SUCCESS\", content: %s" % content)
                             #print u"Response content:", content
@@ -187,15 +194,17 @@ class UserBehavior(TaskSet):
 
 @web.app.route("/info")
 def test_info():
-    global counter,counter_success,total_errors,err1,err2
+    global counter,counter_success,total_errors,err1,err2,start_time
     total_errors = counter-counter_success
+    time_now = time.time()
+    elapsed = int(time_now - start_time)
     if total_errors == 0:
         err_rate = float(0.0)
     else:
         err_rate = total_errors/float(counter)
     err_rate_perc = round(err_rate*100,1)
     if err1 != "":
-        err = err1
+        err = "elapsed:%s, info:%s" % (str(elapsed), err1)
     else:
         err = "No assertion error."
     return err

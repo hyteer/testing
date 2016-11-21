@@ -3,6 +3,7 @@
 
 # Ada Library Information
 *.ali
+*.pyc
 
 
 
