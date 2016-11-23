@@ -144,30 +144,25 @@ class UserBehavior(TaskSet):
         time_elapsed = int(time_now - start_time)
 
 
-
     # 任务：支付接口
     @task(1)
     def unified_order(self):
-        global err1,err2, debug_mode
+        global err1,err2, de
         xmldata = get_xmldata(mch_id,mch_key)
         if self.time_triger() == True:
             self.console_log()
 
-        def order_debug_mode():
-            if response.status_code == 200:
-                response.success()
-                self.count_success()
 
-        def order_normal_mode():
+        with self.client.post("/unifiedorder", data=xmldata,catch_response=True) as response:
+            self.count_total()
+
             if response.status_code == 200:
 
                 if response.content is False:
                     response.failure("No Response Content.")
 
-                elif response.content is None:
-                    response.failure("Response Content is None.")
-                elif response.content == "":
-                    response.failure("Reponse Content is null")
+                elif response.content == None:
+                        response.failure("Response is null.")
                 else:
                     content = response.content.decode("UTF-8")
                     #restext = response.text.decode("UTF-8")
@@ -178,27 +173,24 @@ class UserBehavior(TaskSet):
                     #matchs = re.findall(r"(?<=<retmsg>).*(?=<\/retmsg>)",content)
                     #matchs2 = re.findall(r"(?<=<retcode>).*(?=<\/retcode>)",content)
                     #print matchs
-                    if len(matchs_msg):
-                        if matchs_msg[0] == "SUCCESS":
-                            response.success()
-                            self.count_success()
-                        else:
-                            response.failure("Asert Error: %s." % content)
-                            matchs_code = re.findall(r"(?<=<retcode>).*(?=<\/retcode>)",content)
-                            err1 = "retcode:%s,retmsg:%s" % (matchs_code[0], matchs_msg[0])                          
+                    if matchs is not None:
+                        response.success()
+                        self.count_success()
+                    elif content and content != "":
+                        response.failure("Asert Error: %s." % content)
+                        matchs_code = re.findall(r"(?<=<retcode>).*(?=<\/retcode>)",content)
+                        err1 = "retcode:%s,retmsg:%s" % (matchs_code[0], matchs_msg[0])
+                    elif content == "":
+                        response.failure("No response content.")
+                    else:
+                            response.failure(u"Response not contains \"SUCCESS\", content: %s" % content)
+                            #print u"Response content:", content
+                    
+                    #else:
+                    #    response.failure("No Response Content!")
 
             else:
                 response.failure(u"Got wrong response, response code: %r,Content:%r" %(response.status_code,response.text))
-
-        # 开始请求
-
-        with self.client.post("/unifiedorder", data=xmldata,catch_response=True) as response:
-            self.count_total()
-            if debug_mode == 1:
-                order_debug_mode()
-            else:
-                order_normal_mode()
-            
 
         self.count_time()    # count elapsed time        
 
@@ -233,4 +225,4 @@ def test_info():
 class WebsiteUser(HttpLocust):
     task_set = UserBehavior
     min_wait = 1000
-    max_wait = 1500
+    max_wait = 3000

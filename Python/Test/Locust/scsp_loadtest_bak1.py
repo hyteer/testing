@@ -23,6 +23,9 @@ mch_list = (
     {"mch_id": "1000000076", "mch_key": "0du7bqrj7m8y9y3goek972xh5vpf86pu"},
     {"mch_id": "1000000077", "mch_key": "31qdxsgvvb2yc3r2zcnure5o80l9hnpz"}
 )
+
+debug_mode = 1  # 0为非调试模式，1为调试模式
+
 x = 0
 mch_id = mch_list[x]['mch_id']
 mch_key = mch_list[x]['mch_key']
@@ -134,6 +137,7 @@ class UserBehavior(TaskSet):
     # 任务：支付接口
     @task(1)
     def unified_order(self):
+        global debug_mode
         xmldata = get_xmldata(mch_id,mch_key)
         if self.time_triger() == True:
             self.console_log()
@@ -157,13 +161,18 @@ class UserBehavior(TaskSet):
                     matchs = re.findall(r"(?<=<retmsg>).*(?=<\/retmsg>)",content)
                     #matchs2 = re.findall(r"(?<=<retcode>).*(?=<\/retcode>)",content)
                     #print matchs
-                    if len(matchs):
-                        if matchs[0] == "SUCCESS":
+                    if len(matchs)
+                        if debug_mode==0:
+                            if matchs[0]=="SUCCESS":
+                                response.success()
+                                self.count_success()
+                            else:
+                                response.failure(u"Response not success, retmsg: %s" % matchs[0])
+                                print u"Response content:", content                   
+                        else:
                             response.success()
                             self.count_success()
-                        else:
-                            response.failure(u"Response not success, retmsg: %s" % matchs[0])
-                            print u"Response content:", content
+                            
                     elif content and content != "":
                         response.failure("Asert Error: %s." % content)
                     else:
