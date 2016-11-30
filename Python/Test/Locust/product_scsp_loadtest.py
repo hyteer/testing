@@ -12,7 +12,7 @@ time_elapsed = 0
 gtime = start_time
 err1 = ""
 err2 = ""
-debug_mode = 2
+debug_mode = 2  
 """ 
     《Debug模式说明》
     0:非调试模式，对返回数据做完整校验
@@ -69,7 +69,6 @@ def rand_out_trade_no():
 
 # 生成XML数据
 def get_xmldata(mch_id,mch_key):
-    global debug_mode
     out_trade_no = rand_out_trade_no()
     '''
     str = "body=test1&cashierid=1&mch_id="+mch_id+"&nonce_str=xbfg5ewrl44yp46x9dsw6dxzk4ycfhqn&notify_url=\
@@ -103,8 +102,6 @@ http://pay.speedpos.snsshop.net/notify/1000100001/1000100001201611021915213701</
 </return_url><spbill_create_ip>127.0.0.1</spbill_create_ip><total_fee>1</total_fee>\
 <trade_type>WXPAY.JSAPI</trade_type><sign>"+sign+"</sign></xml>"
 
-    xmldata_debug = '0'
-
     xmldata2 = "<xml><body>test1</body><cashierid>1</cashierid><mch_id>"+mch_id+"</mch_id>\
 <nonce_str>xbfg5ewrl44yp46x9dsw6dxzk4ycfhqn</nonce_str><notify_url>\
 http://pay.speedpos.snsshop.net/notify/1000100001/1000100001201611021915213701</notify_url>\
@@ -113,10 +110,7 @@ http://pay.speedpos.snsshop.net/notify/1000100001/1000100001201611021915213701</
 </return_url><spbill_create_ip>127.0.0.1</spbill_create_ip><total_fee>1</total_fee>\
 <trade_type>WXPAY.JSAPI</trade_type><sign>"+sign2+"</sign></xml>"
 
-    if debug_mode == 2:
-        return xmldata_debug
-    else:
-        return xmldata
+    return xmldata
 
 ########################################### Loadtesting ##################################################
 
@@ -185,28 +179,7 @@ class UserBehavior(TaskSet):
                     response.failure("Reponse Content is null")
                 else:
                     response.success()
-                    self.count_success()
-            else:
-                response.failure(u"Got wrong response, response code: %r,Content:%r" %(response.status_code,response.text))
-
-        def order_debug_mode3():
-            if response.status_code == 200:
-
-                if response.content is False:
-                    response.failure("No Response Content.")
-
-                elif response.content is None:
-                    response.failure("Response Content is None.")
-                elif response.content == "":
-                    response.failure("Reponse Content is null")
-                else:
-                    content = response.content
-                    match = re.search(r"<xml>",content)
-                    if match is not None:
-                        response.success()
-                        self.count_success()
-                    else:
-                        response.failure("Reponse error, content:%s" % content)              
+                    self.count_success()                        
             else:
                 response.failure(u"Got wrong response, response code: %r,Content:%r" %(response.status_code,response.text))
 
@@ -250,10 +223,6 @@ class UserBehavior(TaskSet):
                 order_debug_mode1()
             elif debug_mode == 2:
                 order_debug_mode2()
-
-            elif debug_mode == 3:
-                order_debug_mode3()
-
             else:
                 order_normal_mode()
             

@@ -1,10 +1,12 @@
+# encoding: utf-8
 import re
 
-str = "<retmsg>SUCCESS</retmsg>"
+str = '<xml><retcode>12001</retcode><retmsg>第三方订单号已存在!</retmsg></xml>'
 
-result = re.search("SUCCESS",str)
+match = re.match(r"<xml>",str)
 
-print "result:",result
+if match is not None:
+	print 'match success, position:',match.span()
+else:
+	print 'match result is None.'
 
-if result is not None:
-	print "match success!"

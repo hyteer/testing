@@ -2,17 +2,23 @@
 from locust import HttpLocust, TaskSet, task
 from locust import web
 import json, re, string, random, time
+import locust.events
+from datetime import datetime
 
+########################################### Global variables ################################################
 counter = 0
 counter_success = 0
 total_errors = 0
 start_time = time.time()
 time_elapsed = 0
+#request_success_stats = ['success event test']
+request_fail_stats = [list()]
+hatch_complete_count = [list()]
 
 gtime = start_time
 err1 = ""
 err2 = ""
-debug_mode = 2
+debug_mode = 2  
 """ 
     《Debug模式说明》
     0:非调试模式，对返回数据做完整校验
@@ -38,11 +44,13 @@ mch_list = (
     {"mch_id": "1000000076", "mch_key": "0du7bqrj7m8y9y3goek972xh5vpf86pu"},
     {"mch_id": "1000000077", "mch_key": "31qdxsgvvb2yc3r2zcnure5o80l9hnpz"}
 )
-x = 0
+x = 1
 mch_id = mch_list[x]['mch_id']
 mch_key = mch_list[x]['mch_key']
 #mch_key = "go5vof4cdab4xte4w46g55jljkluvldy" # 1000000073的key
 #mch_key = "31qdxsgvvb2yc3r2zcnure5o80l9hnpz"    # 1000000077的ke
+
+############################################# Helper Functions ##############################################
 
 # MD5加密
 def md5(str):
@@ -69,7 +77,6 @@ def rand_out_trade_no():
 
 # 生成XML数据
 def get_xmldata(mch_id,mch_key):
-    global debug_mode
     out_trade_no = rand_out_trade_no()
     '''
     str = "body=test1&cashierid=1&mch_id="+mch_id+"&nonce_str=xbfg5ewrl44yp46x9dsw6dxzk4ycfhqn&notify_url=\
@@ -103,8 +110,6 @@ http://pay.speedpos.snsshop.net/notify/1000100001/1000100001201611021915213701</
 </return_url><spbill_create_ip>127.0.0.1</spbill_create_ip><total_fee>1</total_fee>\
 <trade_type>WXPAY.JSAPI</trade_type><sign>"+sign+"</sign></xml>"
 
-    xmldata_debug = '0'
-
     xmldata2 = "<xml><body>test1</body><cashierid>1</cashierid><mch_id>"+mch_id+"</mch_id>\
 <nonce_str>xbfg5ewrl44yp46x9dsw6dxzk4ycfhqn</nonce_str><notify_url>\
 http://pay.speedpos.snsshop.net/notify/1000100001/1000100001201611021915213701</notify_url>\
@@ -113,10 +118,7 @@ http://pay.speedpos.snsshop.net/notify/1000100001/1000100001201611021915213701</
 </return_url><spbill_create_ip>127.0.0.1</spbill_create_ip><total_fee>1</total_fee>\
 <trade_type>WXPAY.JSAPI</trade_type><sign>"+sign2+"</sign></xml>"
 
-    if debug_mode == 2:
-        return xmldata_debug
-    else:
-        return xmldata
+    return xmldata
 
 ########################################### Loadtesting ##################################################
 
@@ -184,29 +186,13 @@ class UserBehavior(TaskSet):
                 elif response.content == "":
                     response.failure("Reponse Content is null")
                 else:
-                    response.success()
-                    self.count_success()
-            else:
-                response.failure(u"Got wrong response, response code: %r,Content:%r" %(response.status_code,response.text))
-
-        def order_debug_mode3():
-            if response.status_code == 200:
-
-                if response.content is False:
-                    response.failure("No Response Content.")
-
-                elif response.content is None:
-                    response.failure("Response Content is None.")
-                elif response.content == "":
-                    response.failure("Reponse Content is null")
-                else:
                     content = response.content
-                    match = re.search(r"<xml>",content)
+                    match = re.match(r"<xml>",content)
                     if match is not None:
                         response.success()
                         self.count_success()
                     else:
-                        response.failure("Reponse error, content:%s" % content)              
+                        response.failure("Abnormal reponse, content:%s" % content)              
             else:
                 response.failure(u"Got wrong response, response code: %r,Content:%r" %(response.status_code,response.text))
 
@@ -250,13 +236,8 @@ class UserBehavior(TaskSet):
                 order_debug_mode1()
             elif debug_mode == 2:
                 order_debug_mode2()
-
-            elif debug_mode == 3:
-                order_debug_mode3()
-
             else:
                 order_normal_mode()
-            
 
         self.count_time()    # count elapsed time        
 
@@ -284,11 +265,42 @@ def test_info():
         err = "Elapsed:%s, info:%s" % (str(time_elapsed), err1)
     else:
         err = "Elapsed:%s<br>Info:No assertion error." % time_elapsed
-    return err
+
+    return str(hatch_complete_count)
     #return "测试数据\nTotal:%d, Success:%d, Errors:%d, ErrorRate:%s%%" % (counter,counter_success,total_errors,str(err_rate_perc))
 
 
 class WebsiteUser(HttpLocust):
+    global request_fail_stats, hatch_complete_count
+
     task_set = UserBehavior
     min_wait = 1000
     max_wait = 1500
+
+
+    def __init__(self):
+        pass
+        #locust.events.request_failure += self.hook_request_fail
+        #locust.events.hatch_complete += self.hook_hatch_complete
+        #locust.events.quitting += self.hook_locust_quit
+
+
+    def hook_request_fail(self, request_type, name, response_time, exception):
+        request_fail_stats.append([name, request_type, response_time, exception])
+
+    def hook_hatch_complete(self, user_count):
+        time = datetime.now()
+        hatch_complete_count.append([time,user_count])
+
+    def hook_locust_quit(self):
+        self.save_test_stats()
+
+    def save_test_stats(self):
+        import csv
+        with open('d:/Res/test_stats.csv', 'wb') as csv_file:
+            writer = csv.writer(csv_file)
+            for value in self.request_fail_stats:
+                writer.writerow(value)
+
+
+
