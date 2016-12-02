@@ -1,4 +1,11 @@
 # -*- coding: utf-8 -*-
+"""
+    SpeedPOS 压力测试脚本 V1.02
+    2016.12.02  
+    Author: YT
+
+"""
+
 from locust import HttpLocust, TaskSet, task
 from locust import web
 import json, re, string, random, time
@@ -12,7 +19,7 @@ time_elapsed = 0
 gtime = start_time
 err1 = ""
 err2 = ""
-debug_mode = 2
+debug_mode = 0
 """ 
     《Debug模式说明》
     0:非调试模式，对返回数据做完整校验
@@ -38,7 +45,7 @@ mch_list = (
     {"mch_id": "1000000076", "mch_key": "0du7bqrj7m8y9y3goek972xh5vpf86pu"},
     {"mch_id": "1000000077", "mch_key": "31qdxsgvvb2yc3r2zcnure5o80l9hnpz"}
 )
-x = 0
+x = 1
 mch_id = mch_list[x]['mch_id']
 mch_key = mch_list[x]['mch_key']
 #mch_key = "go5vof4cdab4xte4w46g55jljkluvldy" # 1000000073的key
