@@ -1,11 +1,4 @@
 # -*- coding: utf-8 -*-
-"""
-    SpeedPOS 压力测试脚本 V1.02
-    2016.12.02  
-    Author: YT
-
-"""
-
 from locust import HttpLocust, TaskSet, task
 from locust import web
 import json, re, string, random, time
@@ -19,7 +12,7 @@ time_elapsed = 0
 gtime = start_time
 err1 = ""
 err2 = ""
-debug_mode = 0
+debug_mode = 2
 """ 
     《Debug模式说明》
     0:非调试模式，对返回数据做完整校验
@@ -125,7 +118,7 @@ http://pay.speedpos.snsshop.net/notify/1000100001/1000100001201611021915213701</
     else:
         return xmldata
 
-########################################### Loadtest ##################################################
+########################################### Loadtesting ##################################################
 
 class UserBehavior(TaskSet):
     #global counter
@@ -297,5 +290,5 @@ def test_info():
 
 class WebsiteUser(HttpLocust):
     task_set = UserBehavior
-    min_wait = 500
-    max_wait = 800
+    min_wait = 1000
+    max_wait = 1500

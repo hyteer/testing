@@ -12,7 +12,7 @@ time_elapsed = 0
 gtime = start_time
 err1 = ""
 err2 = ""
-debug_mode = 2
+debug_mode = 0
 """ 
     《Debug模式说明》
     0:非调试模式，对返回数据做完整校验
@@ -28,6 +28,7 @@ url = "http://gate.speedpos.cn:8181/unifiedorder"
 #url_dev = "http://10.100.100.82:16180/unifiedorder"
 
 mch_list = (
+    {"mch_id": "1000102875", "mch_key": "ycwth8umslsea4tmy0vhf3jhajzt3rfh"},    # for http://10.20.60.76:17180/unifiedorder
     {"mch_id": "1000000001", "mch_key": "but15ozu7ckfqfn1ksle541rbatskk3x"},    # for http://gate.speedpos.cn
     {"mch_id": "1000102875", "mch_key": "ycwth8umslsea4tmy0vhf3jhajzt3rfh"},    # for http://10.100.100.82:16180
     {"mch_id": "1000000069", "mch_key": "22m0fgxvbid1mjgpiq0vfyexwgayzzv1"},    # for http://betagate.speedpos.snsshop.net
@@ -38,7 +39,7 @@ mch_list = (
     {"mch_id": "1000000076", "mch_key": "0du7bqrj7m8y9y3goek972xh5vpf86pu"},
     {"mch_id": "1000000077", "mch_key": "31qdxsgvvb2yc3r2zcnure5o80l9hnpz"}
 )
-x = 1
+x = 0
 mch_id = mch_list[x]['mch_id']
 mch_key = mch_list[x]['mch_key']
 #mch_key = "go5vof4cdab4xte4w46g55jljkluvldy" # 1000000073的key

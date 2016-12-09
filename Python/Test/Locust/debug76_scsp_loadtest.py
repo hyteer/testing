@@ -1,11 +1,4 @@
 # -*- coding: utf-8 -*-
-"""
-    SpeedPOS 压力测试脚本 V1.02
-    2016.12.02  
-    Author: YT
-
-"""
-
 from locust import HttpLocust, TaskSet, task
 from locust import web
 import json, re, string, random, time
@@ -35,6 +28,7 @@ url = "http://gate.speedpos.cn:8181/unifiedorder"
 #url_dev = "http://10.100.100.82:16180/unifiedorder"
 
 mch_list = (
+    {"mch_id": "1000102875", "mch_key": "ycwth8umslsea4tmy0vhf3jhajzt3rfh"},    # for http://10.20.60.76:17180
     {"mch_id": "1000000001", "mch_key": "but15ozu7ckfqfn1ksle541rbatskk3x"},    # for http://gate.speedpos.cn
     {"mch_id": "1000102875", "mch_key": "ycwth8umslsea4tmy0vhf3jhajzt3rfh"},    # for http://10.100.100.82:16180
     {"mch_id": "1000000069", "mch_key": "22m0fgxvbid1mjgpiq0vfyexwgayzzv1"},    # for http://betagate.speedpos.snsshop.net
@@ -76,7 +70,6 @@ def rand_out_trade_no():
 
 # 生成XML数据
 def get_xmldata(mch_id,mch_key):
-    global debug_mode
     out_trade_no = rand_out_trade_no()
     '''
     str = "body=test1&cashierid=1&mch_id="+mch_id+"&nonce_str=xbfg5ewrl44yp46x9dsw6dxzk4ycfhqn&notify_url=\
@@ -120,12 +113,12 @@ http://pay.speedpos.snsshop.net/notify/1000100001/1000100001201611021915213701</
 </return_url><spbill_create_ip>127.0.0.1</spbill_create_ip><total_fee>1</total_fee>\
 <trade_type>WXPAY.JSAPI</trade_type><sign>"+sign2+"</sign></xml>"
 
-    if debug_mode == 2:
+    if debug_mode == 3:
         return xmldata_debug
     else:
         return xmldata
 
-########################################### Loadtest ##################################################
+########################################### Loadtesting ##################################################
 
 class UserBehavior(TaskSet):
     #global counter
@@ -297,5 +290,5 @@ def test_info():
 
 class WebsiteUser(HttpLocust):
     task_set = UserBehavior
-    min_wait = 500
-    max_wait = 800
+    min_wait = 0
+    max_wait = 0
