@@ -10,7 +10,7 @@ start_time = time.time()
 time_elapsed = 0
 
 gtime = start_time
-err1 = ""
+err = ""
 err2 = ""
 debug_mode = 0
 """ 
@@ -39,7 +39,7 @@ mch_list = (
     {"mch_id": "1000000076", "mch_key": "0du7bqrj7m8y9y3goek972xh5vpf86pu"},
     {"mch_id": "1000000077", "mch_key": "31qdxsgvvb2yc3r2zcnure5o80l9hnpz"}
 )
-x = 0
+x = 4
 mch_id = mch_list[x]['mch_id']
 mch_key = mch_list[x]['mch_key']
 #mch_key = "go5vof4cdab4xte4w46g55jljkluvldy" # 1000000073的key
@@ -135,14 +135,14 @@ class UserBehavior(TaskSet):
 
     # 输出控制台日志
     def console_log(self):
-        global counter,counter_success,total_errors,err1,start_time, time_elapsed
+        global counter,counter_success,total_errors,err,start_time, time_elapsed
         total_errors = counter-counter_success
         if total_errors == 0:
             err_rate = float(0.0)
         else:
             err_rate = total_errors/float(counter)
         err_rate_perc = round(err_rate*100,1)
-        print "err1:%s" % err1
+        print "err:%s" % err
         print u"Elapsed:%s<br>Info:Total:%d, Success:%d, Errors:%d, ErrRate:%s%%" % (time_elapsed,counter,\
             counter_success,total_errors,str(err_rate_perc))
 
@@ -164,7 +164,7 @@ class UserBehavior(TaskSet):
     # 任务：支付接口
     @task(1)
     def unified_order(self):
-        global err1,err2, debug_mode
+        global err,err2, debug_mode
         xmldata = get_xmldata(mch_id,mch_key)
         if self.time_triger() == True:
             self.console_log()
@@ -238,7 +238,7 @@ class UserBehavior(TaskSet):
                         else:
                             response.failure("Asert Error: %s." % content)
                             matchs_code = re.findall(r"(?<=<retcode>).*(?=<\/retcode>)",content)
-                            err1 = "retcode:%s,retmsg:%s" % (matchs_code[0], matchs_msg[0])                          
+                            err = "retcode:%s,retmsg:%s" % (matchs_code[0], matchs_msg[0])                          
 
             else:
                 response.failure(u"Got wrong response, response code: %r,Content:%r" %(response.status_code,response.text))
@@ -270,22 +270,26 @@ class UserBehavior(TaskSet):
 
 @web.app.route("/info")
 def test_info():
-    global counter,counter_success,total_errors,err1,err2,start_time,time_elapsed
+    global counter,counter_success,total_errors,start_time,time_elapsed
     total_errors = counter-counter_success
     '''
     time_now = time.time()
     elapsed = int(time_now - start_time)
+    '''
     '''
     if total_errors == 0:
         err_rate = float(0.0)
     else:
         err_rate = total_errors/float(counter)
     err_rate_perc = round(err_rate*100,1)
-    if err1 != "":
-        err = "Elapsed:%s, info:%s" % (str(time_elapsed), err1)
+    if err != "":
+        err = "Total:%s,Elapsed:%s, info:%s" % (counter, str(time_elapsed), err)
     else:
-        err = "Elapsed:%s<br>Info:No assertion error." % time_elapsed
+        err = "Total:%s, Elapsed:%s<br>Info:No assertion error." % (counter, time_elapsed)
     return err
+    '''
+    return "Total:%s,Elapsed:%s, Success:%s, Errors:%s" % \
+    (counter, str(time_elapsed), counter_success,total_errors)
     #return "测试数据\nTotal:%d, Success:%d, Errors:%d, ErrorRate:%s%%" % (counter,counter_success,total_errors,str(err_rate_perc))
 
 
