@@ -1,0 +1,16 @@
+Action() 
+{   
+	char paraData[]="<para>"; 
+	//在lr参数化列表中添加参数 如：1、2、3   
+	lrs_create_socket("socket0", "TCP", "RemoteHost=192.168.3.211:8080", LrsLastArg);   
+	//我自己公司内网地址192.168.3.211  
+	//创建 socket链接    
+	lrs_save_param_ex("socket0","user",lr_eval_string(paraData),0,strlen(lr_eval_string(paraData)),NULL,"data_param");   
+	//把测试用参数 通过函数，传递给 “data_param”，把data_param参数放在Data.ws  
+	lr_start_transaction("yes");   
+	lrs_send("socket0","buf0", LrsLastArg);  
+	//发送数据   
+	lr_end_transaction("yes", LR_AUTO);  
+	lr_think_time(2);  
+	return 0; 
+} 

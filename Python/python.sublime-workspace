@@ -1,0 +1,789 @@
+{
+	"auto_complete":
+	{
+		"selected_items":
+		[
+			[
+				"sp",
+				"sp_version\tfunction"
+			],
+			[
+				"sock",
+				"socket_server\tfunction"
+			],
+			[
+				"by",
+				"bytes\tclass"
+			],
+			[
+				"comp",
+				"compute"
+			],
+			[
+				"start",
+				"start_time\tstatement"
+			],
+			[
+				"st",
+				"start_time\tstatement"
+			],
+			[
+				"m",
+				"microsecond\tinstance"
+			],
+			[
+				"da",
+				"datetime\tclass"
+			],
+			[
+				"request",
+				"request_fail_stats"
+			],
+			[
+				"requ",
+				"request_fail_stats\tstatement"
+			],
+			[
+				"hook_",
+				"hook_hatch_complete"
+			],
+			[
+				"hat",
+				"hatch_complete_count\tstatement"
+			],
+			[
+				"order",
+				"order_debug_mode2\tfunction"
+			],
+			[
+				"Ht",
+				"HttpResponse\tclass"
+			],
+			[
+				"H",
+				"HttpResponse\tclass"
+			]
+		]
+	},
+	"buffers":
+	[
+		{
+			"file": "Lib/TestLib/TestReq.py",
+			"settings":
+			{
+				"buffer_size": 5645,
+				"encoding": "UTF-8",
+				"line_ending": "Windows"
+			}
+		},
+		{
+			"file": "Test/System/demolib/mymodule.py",
+			"settings":
+			{
+				"buffer_size": 179,
+				"line_ending": "Windows"
+			}
+		},
+		{
+			"file": "Lib/Scsp/__init__.py",
+			"settings":
+			{
+				"buffer_size": 177,
+				"encoding": "UTF-8",
+				"line_ending": "Windows"
+			}
+		}
+	],
+	"build_system": "",
+	"build_system_choices":
+	[
+		[
+			[
+				[
+					"Packages/Python/Python.sublime-build",
+					""
+				],
+				[
+					"Packages/Python/Python.sublime-build",
+					"Syntax Check"
+				]
+			],
+			[
+				"Packages/Python/Python.sublime-build",
+				""
+			]
+		]
+	],
+	"build_varint": "",
+	"command_palette":
+	{
+		"height": 239.0,
+		"last_filter": "Package Control: re",
+		"selected_items":
+		[
+			[
+				"Package Control: re",
+				"Package Control: Remove Package"
+			],
+			[
+				"instal",
+				"Package Control: Install Package"
+			],
+			[
+				"Boxy Theme",
+				"Boxy Theme: Activation"
+			],
+			[
+				"inst",
+				"Package Control: Install Package"
+			],
+			[
+				"list",
+				"Package Control: List Packages"
+			],
+			[
+				"Snippet: ",
+				"Snippet: Lorem ipsum"
+			],
+			[
+				"Package Control: ",
+				"Package Control: Install Package"
+			]
+		],
+		"width": 398.0
+	},
+	"console":
+	{
+		"height": 126.0,
+		"history":
+		[
+			"import urllib.request,os; pf = 'Package Control.sublime-package'; ipp = sublime.installed_packages_path(); urllib.request.install_opener( urllib.request.build_opener( urllib.request.ProxyHandler()) ); open(os.path.join(ipp, pf), 'wb').write(urllib.request.urlopen( 'http://sublime.wbond.net/' + pf.replace(' ','%20')).read())"
+		]
+	},
+	"distraction_free":
+	{
+		"menu_visible": true,
+		"show_minimap": false,
+		"show_open_files": false,
+		"show_tabs": false,
+		"side_bar_visible": false,
+		"status_bar_visible": false
+	},
+	"expanded_folders":
+	[
+		"/D/testing/Python",
+		"/D/testing/Python/Lib",
+		"/D/testing/Python/Lib/ApiWsh/api",
+		"/D/testing/Python/Lib/Scsp",
+		"/D/testing/Python/Lib/ScspDev",
+		"/D/testing/Python/Lib/TestLib",
+		"/D/testing/Python/Lib/Ytools",
+		"/D/testing/Python/Lib/YTRequests",
+		"/D/testing/Python/Test",
+		"/D/testing/Python/Test/System",
+		"/D/testing/Python/Test/System/demolib",
+		"/D/testing/Python/Test/System/Path"
+	],
+	"file_history":
+	[
+		"/D/testing/Python/Test/System/demolib/__init__.py",
+		"/D/testing/Python/Lib/__init__.py",
+		"/D/testing/Python/Lib/ScspDev/common.py",
+		"/D/testing/Python/Lib/Scsp/common.py",
+		"/D/testing/Python/Lib/TestLib/Scsp_test.py",
+		"/D/testing/Python/Test/System/__init__.py",
+		"/D/testing/Python/Test/System/Path/test_import.py",
+		"/D/testing/Python/python.sublime-project",
+		"/D/testing/Python/Lib/Ytools/version.py",
+		"/D/testing/Python/Test/IO/Socket/lr_socket_test",
+		"/D/testing/Python/Test/System/get_cli_args.py",
+		"/D/testing/Python/Test/IO/Socket/client.py",
+		"/D/testing/Python/Test/IO/Socket/socket_server.py",
+		"/D/testing/Python/Test/IO/Socket/client2java.py",
+		"/D/testing/Python/Test/IO/Socket/Server2.py",
+		"/D/testing/Python/Test/IO/Socket/Client2.py",
+		"/D/testing/Python/Test/IO/Socket/2client.py",
+		"/D/testing/Python/Test/IO/Socket/sim_input.py",
+		"/D/testing/Python/Test/IO/Socket/p2client.py",
+		"/D/testing/Python/Test/IO/Socket/pserver.py",
+		"/D/testing/Python/Test/IO/Socket/p2server.py",
+		"/D/testing/Python/Test/IO/Socket/pclient.py",
+		"/D/testing/Python/Test/IO/Socket/inter_test.py",
+		"/D/testing/Python/Test/IO/Socket/scsp_client.py",
+		"/D/Testing/Python/Test/Type/hex_test.py",
+		"/D/Testing/Python/Test/Locust/scsp_loadtest_bad1129.py",
+		"/D/Testing/Python/Test/Locust/scsp_loadtest_bak1128.py",
+		"/D/Testing/Python/Test/test.sublime-project",
+		"/E/ytest/Python/Projects/first/manage.py",
+		"/E/ytest/Python/Projects/first/first/urls.py",
+		"/E/ytest/Python/Projects/mysite/tool/views.py",
+		"/E/ytest/Python/Projects/first/first/settings.py",
+		"/E/ytest/Python/Projects/mysite/mysite/settings.py",
+		"/E/ytest/Python/Projects/mysite/mysite/urls.py",
+		"/E/ytest/Python/Projects/django.sublime-project",
+		"/E/Software/Sublime Text Build 3083 x64/Data/Packages/User/pep8_autoformat.sublime-settings",
+		"/E/Software/Sublime Text Build 3083 x64/Data/Packages/Python PEP8 Autoformat/pep8_autoformat.sublime-settings",
+		"/E/Software/Sublime Text Build 3083 x64/Data/Packages/User/Pylinter.sublime-settings",
+		"/E/Software/Sublime Text Build 3083 x64/Data/Packages/User/Anaconda.sublime-settings",
+		"/E/Software/Sublime Text Build 3083 x64/Data/Packages/User/JSON.sublime-settings",
+		"/E/ytest/Python/Projects/Temp/test.py",
+		"/E/ytest/Python/Projects/django.sublime-build",
+		"/E/ytest/Python/Projects/.sublime-project",
+		"/D/Testing/Python/Test/Locust/scsp_loadtest.py",
+		"/D/Testing/Python/Test/Time/time_triger.py",
+		"/D/Testing/Python/Test/Locust/locustfile.py",
+		"/E/Software/Sublime Text Build 3083 x64/Data/Packages/User/Package Control.sublime-settings",
+		"/E/Software/Sublime Text Build 3083 x64/Data/Packages/User/Preferences.sublime-settings",
+		"/D/Testing/Python/Test/IO/file_test/os_test.py",
+		"/D/Testing/Python/Test/Obj&Class/decorator_test2.py",
+		"/D/Web/8h_flasky/app/templates/base.html",
+		"/D/Web/flasky/app/templates/auth/unconfirmed.html",
+		"/D/Web/flasky/app/templates/auth/login.html",
+		"/E/Software/Sublime Text Build 3083 x64/Data/Packages/Pylinter/Default (Windows).sublime-keymap",
+		"/E/Software/Sublime Text Build 3083 x64/Data/Packages/Pylinter/Pylinter.sublime-settings",
+		"/D/Web/flasky/hello.py",
+		"/D/flask/venv/Lib/site-packages/flask_bootstrap/templates/bootstrap/base.html",
+		"/C/Python27/Lib/site-packages/flask_script/__init__.py",
+		"/D/flask/testapp/first.py",
+		"/D/Node/demo/views/layout.hbs",
+		"/D/Node/demo/routes/index.js",
+		"/D/Node/demo/public/angular/reminder.html",
+		"/D/Node/demo/views/angular.hbs",
+		"/D/Node/demo/public/angular.html",
+		"/D/Node/angular/hello.html",
+		"/D/Node/demo/views/about.hbs",
+		"/D/Node/demo/public/stylesheets/style.css",
+		"/D/Node/demo/views/index.hbs",
+		"/D/Node/demo/views/demo.hbs",
+		"/D/Node/angular/demo.html",
+		"/D/Node/ember-start/app/templates/application.hbs",
+		"/D/Node/ember-start/app/templates/index.hbs",
+		"/D/Node/ember-start/app/templates/scientists.hbs",
+		"/D/Node/ember-start/app/routes/index.js",
+		"/D/Node/ember-start/app/templates/components/blog-post.hbs",
+		"/D/Node/ember-start/app/templates/webtechs.hbs",
+		"/D/Node/ember-start/app/templates/components/people-list.hbs",
+		"/D/Node/ember-start/app/routes/scientists.js",
+		"/D/Node/ember-start/app/routes/webtechs.js",
+		"/D/Node/ember-start/app/app.js",
+		"/D/Node/demo/app.js",
+		"/D/Node/demo/views/error.hbs",
+		"/D/Node/demo/bin/www",
+		"/D/Node/demo/public/Bak/index.html",
+		"/D/Node/demo/log/app-0.log",
+		"/D/Node/demo/log/pm2-0.log",
+		"/E/Dev/nodejs/Projects/meadowlark/index.js",
+		"/D/Node/demo/package.json",
+		"/D/Node/demo/public/about.html",
+		"/D/Node/demo/public/demo.html",
+		"/D/Node/demo/public/index.html",
+		"/D/Node/testapp/app.js",
+		"/D/flask/testapp/renderTemplate.py",
+		"/E/wamp/www/test/test.htm",
+		"/E/Dev/Python/Classic/fib.py",
+		"/E/Dev/Python/Study/while.py",
+		"/D/Web/ghost/config.js",
+		"/E/Dev/Python/Test/regexp2.py",
+		"/E/Dev/Python/Test/regexp3.py",
+		"/E/Work/Data/nginx-mysql.conf",
+		"/E/Work/Data/sites-available/default-red",
+		"/D/Web/ghost/content/themes/casper/default.hbs",
+		"/D/Web/ghost/content/themes/casper/index.hbs",
+		"/D/Web/ghost/index.js",
+		"/E/Dev/Python/Test/pass.py",
+		"/E/Dev/Python/Test/for.py",
+		"/E/Dev/Python/Test/forelse.py",
+		"/E/Dev/Python/Test/forAndwhile.py",
+		"/D/Web/ghost/config.example.js",
+		"/E/Dev/nodejs/Projects/meadowlarkTest/views/newsletter-ajax.hbstest",
+		"/E/Dev/nodejs/Projects/meadowlarkTest/views/home.hbs",
+		"/E/Dev/nodejs/Projects/meadowlarkTest/views/newsletter.hbs",
+		"/E/Dev/nodejs/Projects/meadowlarkTest/views/newsletter-ajax.hbs",
+		"/D/Down/Sublime Text Build 3083 x64/Data/Packages/Default/Preferences.sublime-settings",
+		"/D/Down/Sublime Text Build 3083 x64/Data/Packages/User/Preferences.sublime-settings",
+		"/D/Down/Sublime Text Build 3083 x64/Data/Packages/User/JSON.sublime-settings"
+	],
+	"find":
+	{
+		"height": 23.0
+	},
+	"find_in_files":
+	{
+		"height": 90.0,
+		"where_history":
+		[
+		]
+	},
+	"find_state":
+	{
+		"case_sensitive": false,
+		"find_history":
+		[
+			"test_info",
+			"url",
+			"sample1",
+			"(=>):).*",
+			"):\n",
+			"        \n",
+			"privacy",
+			"Gravatar"
+		],
+		"highlight": true,
+		"in_selection": false,
+		"preserve_case": false,
+		"regex": false,
+		"replace_history":
+		[
+			"first",
+			" first"
+		],
+		"reverse": false,
+		"show_context": true,
+		"use_buffer2": true,
+		"whole_word": false,
+		"wrap": true
+	},
+	"groups":
+	[
+		{
+			"selected": 1,
+			"sheets":
+			[
+				{
+					"buffer": 0,
+					"file": "Lib/TestLib/TestReq.py",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 5645,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								532,
+								532
+							]
+						],
+						"settings":
+						{
+							"bracket_highlighter.busy": false,
+							"bracket_highlighter.locations":
+							{
+								"close":
+								{
+									"1":
+									[
+										563,
+										564
+									]
+								},
+								"icon":
+								{
+									"1":
+									[
+										"Packages/BracketHighlighter/icons/round_bracket.png",
+										"brackethighlighter.default"
+									]
+								},
+								"open":
+								{
+									"1":
+									[
+										493,
+										494
+									]
+								},
+								"unmatched":
+								{
+								}
+							},
+							"bracket_highlighter.regions":
+							[
+								"bh_regex",
+								"bh_regex_center",
+								"bh_regex_open",
+								"bh_regex_close",
+								"bh_regex_content",
+								"bh_tag",
+								"bh_tag_center",
+								"bh_tag_open",
+								"bh_tag_close",
+								"bh_tag_content",
+								"bh_double_quote",
+								"bh_double_quote_center",
+								"bh_double_quote_open",
+								"bh_double_quote_close",
+								"bh_double_quote_content",
+								"bh_angle",
+								"bh_angle_center",
+								"bh_angle_open",
+								"bh_angle_close",
+								"bh_angle_content",
+								"bh_c_define",
+								"bh_c_define_center",
+								"bh_c_define_open",
+								"bh_c_define_close",
+								"bh_c_define_content",
+								"bh_curly",
+								"bh_curly_center",
+								"bh_curly_open",
+								"bh_curly_close",
+								"bh_curly_content",
+								"bh_round",
+								"bh_round_center",
+								"bh_round_open",
+								"bh_round_close",
+								"bh_round_content",
+								"bh_default",
+								"bh_default_center",
+								"bh_default_open",
+								"bh_default_close",
+								"bh_default_content",
+								"bh_single_quote",
+								"bh_single_quote_center",
+								"bh_single_quote_open",
+								"bh_single_quote_close",
+								"bh_single_quote_content",
+								"bh_square",
+								"bh_square_center",
+								"bh_square_open",
+								"bh_square_close",
+								"bh_square_content",
+								"bh_unmatched",
+								"bh_unmatched_center",
+								"bh_unmatched_open",
+								"bh_unmatched_close",
+								"bh_unmatched_content"
+							],
+							"syntax": "Packages/Python/Python.sublime-syntax"
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 1,
+					"type": "text"
+				},
+				{
+					"buffer": 1,
+					"file": "Test/System/demolib/mymodule.py",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 179,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								179,
+								179
+							]
+						],
+						"settings":
+						{
+							"auto_complete_triggers":
+							[
+								{
+									"characters": ".",
+									"selector": "source.python - string - comment - constant.numeric"
+								},
+								{
+									"characters": ".",
+									"selector": "source.python - string - constant.numeric"
+								}
+							],
+							"bracket_highlighter.busy": false,
+							"bracket_highlighter.locations":
+							{
+								"close":
+								{
+								},
+								"icon":
+								{
+								},
+								"open":
+								{
+								},
+								"unmatched":
+								{
+								}
+							},
+							"bracket_highlighter.regions":
+							[
+								"bh_regex",
+								"bh_regex_center",
+								"bh_regex_open",
+								"bh_regex_close",
+								"bh_regex_content",
+								"bh_tag",
+								"bh_tag_center",
+								"bh_tag_open",
+								"bh_tag_close",
+								"bh_tag_content",
+								"bh_double_quote",
+								"bh_double_quote_center",
+								"bh_double_quote_open",
+								"bh_double_quote_close",
+								"bh_double_quote_content",
+								"bh_angle",
+								"bh_angle_center",
+								"bh_angle_open",
+								"bh_angle_close",
+								"bh_angle_content",
+								"bh_c_define",
+								"bh_c_define_center",
+								"bh_c_define_open",
+								"bh_c_define_close",
+								"bh_c_define_content",
+								"bh_curly",
+								"bh_curly_center",
+								"bh_curly_open",
+								"bh_curly_close",
+								"bh_curly_content",
+								"bh_round",
+								"bh_round_center",
+								"bh_round_open",
+								"bh_round_close",
+								"bh_round_content",
+								"bh_default",
+								"bh_default_center",
+								"bh_default_open",
+								"bh_default_close",
+								"bh_default_content",
+								"bh_single_quote",
+								"bh_single_quote_center",
+								"bh_single_quote_open",
+								"bh_single_quote_close",
+								"bh_single_quote_content",
+								"bh_square",
+								"bh_square_center",
+								"bh_square_open",
+								"bh_square_close",
+								"bh_square_content",
+								"bh_unmatched",
+								"bh_unmatched_center",
+								"bh_unmatched_open",
+								"bh_unmatched_close",
+								"bh_unmatched_content"
+							],
+							"open_with_edit": true,
+							"syntax": "Packages/Python/Python.sublime-syntax"
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 0,
+					"type": "text"
+				},
+				{
+					"buffer": 2,
+					"file": "Lib/Scsp/__init__.py",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 177,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								87,
+								87
+							]
+						],
+						"settings":
+						{
+							"auto_complete_triggers":
+							[
+								{
+									"characters": ".",
+									"selector": "source.python - string - comment - constant.numeric"
+								},
+								{
+									"characters": ".",
+									"selector": "source.python - string - constant.numeric"
+								},
+								{
+									"characters": ".",
+									"selector": "source.python - string - constant.numeric"
+								}
+							],
+							"bracket_highlighter.busy": false,
+							"bracket_highlighter.locations":
+							{
+								"close":
+								{
+								},
+								"icon":
+								{
+								},
+								"open":
+								{
+								},
+								"unmatched":
+								{
+								}
+							},
+							"bracket_highlighter.regions":
+							[
+								"bh_regex",
+								"bh_regex_center",
+								"bh_regex_open",
+								"bh_regex_close",
+								"bh_regex_content",
+								"bh_tag",
+								"bh_tag_center",
+								"bh_tag_open",
+								"bh_tag_close",
+								"bh_tag_content",
+								"bh_double_quote",
+								"bh_double_quote_center",
+								"bh_double_quote_open",
+								"bh_double_quote_close",
+								"bh_double_quote_content",
+								"bh_angle",
+								"bh_angle_center",
+								"bh_angle_open",
+								"bh_angle_close",
+								"bh_angle_content",
+								"bh_c_define",
+								"bh_c_define_center",
+								"bh_c_define_open",
+								"bh_c_define_close",
+								"bh_c_define_content",
+								"bh_curly",
+								"bh_curly_center",
+								"bh_curly_open",
+								"bh_curly_close",
+								"bh_curly_content",
+								"bh_round",
+								"bh_round_center",
+								"bh_round_open",
+								"bh_round_close",
+								"bh_round_content",
+								"bh_default",
+								"bh_default_center",
+								"bh_default_open",
+								"bh_default_close",
+								"bh_default_content",
+								"bh_single_quote",
+								"bh_single_quote_center",
+								"bh_single_quote_open",
+								"bh_single_quote_close",
+								"bh_single_quote_content",
+								"bh_square",
+								"bh_square_center",
+								"bh_square_open",
+								"bh_square_close",
+								"bh_square_content",
+								"bh_unmatched",
+								"bh_unmatched_center",
+								"bh_unmatched_open",
+								"bh_unmatched_close",
+								"bh_unmatched_content"
+							],
+							"syntax": "Packages/Python/Python.sublime-syntax"
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 2,
+					"type": "text"
+				}
+			]
+		}
+	],
+	"incremental_find":
+	{
+		"height": 23.0
+	},
+	"input":
+	{
+		"height": 31.0
+	},
+	"layout":
+	{
+		"cells":
+		[
+			[
+				0,
+				0,
+				1,
+				1
+			]
+		],
+		"cols":
+		[
+			0.0,
+			1.0
+		],
+		"rows":
+		[
+			0.0,
+			1.0
+		]
+	},
+	"menu_visible": true,
+	"output.exec":
+	{
+		"height": 143.0
+	},
+	"output.find_results":
+	{
+		"height": 0.0
+	},
+	"pinned_build_system": "Anaconda Python Builder",
+	"project": "python.sublime-project",
+	"replace":
+	{
+		"height": 42.0
+	},
+	"save_all_on_build": true,
+	"select_file":
+	{
+		"height": 0.0,
+		"last_filter": "",
+		"selected_items":
+		[
+		],
+		"width": 0.0
+	},
+	"select_project":
+	{
+		"height": 0.0,
+		"last_filter": "",
+		"selected_items":
+		[
+		],
+		"width": 0.0
+	},
+	"select_symbol":
+	{
+		"height": 0.0,
+		"last_filter": "",
+		"selected_items":
+		[
+		],
+		"width": 0.0
+	},
+	"selected_group": 0,
+	"settings":
+	{
+	},
+	"show_minimap": true,
+	"show_open_files": true,
+	"show_tabs": true,
+	"side_bar_visible": true,
+	"side_bar_width": 254.0,
+	"status_bar_visible": true,
+	"template_settings":
+	{
+	}
+}
