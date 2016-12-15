@@ -18,6 +18,7 @@ success_start = 0
 success_case = 0
 
 this_time_start = 0
+this_time_end = 0
 this_time_cost = 0
 last_time_cost = 0
 
@@ -173,7 +174,7 @@ def on_locust_start_hatching():
     global counter,counter_start, counter_success, errors_start,counter_case,errors_case,\
     last_case,last_errors,this_time_start,this_time_cost,last_time_cost
     counter_start = counter
-    this_time_start = time_elapsed
+    this_time_start = time.time()
     errors_start = counter - counter_success
     last_case = counter_case
     last_errors = errors_case
@@ -186,9 +187,10 @@ def on_locust_start_hatching():
 def on_locust_stop_hatching():
     #time.sleep(1)
     global counter,counter_start,counter_case, counter_success, errors_case, errors_start, this_time_start\
-    ,this_time_cost
+    ,this_time_cost,this_time_end
     counter_case = counter - counter_start
-    this_time_cost = time_elapsed - this_time_start
+    this_time_end = time.time()
+    this_time_cost = int(this_time_end - this_time_start)
     errors_case = counter - counter_success - errors_start
 
 
@@ -362,7 +364,7 @@ class UserBehavior(TaskSet):
 @web.app.route("/info")
 def test_info():
     global mch_id,counter,counter_success,total_errors,start_time,time_elapsed,counter_case,errors_case,\
-    last_case,last_errors,this_time_cost,last_time_cost
+    last_case,last_errors,this_time_start,this_time_cost,last_time_cost
     #total_errors = counter-counter_success
     '''
     time_now = time.time()
@@ -383,7 +385,8 @@ def test_info():
     total_info = "<h3>Total</h3>Samples:%s,Elapsed:%s, Success:%s, Errors:%s" % \
     (counter, str(time_elapsed), counter_success,total_errors)
     last_info =  "<h3>Last Test</h3>Samples:%s,Elapsed:%s,Errors:%s" % (last_case, last_time_cost,last_errors)
-    this_info = "<h3>This Time</h3>Samples:%s,Elapsed:%s,Errors:%s" % (counter_case, this_time_cost,errors_case)
+    this_info = "<h3>This Test</h3>Samples:%s,Elapsed:%s,Errors:%s<br><br>StartTime:%s,EndStime:%s" % \
+    (counter_case, this_time_cost,errors_case,this_time_start,this_time_end)
     return "<h3>mch_id:%s</h3>%s%s%s" % (mch_id,total_info,last_info,this_info)
 
     '''

@@ -17,6 +17,11 @@ errors_case = 0
 success_start = 0
 success_case = 0
 
+this_time_start = 0
+this_time_end = 0
+this_time_cost = 0
+last_time_cost = 0
+
 last_case = 0
 last_errors = 0
 
@@ -166,19 +171,28 @@ def on_master_stop_hatching():
     print("new test case master count:%s" % counter_case)
 
 def on_locust_start_hatching():
-    global counter,counter_start, counter_success, errors_start,counter_case,errors_case,last_case,last_errors
+    global counter,counter_start, counter_success, errors_start,counter_case,errors_case,\
+    last_case,last_errors,this_time_start,this_time_cost,last_time_cost
     counter_start = counter
+    this_time_start = time.time()
     errors_start = counter - counter_success
     last_case = counter_case
     last_errors = errors_case
+    last_time_cost = this_time_cost
     counter_case = "waiting..."
     errors_case = "waiting..."
+    this_time_cost = "waiting..."
     print("new test starts, counter start:%s,errors start:%s" % (counter_start,errors_start))
 
 def on_locust_stop_hatching():
-    global counter,counter_start,counter_case, counter_success, errors_case, errors_start
+    #time.sleep(1)
+    global counter,counter_start,counter_case, counter_success, errors_case, errors_start, this_time_start\
+    ,this_time_cost,this_time_end
     counter_case = counter - counter_start
+    this_time_end = time.time()
+    this_time_cost = int(this_time_end - this_time_start)
     errors_case = counter - counter_success - errors_start
+
 
     print("new test case count:%s,errors:%s" % (counter_case,errors_case))
 
@@ -349,8 +363,8 @@ class UserBehavior(TaskSet):
 
 @web.app.route("/info")
 def test_info():
-    global counter,counter_success,total_errors,start_time,time_elapsed,counter_case,errors_case,\
-    last_case,last_errors
+    global mch_id,counter,counter_success,total_errors,start_time,time_elapsed,counter_case,errors_case,\
+    last_case,last_errors,this_time_start,this_time_cost,last_time_cost
     #total_errors = counter-counter_success
     '''
     time_now = time.time()
@@ -370,9 +384,10 @@ def test_info():
     '''
     total_info = "<h3>Total</h3>Samples:%s,Elapsed:%s, Success:%s, Errors:%s" % \
     (counter, str(time_elapsed), counter_success,total_errors)
-    last_info =  "<h3>Last Test</h3>Samples:%s,Errors:%s" % (last_case, last_errors)
-    this_info = "<h3>This Time</h3>Samples:%s,Errors:%s" % (counter_case, errors_case)
-    return "%s%s%s" % (total_info,last_info,this_info)
+    last_info =  "<h3>Last Test</h3>Samples:%s,Elapsed:%s,Errors:%s" % (last_case, last_time_cost,last_errors)
+    this_info = "<h3>This Test</h3>Samples:%s,Elapsed:%s,Errors:%s<br><br>StartTime:%s,EndStime:%s" % \
+    (counter_case, this_time_cost,errors_case,this_time_start,this_time_end)
+    return "<h3>mch_id:%s</h3>%s%s%s" % (mch_id,total_info,last_info,this_info)
 
     '''
     return "<h3>Total</h3>Samples:%s,Elapsed:%s, Success:%s, Errors:%s<h3>This time</h3>\
@@ -386,5 +401,5 @@ def test_info():
 
 class WebsiteUser(HttpLocust):
     task_set = UserBehavior
-    min_wait = 1000
-    max_wait = 1500
+    min_wait = 0
+    max_wait = 10
