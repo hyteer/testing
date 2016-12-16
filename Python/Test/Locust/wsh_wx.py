@@ -38,19 +38,19 @@ class UserBehavior(TaskSet):
 
     @task(1)
     def market_activity(self):
-        res = self.client.post("/wkdianshang/market-activity/get-prize-ajax", {"id":1239,"shop_sub_id":0}\
+        res = self.client.post("/wkdianshang/market-activity/get-prize-ajax", {"id":1308,"shop_sub_id":0}\
             , name=u"大转盘活动")
         content = json.loads(res.content)        
         #errmsg = content["errmsg"]
         errcode = content["errcode"]
-        print "Response status code:", res.status_code
-        print("ResponseContent:%s", content)
+        #print "Response status code:", res.status_code
+        #print("ResponseContent:%s", content)
 
-        #matchs = re.search("teststr", content)
+        matchs = re.search("teststr", content)
         #print "MatchResult:%s" % str(matchs)
         
         #print "errcode:%s,\nerrmsg:%s" % (errcode,str(errmsg))
-        self.count()
+        #self.count()
 
         #print "Response status code:", res.status_code
         #print "Response content:", res.content
@@ -59,6 +59,6 @@ class UserBehavior(TaskSet):
 
 class WebsiteUser(HttpLocust):
     task_set = UserBehavior
-    min_wait = 200
-    max_wait = 500
+    min_wait = 0
+    max_wait = 1
     host = "http://wkdianshang.testnewwx.snsshop.net"
