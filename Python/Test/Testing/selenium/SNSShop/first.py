@@ -1,10 +1,10 @@
-import unittest
+
 import time
 from selenium import webdriver
 
 driver = webdriver.Chrome()
 
-driver.get('http://betanewwsh.snsshop.net/login/index')
+driver.get('http://testnewwsh.snsshop.net/login/index')
 
 print driver.title
 

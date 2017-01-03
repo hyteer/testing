@@ -1,0 +1,5 @@
+{
+  "test_first.py::test_answer_wrong": true, 
+  "test_first.py::test_max_illegal": true, 
+  "test_first.py::test_max_wrong": true
+}
