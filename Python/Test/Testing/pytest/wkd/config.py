@@ -22,7 +22,7 @@ class Maisha():
     defaultapp = 'android'
     testapp = 'testandroid'
 
-class WshConfig(object):
+class Config(object):
 
     CAPTCHA = '1111'
     PROXY = {'http' : 'http://127.0.0.1:8888'}
@@ -31,6 +31,22 @@ class WshConfig(object):
     URL = 'http://betanewwsh.snsshop.net'
     #baseurl = 'http://testnewwsh.snsshop.net/'
     #baseurl = 'http://testnewwsh.nexto2o.com/'
+    INIT_FLAG = 0
+    ENV = 'default'
+    SSID = None
+    #COOKIE = {'PHPSESSID': SSID}
+
+    @staticmethod
+    def get_flag():
+        return Config.INIT_FLAG
+
+    @staticmethod
+    def set_flag(flag):
+        Config.INIT_FLAG = flag
+
+    @staticmethod
+    def get_cookie():
+        return {'PHPSESSID': Config.SSID}
 
 
     HEADERS = {
@@ -51,12 +67,12 @@ class WshConfig(object):
         'YT': 'for debug'
     }
 
-class DevConfig(WshConfig):
+class DevConfig(Config):
     USER = 7638800811
     PASSWORD = 518000
     URL = 'http://335.newwsh.snsshop.net'
 
-class CiConfig(WshConfig):
+class CiConfig(Config):
     USER = 7638800811
     PASSWORD = 518000
     USER_ID = '137240011'
@@ -87,8 +103,8 @@ class CiConfig(WshConfig):
     "kind_ids":[208520]}]}' % (PD_NAME,SALES,PD_NAME,RESERVERS,PRICE,CODE1,PD_NAME,RESERVERS,PRICE,CODE2,PD_NAME)
 
 
-class TestConfig(WshConfig):
-    USER = 20161210
+class TestConfig(Config):
+    USERNAME = 20161210
     PASSWORD = 123456
     USER_ID = '13764761'
     MEMBER_ID = '371'
@@ -97,15 +113,18 @@ class TestConfig(WshConfig):
 
 
 
-class BetaConfig(WshConfig):
-    USER = 20151228
+class BetaConfig(Config):
+    USERNAME = 20151228
     PASSWORD = 123456
+    USER_ID = '13764779'
+    MEMBER_ID = '267'
     URL = 'http://betanewwsh.snsshop.net'
 
-class AutoConfig(WshConfig):
-    USER = 20160912
+class AutoConfig(Config):
+    USERNAME = 20160912
     PASSWORD = 123456
     USER_ID = '13764552'
+    MEMBER_ID = '291'
     URL = 'http://betanewwsh.snsshop.net'
     URL_TERMINAL = 'http://betashopadmin.snsshop.net/'
     URL_WEIXIN = 'http://wkdianshang.betanewwx.snsshop.net/wkdianshang'
@@ -132,14 +151,27 @@ class AutoConfig(WshConfig):
     "kind_value_ids":[944671],"kind_ids":[243720]}]}' % (PD_NAME,SALES,PD_NAME,RESERVERS,PRICE,CODE1,PD_NAME,RESERVERS,PRICE,CODE2,PD_NAME)
 
 
-config = CiConfig
-cfg = WshConfig()
+#config = CiConfig
+#cfg = Config()
 test_cfg = TestConfig()
 
 
-def get_config(flag):
-    if flag == "test":
-        return test_cfg
+def get_config(env):
+    if env == "test":
+        return TestConfig()
+    elif env == "beta":
+        return BetaConfig()
+    elif env == "auto":
+        return AutoConfig()
+    elif env == "dev":
+        return DevConfig()
+    elif env == "ci":
+        return CiConfig()
+    else:
+        print("Please input a legal env string,eg. 'test','auto','dev','ci'.")
+        return None
+
+
 
 '''
 config = {
