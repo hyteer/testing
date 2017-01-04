@@ -29,11 +29,10 @@ class Config(object):
     #USER = 20151228
     #PASSWORD = 123456
     URL = 'http://betanewwsh.snsshop.net'
-    #baseurl = 'http://testnewwsh.snsshop.net/'
-    #baseurl = 'http://testnewwsh.nexto2o.com/'
     INIT_FLAG = 0
     ENV = 'default'
     SSID = None
+    DEBUG = 'no'
     #COOKIE = {'PHPSESSID': SSID}
 
     @staticmethod

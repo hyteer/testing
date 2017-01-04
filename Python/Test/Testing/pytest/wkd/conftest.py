@@ -10,9 +10,12 @@ from config import Config
 #cfg = Config()
 from config import get_config
 import operations.common as cm
+from operations.api.member import Member
+import operations.tools as tools
 
-INIT_FLAG = False
-env = None
+mb = Member()
+#INIT_FLAG = False
+#env = None
 
 
 # 获取环境变量
@@ -20,6 +23,7 @@ def pytest_addoption(parser):
 
     #parser.addoption("--hostname", action="store", default='127.0.0.1', help="specify IP of test host")
     parser.addoption("--testenv", action="store", default="test",help="please input a testenv,eg.'test','beta','ci'")
+    parser.addoption("--mydebug", action="store", default="no",help="input '--mydebug=yes' to print debug info.")
     #import pdb
     #pdb.set_trace()
     #print "test addoption..."
@@ -35,18 +39,30 @@ def env(request):
 '''
 @pytest.fixture()
 def init_conf(request):
-    print "\ninitializing environment..."
+    print "\nInitializing environment..."
     env = request.config.getoption('--testenv')
+    debug = request.config.getoption('--mydebug')
     #import pdb
     #pdb.set_trace()
     cfg = get_config(env)
     Config.set_flag(1)
     Config.ENV = env
     print "Env:%s" % env
-
-    cm.api_login(cfg)
-
+    if debug == 'yes':
+        Config.DEBUG = 'yes'
+    #cm.api_login(cfg)
     return cfg
+
+
+
+@pytest.fixture()
+def init_api_set(request):
+    print "\nAPI logining..."
+    env = request.config.getoption('--testenv')
+    cfg = get_config(env)
+    cm.api_login(cfg)
+    print "Initializing api sets..."
+    Config.member = Member()
 
 # 全局功能及配置
 
@@ -63,6 +79,7 @@ def conf(request):
         #import pdb
         #pdb.set_trace()
         cfg = init_conf(request)
+        init_api_set(request)
         return cfg
 
 @pytest.fixture
@@ -81,4 +98,9 @@ def float_comp():
 def fx_api_login():
     #from operations.common import api_login
     return cm.api_login
+
+@pytest.fixture
+def u8filter():
+    return tools.utf8_filter
+
 

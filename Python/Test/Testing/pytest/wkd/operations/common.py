@@ -5,12 +5,14 @@ from selenium.webdriver.support.ui import WebDriverWait
 import requests
 import Cookie
 from ..config import get_config,Config
+import tools
+import chardet
 
 
 
 
 
-def login():
+def login(conf,u8filter):
     driver = webdriver.Chrome()
     driver.get('http://testnewwsh.snsshop.net/login/index')
     driver.implicitly_wait(10)
@@ -23,15 +25,17 @@ def login():
     #import pdb
     #pdb.set_trace()
     banner = WebDriverWait(driver, 10).until(lambda x: x.find_element_by_id("navbar"))
-    print banner.tag_name
-    print banner.text
-    print banner.get_attribute("class")
 
-    #print "Banner:%r" % str(banner.text())
-
-    print u"Title:%s" % driver.title
     assert driver.title == u"概况"
-    print driver.find_element_by_xpath("//div[@id='top-left']/a[@class='navbar-brand']/small").text
+    brand_text = driver.find_element_by_xpath("//div[@id='top-left']/a[@class='navbar-brand']/small").text
+
+    if conf.DEBUG == 'yes':
+        print banner.tag_name
+        print tools.utf8_filter(banner.text)
+        print banner.get_attribute("class")
+        print "Title:%s" % tools.utf8_filter(driver.title)
+        print tools.utf8_filter(brand_text)
+
     return True
 
 def api_login(conf):
@@ -47,40 +51,30 @@ def api_login(conf):
     ssid = conf.SSID
 
     r = requests.get(baseurl, headers=headers)
-    cookies = r.headers['Set-Cookie']
-    #cookie = re.match("'PHPSESSID':'(.+?)',.", cookies)
-    #cookies.load(headers['Set-Cookie'])
-    #print cookies
-    #session = cookies['PHPSESSID'].value
+    #cookies = r.headers['Set-Cookie']
     cookie = Cookie.SimpleCookie(r.headers['Set-Cookie'])
     sessionid = cookie['PHPSESSID'].value
-
-    #js = json.loads(cookies)
-    print "Headers:",r.headers
-    #print "Cookies:",r.cookies
-    #print "Raw:",r.raw
-    #print "Set-Cookie:",r.headers['Set-Cookie']
-    print "cookies:", cookies
-    print "SessionID:", sessionid
-    Config.SSID = sessionid
-    print "Config::SSID:%s" % conf.SSID
-
     # Login
     print "--- API Login ---"
     url = baseurl+"/login/login-ajax"
-    #url = 'http://betanewwsh.vikduo.com/login/login-ajax'
-    headers = headers
     postdata = {'captcha': captcha, 'username': username, 'password': password}
     cookies = {'PHPSESSID': sessionid}
 
     r = requests.post(url, data=postdata,headers=headers,cookies=cookies)
-    #length = len(r.text)
-    #js = json.loads(r.text[1:length])
 
-    print "headers:",r.headers
-    print u"Response:%s" % (r.content).decode('utf-8')
-    #print "Response:", r.text[1:length]
-    print "length:", len(r.text)
+    if conf.DEBUG == 'yes':
+        #print "Cookies:",r.cookies
+        #print "Raw:",r.raw
+        print "cookies:", cookies
+        print "SessionID:", sessionid
+        Config.SSID = sessionid
+        print "Config::SSID:%s" % conf.SSID
+        print "Headers:",r.headers
+        print "headers:",r.headers
+        #length = len(r.text)
+        #print "Response:", r.text[1:length]
+        print "r.content char:",chardet.detect(r.content)
+        print "r.text:", tools.utf8_filter(r.text)
 
     return cookies
 
