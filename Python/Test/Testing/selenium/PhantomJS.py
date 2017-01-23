@@ -3,8 +3,8 @@ import time
 from selenium import webdriver
 
 #driver = webdriver.Chrome()
-driver = webdriver.PhantomJS(executable_path='D:\\Tool\\phantomjs-2.1.1-windows\\bin\\phantomjs.exe')
-
+#driver = webdriver.PhantomJS(executable_path='D:\\Tool\\phantomjs-2.1.1-windows\\bin\\phantomjs.exe')
+driver = webdriver.PhantomJS()
 
 driver.get('http://testwkd.snsshop.net')
 driver.implicitly_wait(10)

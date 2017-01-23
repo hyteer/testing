@@ -1,7 +1,12 @@
 # coding: utf-8
+'''
+* 自动刷PV工具
+* 使用说明：需安装pyexcel，pyexcel-xlsx三方库
+'''
 import time
 from selenium import webdriver
 import sys
+import pyexcel as pe
 import csv
 
 ENV = '2'
@@ -12,7 +17,8 @@ if len(sys.argv) >1:
 ###################################### 获取参数 ####################################
 
 filename = 'wkd_test.csv'
-pages = []
+EXCEL_FILE = 'wkd_test.xlsx'
+#pages = []
 # driver = webdriver.PhantomJS(executable_path='D:\\Tool\\phantomjs-2.1.1-windows\\bin\\phantomjs.exe')
 phantom = 'phantomjs-2.1.1-windows\\bin\\phantomjs.exe'
 #driver = webdriver.PhantomJS(executable_path=phantom)
@@ -25,7 +31,7 @@ PASSWORD = '123456'
 CAPTCHA = '11'
 
 
-
+'''
 def unicode_csv_reader(utf8_data, dialect=csv.excel, **kwargs):
     csv_reader = csv.reader(utf8_data, dialect=dialect, **kwargs)
     for row in csv_reader:
@@ -45,6 +51,26 @@ def read_data():
         print "Name:%s, Url:%s" % (page['name'],page['url'])
 
 #read_data()
+'''
+
+# Read data from excel file
+def read_exceldata():
+    import pyexcel as pe
+    records =  pe.get_array(file_name=EXCEL_FILE)
+    for i in range(1,len(records)):
+        print("%s, %s") % (records[i][0],records[i][1])
+
+#read_exceldata()
+list =  pe.get_array(file_name=EXCEL_FILE)
+
+def get_pages():
+    #pages = pe.iget_records(file_name=EXCEL_FILE)
+    pages = pe.get_records(file_name=EXCEL_FILE)
+    for page in pages:
+        print("Name: %s, URL: %s" % (page['name'], page['url']))
+    return pages
+
+pages = get_pages()
 
 
 def base_url(ENV):
