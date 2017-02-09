@@ -4,6 +4,7 @@
 * 使用说明：需安装pyexcel，pyexcel-xlsx三方库
 * 通过PIP安装：pip install pyexcel pyexcel-xlsx
 * type:BACK(后台),SHOP(分店)，WX(微信前端)
+* Author:YT
 '''
 import time
 from datetime import datetime
@@ -29,7 +30,7 @@ else:
 ###################################### 获取参数 ####################################
 
 filename = 'wkd_test.csv'
-EXCEL_FILE = 'wkd_test_v4.xlsx'
+EXCEL_FILE = 'wkd_test.xlsx'
 #pages = []
 # driver = webdriver.PhantomJS(executable_path='D:\\Tool\\phantomjs-2.1.1-windows\\bin\\phantomjs.exe')
 PHANTOM = 'phantomjs-2.1.1-windows\\bin\\phantomjs.exe'
@@ -122,6 +123,7 @@ def login_shop(driver):
     print u"--- 分店登录 ---"
     driver.get('http://testwkd.snsshop.net')
     driver.implicitly_wait(10)
+    time.sleep(1)
     driver.find_element_by_id('staff_id').send_keys(USERNAME)
     time.sleep(0.5)
     driver.find_element_by_id('password').send_keys(PASSWORD)
@@ -162,8 +164,6 @@ def req_generic(page):
     #time.sleep(2)
     if page.has_key('title'):
         if page['title'] != driver.title:
-            print "Session 已过期，准备重新登录"
-
             login_generic(page)
             RELOGIN_TIMES += 1
             print "ReloginTimes:",RELOGIN_TIMES
@@ -177,6 +177,7 @@ def login_generic(page):
     if page['type'] == 'WX':   # 前端
         login_wx(page['driver'])
     if page['type'] == 'SHOP':  # 分店
+        print ("Page Driver:",page['driver'])
         login_shop(page['driver'])
     else:   # 后台
         login_backend(page['driver'])
