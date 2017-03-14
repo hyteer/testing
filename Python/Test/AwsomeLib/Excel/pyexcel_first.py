@@ -15,7 +15,7 @@ def print_dict():
 print_dict()
 
 num = len(list)
-print("-----------Total: %d-------------") % num
+print("-----------Total: %d-------------"  % num)
 
 def print_list1():
     for i in range(1,num):

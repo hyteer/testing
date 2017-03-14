@@ -28,4 +28,4 @@ def readListCSV(fileName, splitsymbol=","):
 
 #createListCSV(dataList=['aa','bb','cc'])
 
-print readListCSV(file2)
+#print readListCSV(file2)
