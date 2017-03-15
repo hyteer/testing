@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-from locust import HttpLocust, TaskSet, task
+from locust import HttpLocust, TaskSet, task, events
 from locust import web
 import json, re, string, random, time
 
@@ -9,13 +9,32 @@ total_errors = 0
 start_time = time.time()
 time_elapsed = 0
 
+counter_start = 0
+counter_case = 0
+
+errors_start = 0
+errors_case = 0
+success_start = 0
+success_case = 0
+
+this_time_start = 0
+this_time_end = 0
+this_time_cost = 0
+last_time_cost = 0
+
+last_case = 0
+last_errors = 0
+
+master_counter_start = 0
+master_counter_case = 0
+
+
+
 gtime = start_time
+req_logs = ['StartTime:'+str(start_time)+'\n']
 err = ""
 err2 = ""
 debug_mode = 0
-PAY_TYPE = 0    # 0=Weixin,1=Alipay
-
-
 """ 
     《Debug模式说明》
     0:非调试模式，对返回数据做完整校验
@@ -24,18 +43,15 @@ PAY_TYPE = 0    # 0=Weixin,1=Alipay
     3:调试模式3（检查返回包中是否有成功标志，不做其它数据校验）
 
 """
-
+PAY_TYPE = 0    # 0=Weixin,1=Alipay
 
 #url_beta = "http://betagate.speedpos.snsshop.net/unifiedorder"
 url = "http://gate.speedpos.cn:8181/unifiedorder"
 #url_dev = "http://10.100.100.82:16180/unifiedorder"
-
 PAY_TYPES = [
         {'name': 'WXPAY.JSAPI','openid': 'oRs4Ywkv_6HCQu8DLQZAcyNARtPc'},
         {'name': 'ALIPAY.JSAPI','openid': '2088302373341516'},
     ]
-
-
 
 mch_list = (
     {"mch_id": "1000040854", "mch_key": "pcbonzd9f9nheed57rel71g6v4y04jlo"},    # for http://10.20.60.76:17180/unifiedorder
@@ -52,9 +68,8 @@ mch_list = (
 x = 0
 mch_id = mch_list[x]['mch_id']
 mch_key = mch_list[x]['mch_key']
-#mch_key = "go5vof4cdab4xte4w46g55jljkluvldy" # 1000000073的key
-#mch_key = "31qdxsgvvb2yc3r2zcnure5o80l9hnpz"    # 1000000077的ke
 
+############################################ Helper Functions #############################################
 # MD5加密
 def md5(str):
     import hashlib
@@ -71,6 +86,19 @@ def rand_num(x):
     randNameX = string.join(random.sample(['0','1','2','3','4','5','6','7','8','9','0','1','2','3','4','5','6','7','8','9'], x)).replace(" ","")
     return randNameX
 
+def log_to_file(logs):
+    fo = open("F:\\Log\\scsp_log_20170314.txt", "w")
+    #print "文件名为: ", fo.name
+    #seq = ["Ytest string 1.\n", "Ytest string2..."]
+    fo.writelines( logs )
+    fo.close()
+
+def collect_logs(newlog):
+    global req_logs
+    if len(req_logs) < 20:
+        req_logs.append(newlog)
+
+
 # 生成随机out_trade_no
 def rand_out_trade_no():
     rand_no = rand_num(18)
@@ -86,7 +114,7 @@ openid=odLjYvwUYEEq1HMGQY_3CErEGLSU&out_trade_no={out_trade_no}&\
 return_url=http://pay.speedpos.snsshop.net/success/1000100001/1000100001201611021915213701&\
 spbill_create_ip=127.0.0.1&total_fee=1&trade_type=WXPAY.JSAPI&key={mch_key}".format(mch_id=mch_id,out_trade_no=out_trade_no,mch_key=mch_key)
 
-new_str = "body=test1&cashierid=1&mch_id={mch_id}&nonce_str=xbfg5ewrl44yp46x9dsw6dxzk4ycfhqn&notify_url=\
+new_sign_str = "body=test1&cashierid=1&mch_id={mch_id}&nonce_str=xbfg5ewrl44yp46x9dsw6dxzk4ycfhqn&notify_url=\
 http://pay.speedpos.snsshop.net/notify/1000100001/1000100001201611021915213701&out_trade_no={out_trade_no}&\
 return_url=http://pay.speedpos.snsshop.net/success/1000100001/1000100001201611021915213701&\
 spbill_create_ip=127.0.0.1&sub_openid={open_id}&total_fee=1&trade_type={pay_type}&key=\
@@ -98,25 +126,14 @@ openid=odLjYvwUYEEq1HMGQY_3CErEGLSU&out_trade_no="+out_trade_no+"&\
 return_url=http://pay.speedpos.snsshop.net/success/1000100001/1000100001201611021915213701&\
 spbill_create_ip=127.0.0.1&total_fee=1&trade_type=WXPAY.JSAPI&key="+mch_key
 
-sign = md5(new_str)
+sign = md5(new_sign_str)
 sign_upper = sign.upper()
-
 
 # 生成XML数据
 def get_xmldata(mch_id,mch_key,sign,out_trade_no):
     global debug_mode
-    
-
 
     xmldata = "<xml><body>test1</body><cashierid>1</cashierid><mch_id>"+mch_id+"</mch_id>\
-<nonce_str>xbfg5ewrl44yp46x9dsw6dxzk4ycfhqn</nonce_str><notify_url>\
-http://pay.speedpos.snsshop.net/notify/1000100001/1000100001201611021915213701</notify_url>\
-<openid>odLjYvwUYEEq1HMGQY_3CErEGLSU</openid><out_trade_no>"+out_trade_no+"</out_trade_no>\
-<return_url>http://pay.speedpos.snsshop.net/success/1000100001/1000100001201611021915213701\
-</return_url><spbill_create_ip>127.0.0.1</spbill_create_ip><total_fee>1</total_fee>\
-<trade_type>WXPAY.JSAPI</trade_type><sign>"+sign+"</sign></xml>"
-
-    new_xmldata = "<xml><body>test1</body><cashierid>1</cashierid><mch_id>"+mch_id+"</mch_id>\
 <nonce_str>xbfg5ewrl44yp46x9dsw6dxzk4ycfhqn</nonce_str><notify_url>\
 http://pay.speedpos.snsshop.net/notify/1000100001/1000100001201611021915213701</notify_url>\
 <out_trade_no>"+out_trade_no+"</out_trade_no><return_url>http://pay.speedpos.snsshop.net/success/1000100001/1000100001201611021915213701\
@@ -125,28 +142,99 @@ http://pay.speedpos.snsshop.net/notify/1000100001/1000100001201611021915213701</
 
     xmldata_debug = '0'
 
+    '''
     xmldata2 = "<xml><body>test1</body><cashierid>1</cashierid><mch_id>"+mch_id+"</mch_id>\
 <nonce_str>xbfg5ewrl44yp46x9dsw6dxzk4ycfhqn</nonce_str><notify_url>\
 http://pay.speedpos.snsshop.net/notify/1000100001/1000100001201611021915213701</notify_url>\
-<openid>odLjYvwUYEEq1HMGQY_3CErEGLSU</openid><out_trade_no>"+out_trade_no+"\
-</out_trade_no><return_url>http://pay.speedpos.snsshop.net/success/1000100001/1000100001201611021915213701\
+<openid>odLjYvwUYEEq1HMGQY_3CErEGLSU</openid><out_trade_no>"+out_trade_no+"</out_trade_no>\
+<return_url>http://pay.speedpos.snsshop.net/success/1000100001/1000100001201611021915213701\
 </return_url><spbill_create_ip>127.0.0.1</spbill_create_ip><total_fee>1</total_fee>\
-<trade_type>WXPAY.JSAPI</trade_type><sign>"+sign+"</sign></xml>"
+<trade_type>WXPAY.JSAPI</trade_type><sign>"+sign_upper+"</sign></xml>"
+    '''
 
     if debug_mode == 2:
         return xmldata_debug
     else:
-        return new_xmldata
+        return xmldata
+
+
+
+####################################### Event hooks defination ############################################
+'''
+def on_request_failure(request_type, name, response_time, exception):
+    print 'Type: %s, Name: %s, Time: %fms, Reason: %r' % \
+            (request_type, name, response_time, exception)
+
+def on_locust_error(locust_instance, exception, tb):
+    print "%r, %s, %s" % (locust_instance, exception, "".join(traceback.format_tb(tb)))
+
+def on_hatch_complete(user_count):
+    print "Haha, Locust have generate %d users" % user_count
+'''
+
+def on_master_start_hatching():
+    global counter,master_counter_start
+    master_counter_start = counter
+    print("new test starts, master counter start at:%s" % master_counter_start)
+
+
+def on_master_stop_hatching():
+    global counter,master_counter_start,master_counter_case
+    master_counter_case = counter - master_counter_start
+    print("new test case master count:%s" % counter_case)
+
+def on_locust_start_hatching():
+    global counter,counter_start, counter_success, errors_start,counter_case,errors_case,\
+    last_case,last_errors,this_time_start,this_time_cost,last_time_cost
+    counter_start = counter
+    this_time_start = time.time()
+    errors_start = counter - counter_success
+    last_case = counter_case
+    last_errors = errors_case
+    last_time_cost = this_time_cost
+    counter_case = "waiting..."
+    errors_case = "waiting..."
+    this_time_cost = "waiting..."
+    print("new test starts, counter start:%s,errors start:%s" % (counter_start,errors_start))
+
+def on_locust_stop_hatching():
+    #time.sleep(1)
+    global counter,counter_start,counter_case, counter_success, errors_case, errors_start, this_time_start\
+    ,this_time_cost,this_time_end
+    counter_case = counter - counter_start
+    this_time_end = time.time()
+    this_time_cost = int(this_time_end - this_time_start)
+    errors_case = counter - counter_success - errors_start
+    print("new test case count:%s,errors:%s" % (counter_case,errors_case))
+    #log_to_file(logs)
+
+def on_hatch_complete(user_count):
+    print "Haha, Locust have generate %d users" % user_count
+
+
+#events.request_failure += on_request_failure
+#events.locust_error += on_locust_error
+#events.hatch_complete += on_hatch_complete
+events.master_start_hatching += on_master_start_hatching
+events.master_stop_hatching += on_master_stop_hatching
+events.locust_start_hatching += on_locust_start_hatching
+events.locust_stop_hatching += on_locust_stop_hatching
+
 
 ########################################### Loadtesting ##################################################
 
 class UserBehavior(TaskSet):
     #global counter
 
+    #mylog = ['start...']    
+
     # 计数器
     def count_success(self):
-        global counter_success
+        global counter,counter_success,total_errors
         counter_success += 1
+        total_errors = counter - counter_success
+
+    
 
     def count_total(self):
         global counter,counter_success,total_errors
@@ -155,14 +243,14 @@ class UserBehavior(TaskSet):
     # 输出控制台日志
     def console_log(self):
         global counter,counter_success,total_errors,err,start_time, time_elapsed
-        total_errors = counter-counter_success
+        #total_errors = counter-counter_success
         if total_errors == 0:
             err_rate = float(0.0)
         else:
             err_rate = total_errors/float(counter)
         err_rate_perc = round(err_rate*100,1)
         #print "err:%s" % err
-        print u"Elapsed:%s<br>Info:Total:%d, Success:%d, Errors:%d, ErrRate:%s%%" % (time_elapsed,counter,\
+        print u"Elapsed:%s, Info:Total:%d, Success:%d, Errors:%d, ErrRate:%s%%" % (time_elapsed,counter,\
             counter_success,total_errors,str(err_rate_perc))
 
     # 触发器
@@ -178,12 +266,12 @@ class UserBehavior(TaskSet):
         time_now = time.time()
         time_elapsed = int(time_now - start_time)
 
-
+    
 
     # 任务：支付接口
     @task(1)
     def unified_order(self):
-        global err,err2, debug_mode,sign
+        global err,err2, debug_mode
         xmldata = get_xmldata(mch_id,mch_key,sign_upper,out_trade_no)
         if self.time_triger() == True:
             self.console_log()
@@ -202,7 +290,7 @@ class UserBehavior(TaskSet):
                 elif response.content is None:
                     response.failure("Response Content is None.")
                 elif response.content == "":
-                    response.failure("Reponse Content is null.<br>MD5:%s<br>sign_str:%s" % (sign,new_str))
+                    response.failure("Reponse Content is null")
                 else:
                     response.success()
                     self.count_success()
@@ -218,7 +306,7 @@ class UserBehavior(TaskSet):
                 elif response.content is None:
                     response.failure("Response Content is None.")
                 elif response.content == "":
-                    response.failure("Reponse Content is null.<br>MD5:%s<br>sign_str:%s" % (sign,new_str))
+                    response.failure("Reponse Content is null")
                 else:
                     content = response.content
                     match = re.search(r"<xml>",content)
@@ -239,7 +327,7 @@ class UserBehavior(TaskSet):
                 elif response.content is None:
                     response.failure("Response Content is None.")
                 elif response.content == "":
-                    response.failure("Reponse Content is null.<br>MD5:%s<br>sign_str:%s" % (sign,new_str))
+                    response.failure("Reponse Content is null")
                 else:
                     content = response.content.decode("UTF-8")
                     #restext = response.text.decode("UTF-8")
@@ -255,12 +343,13 @@ class UserBehavior(TaskSet):
                             response.success()
                             self.count_success()
                         else:
-                            response.failure("Asert Error: %s.<br>MD5:%s<br>sign_str:%s" % (sign,new_str))
+                            response.failure("Asert Error: %s." % content)
                             matchs_code = re.findall(r"(?<=<retcode>).*(?=<\/retcode>)",content)
                             err = "retcode:%s,retmsg:%s" % (matchs_code[0], matchs_msg[0])                          
 
             else:
                 response.failure(u"Got wrong response, response code: %r,Content:%r" %(response.status_code,response.text))
+                collect_logs("sign:%s, sign_str:%s" % (sign,new_sign_str))
 
         # 开始请求
 
@@ -278,7 +367,11 @@ class UserBehavior(TaskSet):
                 order_normal_mode()
             
 
-        self.count_time()    # count elapsed time        
+        self.count_time()    # count elapsed time    
+
+        
+
+    
 
         '''
         res = self.client.post("/unifiedorder", xmldata2)
@@ -289,8 +382,9 @@ class UserBehavior(TaskSet):
 
 @web.app.route("/info")
 def test_info():
-    global counter,counter_success,total_errors,start_time,time_elapsed
-    total_errors = counter-counter_success
+    global mch_id,counter,counter_success,total_errors,start_time,time_elapsed,counter_case,errors_case,\
+    last_case,last_errors,this_time_start,this_time_cost,last_time_cost
+    #total_errors = counter-counter_success
     '''
     time_now = time.time()
     elapsed = int(time_now - start_time)
@@ -307,9 +401,30 @@ def test_info():
         err = "Total:%s, Elapsed:%s<br>Info:No assertion error." % (counter, time_elapsed)
     return err
     '''
-    return "Total:%s,Elapsed:%s, Success:%s, Errors:%s" % \
+    this_req_logs = "<h3>Failing Requests</h3>"
+    def failing_logs(logs):
+        header = "<h3>Failing Requests</h3>"
+        log_list = ""
+        for log in logs:
+            log_list += "<li>"+log+"</li>"
+        return header + "<div><ul>" + log_list + "</ul></div>"
+
+
+    total_info = "<h3>Total</h3>Samples:%s,Elapsed:%s, Success:%s, Errors:%s" % \
     (counter, str(time_elapsed), counter_success,total_errors)
+    last_info =  "<h3>Last Test</h3>Samples:%s,Elapsed:%s,Errors:%s" % (last_case, last_time_cost,last_errors)
+    this_info = "<h3>This Test</h3>Samples:%s,Elapsed:%s,Errors:%s<br><br>StartTime:%s,EndStime:%s" % \
+    (counter_case, this_time_cost,errors_case,this_time_start,this_time_end)
+    return "<h3>mch_id:%s</h3>%s%s%s%s" % (mch_id,total_info,last_info,this_info,failing_logs(req_logs))
+
+    '''
+    return "<h3>Total</h3>Samples:%s,Elapsed:%s, Success:%s, Errors:%s<h3>This time</h3>\
+    Samples:%s, Errors:%s" % \
+    (counter, str(time_elapsed), counter_success,total_errors, counter_case, errors_case)
     #return "测试数据\nTotal:%d, Success:%d, Errors:%d, ErrorRate:%s%%" % (counter,counter_success,total_errors,str(err_rate_perc))
+    '''
+
+
 
 
 class WebsiteUser(HttpLocust):
