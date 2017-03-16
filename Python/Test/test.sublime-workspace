@@ -4,6 +4,14 @@
 		"selected_items":
 		[
 			[
+				"socket",
+				"socket_request\tfunction"
+			],
+			[
+				"sock",
+				"socket_client\tfunction"
+			],
+			[
 				"sign",
 				"sign_str\tstatement"
 			],
@@ -116,10 +124,6 @@
 				"counter_start\tstatement"
 			],
 			[
-				"sock",
-				"socket_server\tfunction"
-			],
-			[
 				"by",
 				"bytes\tclass"
 			],
@@ -206,7 +210,72 @@
 			"file": "Locust/scsp_v2.py",
 			"settings":
 			{
-				"buffer_size": 16343,
+				"buffer_size": 16333,
+				"encoding": "UTF-8",
+				"line_ending": "Windows"
+			}
+		},
+		{
+			"contents": "# -*- coding: utf-8 -*-\nfrom locust import HttpLocust, TaskSet, task, events\nfrom locust import web\nimport json, re, string, random, time\n\ncounter = 0\ncounter_success = 0\ntotal_errors = 0\nstart_time = time.time()\ntime_elapsed = 0\n\ncounter_start = 0\ncounter_case = 0\n\nerrors_start = 0\nerrors_case = 0\nsuccess_start = 0\nsuccess_case = 0\n\nthis_time_start = 0\nthis_time_end = 0\nthis_time_cost = 0\nlast_time_cost = 0\n\nlast_case = 0\nlast_errors = 0\n\nmaster_counter_start = 0\nmaster_counter_case = 0\n\n\n\ngtime = start_time\nreq_logs = ['StartTime:'+str(start_time)+'\\n']\nerr = \"\"\nerr2 = \"\"\ndebug_mode = 0\n\"\"\" \n    《Debug模式说明》\n    0:非调试模式，对返回数据做完整校验\n    1:调试模式1(只要返回200则标记成功)\n    2:调试模式2（检查返回包是否为空）\n    3:调试模式3（检查返回包中是否有成功标志，不做其它数据校验）\n\n\"\"\"\nPAY_TYPE = 0    # 0=Weixin,1=Alipay\n\n#url_beta = \"http://betagate.speedpos.snsshop.net/unifiedorder\"\nurl = \"http://gate.speedpos.cn:8181/unifiedorder\"\n#url_dev = \"http://10.100.100.82:16180/unifiedorder\"\nPAY_TYPES = [\n        {'name': 'WXPAY.JSAPI','openid': 'oRs4Ywkv_6HCQu8DLQZAcyNARtPc'},\n        {'name': 'ALIPAY.JSAPI','openid': '2088302373341516'},\n    ]\n\nmch_list = (\n    {\"mch_id\": \"1000040854\", \"mch_key\": \"pcbonzd9f9nheed57rel71g6v4y04jlo\"},    # for http://10.20.60.76:17180/unifiedorder\n    {\"mch_id\": \"1000000001\", \"mch_key\": \"but15ozu7ckfqfn1ksle541rbatskk3x\"},    # for http://gate.speedpos.cn\n    {\"mch_id\": \"1000102875\", \"mch_key\": \"ycwth8umslsea4tmy0vhf3jhajzt3rfh\"},    # for http://10.100.100.82:16180\n    {\"mch_id\": \"1000000069\", \"mch_key\": \"22m0fgxvbid1mjgpiq0vfyexwgayzzv1\"},    # for http://betagate.speedpos.snsshop.net\n    {\"mch_id\": \"1000000070\", \"mch_key\": \"kpy5r160mq0p8idmjt0swj0vl6f4l6fm\"},\n    {\"mch_id\": \"1000000072\", \"mch_key\": \"2bytm9n4ctekl36p3orf5eq6d657zmgn\"},\n    {\"mch_id\": \"1000000073\", \"mch_key\": \"go5vof4cdab4xte4w46g55jljkluvldy\"},\n    {\"mch_id\": \"1000000075\", \"mch_key\": \"ir1o3mpash1qj0kg2ocd1wubqowqq2kg\"},\n    {\"mch_id\": \"1000000076\", \"mch_key\": \"0du7bqrj7m8y9y3goek972xh5vpf86pu\"},\n    {\"mch_id\": \"1000000077\", \"mch_key\": \"31qdxsgvvb2yc3r2zcnure5o80l9hnpz\"}\n)\nx = 0\nmch_id = mch_list[x]['mch_id']\nmch_key = mch_list[x]['mch_key']\n\n###########################################\nimport socket\nimport sys\ndef socket_client(HOST,PORT,MSG):\n\n    for res in socket.getaddrinfo(HOST, PORT, socket.AF_UNSPEC, socket.SOCK_STREAM):\n        af, socktype, proto, canonname, sa = res\n        try:\n            s = socket.socket(af, socktype, proto)\n        except socket.error as msg:\n            s = None\n            continue\n        try:\n            s.connect(sa)\n        except socket.error as msg:\n            s.close()\n            s = None\n            continue\n        break\n    if s is None:\n        print 'could not open socket'\n        sys.exit(1)\n    s.sendall(MSG)\n    data = s.recv(1024)\n    #print(\"data:%s\" % data)\n    s.close()\n    #print 'Received', repr(data)\n    return data\n\n\n############################################ Helper Functions #############################################\n# MD5加密\ndef md5(str):\n    import hashlib\n    import types\n    if type(str) is types.StringType:\n        m = hashlib.md5()\n        m.update(str)\n        return m.hexdigest()\n    else:\n        return ''\n\n# 生成了随机数\ndef rand_num(x):\n    randNameX = string.join(random.sample(['0','1','2','3','4','5','6','7','8','9','0','1','2','3','4','5','6','7','8','9'], x)).replace(\" \",\"\")\n    return randNameX\n\ndef log_to_file(logs):\n    fo = open(\"F:\\\\Log\\\\scsp_log_20170314.txt\", \"w\")\n    #print \"文件名为: \", fo.name\n    #seq = [\"Ytest string 1.\\n\", \"Ytest string2...\"]\n    fo.writelines( logs )\n    fo.close()\n\ndef collect_logs(newlog):\n    global req_logs\n    if len(req_logs) < 20:\n        req_logs.append(newlog)\n\n\n# 生成随机out_trade_no\ndef rand_out_trade_no():\n    rand_no = rand_num(18)\n    out_trade_no = \"10002000\" + rand_no\n    #print \"out_trade_no: %s\" % out_trade_no\n    return out_trade_no\n\n\n\n# 生成XML数据\ndef get_xmldata(mch_id,mch_key):\n    global debug_mode\n\n    out_trade_no = rand_out_trade_no()\n\n    sign_str = \"body=test1&cashierid=1&mch_id={mch_id}&nonce_str=xbfg5ewrl44yp46x9dsw6dxzk4ycfhqn&notify_url=\\\nhttp://pay.speedpos.snsshop.net/notify/1000100001/1000100001201611021915213701&\\\nopenid=odLjYvwUYEEq1HMGQY_3CErEGLSU&out_trade_no={out_trade_no}&\\\nreturn_url=http://pay.speedpos.snsshop.net/success/1000100001/1000100001201611021915213701&\\\nspbill_create_ip=127.0.0.1&total_fee=1&trade_type=WXPAY.JSAPI&key={mch_key}\".format(mch_id=mch_id,out_trade_no=out_trade_no,mch_key=mch_key)\n\n    new_sign_str = \"body=test1&cashierid=1&mch_id={mch_id}&nonce_str=xbfg5ewrl44yp46x9dsw6dxzk4ycfhqn&notify_url=\\\nhttp://pay.speedpos.snsshop.net/notify/1000100001/1000100001201611021915213701&out_trade_no={out_trade_no}&\\\nreturn_url=http://pay.speedpos.snsshop.net/success/1000100001/1000100001201611021915213701&\\\nspbill_create_ip=127.0.0.1&sub_openid={open_id}&total_fee=1&trade_type={pay_type}&key=\\\n{mch_key}\".format(mch_id=mch_id,out_trade_no=out_trade_no,open_id=PAY_TYPES[PAY_TYPE]['openid'],pay_type=PAY_TYPES[PAY_TYPE]['name'],mch_key=mch_key)\n\n    str2 = \"body=test1&cashierid=1&mch_id=\"+mch_id+\"&nonce_str=xbfg5ewrl44yp46x9dsw6dxzk4ycfhqn&\\\nnotify_url=http://pay.speedpos.snsshop.net/notify/1000100001/1000100001201611021915213701&\\\nopenid=odLjYvwUYEEq1HMGQY_3CErEGLSU&out_trade_no=\"+out_trade_no+\"&\\\nreturn_url=http://pay.speedpos.snsshop.net/success/1000100001/1000100001201611021915213701&\\\nspbill_create_ip=127.0.0.1&total_fee=1&trade_type=WXPAY.JSAPI&key=\"+mch_key\n\n    sign = md5(new_sign_str)\n    sign_upper = sign.upper()\n\n    xmldata = \"<xml><body>test1</body><cashierid>1</cashierid><mch_id>\"+mch_id+\"</mch_id>\\\n<nonce_str>xbfg5ewrl44yp46x9dsw6dxzk4ycfhqn</nonce_str><notify_url>\\\nhttp://pay.speedpos.snsshop.net/notify/1000100001/1000100001201611021915213701</notify_url>\\\n<out_trade_no>\"+out_trade_no+\"</out_trade_no><return_url>http://pay.speedpos.snsshop.net/success/1000100001/1000100001201611021915213701\\\n</return_url><spbill_create_ip>127.0.0.1</spbill_create_ip><sub_openid>\"+PAY_TYPES[PAY_TYPE]['openid']+\"</sub_openid><total_fee>1</total_fee>\\\n<trade_type>\"+PAY_TYPES[PAY_TYPE]['name']+\"</trade_type><sign>\"+sign_upper+\"</sign></xml>\"\n\n    xmldata_debug = '0'\n\n    '''\n    xmldata2 = \"<xml><body>test1</body><cashierid>1</cashierid><mch_id>\"+mch_id+\"</mch_id>\\\n<nonce_str>xbfg5ewrl44yp46x9dsw6dxzk4ycfhqn</nonce_str><notify_url>\\\nhttp://pay.speedpos.snsshop.net/notify/1000100001/1000100001201611021915213701</notify_url>\\\n<openid>odLjYvwUYEEq1HMGQY_3CErEGLSU</openid><out_trade_no>\"+out_trade_no+\"</out_trade_no>\\\n<return_url>http://pay.speedpos.snsshop.net/success/1000100001/1000100001201611021915213701\\\n</return_url><spbill_create_ip>127.0.0.1</spbill_create_ip><total_fee>1</total_fee>\\\n<trade_type>WXPAY.JSAPI</trade_type><sign>\"+sign_upper+\"</sign></xml>\"\n    '''\n\n    if debug_mode == 2:\n        return xmldata_debug\n    else:\n        return xmldata\n\n\n\n####################################### Event hooks defination ############################################\n'''\ndef on_request_failure(request_type, name, response_time, exception):\n    print 'Type: %s, Name: %s, Time: %fms, Reason: %r' % \\\n            (request_type, name, response_time, exception)\n\ndef on_locust_error(locust_instance, exception, tb):\n    print \"%r, %s, %s\" % (locust_instance, exception, \"\".join(traceback.format_tb(tb)))\n\ndef on_hatch_complete(user_count):\n    print \"Haha, Locust have generate %d users\" % user_count\n'''\n\ndef on_master_start_hatching():\n    global counter,master_counter_start\n    master_counter_start = counter\n    print(\"new test starts, master counter start at:%s\" % master_counter_start)\n\n\ndef on_master_stop_hatching():\n    global counter,master_counter_start,master_counter_case\n    master_counter_case = counter - master_counter_start\n    print(\"new test case master count:%s\" % counter_case)\n\ndef on_locust_start_hatching():\n    global counter,counter_start, counter_success, errors_start,counter_case,errors_case,\\\n    last_case,last_errors,this_time_start,this_time_cost,last_time_cost\n    counter_start = counter\n    this_time_start = time.time()\n    errors_start = counter - counter_success\n    last_case = counter_case\n    last_errors = errors_case\n    last_time_cost = this_time_cost\n    counter_case = \"waiting...\"\n    errors_case = \"waiting...\"\n    this_time_cost = \"waiting...\"\n    print(\"new test starts, counter start:%s,errors start:%s\" % (counter_start,errors_start))\n\ndef on_locust_stop_hatching():\n    #time.sleep(1)\n    global counter,counter_start,counter_case, counter_success, errors_case, errors_start, this_time_start\\\n    ,this_time_cost,this_time_end\n    counter_case = counter - counter_start\n    this_time_end = time.time()\n    this_time_cost = int(this_time_end - this_time_start)\n    errors_case = counter - counter_success - errors_start\n    print(\"new test case count:%s,errors:%s\" % (counter_case,errors_case))\n    #log_to_file(logs)\n\ndef on_hatch_complete(user_count):\n    print \"Haha, Locust have generate %d users\" % user_count\n\n\n#events.request_failure += on_request_failure\n#events.locust_error += on_locust_error\n#events.hatch_complete += on_hatch_complete\nevents.master_start_hatching += on_master_start_hatching\nevents.master_stop_hatching += on_master_stop_hatching\nevents.locust_start_hatching += on_locust_start_hatching\nevents.locust_stop_hatching += on_locust_stop_hatching\n\n\n########################################### Loadtesting ##################################################\n\nclass UserBehavior(TaskSet):\n    #global counter\n\n    #mylog = ['start...']    \n\n    # 计数器\n    def count_success(self):\n        global counter,counter_success,total_errors\n        counter_success += 1\n        total_errors = counter - counter_success\n\n    \n\n    def count_total(self):\n        global counter,counter_success,total_errors\n        counter += 1\n\n    # 输出控制台日志\n    def console_log(self):\n        global counter,counter_success,total_errors,err,start_time, time_elapsed\n        #total_errors = counter-counter_success\n        if total_errors == 0:\n            err_rate = float(0.0)\n        else:\n            err_rate = total_errors/float(counter)\n        err_rate_perc = round(err_rate*100,1)\n        #print \"err:%s\" % err\n        print u\"Elapsed:%s, Info:Total:%d, Success:%d, Errors:%d, ErrRate:%s%%\" % (time_elapsed,counter,\\\n            counter_success,total_errors,str(err_rate_perc))\n\n    # 触发器\n    def time_triger(self):\n        global gtime\n        if gtime <= time.time():\n            gtime += 4\n            return True\n        else:\n            return False\n    def count_time(self):\n        global time_elapsed\n        time_now = time.time()\n        time_elapsed = int(time_now - start_time)\n\n    \n\n    # 任务：支付接口\n    @task(1)\n    def unified_order(self):\n        global err,err2, debug_mode\n        xmldata = get_xmldata(mch_id,mch_key)\n        if self.time_triger() == True:\n            self.console_log()\n\n        def order_debug_mode1():\n            if response.status_code == 200:\n                response.success()\n                self.count_success()\n\n        def order_debug_mode2():\n            if response.status_code == 200:\n\n                if response.content is False:\n                    response.failure(\"No Response Content.\")\n\n                elif response.content is None:\n                    response.failure(\"Response Content is None.\")\n                elif response.content == \"\":\n                    response.failure(\"Reponse Content is null\")\n                else:\n                    response.success()\n                    self.count_success()\n            else:\n                response.failure(u\"Got wrong response, response code: %r,Content:%r\" %(response.status_code,response.text))\n\n        def order_debug_mode3():\n            if response.status_code == 200:\n\n                if response.content is False:\n                    response.failure(\"No Response Content.\")\n\n                elif response.content is None:\n                    response.failure(\"Response Content is None.\")\n                elif response.content == \"\":\n                    response.failure(\"Reponse Content is null\")\n                else:\n                    content = response.content\n                    match = re.search(r\"<xml>\",content)\n                    if match is not None:\n                        response.success()\n                        self.count_success()\n                    else:\n                        response.failure(\"Reponse error, content:%s\" % content)              \n            else:\n                response.failure(u\"Got wrong response, response code: %r,Content:%r\" %(response.status_code,response.text))\n\n        def order_normal_mode():\n            if response.status_code == 200:\n\n                if response.content is False:\n                    response.failure(\"No Response Content.\")\n\n                elif response.content is None:\n                    response.failure(\"Response Content is None.\")\n                elif response.content == \"\":\n                    response.failure(\"Reponse Content is null\")\n                else:\n                    content = response.content.decode(\"UTF-8\")\n                    #restext = response.text.decode(\"UTF-8\")\n                    #print u\"Response status code:\", response.status_code\n                    #print u\"Response content:\", content\n                    matchs = re.search(\"SUCCESS\", content)\n                    matchs_msg = re.findall(r\"(?<=<retmsg>).*(?=<\\/retmsg>)\",content)\n                    #matchs = re.findall(r\"(?<=<retmsg>).*(?=<\\/retmsg>)\",content)\n                    #matchs2 = re.findall(r\"(?<=<retcode>).*(?=<\\/retcode>)\",content)\n                    #print matchs\n                    if len(matchs_msg):\n                        if matchs_msg[0] == \"SUCCESS\":\n                            response.success()\n                            self.count_success()\n                        else:\n                            response.failure(\"Asert Error: %s.\" % content)\n                            matchs_code = re.findall(r\"(?<=<retcode>).*(?=<\\/retcode>)\",content)\n                            err = \"retcode:%s,retmsg:%s\" % (matchs_code[0], matchs_msg[0])                          \n\n            else:\n                response.failure(u\"Got wrong response, response code: %r,Content:%r\" %(response.status_code,response.text))\n                collect_logs(\"sign:%s, sign_str:%s\" % (sign,new_sign_str))\n\n        # 开始请求\n\n        with self.client.post(\"/unifiedorder\", data=xmldata,catch_response=True) as response:\n            self.count_total()\n            if debug_mode == 1:\n                order_debug_mode1()\n            elif debug_mode == 2:\n                order_debug_mode2()\n\n            elif debug_mode == 3:\n                order_debug_mode3()\n\n            else:\n                order_normal_mode()\n            \n\n        self.count_time()    # count elapsed time    \n\n        \n\n    \n\n        '''\n        res = self.client.post(\"/unifiedorder\", xmldata2)\n        content = res.content.decode(\"UTF-8\")\n        matchs = re.findall(r\"(?<=<retmsg>).*(?=<\\/retmsg>)\",content)\n        '''\n\n\n@web.app.route(\"/info\")\ndef test_info():\n    global mch_id,counter,counter_success,total_errors,start_time,time_elapsed,counter_case,errors_case,\\\n    last_case,last_errors,this_time_start,this_time_cost,last_time_cost\n    #total_errors = counter-counter_success\n    '''\n    time_now = time.time()\n    elapsed = int(time_now - start_time)\n    '''\n    '''\n    if total_errors == 0:\n        err_rate = float(0.0)\n    else:\n        err_rate = total_errors/float(counter)\n    err_rate_perc = round(err_rate*100,1)\n    if err != \"\":\n        err = \"Total:%s,Elapsed:%s, info:%s\" % (counter, str(time_elapsed), err)\n    else:\n        err = \"Total:%s, Elapsed:%s<br>Info:No assertion error.\" % (counter, time_elapsed)\n    return err\n    '''\n    this_req_logs = \"<h3>Failing Requests</h3>\"\n    def failing_logs(logs):\n        header = \"<h3>Failing Requests</h3>\"\n        log_list = \"\"\n        for log in logs:\n            log_list += \"<li>\"+log+\"</li>\"\n        return header + \"<div><ul>\" + log_list + \"</ul></div>\"\n\n\n    total_info = \"<h3>Total</h3>Samples:%s,Elapsed:%s, Success:%s, Errors:%s\" % \\\n    (counter, str(time_elapsed), counter_success,total_errors)\n    last_info =  \"<h3>Last Test</h3>Samples:%s,Elapsed:%s,Errors:%s\" % (last_case, last_time_cost,last_errors)\n    this_info = \"<h3>This Test</h3>Samples:%s,Elapsed:%s,Errors:%s<br><br>StartTime:%s,EndStime:%s\" % \\\n    (counter_case, this_time_cost,errors_case,this_time_start,this_time_end)\n    return \"<h3>mch_id:%s</h3>%s%s%s%s\" % (mch_id,total_info,last_info,this_info,failing_logs(req_logs))\n\n    '''\n    return \"<h3>Total</h3>Samples:%s,Elapsed:%s, Success:%s, Errors:%s<h3>This time</h3>\\\n    Samples:%s, Errors:%s\" % \\\n    (counter, str(time_elapsed), counter_success,total_errors, counter_case, errors_case)\n    #return \"测试数据\\nTotal:%d, Success:%d, Errors:%d, ErrorRate:%s%%\" % (counter,counter_success,total_errors,str(err_rate_perc))\n    '''\n\n\n\n\nclass WebsiteUser(HttpLocust):\n    task_set = UserBehavior\n    min_wait = 1\n    max_wait = 2\n    host = \"http://betaapi.speedpos.snsshop.net\"",
+			"file": "Locust/scsp_v2_temp.py",
+			"file_size": 17879,
+			"file_write_time": 131340488834727284,
+			"settings":
+			{
+				"buffer_size": 17080,
+				"encoding": "UTF-8",
+				"line_ending": "Windows"
+			}
+		},
+		{
+			"file": "Locust/scsp_v3.py",
+			"settings":
+			{
+				"buffer_size": 21091,
+				"encoding": "UTF-8",
+				"line_ending": "Windows"
+			}
+		},
+		{
+			"file": "IO/Socket/client.py",
+			"settings":
+			{
+				"buffer_size": 549,
+				"line_ending": "Windows"
+			}
+		},
+		{
+			"file": "IO/Socket/client_spp.py",
+			"settings":
+			{
+				"buffer_size": 1277,
+				"encoding": "UTF-8",
+				"line_ending": "Windows"
+			}
+		},
+		{
+			"file": "IO/Socket/new_client.py",
+			"settings":
+			{
+				"buffer_size": 1271,
+				"encoding": "UTF-8",
+				"line_ending": "Windows"
+			}
+		},
+		{
+			"file": "IO/Socket/EchoClient.py",
+			"settings":
+			{
+				"buffer_size": 706,
+				"encoding": "UTF-8",
+				"line_ending": "Windows"
+			}
+		},
+		{
+			"file": "IO/Socket/SPP_Client.py",
+			"settings":
+			{
+				"buffer_size": 1534,
 				"encoding": "UTF-8",
 				"line_ending": "Windows"
 			}
@@ -216,15 +285,6 @@
 			"settings":
 			{
 				"buffer_size": 12784,
-				"encoding": "UTF-8",
-				"line_ending": "Windows"
-			}
-		},
-		{
-			"file": "Temp/temp0314.py",
-			"settings":
-			{
-				"buffer_size": 158,
 				"encoding": "UTF-8",
 				"line_ending": "Windows"
 			}
@@ -245,6 +305,33 @@
 				"buffer_size": 2204,
 				"encoding": "UTF-8",
 				"line_ending": "Windows"
+			}
+		},
+		{
+			"contents": "# coding: utf-8\nfrom locust import Locust, TaskSet, task\nimport re,random,string\nfrom urllib import unquote,urlencode,quote_plus\n\nimport socket\nimport sys\n\n\nHOST = '10.100.100.88'    # The remote host\nPORT = 13480              # The same port as used by the server\ns = None\nMSG = \"ver=1&cmd=4010&src=1&biz_content=<xml><body><![CDATA[测试商户1]]></body><cashierid><![CDATA[]]></cashierid><mch_id>1000000013</mch_id><nonce_str><![CDATA[7vwzjzr0l9emxkdhw0mqw7u16rq55ygq]]></nonce_str><notify_url><![CDATA[http://betapay.speedpos.snsshop.net/notify/1000000013/P1000000013201703151145461111]]></notify_url><openid><![CDATA[oRs4Ywk9D3mNHfjVI22dfVanN-sA]]></openid><out_trade_no><![CDATA[P1000000013201703151145461111]]></out_trade_no><return_url><![CDATA[http://betapay.speedpos.snsshop.net/success/1000000013/P1000000013201703151145461111]]></return_url><sign><![CDATA[0C81D6022D4EDA3CDA630AFF05573FC3]]></sign><spbill_create_ip><![CDATA[10.20.100.200]]></spbill_create_ip><total_fee>1</total_fee><trade_type><![CDATA[WXPAY.JSAPI]]></trade_type></xml>\\r\\n\"\nMSG1 = 'Test from py..\\r\\n'\n\n\ndef socket_request(HOST,PORT,MSG):\n\n    for res in socket.getaddrinfo(HOST, PORT, socket.AF_UNSPEC, socket.SOCK_STREAM):\n        af, socktype, proto, canonname, sa = res\n        try:\n            s = socket.socket(af, socktype, proto)\n        except socket.error as msg:\n            s = None\n            continue\n        try:\n            s.connect(sa)\n        except socket.error as msg:\n            s.close()\n            s = None\n            continue\n        break\n    if s is None:\n        print 'could not open socket'\n        sys.exit(1)\n    s.sendall(MSG)\n    data = s.recv(1024)\n    #print(\"data:%s\" % data)\n    s.close()\n    #print 'Received', repr(data)\n    return data\n\n\nclass SocketLocust(Locust):\n    \"\"\"\n    This is the abstract Locust class which should be subclassed. It provides an XML-RPC client\n    that can be used to make XML-RPC requests that will be tracked in Locust's statistics.\n    \"\"\"\n    def __init__(self, *args, **kwargs):\n        super(XmlRpcLocust, self).__init__(*args, **kwargs)\n        self.client = socket_request(self.host)\n\n\nclass UserBehavior(TaskSet):\n    #global counter\n    def get_url(self):\n        param1 = string.join(random.sample(['1','2','3','4','5','6','7','8','9'], 5)).replace(\" \",\"\")\n        param2 = string.join(random.sample(['1','2','3','4','5','6','7','8','9'], 2)).replace(\" \",\"\")\n        param3 = str(random.randrange(1,3))\n        params = param1 + ',' + param2 + ',' + param3\n        quoteUrl=quote_plus(url,safe=':\\'/?&=()%')\n        url = '/collect/index?id=1&siteid=686&param='+',/second-kill/list&lg=zh-cn&showp=1920x1080&page=http://testwkd.snsshop.net/second-kill/list&uri=testwkd.snsshop.net/second-kill/list&title=%%E7%%A7%%92%%E6%9D%%80%%E6%%B4%%BB%%E5%8A%%A8%%E7%%AE%%A1%%E7%%90%86&key=&fromkey=&vid=&agent=Mozilla/5.0%20(Windows%20NT%206.1;%20WOW64)%20AppleWebKit/537.36%20(KHTML,%%20like%%20Gecko)%20Chrome/52.0.2743.6%20Safari/537.36&referrer=http://testwkd.snsshop.net/&rnd=1608197300'\n        #url = urlencode(url_raw)\n\n        return url         \n    \n    @task(1)\n    def index(self):\n        url = self.get_url()\n        print url\n        with self.client.post(url, catch_response=True,name='Ta_Req') as response:\n            if response.status_code == 200:\n\n                if response.content is False:\n                    response.failure(\"No Response Content.\")\n\n                elif response.content is None:\n                    response.failure(\"Response Content is None.\")\n                elif response.content == \"\":\n                    response.failure(\"Reponse Content is null\")\n                else:\n                    content = response.content.decode(\"UTF-8\")\n                    matchs = re.search(\"1\", content)\n                    assert matchs is not None\n                    response.success()\n                    \n            else:\n                response.failure(u\"Got wrong response, response code: %r,Content:%r\" %(response.status_code,response.text))\n\n    @task(1)\n    def req_spp(self):\n        with socket_request() as resp:\n            if resp:\n                resp\n            \n            \n            \n\n\n\n\nclass WebsiteUser(HttpLocust):\n    task_set = UserBehavior\n    min_wait = 500\n    max_wait = 2000\n    host = \"http://betata.snsshop.net\"\n",
+			"file": "Locust/SPP_Socket.py",
+			"file_size": 0,
+			"file_write_time": 131340495012350624,
+			"settings":
+			{
+				"buffer_size": 4329,
+				"line_ending": "Windows"
+			}
+		},
+		{
+			"file": "/C/Python27/Lib/site-packages/locust/__init__.py",
+			"settings":
+			{
+				"buffer_size": 155,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "/C/Python27/Lib/site-packages/locust/rpc/__init__.py",
+			"settings":
+			{
+				"buffer_size": 376,
+				"line_ending": "Unix"
 			}
 		},
 		{
@@ -343,7 +430,8 @@
 	"expanded_folders":
 	[
 		"/D/testing/Python/Test",
-		"/D/testing/Python/Test/encoding",
+		"/D/testing/Python/Test/IO",
+		"/D/testing/Python/Test/IO/Socket",
 		"/D/testing/Python/Test/Locust",
 		"/D/testing/Python/Test/System",
 		"/D/testing/Python/Test/System/File",
@@ -352,6 +440,9 @@
 	],
 	"file_history":
 	[
+		"/C/Python27/Lib/site-packages/locust/test/test_client.py",
+		"/D/testing/Python/Test/Temp/temp0314.py",
+		"/D/testing/Python/Test/IO/Socket/EchoServer.py",
 		"/D/testing/Python/Test/Temp/temp.py",
 		"/D/testing/Python/Test/Temp/temp0310.py",
 		"/D/testing/Python/Test/encoding/testMd5.py",
@@ -476,10 +567,7 @@
 		"/D/Web/ghost/config.js",
 		"/E/Dev/Python/Test/regexp2.py",
 		"/E/Dev/Python/Test/regexp3.py",
-		"/E/Work/Data/nginx-mysql.conf",
-		"/E/Work/Data/sites-available/default-red",
-		"/D/Web/ghost/content/themes/casper/default.hbs",
-		"/D/Web/ghost/content/themes/casper/index.hbs"
+		"/E/Work/Data/nginx-mysql.conf"
 	],
 	"find":
 	{
@@ -497,6 +585,7 @@
 		"case_sensitive": false,
 		"find_history":
 		[
+			"10002000523506673910889274",
 			"mylog",
 			"log_to_file",
 			"CatchResponseError",
@@ -532,7 +621,7 @@
 	"groups":
 	[
 		{
-			"selected": 3,
+			"selected": 16,
 			"sheets":
 			[
 				{
@@ -651,7 +740,7 @@
 						"translation.y": 3697.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 8,
+					"stack_index": 17,
 					"type": "text"
 				},
 				{
@@ -768,7 +857,7 @@
 						"translation.y": 3960.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 6,
+					"stack_index": 15,
 					"type": "text"
 				},
 				{
@@ -808,36 +897,21 @@
 							},
 							"bracket_highlighter.regions":
 							[
-								"bh_angle",
-								"bh_angle_center",
-								"bh_angle_open",
-								"bh_angle_close",
-								"bh_angle_content",
 								"bh_default",
 								"bh_default_center",
 								"bh_default_open",
 								"bh_default_close",
 								"bh_default_content",
-								"bh_unmatched",
-								"bh_unmatched_center",
-								"bh_unmatched_open",
-								"bh_unmatched_close",
-								"bh_unmatched_content",
-								"bh_round",
-								"bh_round_center",
-								"bh_round_open",
-								"bh_round_close",
-								"bh_round_content",
-								"bh_regex",
-								"bh_regex_center",
-								"bh_regex_open",
-								"bh_regex_close",
-								"bh_regex_content",
-								"bh_c_define",
-								"bh_c_define_center",
-								"bh_c_define_open",
-								"bh_c_define_close",
-								"bh_c_define_content",
+								"bh_tag",
+								"bh_tag_center",
+								"bh_tag_open",
+								"bh_tag_close",
+								"bh_tag_content",
+								"bh_double_quote",
+								"bh_double_quote_center",
+								"bh_double_quote_open",
+								"bh_double_quote_close",
+								"bh_double_quote_content",
 								"bh_curly",
 								"bh_curly_center",
 								"bh_curly_open",
@@ -848,31 +922,46 @@
 								"bh_single_quote_open",
 								"bh_single_quote_close",
 								"bh_single_quote_content",
-								"bh_double_quote",
-								"bh_double_quote_center",
-								"bh_double_quote_open",
-								"bh_double_quote_close",
-								"bh_double_quote_content",
+								"bh_regex",
+								"bh_regex_center",
+								"bh_regex_open",
+								"bh_regex_close",
+								"bh_regex_content",
+								"bh_c_define",
+								"bh_c_define_center",
+								"bh_c_define_open",
+								"bh_c_define_close",
+								"bh_c_define_content",
+								"bh_round",
+								"bh_round_center",
+								"bh_round_open",
+								"bh_round_close",
+								"bh_round_content",
+								"bh_unmatched",
+								"bh_unmatched_center",
+								"bh_unmatched_open",
+								"bh_unmatched_close",
+								"bh_unmatched_content",
+								"bh_angle",
+								"bh_angle_center",
+								"bh_angle_open",
+								"bh_angle_close",
+								"bh_angle_content",
 								"bh_square",
 								"bh_square_center",
 								"bh_square_open",
 								"bh_square_close",
-								"bh_square_content",
-								"bh_tag",
-								"bh_tag_center",
-								"bh_tag_open",
-								"bh_tag_close",
-								"bh_tag_content"
+								"bh_square_content"
 							],
 							"syntax": "Packages/Python/Python.sublime-syntax",
 							"tab_size": 4,
 							"translate_tabs_to_spaces": true
 						},
 						"translation.x": 0.0,
-						"translation.y": 900.0,
+						"translation.y": 1170.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 4,
+					"stack_index": 14,
 					"type": "text"
 				},
 				{
@@ -881,15 +970,147 @@
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 16343,
+						"buffer_size": 16333,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								8747,
-								8747
+								3206,
+								3206
+							]
+						],
+						"settings":
+						{
+							"auto_complete_triggers":
+							[
+								{
+									"characters": ".",
+									"selector": "source.python - string - comment - constant.numeric"
+								},
+								{
+									"characters": ".",
+									"selector": "source.python - string - constant.numeric"
+								}
+							],
+							"bracket_highlighter.busy": false,
+							"bracket_highlighter.locations":
+							{
+								"close":
+								{
+									"1":
+									[
+										3205,
+										3206
+									]
+								},
+								"icon":
+								{
+									"1":
+									[
+										"Packages/BracketHighlighter/icons/round_bracket.png",
+										"brackethighlighter.default"
+									]
+								},
+								"open":
+								{
+									"1":
+									[
+										3204,
+										3205
+									]
+								},
+								"unmatched":
+								{
+								}
+							},
+							"bracket_highlighter.regions":
+							[
+								"bh_square",
+								"bh_square_center",
+								"bh_square_open",
+								"bh_square_close",
+								"bh_square_content",
+								"bh_default",
+								"bh_default_center",
+								"bh_default_open",
+								"bh_default_close",
+								"bh_default_content",
+								"bh_single_quote",
+								"bh_single_quote_center",
+								"bh_single_quote_open",
+								"bh_single_quote_close",
+								"bh_single_quote_content",
+								"bh_round",
+								"bh_round_center",
+								"bh_round_open",
+								"bh_round_close",
+								"bh_round_content",
+								"bh_c_define",
+								"bh_c_define_center",
+								"bh_c_define_open",
+								"bh_c_define_close",
+								"bh_c_define_content",
+								"bh_regex",
+								"bh_regex_center",
+								"bh_regex_open",
+								"bh_regex_close",
+								"bh_regex_content",
+								"bh_tag",
+								"bh_tag_center",
+								"bh_tag_open",
+								"bh_tag_close",
+								"bh_tag_content",
+								"bh_angle",
+								"bh_angle_center",
+								"bh_angle_open",
+								"bh_angle_close",
+								"bh_angle_content",
+								"bh_unmatched",
+								"bh_unmatched_center",
+								"bh_unmatched_open",
+								"bh_unmatched_close",
+								"bh_unmatched_content",
+								"bh_double_quote",
+								"bh_double_quote_center",
+								"bh_double_quote_open",
+								"bh_double_quote_close",
+								"bh_double_quote_content",
+								"bh_curly",
+								"bh_curly_center",
+								"bh_curly_open",
+								"bh_curly_close",
+								"bh_curly_content"
+							],
+							"is_xml": false,
+							"open_with_edit": true,
+							"syntax": "Packages/Python/Python.sublime-syntax",
+							"tab_size": 4,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 1171.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 12,
+					"type": "text"
+				},
+				{
+					"buffer": 4,
+					"file": "Locust/scsp_v2_temp.py",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 17080,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								2153,
+								2853
 							]
 						],
 						"settings":
@@ -923,77 +1144,793 @@
 							},
 							"bracket_highlighter.regions":
 							[
-								"bh_angle",
-								"bh_angle_center",
-								"bh_angle_open",
-								"bh_angle_close",
-								"bh_angle_content",
-								"bh_default",
-								"bh_default_center",
-								"bh_default_open",
-								"bh_default_close",
-								"bh_default_content",
-								"bh_unmatched",
-								"bh_unmatched_center",
-								"bh_unmatched_open",
-								"bh_unmatched_close",
-								"bh_unmatched_content",
-								"bh_round",
-								"bh_round_center",
-								"bh_round_open",
-								"bh_round_close",
-								"bh_round_content",
-								"bh_regex",
-								"bh_regex_center",
-								"bh_regex_open",
-								"bh_regex_close",
-								"bh_regex_content",
-								"bh_c_define",
-								"bh_c_define_center",
-								"bh_c_define_open",
-								"bh_c_define_close",
-								"bh_c_define_content",
-								"bh_curly",
-								"bh_curly_center",
-								"bh_curly_open",
-								"bh_curly_close",
-								"bh_curly_content",
-								"bh_single_quote",
-								"bh_single_quote_center",
-								"bh_single_quote_open",
-								"bh_single_quote_close",
-								"bh_single_quote_content",
-								"bh_double_quote",
-								"bh_double_quote_center",
-								"bh_double_quote_open",
-								"bh_double_quote_close",
-								"bh_double_quote_content",
 								"bh_square",
 								"bh_square_center",
 								"bh_square_open",
 								"bh_square_close",
 								"bh_square_content",
+								"bh_default",
+								"bh_default_center",
+								"bh_default_open",
+								"bh_default_close",
+								"bh_default_content",
+								"bh_single_quote",
+								"bh_single_quote_center",
+								"bh_single_quote_open",
+								"bh_single_quote_close",
+								"bh_single_quote_content",
+								"bh_round",
+								"bh_round_center",
+								"bh_round_open",
+								"bh_round_close",
+								"bh_round_content",
+								"bh_c_define",
+								"bh_c_define_center",
+								"bh_c_define_open",
+								"bh_c_define_close",
+								"bh_c_define_content",
+								"bh_regex",
+								"bh_regex_center",
+								"bh_regex_open",
+								"bh_regex_close",
+								"bh_regex_content",
 								"bh_tag",
 								"bh_tag_center",
 								"bh_tag_open",
 								"bh_tag_close",
-								"bh_tag_content"
+								"bh_tag_content",
+								"bh_angle",
+								"bh_angle_center",
+								"bh_angle_open",
+								"bh_angle_close",
+								"bh_angle_content",
+								"bh_unmatched",
+								"bh_unmatched_center",
+								"bh_unmatched_open",
+								"bh_unmatched_close",
+								"bh_unmatched_content",
+								"bh_double_quote",
+								"bh_double_quote_center",
+								"bh_double_quote_open",
+								"bh_double_quote_close",
+								"bh_double_quote_content",
+								"bh_curly",
+								"bh_curly_center",
+								"bh_curly_open",
+								"bh_curly_close",
+								"bh_curly_content"
 							],
-							"is_xml": false,
 							"open_with_edit": true,
 							"syntax": "Packages/Python/Python.sublime-syntax",
 							"tab_size": 4,
 							"translate_tabs_to_spaces": true
 						},
 						"translation.x": 0.0,
-						"translation.y": 2844.0,
+						"translation.y": 832.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 0,
+					"stack_index": 4,
 					"type": "text"
 				},
 				{
-					"buffer": 4,
+					"buffer": 5,
+					"file": "Locust/scsp_v3.py",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 21091,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								4791,
+								5751
+							]
+						],
+						"settings":
+						{
+							"auto_complete_triggers":
+							[
+								{
+									"characters": ".",
+									"selector": "source.python - string - comment - constant.numeric"
+								},
+								{
+									"characters": ".",
+									"selector": "source.python - string - constant.numeric"
+								},
+								{
+									"characters": ".",
+									"selector": "source.python - string - constant.numeric"
+								}
+							],
+							"bracket_highlighter.busy": false,
+							"bracket_highlighter.locations":
+							{
+								"close":
+								{
+								},
+								"icon":
+								{
+								},
+								"open":
+								{
+								},
+								"unmatched":
+								{
+								}
+							},
+							"bracket_highlighter.regions":
+							[
+								"bh_square",
+								"bh_square_center",
+								"bh_square_open",
+								"bh_square_close",
+								"bh_square_content",
+								"bh_default",
+								"bh_default_center",
+								"bh_default_open",
+								"bh_default_close",
+								"bh_default_content",
+								"bh_single_quote",
+								"bh_single_quote_center",
+								"bh_single_quote_open",
+								"bh_single_quote_close",
+								"bh_single_quote_content",
+								"bh_round",
+								"bh_round_center",
+								"bh_round_open",
+								"bh_round_close",
+								"bh_round_content",
+								"bh_c_define",
+								"bh_c_define_center",
+								"bh_c_define_open",
+								"bh_c_define_close",
+								"bh_c_define_content",
+								"bh_regex",
+								"bh_regex_center",
+								"bh_regex_open",
+								"bh_regex_close",
+								"bh_regex_content",
+								"bh_tag",
+								"bh_tag_center",
+								"bh_tag_open",
+								"bh_tag_close",
+								"bh_tag_content",
+								"bh_angle",
+								"bh_angle_center",
+								"bh_angle_open",
+								"bh_angle_close",
+								"bh_angle_content",
+								"bh_unmatched",
+								"bh_unmatched_center",
+								"bh_unmatched_open",
+								"bh_unmatched_close",
+								"bh_unmatched_content",
+								"bh_double_quote",
+								"bh_double_quote_center",
+								"bh_double_quote_open",
+								"bh_double_quote_close",
+								"bh_double_quote_content",
+								"bh_curly",
+								"bh_curly_center",
+								"bh_curly_open",
+								"bh_curly_close",
+								"bh_curly_content"
+							],
+							"open_with_edit": true,
+							"syntax": "Packages/Python/Python.sublime-syntax",
+							"tab_size": 4,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 1733.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 13,
+					"type": "text"
+				},
+				{
+					"buffer": 6,
+					"file": "IO/Socket/client.py",
+					"semi_transient": true,
+					"settings":
+					{
+						"buffer_size": 549,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								549,
+								289
+							]
+						],
+						"settings":
+						{
+							"bracket_highlighter.busy": false,
+							"bracket_highlighter.locations":
+							{
+								"close":
+								{
+								},
+								"icon":
+								{
+								},
+								"open":
+								{
+								},
+								"unmatched":
+								{
+								}
+							},
+							"bracket_highlighter.regions":
+							[
+								"bh_square",
+								"bh_square_center",
+								"bh_square_open",
+								"bh_square_close",
+								"bh_square_content",
+								"bh_default",
+								"bh_default_center",
+								"bh_default_open",
+								"bh_default_close",
+								"bh_default_content",
+								"bh_single_quote",
+								"bh_single_quote_center",
+								"bh_single_quote_open",
+								"bh_single_quote_close",
+								"bh_single_quote_content",
+								"bh_round",
+								"bh_round_center",
+								"bh_round_open",
+								"bh_round_close",
+								"bh_round_content",
+								"bh_c_define",
+								"bh_c_define_center",
+								"bh_c_define_open",
+								"bh_c_define_close",
+								"bh_c_define_content",
+								"bh_regex",
+								"bh_regex_center",
+								"bh_regex_open",
+								"bh_regex_close",
+								"bh_regex_content",
+								"bh_tag",
+								"bh_tag_center",
+								"bh_tag_open",
+								"bh_tag_close",
+								"bh_tag_content",
+								"bh_angle",
+								"bh_angle_center",
+								"bh_angle_open",
+								"bh_angle_close",
+								"bh_angle_content",
+								"bh_unmatched",
+								"bh_unmatched_center",
+								"bh_unmatched_open",
+								"bh_unmatched_close",
+								"bh_unmatched_content",
+								"bh_double_quote",
+								"bh_double_quote_center",
+								"bh_double_quote_open",
+								"bh_double_quote_close",
+								"bh_double_quote_content",
+								"bh_curly",
+								"bh_curly_center",
+								"bh_curly_open",
+								"bh_curly_close",
+								"bh_curly_content"
+							],
+							"syntax": "Packages/Python/Python.sublime-syntax",
+							"tab_size": 8,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 8,
+					"type": "text"
+				},
+				{
+					"buffer": 7,
+					"file": "IO/Socket/client_spp.py",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 1277,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								66,
+								66
+							]
+						],
+						"settings":
+						{
+							"auto_complete_triggers":
+							[
+								{
+									"characters": ".",
+									"selector": "source.python - string - comment - constant.numeric"
+								},
+								{
+									"characters": ".",
+									"selector": "source.python - string - constant.numeric"
+								}
+							],
+							"bracket_highlighter.busy": false,
+							"bracket_highlighter.locations":
+							{
+								"close":
+								{
+								},
+								"icon":
+								{
+								},
+								"open":
+								{
+								},
+								"unmatched":
+								{
+								}
+							},
+							"bracket_highlighter.regions":
+							[
+								"bh_square",
+								"bh_square_center",
+								"bh_square_open",
+								"bh_square_close",
+								"bh_square_content",
+								"bh_default",
+								"bh_default_center",
+								"bh_default_open",
+								"bh_default_close",
+								"bh_default_content",
+								"bh_single_quote",
+								"bh_single_quote_center",
+								"bh_single_quote_open",
+								"bh_single_quote_close",
+								"bh_single_quote_content",
+								"bh_round",
+								"bh_round_center",
+								"bh_round_open",
+								"bh_round_close",
+								"bh_round_content",
+								"bh_c_define",
+								"bh_c_define_center",
+								"bh_c_define_open",
+								"bh_c_define_close",
+								"bh_c_define_content",
+								"bh_regex",
+								"bh_regex_center",
+								"bh_regex_open",
+								"bh_regex_close",
+								"bh_regex_content",
+								"bh_tag",
+								"bh_tag_center",
+								"bh_tag_open",
+								"bh_tag_close",
+								"bh_tag_content",
+								"bh_angle",
+								"bh_angle_center",
+								"bh_angle_open",
+								"bh_angle_close",
+								"bh_angle_content",
+								"bh_unmatched",
+								"bh_unmatched_center",
+								"bh_unmatched_open",
+								"bh_unmatched_close",
+								"bh_unmatched_content",
+								"bh_double_quote",
+								"bh_double_quote_center",
+								"bh_double_quote_open",
+								"bh_double_quote_close",
+								"bh_double_quote_content",
+								"bh_curly",
+								"bh_curly_center",
+								"bh_curly_open",
+								"bh_curly_close",
+								"bh_curly_content"
+							],
+							"open_with_edit": true,
+							"syntax": "Packages/Python/Python.sublime-syntax",
+							"tab_size": 8,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 9,
+					"type": "text"
+				},
+				{
+					"buffer": 8,
+					"file": "IO/Socket/new_client.py",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 1271,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								88,
+								862
+							]
+						],
+						"settings":
+						{
+							"auto_complete_triggers":
+							[
+								{
+									"characters": ".",
+									"selector": "source.python - string - comment - constant.numeric"
+								},
+								{
+									"characters": ".",
+									"selector": "source.python - string - constant.numeric"
+								}
+							],
+							"bracket_highlighter.busy": false,
+							"bracket_highlighter.locations":
+							{
+								"close":
+								{
+								},
+								"icon":
+								{
+								},
+								"open":
+								{
+								},
+								"unmatched":
+								{
+								}
+							},
+							"bracket_highlighter.regions":
+							[
+								"bh_square",
+								"bh_square_center",
+								"bh_square_open",
+								"bh_square_close",
+								"bh_square_content",
+								"bh_default",
+								"bh_default_center",
+								"bh_default_open",
+								"bh_default_close",
+								"bh_default_content",
+								"bh_single_quote",
+								"bh_single_quote_center",
+								"bh_single_quote_open",
+								"bh_single_quote_close",
+								"bh_single_quote_content",
+								"bh_round",
+								"bh_round_center",
+								"bh_round_open",
+								"bh_round_close",
+								"bh_round_content",
+								"bh_c_define",
+								"bh_c_define_center",
+								"bh_c_define_open",
+								"bh_c_define_close",
+								"bh_c_define_content",
+								"bh_regex",
+								"bh_regex_center",
+								"bh_regex_open",
+								"bh_regex_close",
+								"bh_regex_content",
+								"bh_tag",
+								"bh_tag_center",
+								"bh_tag_open",
+								"bh_tag_close",
+								"bh_tag_content",
+								"bh_angle",
+								"bh_angle_center",
+								"bh_angle_open",
+								"bh_angle_close",
+								"bh_angle_content",
+								"bh_unmatched",
+								"bh_unmatched_center",
+								"bh_unmatched_open",
+								"bh_unmatched_close",
+								"bh_unmatched_content",
+								"bh_double_quote",
+								"bh_double_quote_center",
+								"bh_double_quote_open",
+								"bh_double_quote_close",
+								"bh_double_quote_content",
+								"bh_curly",
+								"bh_curly_center",
+								"bh_curly_open",
+								"bh_curly_close",
+								"bh_curly_content"
+							],
+							"open_with_edit": true,
+							"syntax": "Packages/Python/Python.sublime-syntax",
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 139.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 10,
+					"type": "text"
+				},
+				{
+					"buffer": 9,
+					"file": "IO/Socket/EchoClient.py",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 706,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								662,
+								662
+							]
+						],
+						"settings":
+						{
+							"auto_complete_triggers":
+							[
+								{
+									"characters": ".",
+									"selector": "source.python - string - comment - constant.numeric"
+								},
+								{
+									"characters": ".",
+									"selector": "source.python - string - constant.numeric"
+								}
+							],
+							"bracket_highlighter.busy": false,
+							"bracket_highlighter.locations":
+							{
+								"close":
+								{
+									"1":
+									[
+										666,
+										667
+									]
+								},
+								"icon":
+								{
+									"1":
+									[
+										"Packages/BracketHighlighter/icons/round_bracket.png",
+										"brackethighlighter.default"
+									]
+								},
+								"open":
+								{
+									"1":
+									[
+										649,
+										650
+									]
+								},
+								"unmatched":
+								{
+								}
+							},
+							"bracket_highlighter.regions":
+							[
+								"bh_square",
+								"bh_square_center",
+								"bh_square_open",
+								"bh_square_close",
+								"bh_square_content",
+								"bh_default",
+								"bh_default_center",
+								"bh_default_open",
+								"bh_default_close",
+								"bh_default_content",
+								"bh_single_quote",
+								"bh_single_quote_center",
+								"bh_single_quote_open",
+								"bh_single_quote_close",
+								"bh_single_quote_content",
+								"bh_round",
+								"bh_round_center",
+								"bh_round_open",
+								"bh_round_close",
+								"bh_round_content",
+								"bh_c_define",
+								"bh_c_define_center",
+								"bh_c_define_open",
+								"bh_c_define_close",
+								"bh_c_define_content",
+								"bh_regex",
+								"bh_regex_center",
+								"bh_regex_open",
+								"bh_regex_close",
+								"bh_regex_content",
+								"bh_tag",
+								"bh_tag_center",
+								"bh_tag_open",
+								"bh_tag_close",
+								"bh_tag_content",
+								"bh_angle",
+								"bh_angle_center",
+								"bh_angle_open",
+								"bh_angle_close",
+								"bh_angle_content",
+								"bh_unmatched",
+								"bh_unmatched_center",
+								"bh_unmatched_open",
+								"bh_unmatched_close",
+								"bh_unmatched_content",
+								"bh_double_quote",
+								"bh_double_quote_center",
+								"bh_double_quote_open",
+								"bh_double_quote_close",
+								"bh_double_quote_content",
+								"bh_curly",
+								"bh_curly_center",
+								"bh_curly_open",
+								"bh_curly_close",
+								"bh_curly_content"
+							],
+							"open_with_edit": true,
+							"syntax": "Packages/Python/Python.sublime-syntax",
+							"tab_size": 4,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 11,
+					"type": "text"
+				},
+				{
+					"buffer": 10,
+					"file": "IO/Socket/SPP_Client.py",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 1534,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								998,
+								79
+							]
+						],
+						"settings":
+						{
+							"auto_complete_triggers":
+							[
+								{
+									"characters": ".",
+									"selector": "source.python - string - comment - constant.numeric"
+								},
+								{
+									"characters": ".",
+									"selector": "source.python - string - constant.numeric"
+								}
+							],
+							"bracket_highlighter.busy": false,
+							"bracket_highlighter.locations":
+							{
+								"close":
+								{
+									"1":
+									[
+										997,
+										998
+									]
+								},
+								"icon":
+								{
+									"1":
+									[
+										"Packages/BracketHighlighter/icons/single_quote.png",
+										"brackethighlighter.default"
+									]
+								},
+								"open":
+								{
+									"1":
+									[
+										978,
+										979
+									]
+								},
+								"unmatched":
+								{
+								}
+							},
+							"bracket_highlighter.regions":
+							[
+								"bh_square",
+								"bh_square_center",
+								"bh_square_open",
+								"bh_square_close",
+								"bh_square_content",
+								"bh_default",
+								"bh_default_center",
+								"bh_default_open",
+								"bh_default_close",
+								"bh_default_content",
+								"bh_single_quote",
+								"bh_single_quote_center",
+								"bh_single_quote_open",
+								"bh_single_quote_close",
+								"bh_single_quote_content",
+								"bh_round",
+								"bh_round_center",
+								"bh_round_open",
+								"bh_round_close",
+								"bh_round_content",
+								"bh_c_define",
+								"bh_c_define_center",
+								"bh_c_define_open",
+								"bh_c_define_close",
+								"bh_c_define_content",
+								"bh_regex",
+								"bh_regex_center",
+								"bh_regex_open",
+								"bh_regex_close",
+								"bh_regex_content",
+								"bh_tag",
+								"bh_tag_center",
+								"bh_tag_open",
+								"bh_tag_close",
+								"bh_tag_content",
+								"bh_angle",
+								"bh_angle_center",
+								"bh_angle_open",
+								"bh_angle_close",
+								"bh_angle_content",
+								"bh_unmatched",
+								"bh_unmatched_center",
+								"bh_unmatched_open",
+								"bh_unmatched_close",
+								"bh_unmatched_content",
+								"bh_double_quote",
+								"bh_double_quote_center",
+								"bh_double_quote_open",
+								"bh_double_quote_close",
+								"bh_double_quote_content",
+								"bh_curly",
+								"bh_curly_center",
+								"bh_curly_open",
+								"bh_curly_close",
+								"bh_curly_content"
+							],
+							"open_with_edit": true,
+							"syntax": "Packages/Python/Python.sublime-syntax",
+							"tab_size": 4,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 3,
+					"type": "text"
+				},
+				{
+					"buffer": 11,
 					"file": "Locust/scsp_20170314.py",
 					"semi_transient": false,
 					"settings":
@@ -1055,61 +1992,61 @@
 							},
 							"bracket_highlighter.regions":
 							[
-								"bh_angle",
-								"bh_angle_center",
-								"bh_angle_open",
-								"bh_angle_close",
-								"bh_angle_content",
-								"bh_default",
-								"bh_default_center",
-								"bh_default_open",
-								"bh_default_close",
-								"bh_default_content",
-								"bh_unmatched",
-								"bh_unmatched_center",
-								"bh_unmatched_open",
-								"bh_unmatched_close",
-								"bh_unmatched_content",
-								"bh_round",
-								"bh_round_center",
-								"bh_round_open",
-								"bh_round_close",
-								"bh_round_content",
-								"bh_regex",
-								"bh_regex_center",
-								"bh_regex_open",
-								"bh_regex_close",
-								"bh_regex_content",
-								"bh_c_define",
-								"bh_c_define_center",
-								"bh_c_define_open",
-								"bh_c_define_close",
-								"bh_c_define_content",
-								"bh_curly",
-								"bh_curly_center",
-								"bh_curly_open",
-								"bh_curly_close",
-								"bh_curly_content",
-								"bh_single_quote",
-								"bh_single_quote_center",
-								"bh_single_quote_open",
-								"bh_single_quote_close",
-								"bh_single_quote_content",
-								"bh_double_quote",
-								"bh_double_quote_center",
-								"bh_double_quote_open",
-								"bh_double_quote_close",
-								"bh_double_quote_content",
 								"bh_square",
 								"bh_square_center",
 								"bh_square_open",
 								"bh_square_close",
 								"bh_square_content",
+								"bh_default",
+								"bh_default_center",
+								"bh_default_open",
+								"bh_default_close",
+								"bh_default_content",
+								"bh_single_quote",
+								"bh_single_quote_center",
+								"bh_single_quote_open",
+								"bh_single_quote_close",
+								"bh_single_quote_content",
+								"bh_round",
+								"bh_round_center",
+								"bh_round_open",
+								"bh_round_close",
+								"bh_round_content",
+								"bh_c_define",
+								"bh_c_define_center",
+								"bh_c_define_open",
+								"bh_c_define_close",
+								"bh_c_define_content",
+								"bh_regex",
+								"bh_regex_center",
+								"bh_regex_open",
+								"bh_regex_close",
+								"bh_regex_content",
 								"bh_tag",
 								"bh_tag_center",
 								"bh_tag_open",
 								"bh_tag_close",
-								"bh_tag_content"
+								"bh_tag_content",
+								"bh_angle",
+								"bh_angle_center",
+								"bh_angle_open",
+								"bh_angle_close",
+								"bh_angle_content",
+								"bh_unmatched",
+								"bh_unmatched_center",
+								"bh_unmatched_open",
+								"bh_unmatched_close",
+								"bh_unmatched_content",
+								"bh_double_quote",
+								"bh_double_quote_center",
+								"bh_double_quote_open",
+								"bh_double_quote_close",
+								"bh_double_quote_content",
+								"bh_curly",
+								"bh_curly_center",
+								"bh_curly_open",
+								"bh_curly_close",
+								"bh_curly_content"
 							],
 							"open_with_edit": true,
 							"syntax": "Packages/Python/Python.sublime-syntax",
@@ -1117,129 +2054,14 @@
 							"translate_tabs_to_spaces": true
 						},
 						"translation.x": 0.0,
-						"translation.y": 4128.0,
+						"translation.y": 3878.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 1,
+					"stack_index": 7,
 					"type": "text"
 				},
 				{
-					"buffer": 5,
-					"file": "Temp/temp0314.py",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 158,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								158,
-								158
-							]
-						],
-						"settings":
-						{
-							"auto_complete_triggers":
-							[
-								{
-									"characters": ".",
-									"selector": "source.python - string - comment - constant.numeric"
-								},
-								{
-									"characters": ".",
-									"selector": "source.python - string - constant.numeric"
-								}
-							],
-							"bracket_highlighter.busy": false,
-							"bracket_highlighter.locations":
-							{
-								"close":
-								{
-								},
-								"icon":
-								{
-								},
-								"open":
-								{
-								},
-								"unmatched":
-								{
-								}
-							},
-							"bracket_highlighter.regions":
-							[
-								"bh_angle",
-								"bh_angle_center",
-								"bh_angle_open",
-								"bh_angle_close",
-								"bh_angle_content",
-								"bh_default",
-								"bh_default_center",
-								"bh_default_open",
-								"bh_default_close",
-								"bh_default_content",
-								"bh_unmatched",
-								"bh_unmatched_center",
-								"bh_unmatched_open",
-								"bh_unmatched_close",
-								"bh_unmatched_content",
-								"bh_round",
-								"bh_round_center",
-								"bh_round_open",
-								"bh_round_close",
-								"bh_round_content",
-								"bh_regex",
-								"bh_regex_center",
-								"bh_regex_open",
-								"bh_regex_close",
-								"bh_regex_content",
-								"bh_c_define",
-								"bh_c_define_center",
-								"bh_c_define_open",
-								"bh_c_define_close",
-								"bh_c_define_content",
-								"bh_curly",
-								"bh_curly_center",
-								"bh_curly_open",
-								"bh_curly_close",
-								"bh_curly_content",
-								"bh_single_quote",
-								"bh_single_quote_center",
-								"bh_single_quote_open",
-								"bh_single_quote_close",
-								"bh_single_quote_content",
-								"bh_double_quote",
-								"bh_double_quote_center",
-								"bh_double_quote_open",
-								"bh_double_quote_close",
-								"bh_double_quote_content",
-								"bh_square",
-								"bh_square_center",
-								"bh_square_open",
-								"bh_square_close",
-								"bh_square_content",
-								"bh_tag",
-								"bh_tag_center",
-								"bh_tag_open",
-								"bh_tag_close",
-								"bh_tag_content"
-							],
-							"open_with_edit": true,
-							"syntax": "Packages/Python/Python.sublime-syntax",
-							"translate_tabs_to_spaces": true
-						},
-						"translation.x": 0.0,
-						"translation.y": 0.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 2,
-					"type": "text"
-				},
-				{
-					"buffer": 6,
+					"buffer": 12,
 					"file": "System/File/write_file.py",
 					"semi_transient": false,
 					"settings":
@@ -1286,61 +2108,61 @@
 							},
 							"bracket_highlighter.regions":
 							[
-								"bh_angle",
-								"bh_angle_center",
-								"bh_angle_open",
-								"bh_angle_close",
-								"bh_angle_content",
-								"bh_default",
-								"bh_default_center",
-								"bh_default_open",
-								"bh_default_close",
-								"bh_default_content",
-								"bh_unmatched",
-								"bh_unmatched_center",
-								"bh_unmatched_open",
-								"bh_unmatched_close",
-								"bh_unmatched_content",
-								"bh_round",
-								"bh_round_center",
-								"bh_round_open",
-								"bh_round_close",
-								"bh_round_content",
-								"bh_regex",
-								"bh_regex_center",
-								"bh_regex_open",
-								"bh_regex_close",
-								"bh_regex_content",
-								"bh_c_define",
-								"bh_c_define_center",
-								"bh_c_define_open",
-								"bh_c_define_close",
-								"bh_c_define_content",
-								"bh_curly",
-								"bh_curly_center",
-								"bh_curly_open",
-								"bh_curly_close",
-								"bh_curly_content",
-								"bh_single_quote",
-								"bh_single_quote_center",
-								"bh_single_quote_open",
-								"bh_single_quote_close",
-								"bh_single_quote_content",
-								"bh_double_quote",
-								"bh_double_quote_center",
-								"bh_double_quote_open",
-								"bh_double_quote_close",
-								"bh_double_quote_content",
 								"bh_square",
 								"bh_square_center",
 								"bh_square_open",
 								"bh_square_close",
 								"bh_square_content",
+								"bh_default",
+								"bh_default_center",
+								"bh_default_open",
+								"bh_default_close",
+								"bh_default_content",
+								"bh_single_quote",
+								"bh_single_quote_center",
+								"bh_single_quote_open",
+								"bh_single_quote_close",
+								"bh_single_quote_content",
+								"bh_round",
+								"bh_round_center",
+								"bh_round_open",
+								"bh_round_close",
+								"bh_round_content",
+								"bh_c_define",
+								"bh_c_define_center",
+								"bh_c_define_open",
+								"bh_c_define_close",
+								"bh_c_define_content",
+								"bh_regex",
+								"bh_regex_center",
+								"bh_regex_open",
+								"bh_regex_close",
+								"bh_regex_content",
 								"bh_tag",
 								"bh_tag_center",
 								"bh_tag_open",
 								"bh_tag_close",
-								"bh_tag_content"
+								"bh_tag_content",
+								"bh_angle",
+								"bh_angle_center",
+								"bh_angle_open",
+								"bh_angle_close",
+								"bh_angle_content",
+								"bh_unmatched",
+								"bh_unmatched_center",
+								"bh_unmatched_open",
+								"bh_unmatched_close",
+								"bh_unmatched_content",
+								"bh_double_quote",
+								"bh_double_quote_center",
+								"bh_double_quote_open",
+								"bh_double_quote_close",
+								"bh_double_quote_content",
+								"bh_curly",
+								"bh_curly_center",
+								"bh_curly_open",
+								"bh_curly_close",
+								"bh_curly_content"
 							],
 							"open_with_edit": true,
 							"syntax": "Packages/Python/Python.sublime-syntax"
@@ -1349,11 +2171,11 @@
 						"translation.y": 0.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 3,
+					"stack_index": 6,
 					"type": "text"
 				},
 				{
-					"buffer": 7,
+					"buffer": 13,
 					"file": "Locust/ta.py",
 					"semi_transient": false,
 					"settings":
@@ -1365,8 +2187,8 @@
 						"selection":
 						[
 							[
-								2203,
-								2169
+								0,
+								2204
 							]
 						],
 						"settings":
@@ -1400,61 +2222,61 @@
 							},
 							"bracket_highlighter.regions":
 							[
-								"bh_angle",
-								"bh_angle_center",
-								"bh_angle_open",
-								"bh_angle_close",
-								"bh_angle_content",
-								"bh_default",
-								"bh_default_center",
-								"bh_default_open",
-								"bh_default_close",
-								"bh_default_content",
-								"bh_unmatched",
-								"bh_unmatched_center",
-								"bh_unmatched_open",
-								"bh_unmatched_close",
-								"bh_unmatched_content",
-								"bh_round",
-								"bh_round_center",
-								"bh_round_open",
-								"bh_round_close",
-								"bh_round_content",
-								"bh_regex",
-								"bh_regex_center",
-								"bh_regex_open",
-								"bh_regex_close",
-								"bh_regex_content",
-								"bh_c_define",
-								"bh_c_define_center",
-								"bh_c_define_open",
-								"bh_c_define_close",
-								"bh_c_define_content",
-								"bh_curly",
-								"bh_curly_center",
-								"bh_curly_open",
-								"bh_curly_close",
-								"bh_curly_content",
-								"bh_single_quote",
-								"bh_single_quote_center",
-								"bh_single_quote_open",
-								"bh_single_quote_close",
-								"bh_single_quote_content",
-								"bh_double_quote",
-								"bh_double_quote_center",
-								"bh_double_quote_open",
-								"bh_double_quote_close",
-								"bh_double_quote_content",
 								"bh_square",
 								"bh_square_center",
 								"bh_square_open",
 								"bh_square_close",
 								"bh_square_content",
+								"bh_default",
+								"bh_default_center",
+								"bh_default_open",
+								"bh_default_close",
+								"bh_default_content",
+								"bh_single_quote",
+								"bh_single_quote_center",
+								"bh_single_quote_open",
+								"bh_single_quote_close",
+								"bh_single_quote_content",
+								"bh_round",
+								"bh_round_center",
+								"bh_round_open",
+								"bh_round_close",
+								"bh_round_content",
+								"bh_c_define",
+								"bh_c_define_center",
+								"bh_c_define_open",
+								"bh_c_define_close",
+								"bh_c_define_content",
+								"bh_regex",
+								"bh_regex_center",
+								"bh_regex_open",
+								"bh_regex_close",
+								"bh_regex_content",
 								"bh_tag",
 								"bh_tag_center",
 								"bh_tag_open",
 								"bh_tag_close",
-								"bh_tag_content"
+								"bh_tag_content",
+								"bh_angle",
+								"bh_angle_center",
+								"bh_angle_open",
+								"bh_angle_close",
+								"bh_angle_content",
+								"bh_unmatched",
+								"bh_unmatched_center",
+								"bh_unmatched_open",
+								"bh_unmatched_close",
+								"bh_unmatched_content",
+								"bh_double_quote",
+								"bh_double_quote_center",
+								"bh_double_quote_open",
+								"bh_double_quote_close",
+								"bh_double_quote_content",
+								"bh_curly",
+								"bh_curly_center",
+								"bh_curly_open",
+								"bh_curly_close",
+								"bh_curly_content"
 							],
 							"open_with_edit": true,
 							"syntax": "Packages/Python/Python.sublime-syntax",
@@ -1469,7 +2291,342 @@
 					"type": "text"
 				},
 				{
-					"buffer": 8,
+					"buffer": 14,
+					"file": "Locust/SPP_Socket.py",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 4329,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								2056,
+								2044
+							]
+						],
+						"settings":
+						{
+							"auto_complete_triggers":
+							[
+								{
+									"characters": ".",
+									"selector": "source.python - string - comment - constant.numeric"
+								},
+								{
+									"characters": ".",
+									"selector": "source.python - string - constant.numeric"
+								}
+							],
+							"bracket_highlighter.busy": false,
+							"bracket_highlighter.locations":
+							{
+								"close":
+								{
+									"1":
+									[
+										2062,
+										2063
+									]
+								},
+								"icon":
+								{
+									"1":
+									[
+										"Packages/BracketHighlighter/icons/round_bracket.png",
+										"brackethighlighter.default"
+									]
+								},
+								"open":
+								{
+									"1":
+									[
+										2043,
+										2044
+									]
+								},
+								"unmatched":
+								{
+								}
+							},
+							"bracket_highlighter.regions":
+							[
+								"bh_square",
+								"bh_square_center",
+								"bh_square_open",
+								"bh_square_close",
+								"bh_square_content",
+								"bh_default",
+								"bh_default_center",
+								"bh_default_open",
+								"bh_default_close",
+								"bh_default_content",
+								"bh_single_quote",
+								"bh_single_quote_center",
+								"bh_single_quote_open",
+								"bh_single_quote_close",
+								"bh_single_quote_content",
+								"bh_round",
+								"bh_round_center",
+								"bh_round_open",
+								"bh_round_close",
+								"bh_round_content",
+								"bh_c_define",
+								"bh_c_define_center",
+								"bh_c_define_open",
+								"bh_c_define_close",
+								"bh_c_define_content",
+								"bh_regex",
+								"bh_regex_center",
+								"bh_regex_open",
+								"bh_regex_close",
+								"bh_regex_content",
+								"bh_tag",
+								"bh_tag_center",
+								"bh_tag_open",
+								"bh_tag_close",
+								"bh_tag_content",
+								"bh_angle",
+								"bh_angle_center",
+								"bh_angle_open",
+								"bh_angle_close",
+								"bh_angle_content",
+								"bh_unmatched",
+								"bh_unmatched_center",
+								"bh_unmatched_open",
+								"bh_unmatched_close",
+								"bh_unmatched_content",
+								"bh_double_quote",
+								"bh_double_quote_center",
+								"bh_double_quote_open",
+								"bh_double_quote_close",
+								"bh_double_quote_content",
+								"bh_curly",
+								"bh_curly_center",
+								"bh_curly_open",
+								"bh_curly_close",
+								"bh_curly_content"
+							],
+							"open_with_edit": true,
+							"syntax": "Packages/Python/Python.sublime-syntax",
+							"tab_size": 4,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 2,
+					"type": "text"
+				},
+				{
+					"buffer": 15,
+					"file": "/C/Python27/Lib/site-packages/locust/__init__.py",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 155,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								155,
+								155
+							]
+						],
+						"settings":
+						{
+							"bracket_highlighter.busy": false,
+							"bracket_highlighter.locations":
+							{
+								"close":
+								{
+								},
+								"icon":
+								{
+								},
+								"open":
+								{
+								},
+								"unmatched":
+								{
+								}
+							},
+							"bracket_highlighter.regions":
+							[
+								"bh_square",
+								"bh_square_center",
+								"bh_square_open",
+								"bh_square_close",
+								"bh_square_content",
+								"bh_default",
+								"bh_default_center",
+								"bh_default_open",
+								"bh_default_close",
+								"bh_default_content",
+								"bh_single_quote",
+								"bh_single_quote_center",
+								"bh_single_quote_open",
+								"bh_single_quote_close",
+								"bh_single_quote_content",
+								"bh_round",
+								"bh_round_center",
+								"bh_round_open",
+								"bh_round_close",
+								"bh_round_content",
+								"bh_c_define",
+								"bh_c_define_center",
+								"bh_c_define_open",
+								"bh_c_define_close",
+								"bh_c_define_content",
+								"bh_regex",
+								"bh_regex_center",
+								"bh_regex_open",
+								"bh_regex_close",
+								"bh_regex_content",
+								"bh_tag",
+								"bh_tag_center",
+								"bh_tag_open",
+								"bh_tag_close",
+								"bh_tag_content",
+								"bh_angle",
+								"bh_angle_center",
+								"bh_angle_open",
+								"bh_angle_close",
+								"bh_angle_content",
+								"bh_unmatched",
+								"bh_unmatched_center",
+								"bh_unmatched_open",
+								"bh_unmatched_close",
+								"bh_unmatched_content",
+								"bh_double_quote",
+								"bh_double_quote_center",
+								"bh_double_quote_open",
+								"bh_double_quote_close",
+								"bh_double_quote_content",
+								"bh_curly",
+								"bh_curly_center",
+								"bh_curly_open",
+								"bh_curly_close",
+								"bh_curly_content"
+							],
+							"syntax": "Packages/Python/Python.sublime-syntax"
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 1,
+					"type": "text"
+				},
+				{
+					"buffer": 16,
+					"file": "/C/Python27/Lib/site-packages/locust/rpc/__init__.py",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 376,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								33,
+								39
+							]
+						],
+						"settings":
+						{
+							"bracket_highlighter.busy": false,
+							"bracket_highlighter.locations":
+							{
+								"close":
+								{
+								},
+								"icon":
+								{
+								},
+								"open":
+								{
+								},
+								"unmatched":
+								{
+								}
+							},
+							"bracket_highlighter.regions":
+							[
+								"bh_square",
+								"bh_square_center",
+								"bh_square_open",
+								"bh_square_close",
+								"bh_square_content",
+								"bh_default",
+								"bh_default_center",
+								"bh_default_open",
+								"bh_default_close",
+								"bh_default_content",
+								"bh_single_quote",
+								"bh_single_quote_center",
+								"bh_single_quote_open",
+								"bh_single_quote_close",
+								"bh_single_quote_content",
+								"bh_round",
+								"bh_round_center",
+								"bh_round_open",
+								"bh_round_close",
+								"bh_round_content",
+								"bh_c_define",
+								"bh_c_define_center",
+								"bh_c_define_open",
+								"bh_c_define_close",
+								"bh_c_define_content",
+								"bh_regex",
+								"bh_regex_center",
+								"bh_regex_open",
+								"bh_regex_close",
+								"bh_regex_content",
+								"bh_tag",
+								"bh_tag_center",
+								"bh_tag_open",
+								"bh_tag_close",
+								"bh_tag_content",
+								"bh_angle",
+								"bh_angle_center",
+								"bh_angle_open",
+								"bh_angle_close",
+								"bh_angle_content",
+								"bh_unmatched",
+								"bh_unmatched_center",
+								"bh_unmatched_open",
+								"bh_unmatched_close",
+								"bh_unmatched_content",
+								"bh_double_quote",
+								"bh_double_quote_center",
+								"bh_double_quote_open",
+								"bh_double_quote_close",
+								"bh_double_quote_content",
+								"bh_curly",
+								"bh_curly_center",
+								"bh_curly_open",
+								"bh_curly_close",
+								"bh_curly_content"
+							],
+							"syntax": "Packages/Python/Python.sublime-syntax"
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 0,
+					"type": "text"
+				},
+				{
+					"buffer": 17,
 					"file": "Locust/scsp_v1_72.py",
 					"semi_transient": false,
 					"settings":
@@ -1581,7 +2738,7 @@
 						"translation.y": 4444.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 7,
+					"stack_index": 16,
 					"type": "text"
 				}
 			]
@@ -1620,7 +2777,7 @@
 	"menu_visible": true,
 	"output.exec":
 	{
-		"height": 143.0
+		"height": 149.0
 	},
 	"output.find_results":
 	{

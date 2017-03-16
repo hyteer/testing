@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-from locust import HttpLocust, TaskSet, task, events
+from locust import Locust,HttpLocust, TaskSet, task, events
 from locust import web
 import json, re, string, random, time
 
@@ -69,6 +69,130 @@ x = 0
 mch_id = mch_list[x]['mch_id']
 mch_key = mch_list[x]['mch_key']
 
+
+############################################ Custom Sampler ###############################################
+
+class XmlRpcClient(xmlrpclib.ServerProxy):
+    """
+    Simple, sample XML RPC client implementation that wraps xmlrpclib.ServerProxy and 
+    fires locust events on request_success and request_failure, so that all requests 
+    gets tracked in locust's statistics.
+    """
+    def __getattr__(self, name):
+        func = xmlrpclib.ServerProxy.__getattr__(self, name)
+        def wrapper(*args, **kwargs):
+            start_time = time.time()
+            try:
+                result = func(*args, **kwargs)
+            except xmlrpclib.Fault as e:
+                total_time = int((time.time() - start_time) * 1000)
+                events.request_failure.fire(request_type="xmlrpc", name=name, response_time=total_time, exception=e)
+            else:
+                total_time = int((time.time() - start_time) * 1000)
+                events.request_success.fire(request_type="xmlrpc", name=name, response_time=total_time, response_length=0)
+                # In this example, I've hardcoded response_length=0. If we would want the response length to be 
+                # reported correctly in the statistics, we would probably need to hook in at a lower level
+        
+        return wrapper
+
+
+
+import socket
+
+class SocketClient():
+    """
+    Simple, sample XML RPC client implementation that wraps xmlrpclib.ServerProxy and 
+    fires locust events on request_success and request_failure, so that all requests 
+    gets tracked in locust's statistics.
+    """
+    def __getattr__(self, name):
+        func = xmlrpclib.ServerProxy.__getattr__(self, name)
+        import socket
+        sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+        sock.connect((host, port))
+        def wrapper(*args, **kwargs):
+            start_time = time.time()
+            try:
+                result = func(*args, **kwargs)
+            except xmlrpclib.Fault as e:
+                total_time = int((time.time() - start_time) * 1000)
+                events.request_failure.fire(request_type="xmlrpc", name=name, response_time=total_time, exception=e)
+            else:
+                total_time = int((time.time() - start_time) * 1000)
+                events.request_success.fire(request_type="xmlrpc", name=name, response_time=total_time, response_length=0)
+                # In this example, I've hardcoded response_length=0. If we would want the response length to be 
+                # reported correctly in the statistics, we would probably need to hook in at a lower level
+        
+        return wrapper
+
+
+        def socket_wrapper(*args, **kwargs):
+
+            import socket
+            import sys
+
+            HOST = 'localhost'    # The remote host
+            PORT = 12345              # The same port as used by the server
+            s = None
+            for res in socket.getaddrinfo(HOST, PORT, socket.AF_UNSPEC, socket.SOCK_STREAM):
+                af, socktype, proto, canonname, sa = res
+                try:
+                    s = socket.socket(af, socktype, proto)
+                except socket.error as msg:
+                    s = None
+                    continue
+                try:
+                    s.connect(sa)
+                except socket.error as msg:
+                    s.close()
+                    s = None
+                    continue
+                break
+            if s is None:
+                print 'could not open socket'
+                sys.exit(1)
+            s.sendall('Hello, world')
+            data = s.recv(1024)
+            s.close()
+            print 'Received', repr(data)
+
+
+class XmlRpcLocust(Locust):
+    """
+    This is the abstract Locust class which should be subclassed. It provides an XML-RPC client
+    that can be used to make XML-RPC requests that will be tracked in Locust's statistics.
+    """
+    def __init__(self, *args, **kwargs):
+        super(XmlRpcLocust, self).__init__(*args, **kwargs)
+        self.client = XmlRpcClient(self.host)
+
+
+class SocketLocust(Locust):
+    """
+    This is the abstract Locust class which should be subclassed. It provides an XML-RPC client
+    that can be used to make XML-RPC requests that will be tracked in Locust's statistics.
+    """
+    def __init__(self, *args, **kwargs):
+        super(XmlRpcLocust, self).__init__(*args, **kwargs)
+        self.client = XmlRpcClient(self.host)
+
+
+class SocketUser(SocketLocust):
+    
+    host = "http://127.0.0.1:12345/"
+    min_wait = 100
+    max_wait = 1000
+    
+    class task_set(TaskSet):
+        @task(10)
+        def get_time(self):
+            self.client.get_time()
+        
+        @task(5)
+        def get_random_number(self):
+            self.client.get_random_number(0, 100)
+
+
 ############################################ Helper Functions #############################################
 # MD5加密
 def md5(str):
@@ -106,41 +230,39 @@ def rand_out_trade_no():
     #print "out_trade_no: %s" % out_trade_no
     return out_trade_no
 
+out_trade_no = rand_out_trade_no()
 
-
-# 生成XML数据
-def get_xmldata(mch_id,mch_key):
-    global debug_mode
-
-    out_trade_no = rand_out_trade_no()
-
-    sign_str = "body=test1&cashierid=1&mch_id={mch_id}&nonce_str=xbfg5ewrl44yp46x9dsw6dxzk4ycfhqn&notify_url=\
+sign_str = "body=test1&cashierid=1&mch_id={mch_id}&nonce_str=xbfg5ewrl44yp46x9dsw6dxzk4ycfhqn&notify_url=\
 http://pay.speedpos.snsshop.net/notify/1000100001/1000100001201611021915213701&\
 openid=odLjYvwUYEEq1HMGQY_3CErEGLSU&out_trade_no={out_trade_no}&\
 return_url=http://pay.speedpos.snsshop.net/success/1000100001/1000100001201611021915213701&\
 spbill_create_ip=127.0.0.1&total_fee=1&trade_type=WXPAY.JSAPI&key={mch_key}".format(mch_id=mch_id,out_trade_no=out_trade_no,mch_key=mch_key)
 
-    new_sign_str = "body=test1&cashierid=1&mch_id={mch_id}&nonce_str=xbfg5ewrl44yp46x9dsw6dxzk4ycfhqn&notify_url=\
+new_sign_str = "body=test1&cashierid=1&mch_id={mch_id}&nonce_str=xbfg5ewrl44yp46x9dsw6dxzk4ycfhqn&notify_url=\
 http://pay.speedpos.snsshop.net/notify/1000100001/1000100001201611021915213701&out_trade_no={out_trade_no}&\
 return_url=http://pay.speedpos.snsshop.net/success/1000100001/1000100001201611021915213701&\
 spbill_create_ip=127.0.0.1&sub_openid={open_id}&total_fee=1&trade_type={pay_type}&key=\
 {mch_key}".format(mch_id=mch_id,out_trade_no=out_trade_no,open_id=PAY_TYPES[PAY_TYPE]['openid'],pay_type=PAY_TYPES[PAY_TYPE]['name'],mch_key=mch_key)
 
-    str2 = "body=test1&cashierid=1&mch_id="+mch_id+"&nonce_str=xbfg5ewrl44yp46x9dsw6dxzk4ycfhqn&\
+str2 = "body=test1&cashierid=1&mch_id="+mch_id+"&nonce_str=xbfg5ewrl44yp46x9dsw6dxzk4ycfhqn&\
 notify_url=http://pay.speedpos.snsshop.net/notify/1000100001/1000100001201611021915213701&\
 openid=odLjYvwUYEEq1HMGQY_3CErEGLSU&out_trade_no="+out_trade_no+"&\
 return_url=http://pay.speedpos.snsshop.net/success/1000100001/1000100001201611021915213701&\
 spbill_create_ip=127.0.0.1&total_fee=1&trade_type=WXPAY.JSAPI&key="+mch_key
 
-    sign = md5(new_sign_str)
-    sign_upper = sign.upper()
+sign = md5(new_sign_str)
+sign_upper = sign.upper()
+
+# 生成XML数据
+def get_xmldata(mch_id,mch_key,sign,out_trade_no):
+    global debug_mode
 
     xmldata = "<xml><body>test1</body><cashierid>1</cashierid><mch_id>"+mch_id+"</mch_id>\
 <nonce_str>xbfg5ewrl44yp46x9dsw6dxzk4ycfhqn</nonce_str><notify_url>\
 http://pay.speedpos.snsshop.net/notify/1000100001/1000100001201611021915213701</notify_url>\
 <out_trade_no>"+out_trade_no+"</out_trade_no><return_url>http://pay.speedpos.snsshop.net/success/1000100001/1000100001201611021915213701\
 </return_url><spbill_create_ip>127.0.0.1</spbill_create_ip><sub_openid>"+PAY_TYPES[PAY_TYPE]['openid']+"</sub_openid><total_fee>1</total_fee>\
-<trade_type>"+PAY_TYPES[PAY_TYPE]['name']+"</trade_type><sign>"+sign_upper+"</sign></xml>"
+<trade_type>"+PAY_TYPES[PAY_TYPE]['name']+"</trade_type><sign>"+sign+"</sign></xml>"
 
     xmldata_debug = '0'
 
@@ -274,7 +396,7 @@ class UserBehavior(TaskSet):
     @task(1)
     def unified_order(self):
         global err,err2, debug_mode
-        xmldata = get_xmldata(mch_id,mch_key)
+        xmldata = get_xmldata(mch_id,mch_key,sign_upper,out_trade_no)
         if self.time_triger() == True:
             self.console_log()
 
